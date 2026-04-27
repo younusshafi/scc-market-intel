@@ -52,6 +52,38 @@ FEEDS = [
         "source": "Google News — Oman Infrastructure",
         "url": "https://news.google.com/rss/search?q=Oman+infrastructure&hl=en-US&gl=US&ceid=US:en",
     },
+    {
+        "source": "Google News — Galfar",
+        "url": "https://news.google.com/rss/search?q=Galfar+Oman&hl=en-US&gl=US&ceid=US:en",
+    },
+    {
+        "source": "Google News — Strabag",
+        "url": "https://news.google.com/rss/search?q=Strabag+Oman&hl=en-US&gl=US&ceid=US:en",
+    },
+    {
+        "source": "Google News — Al Tasnim",
+        "url": "https://news.google.com/rss/search?q=Al+Tasnim+construction&hl=en-US&gl=US&ceid=US:en",
+    },
+    {
+        "source": "Google News — L&T",
+        "url": "https://news.google.com/rss/search?q=L%26T+Oman&hl=en-US&gl=US&ceid=US:en",
+    },
+    {
+        "source": "Google News — Towell",
+        "url": "https://news.google.com/rss/search?q=Towell+construction+Oman&hl=en-US&gl=US&ceid=US:en",
+    },
+    {
+        "source": "Google News — Hassan Allam",
+        "url": "https://news.google.com/rss/search?q=Hassan+Allam+Oman&hl=en-US&gl=US&ceid=US:en",
+    },
+    {
+        "source": "Google News — Arab Contractors",
+        "url": "https://news.google.com/rss/search?q=Arab+Contractors+Oman&hl=en-US&gl=US&ceid=US:en",
+    },
+    {
+        "source": "Google News — Ozkar",
+        "url": "https://news.google.com/rss/search?q=Ozkar+construction+Oman&hl=en-US&gl=US&ceid=US:en",
+    },
 ]
 
 # Tags for HTML stripping

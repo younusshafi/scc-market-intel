@@ -1,67 +1,44 @@
 """Export the SCC dashboard as a static index.html for deployment."""
-
-import os
-import sys
-
+import os, sys
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
-
 if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-from dashboard import (
-    build_html, extract_articles, extract_tenders,
-    load_file, load_json_file, is_scc_relevant, is_pagination_row,
-    NEWS_KEYWORDS,
-)
+from dashboard import (build_html, extract_articles, extract_tenders,
+    load_file, load_json_file, is_scc, is_pagination, NEWS_KW, COMPETITORS)
 
 OUT_DIR = os.path.join(SCRIPT_DIR, "dashboard-static")
 
-
 def main():
-    tenders_raw = load_json_file("tenders.json")
-    news_raw = load_json_file("news.json")
-    briefing_md = load_file("briefing_output.md")
-
-    tenders = extract_tenders(tenders_raw) if tenders_raw else []
-    articles = extract_articles(news_raw) if news_raw else []
-
-    # Print summary
-    clean = [t for t in tenders if not is_pagination_row(t)]
-    scc = [t for t in clean if is_scc_relevant(t)]
-
+    tr = load_json_file("tenders.json")
+    nr = load_json_file("news.json")
+    hr = load_json_file("historical_tenders.json")
+    bm = load_file("briefing_output.md")
+    tenders = extract_tenders(tr) if tr else []
+    articles = extract_articles(nr) if nr else []
+    hist = extract_tenders(hr) if hr else []
+    clean = [t for t in tenders if not is_pagination(t)]
+    scc = [t for t in clean if is_scc(t)]
     seen = set()
-    deduped = []
-    for a in articles:
-        title = a.get("title", "").strip().lower()
-        if title and title not in seen:
-            seen.add(title)
-            deduped.append(a)
-    relevant = [a for a in deduped if any(
-        kw in (a.get("title", "") + " " + a.get("summary", "")).lower()
-        for kw in NEWS_KEYWORDS
-    )]
+    deduped = [a for a in articles if not (a.get("title","").strip().lower() in seen or seen.add(a.get("title","").strip().lower()))]
+    relevant = [a for a in deduped if any(k in (a.get("title","")+" "+a.get("summary","")).lower() for k in NEWS_KW)]
+    comp = [a for a in relevant if any(c.lower() in a.get("title","").lower() for c in COMPETITORS)]
 
-    html_str = build_html(tenders, articles, briefing_md, tenders_raw)
-
+    html_str = build_html(tenders, articles, bm, tr, hist)
     os.makedirs(OUT_DIR, exist_ok=True)
-    out_path = os.path.join(OUT_DIR, "index.html")
-    with open(out_path, "w", encoding="utf-8") as f:
+    with open(os.path.join(OUT_DIR, "index.html"), "w", encoding="utf-8") as f:
         f.write(html_str)
-
     size = len(html_str.encode("utf-8"))
     print(f"Exported to dashboard-static/index.html ({size:,} bytes)")
-    print()
-    print("ABOVE THE FOLD:")
-    print(f"  Stats bar: 5 cards")
-    print(f"  Executive briefing: {'yes' if briefing_md else 'no'}")
-    print(f"  SCC-relevant tenders table: {len(scc)} tenders")
-    print()
-    print("BELOW THE FOLD (collapsed):")
-    print(f"  Full tender pipeline: {len(clean)} tenders across {len(set(t.get('_view','') for t in clean))} views")
-    print(f"  Market news: {len(relevant)} relevant articles (from {len(articles)} total)")
+    print(f"\nAbove the fold:")
+    print(f"  Metric cards: 4 (Pipeline: {len(clean)}, SCC: {len(scc)}, News: {len(relevant)})")
+    print(f"  Executive briefing + trend chart")
+    print(f"  SCC-relevant tenders table: {len(scc)}")
+    print(f"  Market composition + top entities")
+    print(f"\nBelow the fold (collapsed):")
+    print(f"  All tenders: {len(clean)}")
+    print(f"  News: {len(relevant)} relevant ({len(comp)} competitor)")
 
-
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": main()

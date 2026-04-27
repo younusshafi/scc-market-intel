@@ -58,47 +58,51 @@ MAX_CONTEXT_WORDS = 3200  # ~7-8K tokens with Arabic text, leaving room for syst
 
 SYSTEM_PROMPT = (
     "You are a senior market intelligence analyst embedded in Sarooj "
-    "Construction Company's Tendering department. SCC is a major Omani civil "
-    "infrastructure contractor — their core work is roads, bridges, tunnels, "
-    "marine works, dams, and pipelines. They hold Excellent and First grade "
-    "classifications.\n\n"
-    "Write a weekly briefing for the Head of Tendering. He is experienced, "
-    "sharp, and has no patience for filler. He wants to know:\n\n"
-    "PIPELINE SIGNAL: Are there meaningful new tenders in SCC's core "
-    "categories this week? Do not list every grade match — filter for "
-    "relevance. Maintenance contracts for health centre toilets are not "
-    "SCC's business even if they technically match a grade. Focus on civil "
-    "infrastructure scale work. If there is nothing significant, say so "
-    "plainly and explain what the current tender mix looks like.\n\n"
-    "RE-TENDER INTELLIGENCE: Any re-tenders? A re-tender means something "
-    "went wrong the first time — that is a signal. Speculate briefly on "
-    "what it might mean (too few bidders? pricing issues? scope changes?).\n\n"
-    "COMPETITOR WATCH: Any news mentions of Galfar, Strabag, Al Tasnim, "
-    "L&T, Towell, Hassan Allam, Arab Contractors, or Ozkar? If nothing, "
-    "say so in one line and move on. Do not pad.\n\n"
-    "MARKET CONTEXT: Any government spending signals, ministry "
-    "announcements, or policy news that could affect SCC's pipeline in "
-    "the next 3-6 months? Connect the dots — do not just restate "
-    "headlines.\n\n"
-    "Format: 4 short paragraphs with bold headers, no bullet point lists. "
-    "Write like a trusted advisor speaking to a peer, not like a report "
-    "generator. Total length: 250-350 words maximum.\n\n"
-    "STRICT RULES:\n"
-    "- Never say 'it is essential to continue monitoring' or any variant. "
-    "That is filler.\n"
-    "- Never say 'may have indirect implications.' Either connect the dots "
-    "specifically or do not mention it.\n"
-    "- If there are no relevant tenders, state it in one sentence and use "
-    "the remaining space to analyse WHY — is the market seasonally quiet? "
-    "Is spending concentrated in other categories? What categories ARE "
-    "active and what does that tell us?\n"
-    "- If there is no competitor news, say 'No competitor activity detected "
-    "this week.' and move on. One sentence, not a paragraph.\n"
-    "- Every paragraph must contain at least one specific fact — a number, "
-    "a name, a date, a tender reference. No paragraph should be pure "
-    "commentary.\n"
-    "- The briefing should make the reader smarter about the market in "
-    "under 60 seconds of reading."
+    "Construction Company's tendering department. SCC is a major Omani civil "
+    "infrastructure contractor — core work: roads, bridges, tunnels, marine "
+    "works, dams, pipelines. Grades: Excellent and First.\n\n"
+    "Write a weekly briefing for the Head of Tendering and CEO. They are "
+    "experienced executives who already monitor the portal daily. Do not "
+    "tell them what they already know. Tell them what they cannot easily "
+    "see themselves.\n\n"
+    "MARKET COMPOSITION (1 paragraph):\n"
+    "Analyse the tender mix by category. What percentage of active tenders "
+    "fall in SCC's core categories vs other categories? What does the "
+    "current composition tell us about where government spending is going "
+    "right now? Is SCC's addressable market growing or shrinking relative "
+    "to total tender volume? Use specific numbers and percentages.\n\n"
+    "PIPELINE OUTLOOK (1 paragraph):\n"
+    "What tenders in SCC's core categories are worth watching? Filter "
+    "ruthlessly — school maintenance and health centre repairs are not "
+    "SCC's business even if they technically match a grade. Only highlight "
+    "tenders that involve roads, bridges, tunnels, marine, dams, pipelines, "
+    "or major civil infrastructure at a scale SCC would realistically bid. "
+    "If nothing qualifies, say so clearly in one sentence and pivot to "
+    "forward-looking signals: what upcoming projects from news sources "
+    "might generate tenders in the next 3-6 months?\n\n"
+    "RE-TENDER PATTERNS (1 paragraph):\n"
+    "How many re-tenders exist in the current data? What categories are "
+    "they concentrated in? Re-tender frequency is a market health indicator. "
+    "Analyse what the pattern suggests — specification problems, pricing "
+    "pressure, contractor supply issues? Only mention specific re-tenders "
+    "if they are in SCC's core categories.\n\n"
+    "COMPETITIVE & STRATEGIC SIGNALS (1 paragraph):\n"
+    "Any news about tracked competitors (Galfar, Strabag, Al Tasnim, L&T, "
+    "Towell, Hassan Allam, Arab Contractors, Ozkar)? Any government policy, "
+    "investment, or infrastructure announcements that signal future spending "
+    "in SCC's categories? Connect the dots to SCC's business specifically. "
+    "If recommending action, be concrete — 'watch for X' or 'prepare for Y' "
+    "not 'may present opportunities.'\n\n"
+    "FORMAT RULES:\n"
+    "- 4 paragraphs with bold headers\n"
+    "- Every paragraph must contain at least 2 specific numbers or percentages\n"
+    "- Total: 300-400 words\n"
+    "- Never say 'it is essential to continue monitoring'\n"
+    "- Never say 'may have indirect implications'\n"
+    "- Never say 'could lead to increased opportunities'\n"
+    "- If a data gap limits your analysis, name the gap and recommend "
+    "how to close it\n"
+    "- Write as a strategist, not a reporter"
 )
 
 
@@ -264,28 +268,62 @@ def build_tender_summary(tenders):
     by_grade = {k: v for k, v in by_grade.items() if is_valid_key(k)}
     by_type = {k: v for k, v in by_type.items() if is_valid_key(k)}
 
+    total = len(tenders) or 1  # avoid division by zero
     lines = []
-    lines.append(f"TOTAL TENDERS LOADED: {len(tenders)}")
+    lines.append(f"TOTAL TENDERS LOADED: {total}")
 
-    lines.append("\nBy Procurement Category:")
+    # Category breakdown with percentages
+    lines.append("\nBy Procurement Category (count / % of total):")
+    scc_core_count = 0
+    scc_core_cats = set()
     for cat, count in sorted(by_category.items(), key=lambda x: -x[1]):
-        lines.append(f"  {cat}: {count}")
+        pct = round(count / total * 100, 1)
+        lines.append(f"  {cat}: {count} ({pct}%)")
+        # Track SCC-relevant categories
+        if any(kw in cat for kw in ["Construction", "Ports", "Roads", "Bridges",
+                "Pipeline", "Electromechanical", "Dams", "Marine", "مقاولات"]):
+            scc_core_count += count
+            scc_core_cats.add(cat)
 
-    lines.append("\nBy Grade:")
+    non_scc = total - scc_core_count
+    lines.append(f"\n  SCC CORE CATEGORIES TOTAL: {scc_core_count} ({round(scc_core_count/total*100, 1)}%)")
+    lines.append(f"  OTHER CATEGORIES: {non_scc} ({round(non_scc/total*100, 1)}%)")
+
+    # Grade distribution with percentages
+    lines.append("\nBy Grade (% of tenders listing that grade):")
     for grade, count in sorted(by_grade.items(), key=lambda x: -x[1]):
-        lines.append(f"  {grade}: {count}")
+        pct = round(count / total * 100, 1)
+        lines.append(f"  {grade}: {count} ({pct}%)")
 
+    # Type breakdown
     lines.append("\nBy Tender Type:")
     for ttype, count in sorted(by_type.items(), key=lambda x: -x[1]):
-        lines.append(f"  {ttype}: {count}")
+        pct = round(count / total * 100, 1)
+        lines.append(f"  {ttype}: {count} ({pct}%)")
 
+    # Re-tender analysis
+    lines.append(f"\n=== RE-TENDER ANALYSIS ===")
+    lines.append(f"Total re-tenders: {len(retenders)} out of {total} ({round(len(retenders)/total*100, 1)}%)")
     if retenders:
-        lines.append(f"\nRE-TENDERS DETECTED ({len(retenders)}):")
-        for t in retenders[:10]:
+        # Group re-tenders by category
+        rt_by_cat = {}
+        for t in retenders:
+            cg = bi(t, "category_grade")
+            cm = re.match(r"^([^\[]+)", cg)
+            cat = cm.group(1).strip() if cm else "Unknown"
+            rt_by_cat.setdefault(cat, []).append(t)
+        lines.append("Re-tenders by category:")
+        for cat, rts in sorted(rt_by_cat.items(), key=lambda x: -len(x[1])):
+            lines.append(f"  {cat}: {len(rts)}")
+        lines.append("Re-tender details:")
+        for t in retenders[:15]:
             num = t.get("tender_number", "?")
             name = t.get("tender_name_en") or t.get("tender_name_ar", "?")
             entity = t.get("entity_en") or t.get("entity_ar", "")
-            lines.append(f"  {num} — {name[:60]} [{entity[:40]}]")
+            cat = bi(t, "category_grade")[:40]
+            lines.append(f"  {num} — {name[:50]} [{entity[:30]}] ({cat})")
+    else:
+        lines.append("No re-tenders found in current dataset.")
 
     return "\n".join(lines)
 
@@ -357,7 +395,99 @@ def format_article(a):
     return " | ".join(p for p in parts if p)
 
 
-def build_context(tenders, articles):
+def extract_date_ym(t):
+    """Extract (yyyy, mm) from a tender's date fields."""
+    for field in ("bid_closing_date", "sales_end_date", "date"):
+        d = t.get(field, "")
+        m = re.match(r"(\d{2})-(\d{2})-(\d{4})", d)
+        if m:
+            return int(m.group(3)), int(m.group(2))
+    return None, None
+
+
+def is_scc_relevant(t):
+    """Check if a tender matches SCC's category + grade."""
+    EN_CAT_KW = ["Construction", "Ports", "Roads", "Bridges", "Dams",
+                  "Pipeline", "Electromechanical", "Marine"]
+    EN_GRADE_KW = ["Excellent", "First", "Second"]
+    cg_ar = t.get("category_grade_ar", t.get("category_grade", ""))
+    cg_en = t.get("category_grade_en", "")
+    cg = cg_ar + " " + cg_en
+    cat_match = any(kw in cg for kw in SCC_CATEGORY_KEYWORDS + EN_CAT_KW)
+    grade_match = any(kw in cg for kw in SCC_GRADE_KEYWORDS + EN_GRADE_KW)
+    return cat_match and grade_match
+
+
+def build_historical_trends(hist_tenders):
+    """Build trend statistics from historical data (4,700+ tenders)."""
+    from collections import defaultdict
+
+    by_month = defaultdict(int)
+    scc_by_month = defaultdict(int)
+    rt_by_month = defaultdict(int)
+    entity_counts = defaultdict(int)
+    retenders = []
+
+    for t in hist_tenders:
+        yyyy, mm = extract_date_ym(t)
+        if yyyy is None:
+            continue
+        key = f"{yyyy}-{mm:02d}"
+        by_month[key] += 1
+
+        if is_scc_relevant(t):
+            scc_by_month[key] += 1
+            entity = bi(t, "entity") or "Unknown"
+            entity_counts[entity] += 1
+
+        names = (t.get("tender_name_ar", "") + " " + t.get("tender_name_en", ""))
+        if "اعادة طرح" in names or "إعادة طرح" in names or "recall" in names.lower():
+            retenders.append(t)
+            rt_by_month[key] += 1
+
+    # Last 6 months
+    all_months = sorted(by_month.keys())
+    recent_months = all_months[-6:] if len(all_months) >= 6 else all_months
+
+    lines = []
+    lines.append(f"HISTORICAL DATA: {len(hist_tenders)} tenders spanning {all_months[0] if all_months else '?'} to {all_months[-1] if all_months else '?'}")
+
+    lines.append("\nMonthly tender volume (last 6 months):")
+    for m in recent_months:
+        scc = scc_by_month.get(m, 0)
+        rt = rt_by_month.get(m, 0)
+        pct_scc = round(scc / max(by_month[m], 1) * 100, 1)
+        rt_str = f", re-tenders: {rt}" if rt else ""
+        lines.append(f"  {m}: {by_month[m]:>5} total, {scc:>4} SCC-relevant ({pct_scc}%){rt_str}")
+
+    # SCC-relevant trend direction
+    if len(recent_months) >= 2:
+        first_half = sum(scc_by_month.get(m, 0) for m in recent_months[:3])
+        second_half = sum(scc_by_month.get(m, 0) for m in recent_months[3:])
+        if second_half > first_half:
+            lines.append(f"  Trend: SCC-relevant tenders INCREASING ({first_half} -> {second_half} in last 3 vs prior 3 months)")
+        elif second_half < first_half:
+            lines.append(f"  Trend: SCC-relevant tenders DECREASING ({first_half} -> {second_half} in last 3 vs prior 3 months)")
+        else:
+            lines.append(f"  Trend: SCC-relevant tenders FLAT ({first_half} = {second_half})")
+
+    # Top issuing entities for SCC categories
+    lines.append("\nTop entities issuing SCC-relevant tenders:")
+    for entity, count in sorted(entity_counts.items(), key=lambda x: -x[1])[:10]:
+        lines.append(f"  {entity[:50]}: {count}")
+
+    # Re-tender summary
+    lines.append(f"\nRe-tenders in historical data: {len(retenders)} total")
+    for t in retenders[:5]:
+        num = t.get("tender_number", "?")
+        name = t.get("tender_name_en") or t.get("tender_name_ar", "?")
+        cat = bi(t, "category_grade")[:40]
+        lines.append(f"  {num} — {name[:50]} ({cat})")
+
+    return "\n".join(lines)
+
+
+def build_context(tenders, articles, hist_tenders=None):
     """Build the combined context string for the LLM, respecting the word budget."""
     sections = []
 
@@ -370,39 +500,23 @@ def build_context(tenders, articles):
     )
     sections.append(scc_profile)
 
-    # Section 2: Tender statistics
-    sections.append("=== TENDER STATISTICS ===\n" + build_tender_summary(tenders))
+    # Section 2: Current tender statistics (from tenders.json)
+    sections.append("=== CURRENT TENDER STATISTICS ===\n" + build_tender_summary(tenders))
 
-    # Section 2b: Field definitions
+    # Section 2b: Historical trends (from historical_tenders.json)
+    if hist_tenders:
+        sections.append("=== HISTORICAL TRENDS ===\n" + build_historical_trends(hist_tenders))
+
+    # Section 2c: Field definitions
     sections.append(
         "=== FIELD DEFINITIONS ===\n"
-        "- Fee: This is the tender DOCUMENT PURCHASE fee (cost to buy the "
-        "tender documents), NOT the project value. A fee of 25-50 OMR is "
-        "standard. Do not interpret this as the project's contract value.\n"
-        "- Guarantee: This is the bank guarantee PERCENTAGE required with the "
-        "bid, not an absolute amount. 1 means 1%.\n"
-        "- Do not comment on fees or guarantee values as indicators of project "
-        "size — they are not meaningful for that purpose."
+        "- Fee: Tender DOCUMENT PURCHASE fee, NOT project value. 25-50 OMR is standard.\n"
+        "- Guarantee: Bank guarantee PERCENTAGE, not absolute amount. 1 means 1%.\n"
+        "- Do not comment on fees or guarantees as indicators of project size."
     )
 
-    # Section 3: SCC-relevant tenders (matching categories/grades)
-    # Check both Arabic and English category fields, plus English keywords
-    EN_CATEGORY_KEYWORDS = [
-        "Construction", "Ports", "Roads", "Bridges", "Dams",
-        "Pipeline", "Electromechanical", "Marine",
-    ]
-    EN_GRADE_KEYWORDS = ["Excellent", "First", "Second"]
-
-    relevant = []
-    for t in tenders:
-        cg_ar = t.get("category_grade_ar", t.get("category_grade", ""))
-        cg_en = t.get("category_grade_en", "")
-        ar_cat_match = any(kw in cg_ar for kw in SCC_CATEGORY_KEYWORDS)
-        en_cat_match = any(kw in cg_en for kw in EN_CATEGORY_KEYWORDS)
-        ar_grade_match = any(g in cg_ar for g in SCC_GRADE_KEYWORDS)
-        en_grade_match = any(g in cg_en for g in EN_GRADE_KEYWORDS)
-        if (ar_cat_match or en_cat_match) and (ar_grade_match or en_grade_match):
-            relevant.append(t)
+    # Section 3: SCC-relevant tenders (from recent tenders.json — actionable)
+    relevant = [t for t in tenders if is_scc_relevant(t)]
 
     if relevant:
         lines = [f"=== SCC-RELEVANT TENDERS ({len(relevant)} matching category + grade) ==="]
@@ -412,27 +526,35 @@ def build_context(tenders, articles):
             lines.append(f"... and {len(relevant) - 15} more matching tenders")
         sections.append("\n".join(lines))
 
-    # Section 4: 20 most recent tenders (by view order — NewTenders come first)
-    new_tenders = [t for t in tenders if t.get("_view") == "New/Floated Tenders"]
-    recent_20 = new_tenders[:15] if new_tenders else tenders[:15]
-    lines = ["=== 15 MOST RECENT NEW TENDERS ==="]
-    for t in recent_20:
-        lines.append(format_tender_row(t))
-    sections.append("\n".join(lines))
-
-    # Section 5: Recent news — add articles until we approach the word limit
+    # Section 4: Recent news — competitor news first, then general
     recent_articles = filter_recent_articles(articles, days=7)
-    news_lines = [f"=== NEWS (last 7 days, {len(recent_articles)} articles) ==="]
 
-    # Estimate current word count
-    current_text = "\n\n".join(sections) + "\n\n" + news_lines[0]
-    budget_remaining = MAX_CONTEXT_WORDS - count_words(current_text) - 100  # safety margin
-
+    # Split into competitor news and general news
+    competitor_articles = []
+    general_articles = []
     for a in recent_articles:
+        title = a.get("title", "").lower()
+        if any(comp.lower() in title for comp in SCC_COMPETITORS):
+            competitor_articles.append(a)
+        else:
+            general_articles.append(a)
+
+    # Build news section — competitors first
+    news_lines = []
+    if competitor_articles:
+        news_lines.append(f"=== COMPETITOR NEWS ({len(competitor_articles)} articles) ===")
+        for a in competitor_articles[:15]:
+            news_lines.append(format_article(a))
+
+    current_text = "\n\n".join(sections) + "\n\n" + "\n".join(news_lines)
+    budget_remaining = MAX_CONTEXT_WORDS - count_words(current_text) - 100
+
+    news_lines.append(f"\n=== GENERAL MARKET NEWS ({len(general_articles)} articles) ===")
+    for a in general_articles:
         line = format_article(a)
         line_words = count_words(line)
         if budget_remaining - line_words < 0:
-            news_lines.append(f"... truncated ({len(recent_articles)} total articles)")
+            news_lines.append(f"... truncated ({len(general_articles)} total)")
             break
         news_lines.append(line)
         budget_remaining -= line_words
@@ -514,6 +636,7 @@ def main():
     print("\nLoading data...")
     tenders_raw = load_json("tenders.json")
     news_raw = load_json("news.json")
+    hist_raw = load_json("historical_tenders.json")
 
     if tenders_raw is None and news_raw is None:
         print("\n  ERROR: Neither tenders.json nor news.json found. Nothing to brief on.")
@@ -521,8 +644,10 @@ def main():
 
     # Extract records
     tenders = extract_tenders(tenders_raw) if tenders_raw else []
+    hist_tenders = extract_tenders(hist_raw) if hist_raw else []
     articles_raw = extract_articles(news_raw) if news_raw else []
     total_articles = len(articles_raw)
+    print(f"\n  Historical tenders: {len(hist_tenders)}")
 
     # Deduplicate articles by title
     seen_titles = set()
@@ -558,7 +683,7 @@ def main():
 
     # Build context
     print("\nBuilding context...")
-    context = build_context(tenders, articles)
+    context = build_context(tenders, articles, hist_tenders=hist_tenders)
 
     # Save context for inspection
     context_path = os.path.join(SCRIPT_DIR, "briefing_context.txt")
