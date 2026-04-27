@@ -82,7 +82,23 @@ SYSTEM_PROMPT = (
     "headlines.\n\n"
     "Format: 4 short paragraphs with bold headers, no bullet point lists. "
     "Write like a trusted advisor speaking to a peer, not like a report "
-    "generator. Total length: 250-350 words maximum."
+    "generator. Total length: 250-350 words maximum.\n\n"
+    "STRICT RULES:\n"
+    "- Never say 'it is essential to continue monitoring' or any variant. "
+    "That is filler.\n"
+    "- Never say 'may have indirect implications.' Either connect the dots "
+    "specifically or do not mention it.\n"
+    "- If there are no relevant tenders, state it in one sentence and use "
+    "the remaining space to analyse WHY — is the market seasonally quiet? "
+    "Is spending concentrated in other categories? What categories ARE "
+    "active and what does that tell us?\n"
+    "- If there is no competitor news, say 'No competitor activity detected "
+    "this week.' and move on. One sentence, not a paragraph.\n"
+    "- Every paragraph must contain at least one specific fact — a number, "
+    "a name, a date, a tender reference. No paragraph should be pure "
+    "commentary.\n"
+    "- The briefing should make the reader smarter about the market in "
+    "under 60 seconds of reading."
 )
 
 
@@ -197,6 +213,11 @@ def count_words(text):
     return len(text.split())
 
 
+def bi(t, field):
+    """Read a bilingual field: prefer English, fall back to Arabic, then unsuffixed."""
+    return t.get(f"{field}_en") or t.get(f"{field}_ar") or t.get(field, "")
+
+
 def build_tender_summary(tenders):
     """Build a statistical summary of tenders by category and grade."""
     by_category = {}
@@ -205,10 +226,10 @@ def build_tender_summary(tenders):
     retenders = []
 
     for t in tenders:
-        cat_grade = t.get("category_grade", "")
-        tender_type = t.get("tender_type", "")
-        name = t.get("tender_name", "")
-        view = t.get("_view", "")
+        cat_grade = bi(t, "category_grade")
+        tender_type = bi(t, "tender_type")
+        name_ar = t.get("tender_name_ar", t.get("tender_name", ""))
+        name_en = t.get("tender_name_en", "")
 
         # Count by category (extract the part before the bracket)
         cat_match = re.match(r"^([^\[]+)", cat_grade)
@@ -230,9 +251,18 @@ def build_tender_summary(tenders):
         if ttype:
             by_type[ttype] = by_type.get(ttype, 0) + 1
 
-        # Flag re-tenders
-        if "اعادة طرح" in name or "إعادة طرح" in name or "re-tender" in name.lower():
+        # Flag re-tenders (check both languages)
+        all_names = name_ar + " " + name_en
+        if "اعادة طرح" in all_names or "إعادة طرح" in all_names or "recall" in name_en.lower() or "re-tender" in name_en.lower():
             retenders.append(t)
+
+    # Filter out junk entries (pagination artefacts like "of", "1", "42")
+    def is_valid_key(k):
+        return len(k) >= 3 and not k.isdigit()
+
+    by_category = {k: v for k, v in by_category.items() if is_valid_key(k)}
+    by_grade = {k: v for k, v in by_grade.items() if is_valid_key(k)}
+    by_type = {k: v for k, v in by_type.items() if is_valid_key(k)}
 
     lines = []
     lines.append(f"TOTAL TENDERS LOADED: {len(tenders)}")
@@ -252,7 +282,10 @@ def build_tender_summary(tenders):
     if retenders:
         lines.append(f"\nRE-TENDERS DETECTED ({len(retenders)}):")
         for t in retenders[:10]:
-            lines.append(f"  {t.get('tender_number', '?')} — {t.get('tender_name', '?')[:60]}")
+            num = t.get("tender_number", "?")
+            name = t.get("tender_name_en") or t.get("tender_name_ar", "?")
+            entity = t.get("entity_en") or t.get("entity_ar", "")
+            lines.append(f"  {num} — {name[:60]} [{entity[:40]}]")
 
     return "\n".join(lines)
 
@@ -261,10 +294,10 @@ def format_tender_row(t):
     """Format a single tender as a compact text block."""
     parts = [
         t.get("tender_number", "?"),
-        t.get("tender_name", "?"),
-        t.get("entity", ""),
-        t.get("category_grade", ""),
-        t.get("tender_type", ""),
+        bi(t, "tender_name") or "?",
+        bi(t, "entity"),
+        bi(t, "category_grade"),
+        bi(t, "tender_type"),
     ]
     date_info = ""
     if t.get("sales_end_date"):
@@ -340,13 +373,36 @@ def build_context(tenders, articles):
     # Section 2: Tender statistics
     sections.append("=== TENDER STATISTICS ===\n" + build_tender_summary(tenders))
 
+    # Section 2b: Field definitions
+    sections.append(
+        "=== FIELD DEFINITIONS ===\n"
+        "- Fee: This is the tender DOCUMENT PURCHASE fee (cost to buy the "
+        "tender documents), NOT the project value. A fee of 25-50 OMR is "
+        "standard. Do not interpret this as the project's contract value.\n"
+        "- Guarantee: This is the bank guarantee PERCENTAGE required with the "
+        "bid, not an absolute amount. 1 means 1%.\n"
+        "- Do not comment on fees or guarantee values as indicators of project "
+        "size — they are not meaningful for that purpose."
+    )
+
     # Section 3: SCC-relevant tenders (matching categories/grades)
+    # Check both Arabic and English category fields, plus English keywords
+    EN_CATEGORY_KEYWORDS = [
+        "Construction", "Ports", "Roads", "Bridges", "Dams",
+        "Pipeline", "Electromechanical", "Marine",
+    ]
+    EN_GRADE_KEYWORDS = ["Excellent", "First", "Second"]
+
     relevant = []
     for t in tenders:
-        cg = t.get("category_grade", "")
-        if any(kw in cg for kw in SCC_CATEGORY_KEYWORDS):
-            if any(g in cg for g in SCC_GRADE_KEYWORDS):
-                relevant.append(t)
+        cg_ar = t.get("category_grade_ar", t.get("category_grade", ""))
+        cg_en = t.get("category_grade_en", "")
+        ar_cat_match = any(kw in cg_ar for kw in SCC_CATEGORY_KEYWORDS)
+        en_cat_match = any(kw in cg_en for kw in EN_CATEGORY_KEYWORDS)
+        ar_grade_match = any(g in cg_ar for g in SCC_GRADE_KEYWORDS)
+        en_grade_match = any(g in cg_en for g in EN_GRADE_KEYWORDS)
+        if (ar_cat_match or en_cat_match) and (ar_grade_match or en_grade_match):
+            relevant.append(t)
 
     if relevant:
         lines = [f"=== SCC-RELEVANT TENDERS ({len(relevant)} matching category + grade) ==="]
@@ -465,9 +521,36 @@ def main():
 
     # Extract records
     tenders = extract_tenders(tenders_raw) if tenders_raw else []
-    articles = extract_articles(news_raw) if news_raw else []
+    articles_raw = extract_articles(news_raw) if news_raw else []
+    total_articles = len(articles_raw)
+
+    # Deduplicate articles by title
+    seen_titles = set()
+    articles_dedup = []
+    for a in articles_raw:
+        title = a.get("title", "").strip().lower()
+        if title and title not in seen_titles:
+            seen_titles.add(title)
+            articles_dedup.append(a)
+    dedup_count = len(articles_dedup)
+
+    # Filter for relevance
+    NEWS_KEYWORDS = [
+        "construction", "infrastructure", "tender", "contract", "project",
+        "investment", "industrial", "roads", "bridges", "pipeline", "ministry",
+        "budget", "economic", "zone", "development", "port", "airport",
+        "housing", "railway", "dam", "water", "sewage",
+        "galfar", "strabag", "al tasnim", "l&t", "towell", "hassan allam",
+        "arab contractors", "ozkar", "sarooj", "mtcit", "opaz", "riyada",
+    ]
+    articles = []
+    for a in articles_dedup:
+        text = (a.get("title", "") + " " + a.get("summary", "")).lower()
+        if any(kw in text for kw in NEWS_KEYWORDS):
+            articles.append(a)
+
     print(f"\n  Tenders extracted: {len(tenders)}")
-    print(f"  Articles extracted: {len(articles)}")
+    print(f"  News: {total_articles} total -> {dedup_count} after dedup -> {len(articles)} after relevance filter")
 
     if not tenders and not articles:
         print("\n  ERROR: No data extracted from either file.")
@@ -476,6 +559,22 @@ def main():
     # Build context
     print("\nBuilding context...")
     context = build_context(tenders, articles)
+
+    # Save context for inspection
+    context_path = os.path.join(SCRIPT_DIR, "briefing_context.txt")
+    with open(context_path, "w", encoding="utf-8") as f:
+        f.write(context)
+    print(f"  Saved context to briefing_context.txt")
+    print(f"  Word count: {count_words(context):,}")
+    print(f"  Char count: {len(context):,}")
+
+    # Print first 200 lines
+    print(f"\n{'='*70}")
+    print("CONTEXT PREVIEW (first 200 lines)")
+    print(f"{'='*70}")
+    for i, line in enumerate(context.split("\n")[:200]):
+        print(f"  {line}")
+    print(f"  ... ({len(context.split(chr(10)))} total lines)")
 
     # Call Groq
     briefing = call_groq(context)
