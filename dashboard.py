@@ -465,7 +465,7 @@ def build_html(tenders, articles, briefing_md, tenders_raw, hist_tenders, intel_
     # Competitive intelligence
     major_projects, head_to_head, live_comp, activity_list = build_competitive_intel(intel_data)
 
-    # SVG chart
+    # SVG chart (dark themed)
     if chart_data:
         max_val = max(d["all"] for d in chart_data) or 1
         bar_w = 60
@@ -479,27 +479,26 @@ def build_html(tenders, articles, briefing_md, tenders_raw, hist_tenders, intel_
             y_all = chart_h - 30 - h_all
             y_scc = chart_h - 30 - h_scc
             label = d["m"][5:] + "/" + d["m"][:4]
-            svg_bars += f'<rect x="{x}" y="{y_all}" width="{bar_w//2-2}" height="{h_all}" fill="#E2E8F0" rx="3"/>\n'
-            svg_bars += f'<rect x="{x+bar_w//2}" y="{y_scc}" width="{bar_w//2-2}" height="{h_scc}" fill="#2563EB" rx="3"/>\n'
-            svg_bars += f'<text x="{x+bar_w//2}" y="{chart_h-10}" text-anchor="middle" fill="#64748B" font-size="11">{label}</text>\n'
+            svg_bars += f'<rect x="{x}" y="{y_all}" width="{bar_w//2-2}" height="{h_all}" fill="#334155" rx="3"/>\n'
+            svg_bars += f'<rect x="{x+bar_w//2}" y="{y_scc}" width="{bar_w//2-2}" height="{h_scc}" fill="#3B82F6" rx="3"/>\n'
+            svg_bars += f'<text x="{x+bar_w//2}" y="{chart_h-10}" text-anchor="middle" fill="#94A3B8" font-size="11">{label}</text>\n'
             svg_bars += f'<text x="{x+bar_w//4-1}" y="{y_all-4}" text-anchor="middle" fill="#94A3B8" font-size="10">{d["all"]}</text>\n'
             if d["scc"] > 0:
-                svg_bars += f'<text x="{x+3*bar_w//4-1}" y="{y_scc-4}" text-anchor="middle" fill="#2563EB" font-size="10">{d["scc"]}</text>\n'
+                svg_bars += f'<text x="{x+3*bar_w//4-1}" y="{y_scc-4}" text-anchor="middle" fill="#60A5FA" font-size="10">{d["scc"]}</text>\n'
         trend_svg = f'<svg viewBox="0 0 {chart_w} {chart_h}" style="width:100%;max-height:220px">{svg_bars}</svg>'
-        trend_legend = '<div class="chart-legend"><span class="leg-dot" style="background:#E2E8F0"></span>All Tenders <span class="leg-dot" style="background:#2563EB;margin-left:12px"></span>SCC-Relevant</div>'
+        trend_legend = '<div class="chart-legend"><span class="leg-dot" style="background:#334155"></span>All Tenders <span class="leg-dot" style="background:#3B82F6;margin-left:12px"></span>SCC-Relevant</div>'
     else:
         trend_svg = "<p class='muted'>No historical data available.</p>"
         trend_legend = ""
 
-    # Category bars SVG
+    # Category bars
     cat_max = cat_breakdown[0]["count"] if cat_breakdown else 1
     cat_html = ""
     for c in cat_breakdown[:10]:
         pct_w = max(int(c["count"] / cat_max * 100), 2)
-        color = "#2563EB" if c["scc"] else "#E2E8F0"
-        text_col = "#fff" if c["scc"] else "#64748B"
+        color = "#3B82F6" if c["scc"] else "#334155"
         cat_html += f'''<div class="bar-row"><span class="bar-label">{esc(c["name"][:40])}</span>
-<div class="bar-track"><div class="bar-fill" style="width:{pct_w}%;background:{color}"><span style="color:{text_col}">{c["count"]}</span></div></div>
+<div class="bar-track"><div class="bar-fill" style="width:{pct_w}%;background:{color}"><span>{c["count"]}</span></div></div>
 <span class="bar-pct">{c["pct"]}%</span></div>\n'''
 
     # Entity list
@@ -508,14 +507,17 @@ def build_html(tenders, articles, briefing_md, tenders_raw, hist_tenders, intel_
     for name, count in top_entities:
         pct_w = max(int(count / ent_max * 100), 5)
         ent_html += f'''<div class="bar-row"><span class="bar-label">{esc(name[:40])}</span>
-<div class="bar-track"><div class="bar-fill" style="width:{pct_w}%;background:#2563EB"><span>{count}</span></div></div></div>\n'''
+<div class="bar-track"><div class="bar-fill" style="width:{pct_w}%;background:#3B82F6"><span>{count}</span></div></div></div>\n'''
 
     # --- Competitive Intelligence HTML ---
     ci_html = ""
     if major_projects or head_to_head or live_comp or activity_list:
         def comp_pill(name, role):
             colour = COMP_COLOURS.get(name, "#6B7280")
-            return f'<span class="comp-pill" style="background:{colour}">{esc(name)} · {role}</span>'
+            if role == "BID":
+                return f'<span class="comp-pill" style="background:{colour}">{esc(name)} · BID</span>'
+            else:
+                return f'<span class="comp-pill comp-pill-outline" style="border-color:{colour};color:{colour}">{esc(name)} · DOCS</span>'
 
         def fmt_omr(v):
             if v >= 1_000_000:
@@ -528,13 +530,13 @@ def build_html(tenders, articles, briefing_md, tenders_raw, hist_tenders, intel_
         mp_cards = ""
         for p in major_projects:
             pills = " ".join(comp_pill(c["name"], c["role"]) for c in p["competitors"])
-            highlight = ' style="background:#EFF6FF"' if p["sarooj_present"] else ""
+            highlight = ' style="background:rgba(37,99,235,.08)"' if p["sarooj_present"] else ""
             mp_cards += f'''<div class="proj-card" {highlight}>
 <div class="proj-border" style="background:{p["border_colour"]}"></div>
 <div class="proj-body">
-<h4 class="proj-name">{esc(p["name"][:90])}</h4>
+<div class="proj-head-row"><h4 class="proj-name">{esc(p["name"][:90])}</h4><span class="proj-fee">{p["fee"]:.0f} OMR</span></div>
 <div class="proj-meta"><span>{esc(p["entity"][:60])}</span></div>
-<div class="proj-meta"><span class="proj-tag">Document Fee: {p["fee"]:.0f} OMR</span> <span class="proj-tag">{esc(p["category"][:50])}</span></div>
+<div class="proj-meta"><span class="proj-tag">{esc(p["category"][:50])}</span></div>
 <div class="proj-meta"><strong>{p["num_purchasers"]}</strong> doc purchasers · <strong>{p["num_bidders"]}</strong> bidders</div>
 <div class="proj-pills">{pills if pills else "<span class='muted'>No tracked competitors</span>"}</div>
 </div></div>\n'''
@@ -542,12 +544,17 @@ def build_html(tenders, articles, briefing_md, tenders_raw, hist_tenders, intel_
         # Sub-section 2: Head-to-Head
         h2h_html = ""
         for h in head_to_head:
-            h2h_html += f'<div class="h2h-block"><h4>{esc(h["project"][:80])}</h4><table class="h2h-table"><thead><tr><th>Company</th><th>Bid Value (OMR)</th><th>Difference from SCC</th></tr></thead><tbody>'
+            h2h_html += f'<div class="h2h-block"><h4>{esc(h["project"][:80])}</h4><div class="table-wrap"><table class="h2h-table"><thead><tr><th>Company</th><th>Bid Value (OMR)</th><th>Difference from SCC</th></tr></thead><tbody>'
             for r in h["rows"]:
                 cls = ' class="h2h-scc"' if r["is_scc"] else ""
-                diff_str = "—" if r["is_scc"] else f'{"+" if r["diff"]>=0 else ""}{fmt_omr(r["diff"])} ({"+"+str(r["diff_pct"]) if r["diff_pct"]>=0 else str(r["diff_pct"])}%)'
-                h2h_html += f'<tr{cls}><td>{esc(r["name"])}</td><td>{fmt_omr(r["value"])} OMR</td><td>{diff_str}</td></tr>'
-            h2h_html += '</tbody></table></div>\n'
+                if r["is_scc"]:
+                    diff_str = '<span style="color:#94A3B8">Baseline</span>'
+                elif r["diff_pct"] >= 0:
+                    diff_str = f'<span class="diff-lose">+{fmt_omr(r["diff"])} (+{r["diff_pct"]}%)</span>'
+                else:
+                    diff_str = f'<span class="diff-win">{fmt_omr(r["diff"])} ({r["diff_pct"]}%)</span>'
+                h2h_html += f'<tr{cls}><td>{esc(r["name"])}</td><td class="val-cell">{fmt_omr(r["value"])} OMR</td><td>{diff_str}</td></tr>'
+            h2h_html += '</tbody></table></div></div>\n'
 
         # Sub-section 3: Live Competitive Tenders
         live_html = ""
@@ -561,23 +568,24 @@ def build_html(tenders, articles, briefing_md, tenders_raw, hist_tenders, intel_
                 for c in lc["tracked"]
             )
             status = "Bids received" if lc["has_bids"] else f'Closing: {lc["dates"]}' if lc["dates"] else "Open"
-            live_html += f'''<div class="live-card"><h4>{esc(lc["project"][:80])}</h4>
-<div class="live-meta">{lc["tracked_count"]} of {len(COMPETITORS)+1} tracked competitors active · {lc["total_purchasers"]} total purchasers · {status}</div>
+            live_html += f'''<div class="live-card"><div class="live-head-row"><h4>{esc(lc["project"][:80])}</h4><span class="live-pulse"><span class="pulse-dot"></span>LIVE</span></div>
+<div class="live-meta"><span class="live-stat">{lc["tracked_count"]} of {len(COMPETITORS)+1} tracked competitors active</span> · {lc["total_purchasers"]} total purchasers · {status}</div>
 <div class="proj-pills">{tracked_pills}</div>
 <div class="live-dates">{tracked_dates}</div></div>\n'''
 
         # Sub-section 4: Competitor Activity Summary
-        act_html = '<table class="act-table"><thead><tr><th>Competitor</th><th>Docs Purchased</th><th>Tenders Bid</th><th>Conversion</th><th>Largest Bid</th></tr></thead><tbody>'
+        act_html = '<div class="table-wrap"><table class="act-table"><thead><tr><th>Competitor</th><th>Docs Purchased</th><th>Tenders Bid</th><th>Conversion</th><th>Largest Bid</th></tr></thead><tbody>'
         for a in activity_list:
             cls = ' class="h2h-scc"' if a["name"] == "Sarooj" else ""
-            max_str = f'{fmt_omr(a["max_bid"])} OMR' if a["max_bid"] > 0 else "—"
-            act_html += f'<tr{cls}><td><span class="comp-dot" style="background:{COMP_COLOURS.get(a["name"], "#6B7280")}"></span>{esc(a["name"])}</td><td>{a["docs"]}</td><td>{a["bids"]}</td><td>{a["conv"]}%</td><td>{max_str}</td></tr>'
-        act_html += '</tbody></table>'
+            max_str = f'{fmt_omr(a["max_bid"])} OMR' if a["max_bid"] > 0 else '<span style="color:#64748B">--</span>'
+            conv_color = "#10B981" if a["conv"] >= 50 else "#F59E0B" if a["conv"] >= 25 else "#64748B"
+            act_html += f'<tr{cls}><td><span class="comp-dot" style="background:{COMP_COLOURS.get(a["name"], "#6B7280")}"></span>{esc(a["name"])}</td><td>{a["docs"]}</td><td>{a["bids"]}</td><td><span style="color:{conv_color};font-weight:600">{a["conv"]}%</span></td><td class="val-cell">{max_str}</td></tr>'
+        act_html += '</tbody></table></div>'
 
         ci_html = f'''
 <!-- Competitive Intelligence -->
 <div class="card ci-section section-gap">
-  <div class="card-head"><h3>Competitive Intelligence</h3><span class="badge" style="background:#FEE2E2;color:#DC2626">LIVE</span></div>
+  <div class="card-head"><h3>Competitive Intelligence</h3><span class="badge-live"><span class="pulse-dot"></span>LIVE</span></div>
 
   <div class="ci-sub"><h4 class="ci-sub-head">Major Project Tracker</h4>
   <div class="proj-grid">{mp_cards}</div></div>
@@ -634,106 +642,119 @@ def build_html(tenders, articles, briefing_md, tenders_raw, hist_tenders, intel_
     return f'''<!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SCC Tendering Intelligence</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>SCC Tender Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{{--navy:#0F1B2D;--blue:#2563EB;--bg:#F8FAFC;--surface:#FFF;--text:#1E293B;--muted:#64748B;--green:#10B981;--amber:#F59E0B;--border:#E2E8F0;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);--shadow-lg:0 4px 12px rgba(0,0,0,.08);--r:10px}}
+:root{{--bg:#0F172A;--surface:#1E293B;--surface-hover:#253348;--header:#020617;--text:#F8FAFC;--body:#E2E8F0;--secondary:#CBD5E1;--muted:#94A3B8;--dim:#64748B;--border:#334155;--blue:#3B82F6;--green:#10B981;--amber:#F59E0B;--red:#EF4444;--cyan:#06B6D4;--purple:#8B5CF6;--shadow:0 2px 8px rgba(0,0,0,.3),0 1px 3px rgba(0,0,0,.2);--shadow-lg:0 8px 24px rgba(0,0,0,.4);--r:12px}}
 *{{margin:0;padding:0;box-sizing:border-box}}
-body{{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:14px}}
-a{{color:var(--blue);text-decoration:none}}a:hover{{text-decoration:underline}}
+html{{scroll-behavior:smooth}}
+body{{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--body);line-height:1.6;font-size:14px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}}
+a{{color:var(--blue);text-decoration:none}}a:hover{{text-decoration:underline;color:#60A5FA}}
 
-/* Nav */
-.nav{{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)}}
-.nav-left{{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}}
-.nav-left strong{{color:var(--navy);font-size:14px}}
-.nav-center{{font-size:16px;font-weight:700;color:var(--navy);letter-spacing:-.3px}}
-.nav-right{{font-size:12px;color:var(--muted)}}
+/* Header */
+.nav{{position:sticky;top:0;z-index:100;background:var(--header);border-bottom:1px solid var(--border);padding:14px 32px;display:flex;justify-content:space-between;align-items:center}}
+.nav-brand{{display:flex;align-items:center;gap:10px}}
+.nav-brand svg{{width:28px;height:28px}}
+.nav-title{{font-size:18px;font-weight:700;color:var(--text);letter-spacing:-.3px}}
+.nav-sub{{font-size:11px;color:var(--dim);margin-left:4px;font-weight:400}}
+.nav-right{{font-size:12px;color:var(--dim)}}
 
-.container{{max-width:1320px;margin:0 auto;padding:20px 28px}}
+.container{{max-width:1400px;margin:0 auto;padding:24px 32px}}
+@media(max-width:768px){{.container{{padding:16px}}}}
 
 /* Metric cards */
 .metrics{{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}}
-.metric{{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;transition:box-shadow .15s}}
-.metric:hover{{box-shadow:var(--shadow-lg)}}
-.metric-val{{font-size:36px;font-weight:700;color:var(--navy);line-height:1.1}}
-.metric-label{{font-size:12px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.4px}}
-.metric-sub{{font-size:12px;color:var(--muted);margin-top:2px}}
+.metric{{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;transition:all .2s ease;position:relative;overflow:hidden}}
+.metric::before{{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}}
+.metric:nth-child(1)::before{{background:var(--blue)}}
+.metric:nth-child(2)::before{{background:var(--green)}}
+.metric:nth-child(3)::before{{background:var(--amber)}}
+.metric:nth-child(4)::before{{background:var(--purple)}}
+.metric:hover{{background:var(--surface-hover);box-shadow:var(--shadow-lg)}}
+.metric-val{{font-size:2.5rem;font-weight:800;color:var(--text);line-height:1.1;font-feature-settings:'tnum'}}
+.metric-label{{font-size:11px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}}
+.metric-sub{{font-size:12px;color:var(--dim);margin-top:2px}}
 .trend-up{{color:var(--green);font-weight:600;font-size:13px;margin-left:6px}}
-.trend-down{{color:#EF4444;font-weight:600;font-size:13px;margin-left:6px}}
-.trend-flat{{color:var(--muted);font-size:13px;margin-left:6px}}
+.trend-down{{color:var(--red);font-weight:600;font-size:13px;margin-left:6px}}
+.trend-flat{{color:var(--dim);font-size:13px;margin-left:6px}}
+@media(max-width:900px){{.metrics{{grid-template-columns:repeat(2,1fr)}}}}
+@media(max-width:500px){{.metrics{{grid-template-columns:1fr}}}}
 
 /* Two-col */
 .row2{{display:grid;grid-template-columns:3fr 2fr;gap:20px;margin-bottom:24px}}
 .row2b{{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}}
-@media(max-width:900px){{.row2,.row2b,.metrics{{grid-template-columns:1fr}}}}
+@media(max-width:900px){{.row2,.row2b{{grid-template-columns:1fr}}}}
 
 /* Card */
-.card{{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);transition:box-shadow .15s}}
+.card{{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);transition:all .2s ease}}
 .card:hover{{box-shadow:var(--shadow-lg)}}
 .card-head{{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}}
-.card h3{{font-size:18px;font-weight:600;color:var(--navy)}}
-.badge{{font-size:10px;font-weight:600;background:#DBEAFE;color:var(--blue);padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px}}
-.badge-count{{font-size:11px;font-weight:600;background:var(--navy);color:#fff;padding:2px 10px;border-radius:20px}}
+.card h3{{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}}
+.badge{{font-size:10px;font-weight:600;background:rgba(6,182,212,.15);color:var(--cyan);padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.04em}}
+.badge-count{{font-size:11px;font-weight:700;background:var(--blue);color:#fff;padding:3px 12px;border-radius:20px}}
+.badge-live{{font-size:10px;font-weight:600;background:rgba(239,68,68,.15);color:var(--red);padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.04em;display:inline-flex;align-items:center;gap:6px}}
 
 /* Briefing */
-.briefing{{border-left:4px solid var(--blue)}}
-.briefing h2{{font-size:15px;color:var(--navy);margin:12px 0 4px}}
+.briefing{{border-top:3px solid;border-image:linear-gradient(90deg,var(--blue),var(--purple)) 1}}
+.briefing h2{{font-size:15px;color:var(--text);margin:14px 0 4px}}
 .briefing h3{{font-size:14px;color:var(--blue);margin:10px 0 4px}}
-.briefing p{{margin:5px 0;font-size:13.5px;line-height:1.7}}
-.briefing ul,.briefing ol{{margin:5px 0 5px 20px;font-size:13.5px}}
+.briefing p{{margin:5px 0;font-size:14px;line-height:1.7;color:var(--secondary)}}
+.briefing ul,.briefing ol{{margin:5px 0 5px 20px;font-size:14px;color:var(--secondary)}}
 .briefing li{{margin:3px 0}}
-.briefing strong{{color:var(--navy)}}
-.gen-date{{font-size:11px;color:var(--muted);margin-top:12px}}
+.briefing strong{{color:var(--text)}}
+.gen-date{{font-size:11px;color:var(--dim);margin-top:12px}}
 
 /* Chart */
 .chart-legend{{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);margin-top:8px}}
 .leg-dot{{display:inline-block;width:10px;height:10px;border-radius:2px}}
 
 /* Bar rows */
-.bar-row{{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:12px}}
+.bar-row{{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:12px}}
 .bar-label{{min-width:140px;max-width:180px;color:var(--muted);text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
-.bar-track{{flex:1;background:#F1F5F9;border-radius:4px;height:22px;overflow:hidden}}
+.bar-track{{flex:1;background:rgba(51,65,85,.5);border-radius:4px;height:22px;overflow:hidden}}
 .bar-fill{{height:100%;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding:0 8px;font-size:10px;font-weight:600;color:#fff;min-width:20px;transition:width .3s}}
 .bar-pct{{font-size:11px;color:var(--muted);min-width:36px;text-align:right}}
 
 /* Table */
 .filter-bar{{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px;flex-wrap:wrap}}
 .search-wrap{{position:relative}}
-.search-wrap svg{{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted)}}
-.filter-input{{padding:8px 12px 8px 34px;border:1px solid var(--border);border-radius:8px;font-size:13px;width:300px;font-family:inherit;transition:border .15s,box-shadow .15s}}
-.filter-input:focus{{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12)}}
+.search-wrap svg{{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--dim)}}
+.filter-input{{padding:8px 12px 8px 34px;border:1px solid var(--border);border-radius:8px;font-size:13px;width:300px;font-family:inherit;background:var(--bg);color:var(--body);transition:border .15s,box-shadow .15s}}
+.filter-input:focus{{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,.2)}}
+.filter-input::placeholder{{color:var(--dim)}}
 .pill-toggle{{display:inline-flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-size:12px;font-weight:600}}
-.pill-toggle button{{border:none;background:none;padding:5px 14px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;color:var(--muted);transition:all .15s}}
-.pill-toggle button.active{{background:var(--navy);color:#fff}}
+.pill-toggle button{{border:none;background:none;padding:5px 14px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;color:var(--dim);transition:all .15s}}
+.pill-toggle button.active{{background:var(--blue);color:#fff}}
 .count-label{{font-size:12px;color:var(--muted)}}
 
 .table-wrap{{overflow-x:auto;border-radius:var(--r);border:1px solid var(--border)}}
 table{{width:100%;border-collapse:collapse;font-size:13px}}
-th{{background:var(--navy);color:#fff;padding:10px 12px;text-align:left;font-weight:500;white-space:nowrap;cursor:pointer;user-select:none;position:sticky;top:0}}
-th:hover{{background:#1a2d47}}
-th .sort-arrow{{font-size:10px;margin-left:4px;opacity:.5}}
-td{{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}}
-tr:nth-child(even) td{{background:#FAFBFC}}
-tr:hover td{{background:#F0F7FF}}
-tr.rt td{{background:#FFFBEB;border-left:3px solid var(--amber)}}
+th{{background:var(--bg);color:var(--muted);padding:10px 12px;text-align:left;font-weight:600;white-space:nowrap;cursor:pointer;user-select:none;position:sticky;top:0;font-size:11px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}}
+th:hover{{color:var(--text)}}
+th .sort-arrow{{font-size:10px;margin-left:4px;opacity:.4}}
+td{{padding:9px 12px;border-bottom:1px solid rgba(51,65,85,.5);vertical-align:top;color:var(--body)}}
+tr:nth-child(even) td{{background:rgba(15,23,42,.3)}}
+tr:hover td{{background:rgba(59,130,246,.08)}}
+tr.rt td{{background:rgba(245,158,11,.08);border-left:3px solid var(--amber)}}
 .td-name{{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
-.date-urgent{{color:#EF4444;font-weight:600}}
+.date-urgent{{color:var(--red);font-weight:600}}
+.val-cell{{font-feature-settings:'tnum';text-align:right;font-weight:500}}
 .pag{{display:flex;justify-content:center;gap:8px;padding:12px;font-size:13px}}
-.pag button{{border:1px solid var(--border);background:var(--surface);border-radius:6px;padding:5px 14px;cursor:pointer;font-family:inherit}}
-.pag button:hover{{background:var(--bg)}}
-.pag button.active{{background:var(--navy);color:#fff;border-color:var(--navy)}}
+.pag button{{border:1px solid var(--border);background:var(--surface);color:var(--muted);border-radius:6px;padding:5px 14px;cursor:pointer;font-family:inherit;transition:all .15s}}
+.pag button:hover{{background:var(--surface-hover);color:var(--text)}}
+.pag button.active{{background:var(--blue);color:#fff;border-color:var(--blue)}}
 
 /* Tabs */
 .tabs{{display:flex;gap:4px;margin-bottom:12px;flex-wrap:wrap}}
-.tab-btn{{padding:6px 16px;border:1px solid var(--border);border-radius:8px 8px 0 0;background:var(--surface);cursor:pointer;font-size:12px;font-weight:500;color:var(--muted);font-family:inherit;transition:all .15s}}
-.tab-btn:hover{{background:#F0F7FF}}
-.tab-btn.active{{background:var(--navy);color:#fff;border-color:var(--navy)}}
+.tab-btn{{padding:6px 16px;border:1px solid var(--border);border-radius:8px 8px 0 0;background:var(--surface);cursor:pointer;font-size:12px;font-weight:500;color:var(--dim);font-family:inherit;transition:all .15s}}
+.tab-btn:hover{{background:var(--surface-hover);color:var(--muted)}}
+.tab-btn.active{{background:var(--blue);color:#fff;border-color:var(--blue)}}
 
 /* Collapsible */
-.coll-head{{display:flex;align-items:center;gap:10px;cursor:pointer;padding:16px 24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);user-select:none;margin-bottom:16px;transition:box-shadow .15s}}
-.coll-head:hover{{box-shadow:var(--shadow-lg)}}
-.coll-head h3{{font-size:16px;font-weight:600;color:var(--navy)}}
-.coll-arrow{{font-size:11px;color:var(--muted);transition:transform .2s}}
+.coll-head{{display:flex;align-items:center;gap:10px;cursor:pointer;padding:16px 24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);user-select:none;margin-bottom:16px;transition:all .2s ease}}
+.coll-head:hover{{background:var(--surface-hover);box-shadow:var(--shadow-lg)}}
+.coll-head h3{{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}}
+.coll-arrow{{font-size:11px;color:var(--dim);transition:transform .2s}}
 .coll-head.open .coll-arrow{{transform:rotate(90deg)}}
 .coll-body{{max-height:0;overflow:hidden;transition:max-height .3s ease}}
 .coll-body.open{{max-height:none}}
@@ -741,53 +762,68 @@ tr.rt td{{background:#FFFBEB;border-left:3px solid var(--amber)}}
 
 /* News */
 .news-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}}
-.news-card{{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;transition:box-shadow .15s}}
-.news-card:hover{{box-shadow:var(--shadow-lg)}}
+.news-card{{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;transition:all .2s ease}}
+.news-card:hover{{background:var(--surface-hover);box-shadow:var(--shadow-lg);transform:translateY(-1px)}}
 .news-head{{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}}
-.src-tag{{font-size:9px;font-weight:600;color:#fff;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.3px}}
-.news-date{{font-size:10px;color:var(--muted)}}
+.src-tag{{font-size:9px;font-weight:600;color:#fff;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.03em}}
+.news-date{{font-size:10px;color:var(--dim)}}
 .news-title{{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;line-height:1.4}}
-.news-sum{{font-size:12px;color:var(--muted);flex:1;margin-bottom:6px;line-height:1.5}}
-.news-link{{font-size:11px;font-weight:600}}
+.news-sum{{font-size:12px;color:var(--dim);flex:1;margin-bottom:6px;line-height:1.5}}
+.news-link{{font-size:11px;font-weight:600;color:var(--blue)}}
 
-.footer{{border-top:1px solid var(--border);padding:24px 32px;text-align:center;font-size:11px;color:var(--muted);margin-top:32px}}
-.footer strong{{color:var(--navy)}}
+.footer{{border-top:1px solid var(--border);padding:24px 32px;text-align:center;font-size:11px;color:var(--dim);margin-top:32px}}
+.footer strong{{color:var(--muted)}}
 .section-gap{{margin-bottom:24px}}
 
 /* Competitive Intelligence */
-.ci-section{{border-top:3px solid var(--navy)}}
+.ci-section{{border-top:3px solid;border-image:linear-gradient(90deg,var(--red),var(--amber),var(--green)) 1}}
 .ci-sub{{margin-bottom:28px}}
-.ci-sub-head{{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border)}}
-.comp-pill{{display:inline-block;font-size:10px;font-weight:600;color:#fff;padding:2px 8px;border-radius:10px;margin:2px 3px 2px 0;white-space:nowrap}}
-.comp-dot{{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle}}
-.proj-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px}}
-.proj-card{{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);display:flex;overflow:hidden;transition:box-shadow .15s}}
-.proj-card:hover{{box-shadow:var(--shadow-lg)}}
-.proj-border{{width:5px;flex-shrink:0}}
+.ci-sub-head{{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}}
+.comp-pill{{display:inline-block;font-size:10px;font-weight:600;color:#fff;padding:2px 8px;border-radius:10px;margin:2px 3px 2px 0;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.3)}}
+.comp-pill-outline{{background:transparent !important;border:1.5px solid;text-shadow:none}}
+.comp-dot{{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}}
+.proj-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px}}
+@media(max-width:768px){{.proj-grid{{grid-template-columns:1fr}}}}
+.proj-card{{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);display:flex;overflow:hidden;transition:all .2s ease}}
+.proj-card:hover{{transform:translateY(-2px);box-shadow:var(--shadow-lg);background:var(--surface-hover)}}
+.proj-border{{width:4px;flex-shrink:0}}
 .proj-body{{padding:14px 16px;flex:1}}
-.proj-name{{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4}}
-.proj-meta{{font-size:12px;color:var(--muted);margin-bottom:4px}}
-.proj-meta strong{{color:var(--text)}}
-.proj-tag{{background:#F1F5F9;padding:1px 6px;border-radius:4px;font-size:11px;margin-right:4px}}
-.proj-pills{{margin-top:6px}}
+.proj-head-row{{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:4px}}
+.proj-name{{font-size:13px;font-weight:600;color:var(--text);line-height:1.4;flex:1}}
+.proj-fee{{font-size:13px;font-weight:700;color:var(--amber);white-space:nowrap}}
+.proj-meta{{font-size:12px;color:var(--dim);margin-bottom:4px}}
+.proj-meta strong{{color:var(--body)}}
+.proj-tag{{background:rgba(51,65,85,.6);padding:1px 6px;border-radius:4px;font-size:11px;margin-right:4px;color:var(--muted)}}
+.proj-pills{{margin-top:8px}}
 .h2h-block{{margin-bottom:18px}}
-.h2h-block h4{{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}}
+.h2h-block h4{{font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px}}
 .h2h-table,.act-table{{width:100%;border-collapse:collapse;font-size:13px}}
-.h2h-table th,.act-table th{{background:var(--navy);color:#fff;padding:8px 12px;text-align:left;font-weight:500}}
-.h2h-table td,.act-table td{{padding:8px 12px;border-bottom:1px solid var(--border)}}
-.h2h-scc td{{background:#EFF6FF;font-weight:600}}
-.live-card{{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:12px}}
-.live-card h4{{font-size:13px;font-weight:600;margin-bottom:4px}}
-.live-meta{{font-size:12px;color:var(--muted);margin-bottom:6px}}
-.live-dates{{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:6px;font-size:11px;color:var(--muted)}}
+.h2h-table td,.act-table td{{padding:10px 14px;border-bottom:1px solid rgba(51,65,85,.5);color:var(--body)}}
+.h2h-scc td{{background:rgba(59,130,246,.1);font-weight:600;color:var(--text)}}
+.diff-win{{color:var(--green);font-weight:600}}
+.diff-lose{{color:var(--red);font-weight:500}}
+.live-card{{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:12px;transition:all .2s ease}}
+.live-card:hover{{background:var(--surface-hover);box-shadow:var(--shadow-lg)}}
+.live-head-row{{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}}
+.live-card h4{{font-size:13px;font-weight:600;color:var(--text)}}
+.live-meta{{font-size:12px;color:var(--dim);margin-bottom:8px}}
+.live-stat{{color:var(--amber);font-weight:600}}
+.live-dates{{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:8px;font-size:11px;color:var(--muted)}}
 .live-date{{display:flex;align-items:center;gap:4px}}
-.muted{{color:var(--muted);font-style:italic}}
+.live-pulse{{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.05em}}
+.muted{{color:var(--dim);font-style:italic}}
+
+/* Pulse animation */
+@keyframes pulse{{0%,100%{{opacity:1}}50%{{opacity:.3}}}}
+.pulse-dot{{width:7px;height:7px;border-radius:50%;background:var(--red);display:inline-block;animation:pulse 1.5s ease-in-out infinite}}
 </style></head>
 <body>
 
 <div class="nav">
-  <div class="nav-left"><strong>Zavia-ai</strong> · Market Intelligence</div>
-  <div class="nav-center">SCC Tendering Intelligence</div>
+  <div class="nav-brand">
+    <svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#3B82F6"/><path d="M7 14h4l3-6 3 10 3-4h4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="nav-title">SCC Tender Intelligence</span>
+  </div>
   <div class="nav-right">Last updated: {now_str}</div>
 </div>
 
@@ -804,7 +840,7 @@ tr.rt td{{background:#FFFBEB;border-left:3px solid var(--amber)}}
 <!-- Briefing + Trend -->
 <div class="row2 section-gap">
   <div class="card briefing">
-    <div class="card-head"><h3>Weekly Executive Briefing</h3><span class="badge">AI Generated</span></div>
+    <div class="card-head"><h3>AI Executive Briefing</h3><span class="badge">AI Generated</span></div>
     {briefing_html}
     <div class="gen-date">Generated {today_str}</div>
   </div>
