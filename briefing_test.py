@@ -87,10 +87,14 @@ SYSTEM_PROMPT = (
     "pressure, contractor supply issues? Only mention specific re-tenders "
     "if they are in SCC's core categories.\n\n"
     "COMPETITIVE & STRATEGIC SIGNALS (1 paragraph):\n"
-    "Any news about tracked competitors (Galfar, Strabag, Al Tasnim, L&T, "
-    "Towell, Hassan Allam, Arab Contractors, Ozkar)? Any government policy, "
-    "investment, or infrastructure announcements that signal future spending "
-    "in SCC's categories? Connect the dots to SCC's business specifically. "
+    "Use the COMPETITIVE INTELLIGENCE data. Reference SCC's actual bids and "
+    "head-to-head positioning versus competitors. Mention specific bid values "
+    "and percentage differences. Highlight multi-competitor tenders like "
+    "Sultan Haitham City where many tracked firms are active. Note Galfar's "
+    "large bids and what they signal about market positioning. "
+    "Any government policy, investment, or infrastructure announcements that "
+    "signal future spending in SCC's categories? Connect the dots to SCC's "
+    "business specifically. "
     "If recommending action, be concrete — 'watch for X' or 'prepare for Y' "
     "not 'may present opportunities.'\n\n"
     "FORMAT RULES:\n"
@@ -487,7 +491,105 @@ def build_historical_trends(hist_tenders):
     return "\n".join(lines)
 
 
-def build_context(tenders, articles, hist_tenders=None):
+def build_competitive_intel_context(intel_data):
+    """Build competitive intelligence context from major_project_intelligence.json."""
+    if not intel_data:
+        return ""
+
+    TRACKED_ALIASES = {
+        "SAROOJ CONSTRUCTION COMPANY": "Sarooj",
+        "Sarooj Construction Company": "Sarooj",
+        "GALFAR ENGINEERING AND CONTRACTING": "Galfar",
+        "STRABAG OMAN": "Strabag",
+        "AL TASNIM ENTERPRISES": "Al Tasnim",
+        "LARSEN AND TOUBRO (OMAN)": "L&T",
+        "TOWELL CONSTRUCTION AND CO LLC": "Towell",
+        "TOWELL INFRASTRUCTURE PROJECTS CO": "Towell",
+        "HASSAN ALLAM CONSTRUCTION": "Hassan Allam",
+        "Hassan Allam Construction": "Hassan Allam",
+        "HASSAN ALLAM CONTRACTING AND CONSTRUCTION": "Hassan Allam",
+        "THE ARAB CONTRACTORS OMAN LIMITED": "Arab Contractors",
+        "The Arab Contractors Oman Limited": "Arab Contractors",
+    }
+
+    def resolve(name):
+        if name in TRACKED_ALIASES:
+            return TRACKED_ALIASES[name]
+        low = name.lower()
+        for comp in SCC_COMPETITORS:
+            if comp.lower() in low:
+                return comp
+        return None
+
+    tenders = intel_data.get("tenders", [])
+    lines = ["=== COMPETITIVE INTELLIGENCE ==="]
+
+    # Find Sarooj's bids and head-to-head
+    for t in tenders:
+        bidders = t.get("bidders", [])
+        nit = t.get("nit", {})
+        sarooj_val = None
+        comp_vals = []
+        for b in bidders:
+            if b.get("offer_type") != "Main":
+                continue
+            rn = resolve(b.get("company", ""))
+            val_str = b.get("quoted_value", "")
+            try:
+                val = float(val_str) if val_str else 0
+            except (ValueError, TypeError):
+                val = 0
+            if rn == "Sarooj" and val > 0:
+                sarooj_val = val
+            elif rn and rn != "Sarooj" and val > 0:
+                comp_vals.append((rn, val))
+
+        if sarooj_val:
+            title = nit.get("title", "") or t.get("name", "")
+            lines.append(f"\nSCC BID: {title}")
+            lines.append(f"  Sarooj bid: OMR {sarooj_val:,.3f}")
+            for cn, cv in sorted(comp_vals, key=lambda x: x[1]):
+                diff_pct = round((cv - sarooj_val) / sarooj_val * 100, 1)
+                lines.append(f"  {cn}: OMR {cv:,.3f} ({'+' if diff_pct >= 0 else ''}{diff_pct}% vs SCC)")
+
+    # Find tenders with many tracked competitors (like Sultan Haitham City)
+    lines.append("\nMULTI-COMPETITOR TENDERS:")
+    for t in tenders:
+        purchasers = t.get("purchasers", [])
+        nit = t.get("nit", {})
+        tracked = set()
+        for p in purchasers:
+            rn = resolve(p.get("company", ""))
+            if rn:
+                tracked.add(rn)
+        if len(tracked) >= 3:
+            title = nit.get("title", "") or t.get("name", "")
+            lines.append(f"  {title}: {len(tracked)} tracked competitors ({', '.join(sorted(tracked))}), {len(purchasers)} total purchasers")
+
+    # Largest competitor bids
+    lines.append("\nLARGEST COMPETITOR BIDS:")
+    big_bids = []
+    for t in tenders:
+        for b in t.get("bidders", []):
+            if b.get("offer_type") != "Main":
+                continue
+            rn = resolve(b.get("company", ""))
+            val_str = b.get("quoted_value", "")
+            try:
+                val = float(val_str) if val_str else 0
+            except (ValueError, TypeError):
+                val = 0
+            if rn and val > 5_000_000:
+                nit = t.get("nit", {})
+                big_bids.append((rn, val, nit.get("title", "") or t.get("name", "")))
+    big_bids.sort(key=lambda x: -x[1])
+    for cn, cv, title in big_bids[:8]:
+        lines.append(f"  {cn}: OMR {cv:,.3f} on {title[:60]}")
+
+    return "\n".join(lines)
+
+
+def build_context(tenders, articles, hist_tenders=None, intel_data=None):
     """Build the combined context string for the LLM, respecting the word budget."""
     sections = []
 
@@ -507,7 +609,13 @@ def build_context(tenders, articles, hist_tenders=None):
     if hist_tenders:
         sections.append("=== HISTORICAL TRENDS ===\n" + build_historical_trends(hist_tenders))
 
-    # Section 2c: Field definitions
+    # Section 2c: Competitive intelligence
+    if intel_data:
+        ci_ctx = build_competitive_intel_context(intel_data)
+        if ci_ctx:
+            sections.append(ci_ctx)
+
+    # Section 2d: Field definitions
     sections.append(
         "=== FIELD DEFINITIONS ===\n"
         "- Fee: Tender DOCUMENT PURCHASE fee, NOT project value. 25-50 OMR is standard.\n"
@@ -637,6 +745,7 @@ def main():
     tenders_raw = load_json("tenders.json")
     news_raw = load_json("news.json")
     hist_raw = load_json("historical_tenders.json")
+    intel_raw = load_json("major_project_intelligence.json")
 
     if tenders_raw is None and news_raw is None:
         print("\n  ERROR: Neither tenders.json nor news.json found. Nothing to brief on.")
@@ -683,7 +792,7 @@ def main():
 
     # Build context
     print("\nBuilding context...")
-    context = build_context(tenders, articles, hist_tenders=hist_tenders)
+    context = build_context(tenders, articles, hist_tenders=hist_tenders, intel_data=intel_raw)
 
     # Save context for inspection
     context_path = os.path.join(SCRIPT_DIR, "briefing_context.txt")

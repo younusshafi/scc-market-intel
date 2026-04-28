@@ -1,7 +1,8 @@
 """
 SCC Market Intelligence Dashboard — premium product-grade interface.
 
-Reads: tenders.json, historical_tenders.json, news.json, briefing_output.md
+Reads: tenders.json, historical_tenders.json, news.json, briefing_output.md,
+       major_project_intelligence.json
 Outputs: single self-contained HTML file with inline CSS/JS/SVG.
 """
 
@@ -33,6 +34,32 @@ NEWS_KW = ["construction", "infrastructure", "tender", "contract", "project",
 COMPETITORS = ["Galfar", "Strabag", "Al Tasnim", "L&T", "Towell",
                "Hassan Allam", "Arab Contractors", "Ozkar"]
 PAGINATION_PW = ["الأولى", "السابقة", "التالية", "الأخيرة", "Previous", "Next", "Last"]
+
+COMP_COLOURS = {
+    "Sarooj": "#2563EB", "SCC": "#2563EB",
+    "Galfar": "#DC2626", "Strabag": "#EA580C",
+    "Al Tasnim": "#16A34A", "L&T": "#7C3AED",
+    "Towell": "#0891B2", "Hassan Allam": "#CA8A04",
+    "Arab Contractors": "#BE185D", "Ozkar": "#6B7280",
+}
+
+TRACKED_ALIASES = {
+    "SAROOJ CONSTRUCTION COMPANY": "Sarooj",
+    "Sarooj Construction Company": "Sarooj",
+    "GALFAR ENGINEERING AND CONTRACTING": "Galfar",
+    "STRABAG OMAN": "Strabag",
+    "AL TASNIM ENTERPRISES": "Al Tasnim",
+    "LARSEN AND TOUBRO (OMAN)": "L&T",
+    "LARSEN AND TOUBRO": "L&T",
+    "TOWELL CONSTRUCTION AND CO LLC": "Towell",
+    "TOWELL INFRASTRUCTURE PROJECTS CO": "Towell",
+    "HASSAN ALLAM CONSTRUCTION": "Hassan Allam",
+    "Hassan Allam Construction": "Hassan Allam",
+    "HASSAN ALLAM CONTRACTING AND CONSTRUCTION": "Hassan Allam",
+    "THE ARAB CONTRACTORS OMAN LIMITED": "Arab Contractors",
+    "The Arab Contractors Oman Limited": "Arab Contractors",
+    "OZKAR": "Ozkar",
+}
 
 SOURCE_COLOURS = {
     "Times of Oman": "#2563EB",
@@ -165,6 +192,197 @@ def _inl(t):
     return t
 
 
+def resolve_competitor(company_name):
+    """Map a company name to a tracked competitor short name, or None."""
+    if company_name in TRACKED_ALIASES:
+        return TRACKED_ALIASES[company_name]
+    low = company_name.lower()
+    for alias, short in TRACKED_ALIASES.items():
+        if alias.lower() in low or low in alias.lower():
+            return short
+    for comp in ["Sarooj", "Galfar", "Strabag", "Al Tasnim", "L&T", "Towell",
+                 "Hassan Allam", "Arab Contractors", "Ozkar"]:
+        if comp.lower() in low:
+            return comp
+    return None
+
+
+def build_competitive_intel(intel_data):
+    """Process major_project_intelligence.json into dashboard-ready structures."""
+    if not intel_data:
+        return [], [], [], []
+
+    tenders = intel_data.get("tenders", [])
+
+    # --- Major Project Cards (fee >= 200) ---
+    major_projects = []
+    for t in tenders:
+        fee = t.get("fee", 0) or 0
+        if fee < 200:
+            continue
+
+        bidders = t.get("bidders", [])
+        purchasers = t.get("purchasers", [])
+        nit = t.get("nit", {})
+
+        # Map competitors
+        comp_bids = {}  # short_name -> {value, status}
+        comp_docs = {}  # short_name -> purchase_date
+        for b in bidders:
+            if b.get("offer_type") != "Main":
+                continue
+            name = resolve_competitor(b.get("company", ""))
+            if name:
+                val = b.get("quoted_value", "")
+                try:
+                    fval = float(val) if val else 0
+                except (ValueError, TypeError):
+                    fval = 0
+                comp_bids[name] = {"value": fval, "status": b.get("status", "")}
+        for p in purchasers:
+            name = resolve_competitor(p.get("company", ""))
+            if name:
+                comp_docs[name] = p.get("purchase_date", "")
+
+        # Merge into competitor presence list
+        comp_presence = []
+        all_comp_names = set(list(comp_bids.keys()) + list(comp_docs.keys()))
+        for c in all_comp_names:
+            role = "BID" if c in comp_bids else "DOCS"
+            comp_presence.append({"name": c, "role": role,
+                                  "value": comp_bids.get(c, {}).get("value", 0)})
+
+        sarooj_present = "Sarooj" in all_comp_names
+        num_bidders = len([b for b in bidders if b.get("offer_type") == "Main"])
+        num_purchasers = len(purchasers)
+
+        # Competition intensity
+        if num_bidders >= 10:
+            border_colour = "#EF4444"  # red — highly competitive
+        elif num_bidders >= 5:
+            border_colour = "#F59E0B"  # amber
+        else:
+            border_colour = "#10B981"  # green
+
+        project_name = nit.get("title", "") or t.get("name", "")
+        major_projects.append({
+            "name": project_name,
+            "entity": t.get("entity", ""),
+            "fee": fee,
+            "category": t.get("category", ""),
+            "tender_number": t.get("tender_number_en") or t.get("tender_number", ""),
+            "num_bidders": num_bidders,
+            "num_purchasers": num_purchasers,
+            "competitors": comp_presence,
+            "sarooj_present": sarooj_present,
+            "border_colour": border_colour,
+            "view": t.get("view", ""),
+        })
+
+    major_projects.sort(key=lambda x: -x["fee"])
+
+    # --- Head-to-Head: tenders where Sarooj bid AND competitors also bid ---
+    head_to_head = []
+    for t in tenders:
+        bidders = t.get("bidders", [])
+        nit = t.get("nit", {})
+        sarooj_val = None
+        comp_vals = []
+        for b in bidders:
+            if b.get("offer_type") != "Main":
+                continue
+            name = resolve_competitor(b.get("company", ""))
+            val_str = b.get("quoted_value", "")
+            try:
+                val = float(val_str) if val_str else 0
+            except (ValueError, TypeError):
+                val = 0
+            if name == "Sarooj" and val > 0:
+                sarooj_val = val
+            elif name and name != "Sarooj" and val > 0:
+                comp_vals.append({"name": name, "value": val})
+        if sarooj_val and comp_vals:
+            rows = [{"name": "Sarooj (SCC)", "value": sarooj_val, "diff": 0, "diff_pct": 0, "is_scc": True}]
+            for c in sorted(comp_vals, key=lambda x: x["value"]):
+                diff = c["value"] - sarooj_val
+                diff_pct = round(diff / sarooj_val * 100, 1)
+                rows.append({"name": c["name"], "value": c["value"],
+                             "diff": diff, "diff_pct": diff_pct, "is_scc": False})
+            project_name = nit.get("title", "") or t.get("name", "")
+            head_to_head.append({
+                "project": project_name,
+                "tender_number": t.get("tender_number_en") or t.get("tender_number", ""),
+                "rows": rows,
+            })
+
+    # --- Live Competitive Tenders (multiple tracked competitors, may still be open) ---
+    live_comp = []
+    for t in tenders:
+        bidders = t.get("bidders", [])
+        purchasers = t.get("purchasers", [])
+        nit = t.get("nit", {})
+        if bidders:  # already has bids = not "live" in the pre-bid sense
+            # Still include if it has many tracked competitors for interest
+            pass
+
+        tracked_in = []
+        for p in purchasers:
+            name = resolve_competitor(p.get("company", ""))
+            if name:
+                tracked_in.append({"name": name, "date": p.get("purchase_date", "")})
+        if len(tracked_in) >= 2:
+            project_name = nit.get("title", "") or t.get("name", "")
+            live_comp.append({
+                "project": project_name,
+                "tender_number": t.get("tender_number_en") or t.get("tender_number", ""),
+                "total_purchasers": len(purchasers),
+                "tracked": tracked_in,
+                "tracked_count": len(tracked_in),
+                "has_bids": len(bidders) > 0,
+                "dates": t.get("dates", ""),
+            })
+    live_comp.sort(key=lambda x: -x["tracked_count"])
+
+    # --- Competitor Activity Summary ---
+    activity = {}
+    for comp in ["Sarooj", "Galfar", "Strabag", "Al Tasnim", "L&T", "Towell",
+                 "Hassan Allam", "Arab Contractors", "Ozkar"]:
+        activity[comp] = {"docs": 0, "bids": 0, "max_bid": 0}
+    for t in tenders:
+        bidders = t.get("bidders", [])
+        purchasers = t.get("purchasers", [])
+        seen_bid = set()
+        seen_doc = set()
+        for b in bidders:
+            if b.get("offer_type") != "Main":
+                continue
+            name = resolve_competitor(b.get("company", ""))
+            if name and name in activity and name not in seen_bid:
+                seen_bid.add(name)
+                activity[name]["bids"] += 1
+                val_str = b.get("quoted_value", "")
+                try:
+                    val = float(val_str) if val_str else 0
+                except (ValueError, TypeError):
+                    val = 0
+                if val > activity[name]["max_bid"]:
+                    activity[name]["max_bid"] = val
+        for p in purchasers:
+            name = resolve_competitor(p.get("company", ""))
+            if name and name in activity and name not in seen_doc:
+                seen_doc.add(name)
+                activity[name]["docs"] += 1
+
+    activity_list = []
+    for comp, d in activity.items():
+        conv = round(d["bids"] / max(d["docs"], 1) * 100) if d["docs"] else 0
+        activity_list.append({"name": comp, "docs": d["docs"], "bids": d["bids"],
+                              "conv": conv, "max_bid": d["max_bid"]})
+    activity_list.sort(key=lambda x: -(x["docs"] + x["bids"]))
+
+    return major_projects, head_to_head, live_comp, activity_list
+
+
 def build_trend_data(hist_tenders):
     """Build monthly trend data for SVG chart from historical data."""
     by_month = defaultdict(int)
@@ -204,7 +422,7 @@ def build_cat_breakdown(tenders):
     return result
 
 
-def build_html(tenders, articles, briefing_md, tenders_raw, hist_tenders):
+def build_html(tenders, articles, briefing_md, tenders_raw, hist_tenders, intel_data=None):
     today_str = datetime.now().strftime("%d %B %Y")
     now_str = datetime.now().strftime("%d %b %Y, %H:%M")
     tenders = [t for t in tenders if not is_pagination(t)]
@@ -243,6 +461,9 @@ def build_html(tenders, articles, briefing_md, tenders_raw, hist_tenders):
     # Historical trends
     chart_data, top_entities = build_trend_data(hist_tenders) if hist_tenders else ([], [])
     cat_breakdown = build_cat_breakdown(tenders)
+
+    # Competitive intelligence
+    major_projects, head_to_head, live_comp, activity_list = build_competitive_intel(intel_data)
 
     # SVG chart
     if chart_data:
@@ -288,6 +509,89 @@ def build_html(tenders, articles, briefing_md, tenders_raw, hist_tenders):
         pct_w = max(int(count / ent_max * 100), 5)
         ent_html += f'''<div class="bar-row"><span class="bar-label">{esc(name[:40])}</span>
 <div class="bar-track"><div class="bar-fill" style="width:{pct_w}%;background:#2563EB"><span>{count}</span></div></div></div>\n'''
+
+    # --- Competitive Intelligence HTML ---
+    ci_html = ""
+    if major_projects or head_to_head or live_comp or activity_list:
+        def comp_pill(name, role):
+            colour = COMP_COLOURS.get(name, "#6B7280")
+            return f'<span class="comp-pill" style="background:{colour}">{esc(name)} · {role}</span>'
+
+        def fmt_omr(v):
+            if v >= 1_000_000:
+                return f"{v/1_000_000:.2f}M"
+            if v >= 1_000:
+                return f"{v/1_000:.0f}K"
+            return f"{v:.0f}"
+
+        # Sub-section 1: Major Project Tracker
+        mp_cards = ""
+        for p in major_projects:
+            pills = " ".join(comp_pill(c["name"], c["role"]) for c in p["competitors"])
+            highlight = ' style="background:#EFF6FF"' if p["sarooj_present"] else ""
+            mp_cards += f'''<div class="proj-card" {highlight}>
+<div class="proj-border" style="background:{p["border_colour"]}"></div>
+<div class="proj-body">
+<h4 class="proj-name">{esc(p["name"][:90])}</h4>
+<div class="proj-meta"><span>{esc(p["entity"][:60])}</span></div>
+<div class="proj-meta"><span class="proj-tag">Document Fee: {p["fee"]:.0f} OMR</span> <span class="proj-tag">{esc(p["category"][:50])}</span></div>
+<div class="proj-meta"><strong>{p["num_purchasers"]}</strong> doc purchasers · <strong>{p["num_bidders"]}</strong> bidders</div>
+<div class="proj-pills">{pills if pills else "<span class='muted'>No tracked competitors</span>"}</div>
+</div></div>\n'''
+
+        # Sub-section 2: Head-to-Head
+        h2h_html = ""
+        for h in head_to_head:
+            h2h_html += f'<div class="h2h-block"><h4>{esc(h["project"][:80])}</h4><table class="h2h-table"><thead><tr><th>Company</th><th>Bid Value (OMR)</th><th>Difference from SCC</th></tr></thead><tbody>'
+            for r in h["rows"]:
+                cls = ' class="h2h-scc"' if r["is_scc"] else ""
+                diff_str = "—" if r["is_scc"] else f'{"+" if r["diff"]>=0 else ""}{fmt_omr(r["diff"])} ({"+"+str(r["diff_pct"]) if r["diff_pct"]>=0 else str(r["diff_pct"])}%)'
+                h2h_html += f'<tr{cls}><td>{esc(r["name"])}</td><td>{fmt_omr(r["value"])} OMR</td><td>{diff_str}</td></tr>'
+            h2h_html += '</tbody></table></div>\n'
+
+        # Sub-section 3: Live Competitive Tenders
+        live_html = ""
+        for lc in live_comp[:10]:
+            tracked_pills = " ".join(
+                f'<span class="comp-pill" style="background:{COMP_COLOURS.get(c["name"], "#6B7280")}">{esc(c["name"])}</span>'
+                for c in lc["tracked"]
+            )
+            tracked_dates = "".join(
+                f'<div class="live-date"><span class="comp-dot" style="background:{COMP_COLOURS.get(c["name"], "#6B7280")}"></span>{esc(c["name"])}: {esc(c["date"])}</div>'
+                for c in lc["tracked"]
+            )
+            status = "Bids received" if lc["has_bids"] else f'Closing: {lc["dates"]}' if lc["dates"] else "Open"
+            live_html += f'''<div class="live-card"><h4>{esc(lc["project"][:80])}</h4>
+<div class="live-meta">{lc["tracked_count"]} of {len(COMPETITORS)+1} tracked competitors active · {lc["total_purchasers"]} total purchasers · {status}</div>
+<div class="proj-pills">{tracked_pills}</div>
+<div class="live-dates">{tracked_dates}</div></div>\n'''
+
+        # Sub-section 4: Competitor Activity Summary
+        act_html = '<table class="act-table"><thead><tr><th>Competitor</th><th>Docs Purchased</th><th>Tenders Bid</th><th>Conversion</th><th>Largest Bid</th></tr></thead><tbody>'
+        for a in activity_list:
+            cls = ' class="h2h-scc"' if a["name"] == "Sarooj" else ""
+            max_str = f'{fmt_omr(a["max_bid"])} OMR' if a["max_bid"] > 0 else "—"
+            act_html += f'<tr{cls}><td><span class="comp-dot" style="background:{COMP_COLOURS.get(a["name"], "#6B7280")}"></span>{esc(a["name"])}</td><td>{a["docs"]}</td><td>{a["bids"]}</td><td>{a["conv"]}%</td><td>{max_str}</td></tr>'
+        act_html += '</tbody></table>'
+
+        ci_html = f'''
+<!-- Competitive Intelligence -->
+<div class="card ci-section section-gap">
+  <div class="card-head"><h3>Competitive Intelligence</h3><span class="badge" style="background:#FEE2E2;color:#DC2626">LIVE</span></div>
+
+  <div class="ci-sub"><h4 class="ci-sub-head">Major Project Tracker</h4>
+  <div class="proj-grid">{mp_cards}</div></div>
+
+  <div class="ci-sub"><h4 class="ci-sub-head">Head-to-Head: SCC vs Competitors</h4>
+  {h2h_html if h2h_html else "<p class='muted'>No head-to-head data available yet.</p>"}</div>
+
+  <div class="ci-sub"><h4 class="ci-sub-head">Live Competitive Tenders</h4>
+  {live_html if live_html else "<p class='muted'>No live competitive tenders.</p>"}</div>
+
+  <div class="ci-sub"><h4 class="ci-sub-head">Competitor Activity Summary</h4>
+  {act_html}</div>
+</div>
+'''
 
     # News cards
     news_html = ""
@@ -449,6 +753,35 @@ tr.rt td{{background:#FFFBEB;border-left:3px solid var(--amber)}}
 .footer{{border-top:1px solid var(--border);padding:24px 32px;text-align:center;font-size:11px;color:var(--muted);margin-top:32px}}
 .footer strong{{color:var(--navy)}}
 .section-gap{{margin-bottom:24px}}
+
+/* Competitive Intelligence */
+.ci-section{{border-top:3px solid var(--navy)}}
+.ci-sub{{margin-bottom:28px}}
+.ci-sub-head{{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border)}}
+.comp-pill{{display:inline-block;font-size:10px;font-weight:600;color:#fff;padding:2px 8px;border-radius:10px;margin:2px 3px 2px 0;white-space:nowrap}}
+.comp-dot{{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle}}
+.proj-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px}}
+.proj-card{{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);display:flex;overflow:hidden;transition:box-shadow .15s}}
+.proj-card:hover{{box-shadow:var(--shadow-lg)}}
+.proj-border{{width:5px;flex-shrink:0}}
+.proj-body{{padding:14px 16px;flex:1}}
+.proj-name{{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4}}
+.proj-meta{{font-size:12px;color:var(--muted);margin-bottom:4px}}
+.proj-meta strong{{color:var(--text)}}
+.proj-tag{{background:#F1F5F9;padding:1px 6px;border-radius:4px;font-size:11px;margin-right:4px}}
+.proj-pills{{margin-top:6px}}
+.h2h-block{{margin-bottom:18px}}
+.h2h-block h4{{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}}
+.h2h-table,.act-table{{width:100%;border-collapse:collapse;font-size:13px}}
+.h2h-table th,.act-table th{{background:var(--navy);color:#fff;padding:8px 12px;text-align:left;font-weight:500}}
+.h2h-table td,.act-table td{{padding:8px 12px;border-bottom:1px solid var(--border)}}
+.h2h-scc td{{background:#EFF6FF;font-weight:600}}
+.live-card{{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:12px}}
+.live-card h4{{font-size:13px;font-weight:600;margin-bottom:4px}}
+.live-meta{{font-size:12px;color:var(--muted);margin-bottom:6px}}
+.live-dates{{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:6px;font-size:11px;color:var(--muted)}}
+.live-date{{display:flex;align-items:center;gap:4px}}
+.muted{{color:var(--muted);font-style:italic}}
 </style></head>
 <body>
 
@@ -481,6 +814,8 @@ tr.rt td{{background:#FFFBEB;border-left:3px solid var(--amber)}}
     {trend_legend}
   </div>
 </div>
+
+{ci_html}
 
 <!-- SCC-Relevant Tenders -->
 <div class="card section-gap">
@@ -662,13 +997,15 @@ def main():
     tenders_raw = load_json_file("tenders.json")
     news_raw = load_json_file("news.json")
     hist_raw = load_json_file("historical_tenders.json")
+    intel_raw = load_json_file("major_project_intelligence.json")
     briefing_md = load_file("briefing_output.md")
     tenders = extract_tenders(tenders_raw) if tenders_raw else []
     articles = extract_articles(news_raw) if news_raw else []
     hist = extract_tenders(hist_raw) if hist_raw else []
     print(f"  Tenders: {len(tenders)}, Historical: {len(hist)}, Articles: {len(articles)}, Briefing: {'yes' if briefing_md else 'no'}")
+    print(f"  Intel projects: {len(intel_raw.get('tenders', [])) if intel_raw else 0}")
 
-    html_str = build_html(tenders, articles, briefing_md, tenders_raw, hist)
+    html_str = build_html(tenders, articles, briefing_md, tenders_raw, hist, intel_data=intel_raw)
     DashboardHandler.html_content = html_str.encode("utf-8")
     print(f"  HTML: {len(DashboardHandler.html_content):,} bytes")
 

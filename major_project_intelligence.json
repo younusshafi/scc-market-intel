@@ -1,0 +1,5077 @@
+{
+  "probe_at": "2026-04-27T20:59:19.314983",
+  "elapsed_seconds": 897,
+  "targets_identified": 47,
+  "targets_with_ids": 46,
+  "targets_with_bidders": 28,
+  "tenders": [
+    {
+      "tender_number": "2025/24/ أوباز",
+      "tender_number_en": "24/2025/OPAZ",
+      "name": "CONSTRUCTION OF PRIORITY INT.....",
+      "entity": "Public Authority for Special Economic Zones and Free Zones",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 3000.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "82562",
+      "bidders": [
+        {
+          "company": "PREMIER INTERNATIONAL PROJECTS",
+          "offer_type": "Main",
+          "quoted_value": "13885850.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "GALFAR ENGINEERING AND CONTRACTING",
+          "offer_type": "Main",
+          "quoted_value": "15995399.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "OMAN GULF COMPANY SAOC",
+          "offer_type": "Main",
+          "quoted_value": "13997178.616",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL HASHEMI AL RAWAS TRAD AND CONT",
+          "offer_type": "Main",
+          "quoted_value": "15106171.142",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "GHARABLY INTEGRATED ENGINEERING COMPANY",
+          "offer_type": "Main",
+          "quoted_value": "25607917.367",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AZ ENGINEERS AND PARTNERS",
+          "offer_type": "Main",
+          "quoted_value": "14989270.885",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00002320",
+          "company": "OMAN GULF COMPANY SAOC",
+          "company_type": "Local",
+          "purchase_date": "25-12-2025 10:53"
+        },
+        {
+          "reg_number": "00000464",
+          "company": "GALFAR ENGINEERING AND CONTRACTING",
+          "company_type": "Local",
+          "purchase_date": "01-01-2026 14:21"
+        },
+        {
+          "reg_number": "",
+          "company": "GHARABLY INTEGRATED ENGINEERING COMPANY",
+          "company_type": "International",
+          "purchase_date": "05-01-2026 20:06"
+        },
+        {
+          "reg_number": "00002240",
+          "company": "AL HASHEMI AL RAWAS TRAD AND CONT",
+          "company_type": "Local",
+          "purchase_date": "06-01-2026 08:54"
+        },
+        {
+          "reg_number": "",
+          "company": "PORTEX INSAAT SANAYII TICARET LIMITED SIRKETI",
+          "company_type": "International",
+          "purchase_date": "06-01-2026 10:20"
+        },
+        {
+          "reg_number": "00001801",
+          "company": "PREMIER INTERNATIONAL PROJECTS",
+          "company_type": "Local",
+          "purchase_date": "06-01-2026 11:57"
+        },
+        {
+          "reg_number": "00003776",
+          "company": "AZ ENGINEERS AND PARTNERS",
+          "company_type": "Local",
+          "purchase_date": "06-01-2026 12:18"
+        }
+      ],
+      "nit": {
+        "title": "CONSTRUCTION OF PRIORITY INTERNAL INTEGTATED ROADS FOR BLOCKS 13, 53, 54, 55, 56, 60, & 61 OF SPECIAL ECONOMIC ZONE AT D",
+        "governorate": "Al Wusta",
+        "wilayat": "Al Duqm",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/8/م ع م ص/ م ر -8",
+      "tender_number_en": "8/2025/PEIE/HQ-8",
+      "name": "CONSTRUCTION OF INFRASTRUCTU.....",
+      "entity": "Public Establishment for Industrial Estates",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 2500.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "79595",
+      "bidders": [
+        {
+          "company": "HASSAN ALLAM CONSTRUCTION",
+          "offer_type": "Main",
+          "quoted_value": "45420801.857",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "GALFAR ENGINEERING AND CONTRACTING",
+          "offer_type": "Main",
+          "quoted_value": "71688668.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "EDECS EL DAWLIA FOR CONTRACTING",
+          "offer_type": "Main",
+          "quoted_value": "61839195.821",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "THE ARAB CONTRACTORS OMAN LIMITED",
+          "offer_type": "Main",
+          "quoted_value": "61837641.056",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "TOWELL INFRASTRUCTURE PROJECTS CO",
+          "offer_type": "Main",
+          "quoted_value": "59407808.999",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "UNITED GULF CONSTRUCTION COMPANY W L L",
+          "offer_type": "Main",
+          "quoted_value": "53978060.787",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "THE PETROLEUM PROJECTS AND TECHNICAL CONSULTAION CO",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "TARGET",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "AL- GHARBIA ENTERPRISES TRADIG AND CONTRACTING COMPANY",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "EGYPTIAN CONTRACTING CO & PARTENER",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "",
+          "company": "UNITED GULF CONSTRUCTION COMPANY W L L",
+          "company_type": "International",
+          "purchase_date": "22-10-2025 12:56"
+        },
+        {
+          "reg_number": "00001882",
+          "company": "STRABAG OMAN",
+          "company_type": "Local",
+          "purchase_date": "23-10-2025 12:54"
+        },
+        {
+          "reg_number": "00000752",
+          "company": "AL- GHARBIA ENTERPRISES TRADIG AND CONTRACTING COMPANY",
+          "company_type": "Local",
+          "purchase_date": "27-10-2025 14:58"
+        },
+        {
+          "reg_number": "",
+          "company": "CHINA NATIONAL CHEMICAL SHUGUANG CONSTRUCTION",
+          "company_type": "International",
+          "purchase_date": "30-10-2025 13:03"
+        },
+        {
+          "reg_number": "00002535",
+          "company": "TOWELL INFRASTRUCTURE PROJECTS CO",
+          "company_type": "Local",
+          "purchase_date": "30-10-2025 18:10"
+        },
+        {
+          "reg_number": "00002244",
+          "company": "EGYPTIAN CONTRACTING CO & PARTENER",
+          "company_type": "Local",
+          "purchase_date": "01-11-2025 11:29"
+        },
+        {
+          "reg_number": "00002729",
+          "company": "MARMUL CONTRACTING AND TRADING",
+          "company_type": "Local",
+          "purchase_date": "02-11-2025 08:12"
+        },
+        {
+          "reg_number": "00001255",
+          "company": "The Arab Contractors Oman Limited",
+          "company_type": "Local",
+          "purchase_date": "02-11-2025 10:10"
+        },
+        {
+          "reg_number": "00000464",
+          "company": "GALFAR ENGINEERING AND CONTRACTING",
+          "company_type": "Local",
+          "purchase_date": "02-11-2025 10:14"
+        },
+        {
+          "reg_number": "",
+          "company": "SERKA TAAHHUT INSAAT AS",
+          "company_type": "International",
+          "purchase_date": "02-11-2025 10:50"
+        },
+        {
+          "reg_number": "",
+          "company": "THE PETROLEUM PROJECTS AND TECHNICAL CONSULTAION CO",
+          "company_type": "International",
+          "purchase_date": "03-11-2025 11:53"
+        },
+        {
+          "reg_number": "",
+          "company": "PORTEX INSAAT SANAYII TICARET LIMITED SIRKETI",
+          "company_type": "International",
+          "purchase_date": "06-11-2025 12:12"
+        },
+        {
+          "reg_number": "",
+          "company": "EDECS EL DAWLIA FOR CONTRACTING",
+          "company_type": "International",
+          "purchase_date": "06-11-2025 12:35"
+        },
+        {
+          "reg_number": "00009501",
+          "company": "Hassan Allam Construction",
+          "company_type": "Local",
+          "purchase_date": "12-11-2025 10:16"
+        },
+        {
+          "reg_number": "00002320",
+          "company": "OMAN GULF COMPANY SAOC",
+          "company_type": "Local",
+          "purchase_date": "12-11-2025 10:17"
+        },
+        {
+          "reg_number": "00002693",
+          "company": "TARGET",
+          "company_type": "Local",
+          "purchase_date": "12-11-2025 16:51"
+        }
+      ],
+      "nit": {
+        "title": "CONSTRUCTION OF INFRASTRUCTURE AND FACILITIES (FACILITY BUILDING, PLUG AND PLAY, GREEN HOUSE) AT SUWAIQ INDUSTRIAL CITY ",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/18/هـ م م م",
+      "tender_number_en": "18/2026/PTLC",
+      "name": "CONSTRUCTION OF FLOOD PROTEC.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 1500.0,
+      "view": "New/Floated Tenders",
+      "dates": "14-06-2026",
+      "internal_id": "88623",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "00002456",
+          "company": "Hoehler and Al Salmy Architectural and Engineering Consultanc",
+          "company_type": "SME",
+          "purchase_date": "16-04-2026 15:11"
+        },
+        {
+          "reg_number": "00011408",
+          "company": "KHUTUT WA ROUA ENGINEERING CONSULTANCY",
+          "company_type": "SME",
+          "purchase_date": "16-04-2026 15:38"
+        },
+        {
+          "reg_number": "00003451",
+          "company": "Artelia Muscat Engineering Consultancy",
+          "company_type": "Local",
+          "purchase_date": "16-04-2026 16:11"
+        },
+        {
+          "reg_number": "00009558",
+          "company": "carbon engineering consultancy",
+          "company_type": "SME",
+          "purchase_date": "16-04-2026 17:52"
+        },
+        {
+          "reg_number": "00000527",
+          "company": "CAPITAL ENGINEERING CONSULTING",
+          "company_type": "Local",
+          "purchase_date": "17-04-2026 10:47"
+        },
+        {
+          "reg_number": "00014979",
+          "company": "EJAZ INTERNATIONAL",
+          "company_type": "Local",
+          "purchase_date": "18-04-2026 18:31"
+        },
+        {
+          "reg_number": "00009938",
+          "company": "Bonyan Construction",
+          "company_type": "SME",
+          "purchase_date": "18-04-2026 19:51"
+        },
+        {
+          "reg_number": "00001972",
+          "company": "ABDULLA MUKADAM AND  PARTNER LLC",
+          "company_type": "Local",
+          "purchase_date": "19-04-2026 09:06"
+        },
+        {
+          "reg_number": "00015688",
+          "company": "ERTIKAZA",
+          "company_type": "SME",
+          "purchase_date": "19-04-2026 09:41"
+        },
+        {
+          "reg_number": "00001324",
+          "company": "almanarah engineering consultancy",
+          "company_type": "SME",
+          "purchase_date": "19-04-2026 10:08"
+        },
+        {
+          "reg_number": "00003021",
+          "company": "MUSCAT DESIGN CENTRE AND PARTNERS LLC",
+          "company_type": "SME",
+          "purchase_date": "19-04-2026 11:00"
+        },
+        {
+          "reg_number": "00004288",
+          "company": "Dar SSH International Engineering Consultants",
+          "company_type": "Local",
+          "purchase_date": "19-04-2026 11:27"
+        },
+        {
+          "reg_number": "00001932",
+          "company": "RAZEEN ENGINEERING CONSULTANCY",
+          "company_type": "Local",
+          "purchase_date": "20-04-2026 09:16"
+        },
+        {
+          "reg_number": "00004315",
+          "company": "IBRAHIM JAIDAH ARCHITECTS AND ENGINEERS",
+          "company_type": "Local",
+          "purchase_date": "20-04-2026 10:44"
+        },
+        {
+          "reg_number": "00008252",
+          "company": "ARABTECH JARDANEH INTERNATIONAL",
+          "company_type": "Local",
+          "purchase_date": "20-04-2026 10:50"
+        },
+        {
+          "reg_number": "00001543",
+          "company": "AL-MEEDANIA ENG CONSULTANCY",
+          "company_type": "SME",
+          "purchase_date": "20-04-2026 11:50"
+        },
+        {
+          "reg_number": "00008330",
+          "company": "Maonah Engineering Consultancy",
+          "company_type": "SME",
+          "purchase_date": "20-04-2026 13:20"
+        },
+        {
+          "reg_number": "00003318",
+          "company": "Sabla Architects Engineers Construction",
+          "company_type": "SME",
+          "purchase_date": "21-04-2026 09:35"
+        },
+        {
+          "reg_number": "00006206",
+          "company": "MASHHAD CONSULTANCY",
+          "company_type": "SME",
+          "purchase_date": "21-04-2026 11:35"
+        },
+        {
+          "reg_number": "00011411",
+          "company": "LIWAN FOR DEVELOPMENT",
+          "company_type": "SME",
+          "purchase_date": "21-04-2026 14:44"
+        },
+        {
+          "reg_number": "00004691",
+          "company": "F M MIDDLE EAST ENGINEERING CONSULTANCY LLC",
+          "company_type": "Local",
+          "purchase_date": "21-04-2026 16:55"
+        },
+        {
+          "reg_number": "00014506",
+          "company": "THE INNOVATIVE BUNYAN",
+          "company_type": "SME",
+          "purchase_date": "23-04-2026 10:20"
+        },
+        {
+          "reg_number": "00009791",
+          "company": "ALSAS ENGINEERING CONSULTANCY AND SERVICES",
+          "company_type": "SME",
+          "purchase_date": "23-04-2026 12:54"
+        },
+        {
+          "reg_number": "00000854",
+          "company": "ARAB ENGNEERING",
+          "company_type": "Local",
+          "purchase_date": "23-04-2026 13:50"
+        },
+        {
+          "reg_number": "00001268",
+          "company": "ENGINEERING INNOVATION DESIGN AND CONSULTING LLC",
+          "company_type": "Local",
+          "purchase_date": "25-04-2026 19:45"
+        },
+        {
+          "reg_number": "00002791",
+          "company": "TUSKER ENGINEERING CONSULTANCY GROUP",
+          "company_type": "SME",
+          "purchase_date": "26-04-2026 13:16"
+        }
+      ],
+      "nit": {
+        "title": "Consultancy Services for Interior Design Services for New ASYAD Group Headquarters (Building 02 & 03)",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/64/بيئة/ م ر -24 - اعادة طرح - 1",
+      "tender_number_en": "64/2025/BEAH/HQ-24 - Recall - 1",
+      "name": "Operation and Maintenance fo.....",
+      "entity": "Oman Environmental Services Holding Company (S.A.O.C)",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "fee": 1500.0,
+      "view": "New/Floated Tenders",
+      "dates": "01-06-2026",
+      "internal_id": "83535",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "00015376",
+          "company": "MAQSHAN OIL&GAS SERVICES SAOC",
+          "company_type": "Local",
+          "purchase_date": "06-01-2026 08:43"
+        },
+        {
+          "reg_number": "00007386",
+          "company": "ECO VISION",
+          "company_type": "Local",
+          "purchase_date": "06-01-2026 11:11"
+        },
+        {
+          "reg_number": "00016686",
+          "company": "TIALOC AL RAMOOZ NATIONAL",
+          "company_type": "Local",
+          "purchase_date": "07-01-2026 09:50"
+        },
+        {
+          "reg_number": "",
+          "company": "INDAVER NV",
+          "company_type": "International",
+          "purchase_date": "09-01-2026 17:47"
+        },
+        {
+          "reg_number": "00000479",
+          "company": "ALAHLIAENVIRONMENTALSERVICE COLLC",
+          "company_type": "Local",
+          "purchase_date": "11-01-2026 11:47"
+        },
+        {
+          "reg_number": "00006777",
+          "company": "VERDE WASTE MANAGEMENT",
+          "company_type": "Local",
+          "purchase_date": "12-01-2026 10:09"
+        },
+        {
+          "reg_number": "00000442",
+          "company": "Veolia Al Bashaer",
+          "company_type": "Local",
+          "purchase_date": "13-01-2026 22:01"
+        },
+        {
+          "reg_number": "",
+          "company": "ASPEC",
+          "company_type": "International",
+          "purchase_date": "20-01-2026 11:04"
+        },
+        {
+          "reg_number": "00011543",
+          "company": "DISTINGUISHED GULF DEPTHS",
+          "company_type": "SME",
+          "purchase_date": "21-01-2026 11:44"
+        },
+        {
+          "reg_number": "00002533",
+          "company": "PUBLIC TECHNICAL PROJECTS",
+          "company_type": "SME",
+          "purchase_date": "25-01-2026 21:39"
+        },
+        {
+          "reg_number": "00006696",
+          "company": "Urbaser",
+          "company_type": "Local",
+          "purchase_date": "10-02-2026 15:43"
+        },
+        {
+          "reg_number": "",
+          "company": "ESTEDAMA FOR ENVIRONMENTAL SOLUTIONS AND CONTRACTING CO",
+          "company_type": "International",
+          "purchase_date": "11-02-2026 13:09"
+        }
+      ],
+      "nit": {
+        "title": "Operation and Maintenance for INDUSTRIAL WASTE TREATMENT FACILITY IN SOHAR FREE ZONE",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/58/بيئة/ م ر -23",
+      "tender_number_en": "58/2025/BEAH/HQ-23",
+      "name": "National Naturally Occurring.....",
+      "entity": "Oman Environmental Services Holding Company (S.A.O.C)",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "fee": 1500.0,
+      "view": "New/Floated Tenders",
+      "dates": "07-06-2026",
+      "internal_id": "81877",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "00006083",
+          "company": "BAUER NIMR LLC",
+          "company_type": "Local",
+          "purchase_date": "25-11-2025 15:48"
+        },
+        {
+          "reg_number": "00003482",
+          "company": "Veolia",
+          "company_type": "Local",
+          "purchase_date": "25-11-2025 18:16"
+        },
+        {
+          "reg_number": "",
+          "company": "PRICEWATERHOUSECOOPERS",
+          "company_type": "International",
+          "purchase_date": "30-11-2025 18:14"
+        },
+        {
+          "reg_number": "00001333",
+          "company": "TAWOOS INDUSTRIAL SERVICES COMPANY LLC",
+          "company_type": "Local",
+          "purchase_date": "01-12-2025 15:48"
+        },
+        {
+          "reg_number": "00015596",
+          "company": "Al Ramooz National Sustainability",
+          "company_type": "Local",
+          "purchase_date": "01-12-2025 16:44"
+        },
+        {
+          "reg_number": "00002527",
+          "company": "ARABIAN INDUSTRIES PROJECTS LLC",
+          "company_type": "Local",
+          "purchase_date": "02-12-2025 11:35"
+        },
+        {
+          "reg_number": "00006879",
+          "company": "Ras AL-Hamra",
+          "company_type": "SME",
+          "purchase_date": "03-12-2025 12:19"
+        },
+        {
+          "reg_number": "00015376",
+          "company": "MAQSHAN OIL&GAS SERVICES SAOC",
+          "company_type": "Local",
+          "purchase_date": "04-12-2025 10:47"
+        },
+        {
+          "reg_number": "00006894",
+          "company": "NATIONAL FRIENDLY ENVIRONMENT L L C",
+          "company_type": "SME",
+          "purchase_date": "07-12-2025 14:17"
+        },
+        {
+          "reg_number": "00006777",
+          "company": "VERDE WASTE MANAGEMENT",
+          "company_type": "Local",
+          "purchase_date": "08-12-2025 09:47"
+        },
+        {
+          "reg_number": "",
+          "company": "TECAM ENVIRONMENTAL SOLUTIONS",
+          "company_type": "International",
+          "purchase_date": "11-12-2025 19:00"
+        },
+        {
+          "reg_number": "00014253",
+          "company": "Synergy Investments",
+          "company_type": "Local",
+          "purchase_date": "15-12-2025 11:15"
+        }
+      ],
+      "nit": {
+        "title": "National Naturally Occurring Radioactive Material Waste Management and Treatment Facility Oman (National NORM Facility O",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/69/ ا ع م م",
+      "tender_number_en": "69/2025/GSTB",
+      "name": "DESIGN AND BUILD UPGRADING A.....",
+      "entity": "Ministry of Transport Communications and Information Technol",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 1200.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "73074",
+      "bidders": [
+        {
+          "company": "AL HASHEMI AL RAWAS TRAD AND CONT",
+          "offer_type": "Main",
+          "quoted_value": "8880812.325",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SAROOJ CONSTRUCTION COMPANY",
+          "offer_type": "Main",
+          "quoted_value": "7350547.680",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "OMAN GULF COMPANY SAOC",
+          "offer_type": "Main",
+          "quoted_value": "12659748.608",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "OMAN GULF COMPANY SAOC",
+          "offer_type": "Alternate1",
+          "quoted_value": "12802297.065",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "OMAN GULF COMPANY SAOC",
+          "offer_type": "Alternate2",
+          "quoted_value": "13373646.501",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL TASNIM ENTERPRISES",
+          "offer_type": "Main",
+          "quoted_value": "7999537.390",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL TASNIM ENTERPRISES",
+          "offer_type": "Alternate1",
+          "quoted_value": "8249537.390",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SUN SHINE INTERNATIONAL L L C",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "AL RAFAH TRADING AND CONTRACTION COMPANY",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "HIGH TOWER DEVELOPMENT & INVESTMENT",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "STRABAG OMAN",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "STRABAG OMAN",
+          "offer_type": "Alternate1",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "AMWAJ DHOFAR UNITED",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "SUHAR DEVELOPER",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "RIMAL GLOBAL TECHNICAL SERVICES",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "RIMAL GLOBAL TECHNICAL SERVICES",
+          "offer_type": "Alternate1",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "SHUAA ALFATH GOLDEN TRADING",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "FAGER OMAN TRAD AND CONT CO",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00005424",
+          "company": "SUHAR DEVELOPER",
+          "company_type": "SME",
+          "purchase_date": "20-08-2025 17:03"
+        },
+        {
+          "reg_number": "00008528",
+          "company": "UNITED THUMTAIT LINES",
+          "company_type": "SME",
+          "purchase_date": "21-08-2025 12:01"
+        },
+        {
+          "reg_number": "00001551",
+          "company": "AMWAJ DHOFAR UNITED",
+          "company_type": "SME",
+          "purchase_date": "24-08-2025 10:58"
+        },
+        {
+          "reg_number": "00001882",
+          "company": "STRABAG OMAN",
+          "company_type": "Local",
+          "purchase_date": "24-08-2025 12:15"
+        },
+        {
+          "reg_number": "00010467",
+          "company": "HORMUZ EAGLE",
+          "company_type": "SME",
+          "purchase_date": "25-08-2025 12:11"
+        },
+        {
+          "reg_number": "00008289",
+          "company": "OMAN ENGINEERING AND CONTRACTING CO",
+          "company_type": "SME",
+          "purchase_date": "25-08-2025 12:31"
+        },
+        {
+          "reg_number": "00001941",
+          "company": "AL RAFAH TRADING AND CONTRACTION COMPANY",
+          "company_type": "SME",
+          "purchase_date": "25-08-2025 12:34"
+        },
+        {
+          "reg_number": "00002240",
+          "company": "AL HASHEMI AL RAWAS TRAD AND CONT",
+          "company_type": "Local",
+          "purchase_date": "25-08-2025 14:32"
+        },
+        {
+          "reg_number": "00000430",
+          "company": "HIGH TOWER DEVELOPMENT & INVESTMENT",
+          "company_type": "SME",
+          "purchase_date": "26-08-2025 17:36"
+        },
+        {
+          "reg_number": "00000113",
+          "company": "RIMAL GLOBAL TECHNICAL SERVICES",
+          "company_type": "Local",
+          "purchase_date": "27-08-2025 09:05"
+        },
+        {
+          "reg_number": "00002729",
+          "company": "MARMUL CONTRACTING AND TRADING",
+          "company_type": "Local",
+          "purchase_date": "27-08-2025 09:06"
+        },
+        {
+          "reg_number": "00001525",
+          "company": "AL HARSOOSY TRADING AND CONTRACTING COMPANY",
+          "company_type": "SME",
+          "purchase_date": "27-08-2025 11:58"
+        },
+        {
+          "reg_number": "00003112",
+          "company": "AL TASNIM ENTERPRISES",
+          "company_type": "Local",
+          "purchase_date": "27-08-2025 14:56"
+        },
+        {
+          "reg_number": "00009841",
+          "company": "SHUAA ALFATH GOLDEN TRADING",
+          "company_type": "SME",
+          "purchase_date": "28-08-2025 09:05"
+        },
+        {
+          "reg_number": "00009837",
+          "company": "SUN SHINE INTERNATIONAL L L C",
+          "company_type": "Local",
+          "purchase_date": "28-08-2025 09:56"
+        },
+        {
+          "reg_number": "00010025",
+          "company": "ALAMJAD CONSTRUCTION AND ENGINEERING AND SERVICES",
+          "company_type": "Local",
+          "purchase_date": "28-08-2025 10:08"
+        },
+        {
+          "reg_number": "00002305",
+          "company": "Sarooj Construction Company",
+          "company_type": "Local",
+          "purchase_date": "28-08-2025 10:34"
+        },
+        {
+          "reg_number": "00008139",
+          "company": "SAD AL KHALEJ ENGENEERING",
+          "company_type": "SME",
+          "purchase_date": "31-08-2025 15:23"
+        },
+        {
+          "reg_number": "00001876",
+          "company": "AL TEHOON TRAD AND CONT CO",
+          "company_type": "SME",
+          "purchase_date": "01-09-2025 13:14"
+        },
+        {
+          "reg_number": "00006195",
+          "company": "SUHOOL HAMRA AL DAROU CO ASSTD",
+          "company_type": "Local",
+          "purchase_date": "02-09-2025 14:43"
+        },
+        {
+          "reg_number": "00000415",
+          "company": "TILAL NIMAR TRADING AND CONSTRACTING",
+          "company_type": "Local",
+          "purchase_date": "02-09-2025 15:52"
+        },
+        {
+          "reg_number": "00002320",
+          "company": "OMAN GULF COMPANY SAOC",
+          "company_type": "Local",
+          "purchase_date": "03-09-2025 10:21"
+        },
+        {
+          "reg_number": "00003668",
+          "company": "FAGER OMAN TRAD AND CONT CO",
+          "company_type": "SME",
+          "purchase_date": "03-09-2025 11:49"
+        }
+      ],
+      "nit": {
+        "title": "DESIGN AND BUILD UPGRADING AND DUALIZATION OF SOHAR LINK ROAD FROM SLAUGHTERHOUSE ROUNDABOUT TO BATINAH EXPRESSWAY IN NO",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Envelope"
+      }
+    },
+    {
+      "tender_number": "2017/8/ ع ن ع",
+      "tender_number_en": "8/2017/OBB",
+      "name": "Duct Laying, Chamber Constru.....",
+      "entity": "Oman Broadband Company SAOC",
+      "category": "Construction Works (Old) [Excellent,First,Second,Third,Fourt",
+      "fee": 800.0,
+      "view": "New/Floated Tenders",
+      "dates": "07-02-2017",
+      "internal_id": "1838",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "00001498",
+          "company": "CIVIL CONTRACTING CO LLC",
+          "company_type": "Local",
+          "purchase_date": "17-01-2017 16:09"
+        },
+        {
+          "reg_number": "00000263",
+          "company": "SECOND POWER",
+          "company_type": "Local",
+          "purchase_date": "17-01-2017 16:53"
+        },
+        {
+          "reg_number": "00001876",
+          "company": "AL TEHOON TRAD AND CONT CO",
+          "company_type": "SME",
+          "purchase_date": "23-01-2017 19:20"
+        },
+        {
+          "reg_number": "00004534",
+          "company": "ANCHORED SHIPS",
+          "company_type": "Local",
+          "purchase_date": "24-01-2017 10:55"
+        },
+        {
+          "reg_number": "00000963",
+          "company": "AWASSER TECH LLC",
+          "company_type": "SME",
+          "purchase_date": "24-01-2017 13:22"
+        }
+      ],
+      "nit": {
+        "title": "Duct Laying, Chamber Construction and FTTH Network in Al Khoud Area 7",
+        "governorate": "Muscat",
+        "wilayat": "ASeeb",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/55/ أسياد",
+      "tender_number_en": "55/2025/ASYAD",
+      "name": "Provision of Consolidated Ma.....",
+      "entity": "ASYAD",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "fee": 750.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "80291",
+      "bidders": [
+        {
+          "company": "AMLAAK ENERGY RESOURCES",
+          "offer_type": "Main",
+          "quoted_value": "88288.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "MARAFI SERVICES",
+          "offer_type": "Main",
+          "quoted_value": "58837.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "OSTOOL BUNKERING",
+          "offer_type": "Main",
+          "quoted_value": "3000000.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "GLOBAL OIL RESOURCES",
+          "offer_type": "Main",
+          "quoted_value": "7550400.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL MAHA PETROLEUM PRODUCTS MARKETING",
+          "offer_type": "Main",
+          "quoted_value": "1500000.000",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00009160",
+          "company": "OSTOOL BUNKERING",
+          "company_type": "SME",
+          "purchase_date": "30-10-2025 16:38"
+        },
+        {
+          "reg_number": "00011280",
+          "company": "Marafi services",
+          "company_type": "Local",
+          "purchase_date": "30-10-2025 16:40"
+        },
+        {
+          "reg_number": "00016841",
+          "company": "Global Oil Resources",
+          "company_type": "SME",
+          "purchase_date": "13-11-2025 11:43"
+        },
+        {
+          "reg_number": "00000287",
+          "company": "AL MAHA PETROLEUM PRODUCTS MARKETING",
+          "company_type": "Local",
+          "purchase_date": "13-11-2025 12:22"
+        },
+        {
+          "reg_number": "00000837",
+          "company": "AMLAAK ENERGY RESOURCES",
+          "company_type": "SME",
+          "purchase_date": "18-11-2025 11:52"
+        }
+      ],
+      "nit": {
+        "title": "Provision of Consolidated Marine Bunkering Services on Call-off Basis for Asyad Group",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/2/ أسياد",
+      "tender_number_en": "2/2026/ASYAD",
+      "name": "Providing Stevedoring Servic.....",
+      "entity": "ASYAD",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "fee": 750.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "86874",
+      "bidders": [
+        {
+          "company": "ZHOUSHAN XINYA SHIPYARD CO LTD",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "ASYAD DRY DOCK COMPANY",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "ZHOUSHAN HUAFENG SHIPYARD CO LTD",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "IMCZY",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        }
+      ],
+      "purchasers": [],
+      "nit": {
+        "title": "Appointing Shipyard for ASC fleet (Special Survey Docking) for Vessel Samail",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/7/مواصلات/ م ر -5",
+      "tender_number_en": "7/2026/MSLT/HQ-5",
+      "name": "Framework agreement for the .....",
+      "entity": "Oman National Transport Company S.A.O.C.(Mwasalat)",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "fee": 500.0,
+      "view": "New/Floated Tenders",
+      "dates": "14-06-2026",
+      "internal_id": "88382",
+      "bidders": [
+        {
+          "company": "ONE ZERO ONE",
+          "offer_type": "Main",
+          "quoted_value": "9922.500",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "purchasers": [],
+      "nit": {
+        "title": "الحملة الإعلامية لمشروع الاعتراف الدولي",
+        "governorate": "Muscat",
+        "wilayat": "ASeeb",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2019/1/ع ح ج/ م ر -1",
+      "tender_number_en": "1/2019/ODC/HQ-1",
+      "name": "Supply & Construction of.....",
+      "entity": "Asyad Drydock Company LLC",
+      "category": "Construction Works (Old) [Excellent,First,Second,Third,Fourt",
+      "fee": 500.0,
+      "view": "New/Floated Tenders",
+      "dates": "23-05-2019",
+      "internal_id": "6292",
+      "bidders": [],
+      "purchasers": [],
+      "nit": {
+        "title": "Supply & Construction of 1500 Concrete Keel Block",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Envelope"
+      }
+    },
+    {
+      "tender_number": "2019/3/ع ح ج/ م ر -3",
+      "tender_number_en": "3/2019/ODC/HQ-3",
+      "name": "PURCHASE OF EQUIPMENT FOR MA.....",
+      "entity": "Asyad Drydock Company LLC",
+      "category": "Supply and Services (Old) [Excellent,First,Second,Third,Four",
+      "fee": 500.0,
+      "view": "New/Floated Tenders",
+      "dates": "23-05-2019",
+      "internal_id": "7169",
+      "bidders": [],
+      "purchasers": [],
+      "nit": {
+        "title": "Mobile Documents Box",
+        "governorate": "Muscat",
+        "wilayat": "Bowsher",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/9/م ع م ص/ م ر -9 - اعادة طرح - 1",
+      "tender_number_en": "9/2025/PEIE/HQ-9 - Recall - 1",
+      "name": "CONSTRUCTION OF INFRASTRUCTU.....",
+      "entity": "Public Establishment for Industrial Estates",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 500.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "83490",
+      "bidders": [
+        {
+          "company": "FAHUD TOWERS TRADING",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "PREMIER INTERNATIONAL PROJECTS",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00005359",
+          "company": "FAHUD TOWERS TRADING",
+          "company_type": "SME",
+          "purchase_date": "26-01-2026 18:55"
+        },
+        {
+          "reg_number": "00001801",
+          "company": "PREMIER INTERNATIONAL PROJECTS",
+          "company_type": "Local",
+          "purchase_date": "04-02-2026 08:51"
+        },
+        {
+          "reg_number": "00016605",
+          "company": "INDUSTRIAL TECHNOLOGY SERVICES",
+          "company_type": "Local",
+          "purchase_date": "04-02-2026 12:05"
+        },
+        {
+          "reg_number": "00004316",
+          "company": "THE PETROLEUM PROJECTS COMPANY PETROJET AND PARTNERS",
+          "company_type": "Local",
+          "purchase_date": "08-02-2026 12:47"
+        }
+      ],
+      "nit": {
+        "title": "CONSTRUCTION OF INFRASTRUCTURE FACILITIES AND PLUG & PLAY INDUSTRIAL COMPLEX AT MADHA INDUSTRIAL CITY IN MUSANDAM GOVERN",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/10/م ع م ص/ م ر -10",
+      "tender_number_en": "10/2025/PEIE/HQ-10",
+      "name": "Construction of Entrepreneur.....",
+      "entity": "Public Establishment for Industrial Estates",
+      "category": "Construction and Maintenance [Excellent]",
+      "fee": 500.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "79687",
+      "bidders": [
+        {
+          "company": "NAFAL CONTRACTING AND TRADING CO LLC",
+          "offer_type": "Main",
+          "quoted_value": "10775708.501",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "ATLANTIC CONSTRUCTION LLC",
+          "offer_type": "Main",
+          "quoted_value": "9297144.603",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL KHALILI CONSTRUCTION",
+          "offer_type": "Main",
+          "quoted_value": "8192392.555",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "OASIS GRACE",
+          "offer_type": "Main",
+          "quoted_value": "9499412.510",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SAIF SALIM ESSA AL HARASI AND CO LLC",
+          "offer_type": "Main",
+          "quoted_value": "10611160.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "ALYAM ENTERPRISES LLC",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "DIRECT SERVICES",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "AL RAWDHA WORLD CENTER TRADING AND CONTRACTING LLC",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "KHIMJI RAMDAS CONSTRUCTION",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00000453",
+          "company": "Khimji Ramdas Construction",
+          "company_type": "Local",
+          "purchase_date": "21-10-2025 12:35"
+        },
+        {
+          "reg_number": "00003292",
+          "company": "ASSARAIN INTERNATIOAL CONTRACTING CO LLC",
+          "company_type": "Local",
+          "purchase_date": "26-10-2025 08:51"
+        },
+        {
+          "reg_number": "00002152",
+          "company": "ALYAM ENTERPRISES LLC",
+          "company_type": "Local",
+          "purchase_date": "26-10-2025 15:54"
+        },
+        {
+          "reg_number": "00001118",
+          "company": "LOTUS CONSTRUCTIONS AND REAL ESTATE INVESTMENT",
+          "company_type": "SME",
+          "purchase_date": "26-10-2025 17:28"
+        },
+        {
+          "reg_number": "00003269",
+          "company": "AL RAWDHA WORLD CENTER TRADING AND CONTRACTING LLC",
+          "company_type": "Local",
+          "purchase_date": "29-10-2025 11:55"
+        },
+        {
+          "reg_number": "00000665",
+          "company": "NAFAL CONTRACTING AND TRADING CO LLC",
+          "company_type": "Local",
+          "purchase_date": "29-10-2025 14:13"
+        },
+        {
+          "reg_number": "00003528",
+          "company": "ATLANTIC CONSTRUCTION LLC",
+          "company_type": "Local",
+          "purchase_date": "30-10-2025 17:45"
+        },
+        {
+          "reg_number": "00001639",
+          "company": "DIRECT SERVICES",
+          "company_type": "Local",
+          "purchase_date": "02-11-2025 08:17"
+        },
+        {
+          "reg_number": "00003290",
+          "company": "SAIF SALIM ESSA AL HARASI AND CO LLC",
+          "company_type": "Local",
+          "purchase_date": "02-11-2025 09:31"
+        },
+        {
+          "reg_number": "00001835",
+          "company": "AL KHALILI CONSTRUCTION",
+          "company_type": "Local",
+          "purchase_date": "02-11-2025 11:50"
+        },
+        {
+          "reg_number": "00004816",
+          "company": "Eshraq Engineering and Investment Company",
+          "company_type": "Local",
+          "purchase_date": "02-11-2025 13:44"
+        },
+        {
+          "reg_number": "00001714",
+          "company": "AL RAFAA TRADING AND CONTRACTING LLC",
+          "company_type": "Local",
+          "purchase_date": "03-11-2025 08:52"
+        },
+        {
+          "reg_number": "00000850",
+          "company": "OASIS GRACE",
+          "company_type": "Local",
+          "purchase_date": "03-11-2025 09:33"
+        },
+        {
+          "reg_number": "00001239",
+          "company": "Mustafa and Kamal Ashraf Trading Co",
+          "company_type": "Local",
+          "purchase_date": "03-11-2025 12:07"
+        }
+      ],
+      "nit": {
+        "title": "Construction of Entrepreneurship Industrial complex in Rusayl Industrial City",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/59/ه ب/ م ر -12",
+      "tender_number_en": "59/2026/EA/HQ-12",
+      "name": "Provision of consultancy ser.....",
+      "entity": "Environment Authority",
+      "category": "Consulting Offices [Excellent,First]",
+      "fee": 300.0,
+      "view": "New/Floated Tenders",
+      "dates": "27-04-2026",
+      "internal_id": "87178",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "00009470",
+          "company": "MAZOON ENGINEERING CONSULTANCY AND PROJECT MANAGEMENT",
+          "company_type": "SME",
+          "purchase_date": "24-03-2026 09:51"
+        },
+        {
+          "reg_number": "00003249",
+          "company": "AZD Engineering Consultancy",
+          "company_type": "SME",
+          "purchase_date": "05-04-2026 11:34"
+        }
+      ],
+      "nit": {
+        "title": "Provision of consultancy services for the ‘Azra’ Oman project to the Environment Agency",
+        "governorate": "Muscat",
+        "wilayat": "Bowsher",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/158/ه ب/ م ر -29 - اعادة طرح - 1",
+      "tender_number_en": "158/2025/EA/HQ-29 - Recall - 1",
+      "name": "Providing advisory services .....",
+      "entity": "Environment Authority",
+      "category": "Consulting Offices [Excellent,First]",
+      "fee": 300.0,
+      "view": "New/Floated Tenders",
+      "dates": "31-03-2026",
+      "internal_id": "86174",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "",
+          "company": "KEO INTERNATIONAL CONSULTANTS",
+          "company_type": "International",
+          "purchase_date": "10-03-2026 12:54"
+        },
+        {
+          "reg_number": "00010642",
+          "company": "Klean Tech Environment Solutions",
+          "company_type": "SME",
+          "purchase_date": "12-03-2026 11:03"
+        }
+      ],
+      "nit": {
+        "title": "Providing advisory services to the Environment Agency in the field of air quality",
+        "governorate": "Muscat",
+        "wilayat": "Bowsher",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/110/و ز ث س م/ م ر -13",
+      "tender_number_en": "110/2026/MAFWR/HQ-13",
+      "name": "Design and Build Services f.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 300.0,
+      "view": "New/Floated Tenders",
+      "dates": "05-05-2026",
+      "internal_id": "83564",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "00005359",
+          "company": "FAHUD TOWERS TRADING",
+          "company_type": "SME",
+          "purchase_date": "23-02-2026 12:02"
+        },
+        {
+          "reg_number": "00004861",
+          "company": "AL FAZARI UNITED TRADING AND CONTRACTION",
+          "company_type": "SME",
+          "purchase_date": "24-02-2026 07:42"
+        },
+        {
+          "reg_number": "00001255",
+          "company": "The Arab Contractors Oman Limited",
+          "company_type": "Local",
+          "purchase_date": "24-02-2026 11:12"
+        },
+        {
+          "reg_number": "00000752",
+          "company": "AL- GHARBIA ENTERPRISES TRADIG AND CONTRACTING COMPANY",
+          "company_type": "Local",
+          "purchase_date": "24-02-2026 12:42"
+        },
+        {
+          "reg_number": "00005690",
+          "company": "Yellow Horizon Trading",
+          "company_type": "SME",
+          "purchase_date": "24-02-2026 14:32"
+        },
+        {
+          "reg_number": "00008139",
+          "company": "SAD AL KHALEJ ENGENEERING",
+          "company_type": "SME",
+          "purchase_date": "26-02-2026 09:08"
+        },
+        {
+          "reg_number": "00001330",
+          "company": "MASITAH INTERNATIONAL TECHNICAL AND MARINE SERVICES LLC",
+          "company_type": "Local",
+          "purchase_date": "26-02-2026 09:22"
+        },
+        {
+          "reg_number": "00002074",
+          "company": "DETONATON BLASTING CONTRACTING",
+          "company_type": "Local",
+          "purchase_date": "01-03-2026 10:00"
+        },
+        {
+          "reg_number": "00000135",
+          "company": "ARABIAN PROJECTS AND TRANSPORT CO LLC",
+          "company_type": "Local",
+          "purchase_date": "01-03-2026 13:15"
+        },
+        {
+          "reg_number": "00003776",
+          "company": "AZ ENGINEERS AND PARTNERS",
+          "company_type": "Local",
+          "purchase_date": "02-03-2026 00:30"
+        },
+        {
+          "reg_number": "00014701",
+          "company": "EAMR AL-Mustagbal Engineering",
+          "company_type": "SME",
+          "purchase_date": "02-03-2026 10:03"
+        },
+        {
+          "reg_number": "0013199",
+          "company": "CAHIT TRADING & CONTRACTING",
+          "company_type": "Local",
+          "purchase_date": "03-03-2026 15:09"
+        },
+        {
+          "reg_number": "00011254",
+          "company": "Nursah Business",
+          "company_type": "Local",
+          "purchase_date": "08-03-2026 15:47"
+        },
+        {
+          "reg_number": "00003668",
+          "company": "FAGER OMAN TRAD AND CONT CO",
+          "company_type": "SME",
+          "purchase_date": "12-03-2026 11:24"
+        },
+        {
+          "reg_number": "00008987",
+          "company": "Masirah Island International",
+          "company_type": "SME",
+          "purchase_date": "01-04-2026 12:07"
+        },
+        {
+          "reg_number": "00000453",
+          "company": "Khimji Ramdas Construction",
+          "company_type": "Local",
+          "purchase_date": "06-04-2026 17:05"
+        },
+        {
+          "reg_number": "00009885",
+          "company": "China Communications Construction Company",
+          "company_type": "Local",
+          "purchase_date": "08-04-2026 10:45"
+        },
+        {
+          "reg_number": "00011003",
+          "company": "MARMUL MINING",
+          "company_type": "Local",
+          "purchase_date": "13-04-2026 19:09"
+        }
+      ],
+      "nit": {
+        "title": "Design and Build Services for Detailed Design and Construction of Quay Wall and Land development at Al Musannah Fishery ",
+        "governorate": "Muscat",
+        "wilayat": "Bowsher",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2024/25/ ه ط م",
+      "tender_number_en": "25/2024/CAA",
+      "name": "Providing aerial surveillanc.....",
+      "entity": "Civil Aviation Authority",
+      "category": "Consulting Offices [Excellent]",
+      "fee": 300.0,
+      "view": "New/Floated Tenders",
+      "dates": "10-03-2025",
+      "internal_id": "64341",
+      "bidders": [
+        {
+          "company": "AIREON LLC",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": ""
+        },
+        {
+          "company": "AIREON LLC",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": ""
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "",
+          "company": "AIREON LLC",
+          "company_type": "International",
+          "purchase_date": "12-12-2024 22:57"
+        }
+      ],
+      "nit": {
+        "title": "Providing aerial surveillance coverage services using SPACE BASED ADS-B satellites for parts of Omani airspace",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2023/12/ت أ ع/ م ر -12",
+      "tender_number_en": "12/2023/FDO/HQ-12",
+      "name": "Environmental Impact Asswssm.....",
+      "entity": "Fisheries Development Oman S.A.O.C.",
+      "category": "Consulting Offices [First,Second,Third]",
+      "fee": 300.0,
+      "view": "New/Floated Tenders",
+      "dates": "19-06-2023",
+      "internal_id": "36255",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "00011462",
+          "company": "NATURAL RESOURCES CONSULTANCY AND SERVICES",
+          "company_type": "Local",
+          "purchase_date": "21-05-2023 09:42"
+        }
+      ],
+      "nit": {
+        "title": "Environmental Impact Asswssment for Bar Al Hikman Shrimp Farm Project",
+        "governorate": "Muscat",
+        "wilayat": "Bowsher",
+        "envelope": "Two Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/200/و إ ت ع/م و-6",
+      "tender_number_en": "200/2025/MHUP/HEMO-6",
+      "name": "Consultancy services for Mas.....",
+      "entity": "Ministry of Housing and Urban Planning",
+      "category": "Consulting Offices [Excellent,First]",
+      "fee": 300.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "81520",
+      "bidders": [
+        {
+          "company": "SERING INTERNATIONAL",
+          "offer_type": "Main",
+          "quoted_value": "2082250.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "NICHOLSON JONES PARTNERSHIP ENGINEERING CONSULTANCY",
+          "offer_type": "Main",
+          "quoted_value": "2882350.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "KHATIB AND ALAMI AND PARTNERS CONSULTING ARCHITECTS & ENGINEERS AND SERVICES",
+          "offer_type": "Main",
+          "quoted_value": "4709089.747",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SURBANA CONSULTANTS PTE LTD DUBAI BRANCH",
+          "offer_type": "Main",
+          "quoted_value": "4490560.019",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "WSP INTERNATIONAL",
+          "offer_type": "Main",
+          "quoted_value": "6413245.007",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "CID GULF LLC",
+          "offer_type": "Main",
+          "quoted_value": "4248395.716",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "F M MIDDLE EAST ENGINEERING CONSULTANCY LLC",
+          "offer_type": "Main",
+          "quoted_value": "3505374.073",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "IBRAHIM JAIDAH ARCHITECTS AND ENGINEERS",
+          "offer_type": "Main",
+          "quoted_value": "6000000.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "ALAMUR ENGINEERING CONSULTANT",
+          "offer_type": "Main",
+          "quoted_value": "1973312.500",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "DAR AL HANDASAH",
+          "offer_type": "Main",
+          "quoted_value": "2255595.550",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "DAR SSH INTERNATIONAL ENGINEERING CONSULTANTS",
+          "offer_type": "Main",
+          "quoted_value": "3250000.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SCIENTIFIC INK ENGINEERING CONSULTANTS",
+          "offer_type": "Main",
+          "quoted_value": "2162921.500",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "DAR AL-NABHAN NIN ENGINEERING CONSULTANCY",
+          "offer_type": "Main",
+          "quoted_value": "4086654.850",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "DESIGN UNIT ENGINEERING",
+          "offer_type": "Main",
+          "quoted_value": "1849045.000",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "",
+          "company": "LXA URBAN ARCHITECTURAL SERVICES LLC",
+          "company_type": "International",
+          "purchase_date": "24-11-2025 17:54"
+        },
+        {
+          "reg_number": "",
+          "company": "SASAKI ASSOCIATES INC",
+          "company_type": "International",
+          "purchase_date": "24-11-2025 21:00"
+        },
+        {
+          "reg_number": "00000143",
+          "company": "NICHOLSON JONES PARTNERSHIP ENGINEERING CONSULTANCY",
+          "company_type": "Local",
+          "purchase_date": "25-11-2025 07:15"
+        },
+        {
+          "reg_number": "00004876",
+          "company": "Design Group Engineering Consultants",
+          "company_type": "SME",
+          "purchase_date": "25-11-2025 08:02"
+        },
+        {
+          "reg_number": "00008252",
+          "company": "ARABTECH JARDANEH INTERNATIONAL",
+          "company_type": "Local",
+          "purchase_date": "25-11-2025 08:55"
+        },
+        {
+          "reg_number": "00000414",
+          "company": "PARSONS INTERNATIONAL AND COMPANY LLC",
+          "company_type": "Local",
+          "purchase_date": "25-11-2025 09:41"
+        },
+        {
+          "reg_number": "00004288",
+          "company": "Dar SSH International Engineering Consultants",
+          "company_type": "Local",
+          "purchase_date": "25-11-2025 11:02"
+        },
+        {
+          "reg_number": "00004691",
+          "company": "F M MIDDLE EAST ENGINEERING CONSULTANCY LLC",
+          "company_type": "Local",
+          "purchase_date": "25-11-2025 11:34"
+        },
+        {
+          "reg_number": "00001324",
+          "company": "almanarah engineering consultancy",
+          "company_type": "SME",
+          "purchase_date": "25-11-2025 12:45"
+        },
+        {
+          "reg_number": "00004183",
+          "company": "WSP INTERNATIONAL",
+          "company_type": "Local",
+          "purchase_date": "25-11-2025 15:09"
+        },
+        {
+          "reg_number": "00011847",
+          "company": "Haskoning International Engineering Consultancy",
+          "company_type": "Local",
+          "purchase_date": "26-11-2025 08:39"
+        },
+        {
+          "reg_number": "",
+          "company": "M E A MIMAR ENGINEERING CONSULTANTSC",
+          "company_type": "International",
+          "purchase_date": "26-11-2025 16:53"
+        },
+        {
+          "reg_number": "00000918",
+          "company": "Muscat Engineering Consulting LLC",
+          "company_type": "Local",
+          "purchase_date": "27-11-2025 07:51"
+        },
+        {
+          "reg_number": "",
+          "company": "INTEGRATED SOLUTIONS CONSULTANCY LTD",
+          "company_type": "International",
+          "purchase_date": "27-11-2025 13:57"
+        },
+        {
+          "reg_number": "",
+          "company": "SCHIATTARELLA ASSOCIATI",
+          "company_type": "International",
+          "purchase_date": "27-11-2025 19:45"
+        },
+        {
+          "reg_number": "",
+          "company": "SP ARCHITECTS",
+          "company_type": "International",
+          "purchase_date": "28-11-2025 12:57"
+        },
+        {
+          "reg_number": "",
+          "company": "CAVENDISH MAXWELL REAL ESTATE CONSULTING",
+          "company_type": "International",
+          "purchase_date": "28-11-2025 15:48"
+        },
+        {
+          "reg_number": "00000640",
+          "company": "DAR AL HANDASAH",
+          "company_type": "Local",
+          "purchase_date": "30-11-2025 12:18"
+        },
+        {
+          "reg_number": "00003021",
+          "company": "MUSCAT DESIGN CENTRE AND PARTNERS LLC",
+          "company_type": "SME",
+          "purchase_date": "30-11-2025 13:42"
+        },
+        {
+          "reg_number": "00000057",
+          "company": "KHATIB AND ALAMI AND PARTNERS CONSULTING ARCHITECTS & ENGINEERS AND SERVICES",
+          "company_type": "Local",
+          "purchase_date": "30-11-2025 14:51"
+        },
+        {
+          "reg_number": "00001972",
+          "company": "ABDULLA MUKADAM AND  PARTNER LLC",
+          "company_type": "Local",
+          "purchase_date": "01-12-2025 09:42"
+        },
+        {
+          "reg_number": "00000050",
+          "company": "RENARDET SA AND PARTNERS CONSULTING ENGINEERS LLC",
+          "company_type": "Local",
+          "purchase_date": "01-12-2025 12:41"
+        },
+        {
+          "reg_number": "00004315",
+          "company": "IBRAHIM JAIDAH ARCHITECTS AND ENGINEERS",
+          "company_type": "Local",
+          "purchase_date": "01-12-2025 13:06"
+        },
+        {
+          "reg_number": "",
+          "company": "SURBANA CONSULTANTS PTE LTD DUBAI BRANCH",
+          "company_type": "International",
+          "purchase_date": "01-12-2025 15:09"
+        },
+        {
+          "reg_number": "",
+          "company": "BERNARD GRUPPE ZT GMBH",
+          "company_type": "International",
+          "purchase_date": "01-12-2025 15:34"
+        },
+        {
+          "reg_number": "",
+          "company": "BIG PARTNERS LIMITED",
+          "company_type": "International",
+          "purchase_date": "02-12-2025 21:41"
+        },
+        {
+          "reg_number": "",
+          "company": "ASP ALBERT SPEER AND PARTNER GMBH",
+          "company_type": "International",
+          "purchase_date": "03-12-2025 12:18"
+        },
+        {
+          "reg_number": "00001932",
+          "company": "RAZEEN ENGINEERING CONSULTANCY",
+          "company_type": "Local",
+          "purchase_date": "03-12-2025 14:35"
+        },
+        {
+          "reg_number": "00003249",
+          "company": "AZD Engineering Consultancy",
+          "company_type": "SME",
+          "purchase_date": "03-12-2025 16:43"
+        },
+        {
+          "reg_number": "00007723",
+          "company": "CID GULF LLC",
+          "company_type": "Local",
+          "purchase_date": "04-12-2025 13:27"
+        },
+        {
+          "reg_number": "",
+          "company": "WITTEVEEN PLUS BOS INTERNATIONAL PROJECTS",
+          "company_type": "International",
+          "purchase_date": "04-12-2025 14:21"
+        },
+        {
+          "reg_number": "",
+          "company": "GOOD TIME CONSULTING FZ LLC",
+          "company_type": "International",
+          "purchase_date": "05-12-2025 10:54"
+        },
+        {
+          "reg_number": "",
+          "company": "THE BOSTON CONSULTING GROUP",
+          "company_type": "International",
+          "purchase_date": "05-12-2025 12:33"
+        },
+        {
+          "reg_number": "",
+          "company": "MEINHARDT SINGAPORE PTE LTD",
+          "company_type": "International",
+          "purchase_date": "08-12-2025 09:21"
+        },
+        {
+          "reg_number": "00002665",
+          "company": "SERING INTERNATIONAL",
+          "company_type": "Local",
+          "purchase_date": "08-12-2025 16:42"
+        },
+        {
+          "reg_number": "00002791",
+          "company": "TUSKER ENGINEERING CONSULTANCY GROUP",
+          "company_type": "SME",
+          "purchase_date": "08-12-2025 17:01"
+        },
+        {
+          "reg_number": "",
+          "company": "ENGINEERING CONSULTANTS GROUP",
+          "company_type": "International",
+          "purchase_date": "09-12-2025 17:12"
+        },
+        {
+          "reg_number": "",
+          "company": "ATELIER ENTROPIC SL",
+          "company_type": "International",
+          "purchase_date": "09-12-2025 22:02"
+        },
+        {
+          "reg_number": "00001507",
+          "company": "SCIENTIFIC INK ENGINEERING CONSULTANTS",
+          "company_type": "SME",
+          "purchase_date": "11-12-2025 10:06"
+        },
+        {
+          "reg_number": "00001461",
+          "company": "ALAMUR ENGINEERING CONSULTANT",
+          "company_type": "SME",
+          "purchase_date": "13-12-2025 09:01"
+        },
+        {
+          "reg_number": "00003464",
+          "company": "DESIGN UNIT ENGINEERING",
+          "company_type": "Local",
+          "purchase_date": "14-12-2025 16:30"
+        },
+        {
+          "reg_number": "",
+          "company": "DAR AL-NABHAN NIN ENGINEERING CONSULTANCY",
+          "company_type": "International",
+          "purchase_date": "16-12-2025 14:24"
+        },
+        {
+          "reg_number": "00001445",
+          "company": "NATIONAL ENGINEERING OFFICE",
+          "company_type": "SME",
+          "purchase_date": "17-12-2025 01:40"
+        },
+        {
+          "reg_number": "",
+          "company": "LAVA BERLIN GMBH",
+          "company_type": "International",
+          "purchase_date": "22-12-2025 13:50"
+        },
+        {
+          "reg_number": "",
+          "company": "UPTON HANSEN ARCHITECTS",
+          "company_type": "International",
+          "purchase_date": "23-12-2025 01:32"
+        }
+      ],
+      "nit": {
+        "title": "Consultancy services for Masterplan & Detailed Designs for The New City Sohar",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/4859/و ص/ م ر -404",
+      "tender_number_en": "4859/2025/MOH/HQ-404",
+      "name": "Construction of Oman Genome .....",
+      "entity": "Ministry of Health",
+      "category": "Construction and Maintenance [Excellent]",
+      "fee": 299.5,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "82695",
+      "bidders": [
+        {
+          "company": "AL RAFAA TRADING AND CONTRACTING LLC",
+          "offer_type": "Main",
+          "quoted_value": "5042403.903",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "ARKAN MAJAN INTERNATIONAL LLC",
+          "offer_type": "Main",
+          "quoted_value": "3998141.666",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SAIF SALIM ESSA AL HARASI AND CO LLC",
+          "offer_type": "Main",
+          "quoted_value": "6798070.446",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "KHIMJI RAMDAS CONSTRUCTION",
+          "offer_type": "Main",
+          "quoted_value": "4012535.865",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00001393",
+          "company": "CARILLION ALAWI LLC",
+          "company_type": "Local",
+          "purchase_date": "21-12-2025 10:54"
+        },
+        {
+          "reg_number": "00001336",
+          "company": "AL AQTAAB TRADING AND CONT",
+          "company_type": "SME",
+          "purchase_date": "22-12-2025 11:57"
+        },
+        {
+          "reg_number": "00002152",
+          "company": "ALYAM ENTERPRISES LLC",
+          "company_type": "Local",
+          "purchase_date": "24-12-2025 15:11"
+        },
+        {
+          "reg_number": "00003290",
+          "company": "SAIF SALIM ESSA AL HARASI AND CO LLC",
+          "company_type": "Local",
+          "purchase_date": "25-12-2025 12:15"
+        },
+        {
+          "reg_number": "00000438",
+          "company": "ARKAN MAJAN INTERNATIONAL LLC",
+          "company_type": "Local",
+          "purchase_date": "28-12-2025 15:58"
+        },
+        {
+          "reg_number": "00000005",
+          "company": "AL HAJIRY TRADING CO",
+          "company_type": "Local",
+          "purchase_date": "30-12-2025 09:25"
+        },
+        {
+          "reg_number": "00000453",
+          "company": "Khimji Ramdas Construction",
+          "company_type": "Local",
+          "purchase_date": "30-12-2025 10:57"
+        },
+        {
+          "reg_number": "00000464",
+          "company": "GALFAR ENGINEERING AND CONTRACTING",
+          "company_type": "Local",
+          "purchase_date": "31-12-2025 11:41"
+        },
+        {
+          "reg_number": "00001714",
+          "company": "AL RAFAA TRADING AND CONTRACTING LLC",
+          "company_type": "Local",
+          "purchase_date": "31-12-2025 15:06"
+        },
+        {
+          "reg_number": "00005118",
+          "company": "AL ARKAN CONSTRUCTION LLC",
+          "company_type": "Local",
+          "purchase_date": "01-01-2026 09:33"
+        }
+      ],
+      "nit": {
+        "title": "Construction of Oman Genome Center and Bio Bank in Governorate of Muscat",
+        "governorate": "Muscat",
+        "wilayat": "ASeeb",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/7/م م ج ب/ م ر -7",
+      "tender_number_en": "7/2026/SBGO/HQ-7",
+      "name": "Construction of Phase Three .....",
+      "entity": "South Al Batinah Governor Office",
+      "category": "Construction and Maintenance [Excellent,First]",
+      "fee": 290.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "84291",
+      "bidders": [
+        {
+          "company": "ALYAM ENTERPRISES LLC",
+          "offer_type": "Main",
+          "quoted_value": "2420648.913",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AWTAD INTERNATIONAL",
+          "offer_type": "Main",
+          "quoted_value": "1587350.315",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL DIYAR NATIONAL ENT L LC",
+          "offer_type": "Main",
+          "quoted_value": "3290186.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "TRADING LOGISTICS",
+          "offer_type": "Main",
+          "quoted_value": "1701309.800",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "FAHUD TOWERS TRADING",
+          "offer_type": "Main",
+          "quoted_value": "1978348.177",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SAROOH GULF ALARABIA SONTSO",
+          "offer_type": "Main",
+          "quoted_value": "1743203.034",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00003165",
+          "company": "SAROOH GULF ALARABIA SONTSO",
+          "company_type": "Local",
+          "purchase_date": "23-02-2026 14:58"
+        },
+        {
+          "reg_number": "00001336",
+          "company": "AL AQTAAB TRADING AND CONT",
+          "company_type": "SME",
+          "purchase_date": "24-02-2026 10:36"
+        },
+        {
+          "reg_number": "00007399",
+          "company": "TRADING LOGISTICS",
+          "company_type": "SME",
+          "purchase_date": "24-02-2026 12:37"
+        },
+        {
+          "reg_number": "00005359",
+          "company": "FAHUD TOWERS TRADING",
+          "company_type": "SME",
+          "purchase_date": "25-02-2026 13:30"
+        },
+        {
+          "reg_number": "00001186",
+          "company": "MUSACAT OVERSEAS CONSTRUCTION CO",
+          "company_type": "Local",
+          "purchase_date": "26-02-2026 15:47"
+        },
+        {
+          "reg_number": "00000034",
+          "company": "AL DIYAR NATIONAL ENT L LC",
+          "company_type": "SME",
+          "purchase_date": "27-02-2026 16:35"
+        },
+        {
+          "reg_number": "00003720",
+          "company": "Awtad International",
+          "company_type": "SME",
+          "purchase_date": "28-02-2026 10:32"
+        },
+        {
+          "reg_number": "00001751",
+          "company": "WESTERN UNITED BUSINESS LLC",
+          "company_type": "SME",
+          "purchase_date": "02-03-2026 14:35"
+        },
+        {
+          "reg_number": "00001199",
+          "company": "NADANTRADING LLC",
+          "company_type": "Local",
+          "purchase_date": "04-03-2026 10:00"
+        },
+        {
+          "reg_number": "00002152",
+          "company": "ALYAM ENTERPRISES LLC",
+          "company_type": "Local",
+          "purchase_date": "04-03-2026 14:45"
+        },
+        {
+          "reg_number": "00001876",
+          "company": "AL TEHOON TRAD AND CONT CO",
+          "company_type": "SME",
+          "purchase_date": "06-03-2026 02:53"
+        },
+        {
+          "reg_number": "00004207",
+          "company": "KHOTOOT AL REEF SERVICES AND CONT CO",
+          "company_type": "SME",
+          "purchase_date": "10-03-2026 12:53"
+        },
+        {
+          "reg_number": "00010465",
+          "company": "AL RAWABI AL ZAHIYA INTERNATIONAL TRAD AND CONT LLC",
+          "company_type": "Local",
+          "purchase_date": "14-03-2026 10:22"
+        }
+      ],
+      "nit": {
+        "title": "Construction of Phase Three of Remal Park Project in Wilayat Nakhal, South Al Batinah Governorate.",
+        "governorate": "Al Batinah South",
+        "wilayat": "Nakhl",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/707/و ص/ م ر -51",
+      "tender_number_en": "707/2026/MOH/HQ-51",
+      "name": "Provision of Operation and M.....",
+      "entity": "Ministry of Health",
+      "category": "Electromechanical and Telecommunications Contracting and Mai",
+      "fee": 290.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "82705",
+      "bidders": [
+        {
+          "company": "JAL ENGINEERING SERVICES",
+          "offer_type": "Main",
+          "quoted_value": "3035562.132",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "TAWOOS INDUSTRIAL SERVICES COMPANY LLC",
+          "offer_type": "Main",
+          "quoted_value": "2580948.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SUNSET BRIGHTNESS TRADING LLC",
+          "offer_type": "Main",
+          "quoted_value": "2733912.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "GLOBAL CHEMICALS AND MAINTENANCE SYSTEMS",
+          "offer_type": "Main",
+          "quoted_value": "2798838.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SHARIKAT FANNIYA OMANIYA",
+          "offer_type": "Main",
+          "quoted_value": "3101237.760",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL TASNIM ENTERPRISES",
+          "offer_type": "Main",
+          "quoted_value": "2739240.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "PRECISION SKILLS INTERNATIONAL",
+          "offer_type": "Main",
+          "quoted_value": "3289146.528",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "OMAN SHAPOORJI COMPANY L.L.C",
+          "offer_type": "Main",
+          "quoted_value": "4645953.600",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "OMAN NATIONAL ENGINEERIN AND INVESTMENT CO",
+          "offer_type": "Main",
+          "quoted_value": "3275127.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "GENERAL ELECTRIC AND TRADING CO (GENETCO)",
+          "offer_type": "Main",
+          "quoted_value": "3079525.248",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00001333",
+          "company": "TAWOOS INDUSTRIAL SERVICES COMPANY LLC",
+          "company_type": "Local",
+          "purchase_date": "17-02-2026 10:56"
+        },
+        {
+          "reg_number": "00002533",
+          "company": "PUBLIC TECHNICAL PROJECTS",
+          "company_type": "SME",
+          "purchase_date": "18-02-2026 12:15"
+        },
+        {
+          "reg_number": "00000331",
+          "company": "GENERAL ELECTRIC AND TRADING CO (GENETCO)",
+          "company_type": "Local",
+          "purchase_date": "18-02-2026 14:45"
+        },
+        {
+          "reg_number": "00002718",
+          "company": "SHARIKAT FANNIYA OMANIYA",
+          "company_type": "Local",
+          "purchase_date": "19-02-2026 10:17"
+        },
+        {
+          "reg_number": "00001129",
+          "company": "GLOBAL CHEMICALS AND MAINTENANCE SYSTEMS",
+          "company_type": "Local",
+          "purchase_date": "19-02-2026 15:51"
+        },
+        {
+          "reg_number": "00001519",
+          "company": "OMAN SHAPOORJI COMPANY L.L.C",
+          "company_type": "Local",
+          "purchase_date": "22-02-2026 08:52"
+        },
+        {
+          "reg_number": "00005095",
+          "company": "JAL ENGINEERING SERVICES",
+          "company_type": "Local",
+          "purchase_date": "22-02-2026 09:49"
+        },
+        {
+          "reg_number": "00006203",
+          "company": "PRECISION SKILLS INTERNATIONAL",
+          "company_type": "Local",
+          "purchase_date": "22-02-2026 13:25"
+        },
+        {
+          "reg_number": "00000960",
+          "company": "OMAN NATIONAL ENGINEERIN AND INVESTMENT CO",
+          "company_type": "Local",
+          "purchase_date": "22-02-2026 14:35"
+        },
+        {
+          "reg_number": "00014012",
+          "company": "SUNSET BRIGHTNESS TRADING LLC",
+          "company_type": "Local",
+          "purchase_date": "22-02-2026 16:17"
+        },
+        {
+          "reg_number": "00003112",
+          "company": "AL TASNIM ENTERPRISES",
+          "company_type": "Local",
+          "purchase_date": "24-02-2026 08:45"
+        }
+      ],
+      "nit": {
+        "title": "Provision of Operation and Maintenance Services for Equipment at Ibra Hospital and Its Affiliated Health Units in North ",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/176/و ت س/ م ر -42",
+      "tender_number_en": "176/2025/MHT/HQ-42",
+      "name": "Construction Of Visitor Cent.....",
+      "entity": "Ministry of Heritage and Tourism",
+      "category": "Construction and Maintenance [Excellent]",
+      "fee": 290.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "82500",
+      "bidders": [
+        {
+          "company": "NEBRAS AL BARAKA ENT",
+          "offer_type": "Main",
+          "quoted_value": "3995986.670",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SMART VISION TECHNICAL SERVICES",
+          "offer_type": "Main",
+          "quoted_value": "3914444.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "OASIS GRACE",
+          "offer_type": "Main",
+          "quoted_value": "3604714.286",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "ALYAM ENTERPRISES LLC",
+          "offer_type": "Main",
+          "quoted_value": "3991299.850",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SOHAR UNITED CONTRACTING COMPANY",
+          "offer_type": "Main",
+          "quoted_value": "3050612.630",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00001336",
+          "company": "AL AQTAAB TRADING AND CONT",
+          "company_type": "SME",
+          "purchase_date": "10-12-2025 09:31"
+        },
+        {
+          "reg_number": "00007001",
+          "company": "SOHAR UNITED CONTRACTING COMPANY",
+          "company_type": "SME",
+          "purchase_date": "10-12-2025 12:44"
+        },
+        {
+          "reg_number": "00000437",
+          "company": "DEVELOPMENT SERVICES AND MAINTENANCE LLC",
+          "company_type": "Local",
+          "purchase_date": "11-12-2025 10:25"
+        },
+        {
+          "reg_number": "00002334",
+          "company": "AL-HADDAD TRADING & CONT CO",
+          "company_type": "SME",
+          "purchase_date": "14-12-2025 10:23"
+        },
+        {
+          "reg_number": "00000078",
+          "company": "SMART VISION TECHNICAL SERVICES",
+          "company_type": "Local",
+          "purchase_date": "16-12-2025 11:07"
+        },
+        {
+          "reg_number": "00000850",
+          "company": "OASIS GRACE",
+          "company_type": "Local",
+          "purchase_date": "18-12-2025 16:16"
+        },
+        {
+          "reg_number": "00002152",
+          "company": "ALYAM ENTERPRISES LLC",
+          "company_type": "Local",
+          "purchase_date": "20-12-2025 12:29"
+        },
+        {
+          "reg_number": "00004816",
+          "company": "Eshraq Engineering and Investment Company",
+          "company_type": "Local",
+          "purchase_date": "20-12-2025 17:23"
+        },
+        {
+          "reg_number": "00002866",
+          "company": "NEBRAS AL BARAKA ENT",
+          "company_type": "Local",
+          "purchase_date": "21-12-2025 10:24"
+        }
+      ],
+      "nit": {
+        "title": "Construction Of Visitor Center And Ancillary Building At Qalhat Archaeological Site In Sur",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/13/و إ ت ع/ م ر -4",
+      "tender_number_en": "11/2026/MTCIT/DGPRC-9",
+      "name": "Manufacturing a seafarer\u0003.....",
+      "entity": "Ministry of Transport Communications and Information Technol",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "fee": 280.0,
+      "view": "New/Floated Tenders",
+      "dates": "15-06-2026",
+      "internal_id": "84872",
+      "bidders": [
+        {
+          "company": "OBSESSION           TESTACY",
+          "offer_type": "Main",
+          "quoted_value": "655.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "ANWAR AL MAHROOQI TRADING",
+          "offer_type": "Main",
+          "quoted_value": "1193.000",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "purchasers": [],
+      "nit": {
+        "title": "Providing office furniture for the offices and departments of the governorate in North Al Batinah",
+        "governorate": "Al Batinah North",
+        "wilayat": "Sohar",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/260/و ص/م ن ز و م-9",
+      "tender_number_en": "13/2026/MHUP/HQ-4",
+      "name": "Sultan Haitham City Phase-01.....",
+      "entity": "Ministry of Housing and Urban Planning",
+      "category": "Construction and Maintenance [Excellent]",
+      "fee": 280.0,
+      "view": "New/Floated Tenders",
+      "dates": "22-04-2026",
+      "internal_id": "83790",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "00003247",
+          "company": "AGRICULTURE MODERN ENGINEERING",
+          "company_type": "Local",
+          "purchase_date": "21-01-2026 17:13"
+        },
+        {
+          "reg_number": "00000968",
+          "company": "GENERAL DEVELOPMENT SERVICES",
+          "company_type": "Local",
+          "purchase_date": "22-01-2026 11:00"
+        },
+        {
+          "reg_number": "00003112",
+          "company": "AL TASNIM ENTERPRISES",
+          "company_type": "Local",
+          "purchase_date": "22-01-2026 16:15"
+        },
+        {
+          "reg_number": "00000789",
+          "company": "Al Adrak Trading And Contracting",
+          "company_type": "Local",
+          "purchase_date": "22-01-2026 17:32"
+        },
+        {
+          "reg_number": "00003290",
+          "company": "SAIF SALIM ESSA AL HARASI AND CO LLC",
+          "company_type": "Local",
+          "purchase_date": "22-01-2026 18:54"
+        },
+        {
+          "reg_number": "00001882",
+          "company": "STRABAG OMAN",
+          "company_type": "Local",
+          "purchase_date": "25-01-2026 10:43"
+        },
+        {
+          "reg_number": "00003776",
+          "company": "AZ ENGINEERS AND PARTNERS",
+          "company_type": "Local",
+          "purchase_date": "26-01-2026 10:04"
+        },
+        {
+          "reg_number": "00001641",
+          "company": "UNIVERSAL LALBUKSH ENGINEERING SERVICES and TRADING",
+          "company_type": "Local",
+          "purchase_date": "26-01-2026 13:00"
+        },
+        {
+          "reg_number": "00007001",
+          "company": "SOHAR UNITED CONTRACTING COMPANY",
+          "company_type": "SME",
+          "purchase_date": "27-01-2026 10:04"
+        },
+        {
+          "reg_number": "00001835",
+          "company": "AL KHALILI CONSTRUCTION",
+          "company_type": "Local",
+          "purchase_date": "29-01-2026 08:59"
+        },
+        {
+          "reg_number": "00000453",
+          "company": "Khimji Ramdas Construction",
+          "company_type": "Local",
+          "purchase_date": "29-01-2026 09:01"
+        },
+        {
+          "reg_number": "00000438",
+          "company": "ARKAN MAJAN INTERNATIONAL LLC",
+          "company_type": "Local",
+          "purchase_date": "29-01-2026 09:09"
+        },
+        {
+          "reg_number": "00000850",
+          "company": "OASIS GRACE",
+          "company_type": "Local",
+          "purchase_date": "02-02-2026 08:07"
+        },
+        {
+          "reg_number": "00009501",
+          "company": "Hassan Allam Construction",
+          "company_type": "Local",
+          "purchase_date": "02-02-2026 15:17"
+        },
+        {
+          "reg_number": "00002305",
+          "company": "Sarooj Construction Company",
+          "company_type": "Local",
+          "purchase_date": "03-02-2026 10:44"
+        },
+        {
+          "reg_number": "00000407",
+          "company": "TOWELL CONSTRUCTION AND CO LLC",
+          "company_type": "Local",
+          "purchase_date": "03-02-2026 15:11"
+        },
+        {
+          "reg_number": "00000665",
+          "company": "NAFAL CONTRACTING AND TRADING CO LLC",
+          "company_type": "Local",
+          "purchase_date": "04-02-2026 11:26"
+        },
+        {
+          "reg_number": "00002234",
+          "company": "ALSALSABEEL TRAD CONT EST",
+          "company_type": "Local",
+          "purchase_date": "05-02-2026 13:07"
+        },
+        {
+          "reg_number": "00003563",
+          "company": "KHALEEJI MANAGER CONTRACTING COMPANY",
+          "company_type": "Local",
+          "purchase_date": "07-02-2026 11:56"
+        },
+        {
+          "reg_number": "00002334",
+          "company": "AL-HADDAD TRADING & CONT CO",
+          "company_type": "SME",
+          "purchase_date": "08-02-2026 11:27"
+        },
+        {
+          "reg_number": "00003868",
+          "company": "GULF INTERNATIONAL CONTRACTING",
+          "company_type": "Local",
+          "purchase_date": "09-02-2026 13:03"
+        },
+        {
+          "reg_number": "00002693",
+          "company": "TARGET",
+          "company_type": "Local",
+          "purchase_date": "11-02-2026 10:17"
+        },
+        {
+          "reg_number": "",
+          "company": "SAUDI BASHYER CONSTRUCION CO",
+          "company_type": "International",
+          "purchase_date": "23-03-2026 06:16"
+        },
+        {
+          "reg_number": "",
+          "company": "PORTEX INSAAT SANAYII TICARET LIMITED SIRKETI",
+          "company_type": "International",
+          "purchase_date": "24-03-2026 16:08"
+        },
+        {
+          "reg_number": "",
+          "company": "UNITED GULF CONSTRUCTION COMPANY W L L",
+          "company_type": "International",
+          "purchase_date": "25-03-2026 11:43"
+        },
+        {
+          "reg_number": "00002152",
+          "company": "ALYAM ENTERPRISES LLC",
+          "company_type": "Local",
+          "purchase_date": "26-03-2026 14:48"
+        },
+        {
+          "reg_number": "",
+          "company": "EDECS EL DAWLIA FOR CONTRACTING",
+          "company_type": "International",
+          "purchase_date": "31-03-2026 08:28"
+        },
+        {
+          "reg_number": "",
+          "company": "SAYED KADHEM ALDURAZI AND SONS COMPANY BSC",
+          "company_type": "International",
+          "purchase_date": "31-03-2026 10:25"
+        },
+        {
+          "reg_number": "",
+          "company": "SERKA TAAHHUT INSAAT AS",
+          "company_type": "International",
+          "purchase_date": "31-03-2026 12:37"
+        },
+        {
+          "reg_number": "00000464",
+          "company": "GALFAR ENGINEERING AND CONTRACTING",
+          "company_type": "Local",
+          "purchase_date": "08-04-2026 11:28"
+        }
+      ],
+      "nit": {
+        "title": "Sultan Haitham City Phase-01, WP09B Construction of Big Park Including Structures and Wet/Dry Infrastructure",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/137/ه ب/ م ر -28 - اعادة طرح - 1",
+      "tender_number_en": "137/2025/EA/HQ-28 - Recall - 1",
+      "name": "Development of Al-Sail Natur.....",
+      "entity": "Environment Authority",
+      "category": "Construction and Maintenance [Excellent,First]",
+      "fee": 260.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "86173",
+      "bidders": [
+        {
+          "company": "WESTERN UNITED BUSINESS LLC",
+          "offer_type": "Main",
+          "quoted_value": "5108303.740",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "KHOTOOT AL REEF SERVICES AND CONT CO",
+          "offer_type": "Main",
+          "quoted_value": "2850945.715",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL-SSARH TRADING AND CONTRACTING",
+          "offer_type": "Main",
+          "quoted_value": "3303192.900",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "ATLANTIC",
+          "offer_type": "Main",
+          "quoted_value": "4091721.380",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "OASIS GRACE",
+          "offer_type": "Main",
+          "quoted_value": "3610950.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "GULF EMAAR EXCELLENCE",
+          "offer_type": "Main",
+          "quoted_value": "2499599.298",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "MIDDLE EAST ELECTRO MECHANICAL AND CONSRUCTION COMPANY",
+          "offer_type": "Main",
+          "quoted_value": "5362970.353",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SOHAR STAR UNITED LLC",
+          "offer_type": "Main",
+          "quoted_value": "5789700.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AMOD ALREEF TRAD AND CONT CO",
+          "offer_type": "Main",
+          "quoted_value": "6578787.338",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AWTAD INTERNATIONAL",
+          "offer_type": "Main",
+          "quoted_value": "3997802.127",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL RAWDHA WORLD CENTER TRADING AND CONTRACTING LLC",
+          "offer_type": "Main",
+          "quoted_value": "4700291.800",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "ALMASKARI CONSTRUCTION CO",
+          "offer_type": "Main",
+          "quoted_value": "2998465.995",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL DIYAR NATIONAL ENT L LC",
+          "offer_type": "Main",
+          "quoted_value": "2950000.000",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00004207",
+          "company": "KHOTOOT AL REEF SERVICES AND CONT CO",
+          "company_type": "SME",
+          "purchase_date": "04-03-2026 10:15"
+        },
+        {
+          "reg_number": "00008952",
+          "company": "SOCIAL SERVICES TRADING",
+          "company_type": "SME",
+          "purchase_date": "04-03-2026 11:00"
+        },
+        {
+          "reg_number": "00003720",
+          "company": "Awtad International",
+          "company_type": "SME",
+          "purchase_date": "05-03-2026 09:13"
+        },
+        {
+          "reg_number": "00000034",
+          "company": "AL DIYAR NATIONAL ENT L LC",
+          "company_type": "SME",
+          "purchase_date": "06-03-2026 15:03"
+        },
+        {
+          "reg_number": "00003828",
+          "company": "GULF EMAAR EXCELLENCE",
+          "company_type": "SME",
+          "purchase_date": "09-03-2026 15:22"
+        },
+        {
+          "reg_number": "00001751",
+          "company": "WESTERN UNITED BUSINESS LLC",
+          "company_type": "SME",
+          "purchase_date": "09-03-2026 22:18"
+        },
+        {
+          "reg_number": "00003671",
+          "company": "AMOD ALREEF TRAD AND CONT CO",
+          "company_type": "SME",
+          "purchase_date": "10-03-2026 10:50"
+        },
+        {
+          "reg_number": "00002334",
+          "company": "AL-HADDAD TRADING & CONT CO",
+          "company_type": "SME",
+          "purchase_date": "10-03-2026 13:57"
+        },
+        {
+          "reg_number": "00001973",
+          "company": "ALMASKARI CONSTRUCTION CO",
+          "company_type": "SME",
+          "purchase_date": "11-03-2026 09:57"
+        },
+        {
+          "reg_number": "00007420",
+          "company": "SOHAR STAR UNITED LLC",
+          "company_type": "Local",
+          "purchase_date": "11-03-2026 10:45"
+        },
+        {
+          "reg_number": "00003269",
+          "company": "AL RAWDHA WORLD CENTER TRADING AND CONTRACTING LLC",
+          "company_type": "Local",
+          "purchase_date": "11-03-2026 19:26"
+        },
+        {
+          "reg_number": "00005835",
+          "company": "Middle East Electro Mechanical and consruction company",
+          "company_type": "SME",
+          "purchase_date": "12-03-2026 14:38"
+        },
+        {
+          "reg_number": "00004104",
+          "company": "ATLANTIC",
+          "company_type": "Local",
+          "purchase_date": "12-03-2026 18:27"
+        },
+        {
+          "reg_number": "00005880",
+          "company": "AL-SSARH TRADING AND CONTRACTING",
+          "company_type": "SME",
+          "purchase_date": "12-03-2026 22:51"
+        },
+        {
+          "reg_number": "00000850",
+          "company": "OASIS GRACE",
+          "company_type": "Local",
+          "purchase_date": "14-03-2026 12:42"
+        },
+        {
+          "reg_number": "00001876",
+          "company": "AL TEHOON TRAD AND CONT CO",
+          "company_type": "SME",
+          "purchase_date": "15-03-2026 11:00"
+        }
+      ],
+      "nit": {
+        "title": "Development of Al-Sail Natural Park in South Sharqia Governorate",
+        "governorate": "Muscat",
+        "wilayat": "Bowsher",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/9/و إ ت ع/ م ر -2",
+      "tender_number_en": "1658/2025/MOH/DGKHP-40- Recall - 2",
+      "name": "REPAIR OF STERILE TUBING WEL.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "fee": 250.0,
+      "view": "New/Floated Tenders",
+      "dates": "30-04-2026",
+      "internal_id": "80150",
+      "bidders": [],
+      "purchasers": [],
+      "nit": {
+        "title": "REPAIR OF STERILE TUBING WELDER AT DIRECTORATE GENERAL OF KHOULA HOSPITAL",
+        "governorate": "Muscat",
+        "wilayat": "Muttrah",
+        "envelope": "Purchase"
+      }
+    },
+    {
+      "tender_number": "2026/23/و ع/ق م-23",
+      "tender_number_en": "9/2026/MHUP/HQ-2",
+      "name": "CONSTRUCTION OF REHABILITATI.....",
+      "entity": "Ministry of Housing and Urban Planning",
+      "category": "Construction and Maintenance [Excellent,First]",
+      "fee": 250.0,
+      "view": "New/Floated Tenders",
+      "dates": "08-02-2026",
+      "internal_id": "83560",
+      "bidders": [
+        {
+          "company": "MAWAHIB AL-KHALIDYAH TRD",
+          "offer_type": "Main",
+          "quoted_value": "4330.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "BADAYA ALMADEENA WATANYA",
+          "offer_type": "Main",
+          "quoted_value": "3735.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "TSAMEM MEDIA",
+          "offer_type": "Main",
+          "quoted_value": "5855.000",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00007200",
+          "company": "TSAMEM MEDIA",
+          "company_type": "SME",
+          "purchase_date": "06-01-2026 15:19"
+        },
+        {
+          "reg_number": "00014372",
+          "company": "Quick Sheet",
+          "company_type": "SME",
+          "purchase_date": "06-01-2026 15:50"
+        },
+        {
+          "reg_number": "00015345",
+          "company": "Muscat QUALITY UNITED",
+          "company_type": "Local",
+          "purchase_date": "06-01-2026 15:54"
+        },
+        {
+          "reg_number": "00002038",
+          "company": "ALZAIDI INTEGRATED ENTERPRISES",
+          "company_type": "SME",
+          "purchase_date": "06-01-2026 22:16"
+        },
+        {
+          "reg_number": "00016383",
+          "company": "Top Leaders for investment",
+          "company_type": "SME",
+          "purchase_date": "07-01-2026 08:31"
+        },
+        {
+          "reg_number": "00015300",
+          "company": "JAWAHART ALJORI TRADING",
+          "company_type": "SME",
+          "purchase_date": "07-01-2026 08:52"
+        },
+        {
+          "reg_number": "00002142",
+          "company": "SHAMS ALULOOM OFFICE SERVICES",
+          "company_type": "SME",
+          "purchase_date": "07-01-2026 18:34"
+        },
+        {
+          "reg_number": "00012015",
+          "company": "QAWAFIL ALBATINA MODREN",
+          "company_type": "SME",
+          "purchase_date": "07-01-2026 20:17"
+        },
+        {
+          "reg_number": "00004168",
+          "company": "WONDERFUL GRAPHICS",
+          "company_type": "SME",
+          "purchase_date": "08-01-2026 10:57"
+        },
+        {
+          "reg_number": "00007549",
+          "company": "AL TANFITH ALDWALIAH SPC",
+          "company_type": "SME",
+          "purchase_date": "08-01-2026 11:01"
+        },
+        {
+          "reg_number": "00012164",
+          "company": "TARGET PRINTING SERVICES",
+          "company_type": "SME",
+          "purchase_date": "08-01-2026 15:13"
+        },
+        {
+          "reg_number": "00014608",
+          "company": "MAWAHIB AL-KHALIDYAH TRD",
+          "company_type": "Local",
+          "purchase_date": "10-01-2026 09:39"
+        },
+        {
+          "reg_number": "00009406",
+          "company": "CE-INTERNATIONAL For Educational And Security Services",
+          "company_type": "SME",
+          "purchase_date": "11-01-2026 11:23"
+        },
+        {
+          "reg_number": "00012181",
+          "company": "DIGITAL VISUALS",
+          "company_type": "SME",
+          "purchase_date": "11-01-2026 13:30"
+        },
+        {
+          "reg_number": "00013007",
+          "company": "ATLAS PRINTING PRESS",
+          "company_type": "SME",
+          "purchase_date": "11-01-2026 18:26"
+        },
+        {
+          "reg_number": "00016097",
+          "company": "BADAYA ALMADEENA WATANYA",
+          "company_type": "Local",
+          "purchase_date": "12-01-2026 21:22"
+        }
+      ],
+      "nit": {
+        "title": "Training and Guidance Forum",
+        "governorate": "Al Batinah South",
+        "wilayat": "Musannah",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2021/13/ ن ا د",
+      "tender_number_en": "13/2021/ANP",
+      "name": "Tender of Outsourcing Manpow.....",
+      "entity": "A Namaa Poultry Co. SAOC",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "fee": 250.0,
+      "view": "New/Floated Tenders",
+      "dates": "22-08-2021",
+      "internal_id": "14504",
+      "bidders": [
+        {
+          "company": "ETHAD ENGINEERS OF BUSINESSES",
+          "offer_type": "",
+          "quoted_value": "",
+          "status": "Bid Submitted"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00001022",
+          "company": "AL NAWA MANAGEMENT AND HRD CONSULTANTS",
+          "company_type": "Local",
+          "purchase_date": "14-06-2021 14:59"
+        },
+        {
+          "reg_number": "00000858",
+          "company": "TAQSEEM DEVELOPERS AND SERVICES",
+          "company_type": "Local",
+          "purchase_date": "09-08-2021 22:55"
+        },
+        {
+          "reg_number": "00006010",
+          "company": "ETHAD ENGINEERS OF Businesses",
+          "company_type": "SME",
+          "purchase_date": "15-08-2021 10:44"
+        }
+      ],
+      "nit": {
+        "title": "Tender of Outsourcing Manpower",
+        "governorate": "Al Dhahira",
+        "wilayat": "Ibri",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/9/ أسياد",
+      "tender_number_en": "9/2026/ASYAD",
+      "name": "Consultancy Services for Qua.....",
+      "entity": "ASYAD",
+      "category": "Consulting Offices [Excellent,First,Second,Third]",
+      "fee": 250.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "85922",
+      "bidders": [
+        {
+          "company": "HASKONING INTERNATIONAL ENGINEERING CONSULTANCY",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "LLOYD ENGINEERING",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "WSP INTERNATIONAL",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "SERING INTERNATIONAL",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "F M MIDDLE EAST ENGINEERING CONSULTANCY LLC",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "ORIX ENGINEERING CONSULTATION",
+          "offer_type": "Main",
+          "quoted_value": "Technical Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "AL WASEET FOR ECONOMIC AND FINANCIAL CONSULTANCY SERVICES WEFICS",
+          "offer_type": "Main",
+          "quoted_value": "Technical Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "RENARDET SA AND PARTNERS CONSULTING ENGINEERS LLC",
+          "offer_type": "Main",
+          "quoted_value": "Technical Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "ISAG CONSULTING ENGINEERS",
+          "offer_type": "Main",
+          "quoted_value": "Technical Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "AZD ENGINEERING CONSULTANCY",
+          "offer_type": "Main",
+          "quoted_value": "Technical Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "BINAA CONSULTING",
+          "offer_type": "Main",
+          "quoted_value": "Technical Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "TANGER MED ENGINEERING",
+          "offer_type": "Main",
+          "quoted_value": "Technical Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "TANGER MED ENGINEERING",
+          "offer_type": "Alternate1",
+          "quoted_value": "Technical Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "TANGER MED ENGINEERING",
+          "offer_type": "Alternate2",
+          "quoted_value": "Technical Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "ALMANARAH ENGINEERING CONSULTANCY",
+          "offer_type": "Main",
+          "quoted_value": "Technical Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "LANKA HYDRAULIC INSTITUTE LTD",
+          "offer_type": "Main",
+          "quoted_value": "Technical Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "VERTEX ENGINEERING CONSULTANCY",
+          "offer_type": "Main",
+          "quoted_value": "Technical Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "NATIONAL ENGINEERING OFFICE",
+          "offer_type": "Main",
+          "quoted_value": "Technical Bid Opened",
+          "status": ""
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00011847",
+          "company": "Haskoning International Engineering Consultancy",
+          "company_type": "Local",
+          "purchase_date": "23-02-2026 08:15"
+        },
+        {
+          "reg_number": "00001324",
+          "company": "almanarah engineering consultancy",
+          "company_type": "SME",
+          "purchase_date": "23-02-2026 09:00"
+        },
+        {
+          "reg_number": "00000050",
+          "company": "RENARDET SA AND PARTNERS CONSULTING ENGINEERS LLC",
+          "company_type": "Local",
+          "purchase_date": "23-02-2026 10:57"
+        },
+        {
+          "reg_number": "00002665",
+          "company": "SERING INTERNATIONAL",
+          "company_type": "Local",
+          "purchase_date": "23-02-2026 11:13"
+        },
+        {
+          "reg_number": "00000905",
+          "company": "JEEL ENGINEERING",
+          "company_type": "SME",
+          "purchase_date": "23-02-2026 16:02"
+        },
+        {
+          "reg_number": "",
+          "company": "LLOYD ENGINEERING",
+          "company_type": "International",
+          "purchase_date": "23-02-2026 20:18"
+        },
+        {
+          "reg_number": "00014100",
+          "company": "Al Waseet for Economic and Financial Consultancy Services WEFICS",
+          "company_type": "SME",
+          "purchase_date": "24-02-2026 09:58"
+        },
+        {
+          "reg_number": "00004183",
+          "company": "WSP INTERNATIONAL",
+          "company_type": "Local",
+          "purchase_date": "24-02-2026 11:22"
+        },
+        {
+          "reg_number": "00001445",
+          "company": "NATIONAL ENGINEERING OFFICE",
+          "company_type": "SME",
+          "purchase_date": "24-02-2026 13:04"
+        },
+        {
+          "reg_number": "00004916",
+          "company": "ORIX ENGINEERING CONSULTATION",
+          "company_type": "Local",
+          "purchase_date": "24-02-2026 14:17"
+        },
+        {
+          "reg_number": "",
+          "company": "LANKA HYDRAULIC INSTITUTE LTD",
+          "company_type": "International",
+          "purchase_date": "25-02-2026 12:59"
+        },
+        {
+          "reg_number": "00003249",
+          "company": "AZD Engineering Consultancy",
+          "company_type": "SME",
+          "purchase_date": "25-02-2026 13:22"
+        },
+        {
+          "reg_number": "00003000",
+          "company": "AL SAQF ENGINEERING CONSULTANCY",
+          "company_type": "Local",
+          "purchase_date": "25-02-2026 13:30"
+        },
+        {
+          "reg_number": "00004155",
+          "company": "BINAA CONSULTING",
+          "company_type": "SME",
+          "purchase_date": "25-02-2026 13:41"
+        },
+        {
+          "reg_number": "",
+          "company": "TANGER MED ENGINEERING",
+          "company_type": "International",
+          "purchase_date": "25-02-2026 13:51"
+        },
+        {
+          "reg_number": "00010924",
+          "company": "Vertex Engineering Consultancy",
+          "company_type": "SME",
+          "purchase_date": "25-02-2026 16:25"
+        },
+        {
+          "reg_number": "00010860",
+          "company": "ISAG CONSULTING ENGINEERS",
+          "company_type": "Local",
+          "purchase_date": "26-02-2026 09:44"
+        },
+        {
+          "reg_number": "00004691",
+          "company": "F M MIDDLE EAST ENGINEERING CONSULTANCY LLC",
+          "company_type": "Local",
+          "purchase_date": "26-02-2026 12:28"
+        },
+        {
+          "reg_number": "00004032",
+          "company": "Tϋv Rheinland",
+          "company_type": "Local",
+          "purchase_date": "26-02-2026 16:27"
+        }
+      ],
+      "nit": {
+        "title": "Consultancy Services for Quay Wall Rehabilitation at Port Sultan Qaboos (Re-float)",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/2/ ش ص م ح",
+      "tender_number_en": "2/2025/SFZCO",
+      "name": "Construction road P04 & .....",
+      "entity": "Salalah Free Zone Company S.A.O.C.",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 250.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "81627",
+      "bidders": [
+        {
+          "company": "SHANFARI AND PARTNERS CO",
+          "offer_type": "Main",
+          "quoted_value": "1499000.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "NASR ARABIAN CO",
+          "offer_type": "Main",
+          "quoted_value": "1605674.248",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "BR OMAN LLC",
+          "offer_type": "Main",
+          "quoted_value": "1748735.320",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL KATHEERY TRADING AND CONT EST",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "AL RAFAH TRADING AND CONTRACTION COMPANY",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "AL TEHOON TRAD AND CONT CO",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "GLOBAL DEVELOPMENT TRADING & CONT.LLC",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "FAGER OMAN TRAD AND CONT CO",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00003053",
+          "company": "AL KATHEERY TRADING AND CONT EST",
+          "company_type": "Local",
+          "purchase_date": "23-11-2025 11:10"
+        },
+        {
+          "reg_number": "00003129",
+          "company": "BR OMAN LLC",
+          "company_type": "Local",
+          "purchase_date": "23-11-2025 12:55"
+        },
+        {
+          "reg_number": "00003668",
+          "company": "FAGER OMAN TRAD AND CONT CO",
+          "company_type": "SME",
+          "purchase_date": "24-11-2025 15:49"
+        },
+        {
+          "reg_number": "00000988",
+          "company": "KHATOOT AL MAJD TRAD AND CONT",
+          "company_type": "SME",
+          "purchase_date": "24-11-2025 20:51"
+        },
+        {
+          "reg_number": "00005742",
+          "company": "SHANFARI AND PARTNERS CO",
+          "company_type": "Local",
+          "purchase_date": "26-11-2025 10:25"
+        },
+        {
+          "reg_number": "00002574",
+          "company": "NASR ARABIAN CO",
+          "company_type": "Local",
+          "purchase_date": "29-11-2025 13:17"
+        },
+        {
+          "reg_number": "00003495",
+          "company": "GLOBAL DEVELOPMENT TRADING & CONT.LLC",
+          "company_type": "Local",
+          "purchase_date": "29-11-2025 17:50"
+        },
+        {
+          "reg_number": "00001941",
+          "company": "AL RAFAH TRADING AND CONTRACTION COMPANY",
+          "company_type": "SME",
+          "purchase_date": "29-11-2025 21:40"
+        },
+        {
+          "reg_number": "00001876",
+          "company": "AL TEHOON TRAD AND CONT CO",
+          "company_type": "SME",
+          "purchase_date": "30-11-2025 03:17"
+        }
+      ],
+      "nit": {
+        "title": "Construction road P04 & P05 in Adhan at Salalah Free Zone",
+        "governorate": "Dhofar",
+        "wilayat": "Salalah",
+        "envelope": "Two Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/47/ ش.أ.ل.أ",
+      "tender_number_en": "47/2025/ASC",
+      "name": "Initial stores supply for th.....",
+      "entity": "Asyad Shipping Company S.A.O.G.",
+      "category": "Supply [Excellent,First,Second]",
+      "fee": 250.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "83076",
+      "bidders": [
+        {
+          "company": "DINTEC CO LTD",
+          "offer_type": "Main",
+          "quoted_value": "80690.518",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "HANIL FUJI KOREA CO LTD",
+          "offer_type": "Main",
+          "quoted_value": "447475.043",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "QINGDAO OCEAN RICH MARINE SERVICE CO LTD",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "DEYYAR INTERNATIONAL LLC",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "",
+          "company": "MIDDLE EAST FUJI LLC",
+          "company_type": "International",
+          "purchase_date": "29-12-2025 15:38"
+        },
+        {
+          "reg_number": "00006396",
+          "company": "Energy Services",
+          "company_type": "SME",
+          "purchase_date": "30-12-2025 09:55"
+        },
+        {
+          "reg_number": "",
+          "company": "SINWA SINGAPORE PTE LTD",
+          "company_type": "International",
+          "purchase_date": "30-12-2025 11:01"
+        },
+        {
+          "reg_number": "00000753",
+          "company": "DEYYAR INTERNATIONAL LLC",
+          "company_type": "SME",
+          "purchase_date": "30-12-2025 11:21"
+        },
+        {
+          "reg_number": "",
+          "company": "DAN MARINE SHANGHAI LTD",
+          "company_type": "International",
+          "purchase_date": "04-01-2026 05:43"
+        },
+        {
+          "reg_number": "",
+          "company": "QINGDAO OCEAN RICH MARINE SERVICE CO LTD",
+          "company_type": "International",
+          "purchase_date": "04-01-2026 06:32"
+        },
+        {
+          "reg_number": "",
+          "company": "HANIL FUJI KOREA CO LTD",
+          "company_type": "International",
+          "purchase_date": "17-01-2026 03:39"
+        },
+        {
+          "reg_number": "",
+          "company": "DINTEC CO LTD",
+          "company_type": "International",
+          "purchase_date": "22-01-2026 05:39"
+        }
+      ],
+      "nit": {
+        "title": "Initial stores supply for the 6 new vessels under construction",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/16/ب م ع/ م ر -11",
+      "tender_number_en": "16/2026/CBO/HQ-11",
+      "name": "Contract for the Operational.....",
+      "entity": "Central Bank of Oman",
+      "category": "Electromechanical and Telecommunications Contracting and Mai",
+      "fee": 200.0,
+      "view": "New/Floated Tenders",
+      "dates": "03-05-2026",
+      "internal_id": "88112",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "00001249",
+          "company": "MIDEAST DATA SYSTEM LLC",
+          "company_type": "Local",
+          "purchase_date": "15-04-2026 16:27"
+        },
+        {
+          "reg_number": "00001333",
+          "company": "TAWOOS INDUSTRIAL SERVICES COMPANY LLC",
+          "company_type": "Local",
+          "purchase_date": "16-04-2026 09:12"
+        },
+        {
+          "reg_number": "00000331",
+          "company": "GENERAL ELECTRIC AND TRADING CO (GENETCO)",
+          "company_type": "Local",
+          "purchase_date": "16-04-2026 10:48"
+        },
+        {
+          "reg_number": "00000557",
+          "company": "AL NABA SERVICES LLC",
+          "company_type": "Local",
+          "purchase_date": "19-04-2026 09:39"
+        },
+        {
+          "reg_number": "00006203",
+          "company": "PRECISION SKILLS INTERNATIONAL",
+          "company_type": "Local",
+          "purchase_date": "19-04-2026 20:12"
+        },
+        {
+          "reg_number": "00005095",
+          "company": "JAL ENGINEERING SERVICES",
+          "company_type": "Local",
+          "purchase_date": "22-04-2026 12:43"
+        },
+        {
+          "reg_number": "00003112",
+          "company": "AL TASNIM ENTERPRISES",
+          "company_type": "Local",
+          "purchase_date": "22-04-2026 14:01"
+        }
+      ],
+      "nit": {
+        "title": "Contract for the Operational and Facilities Management for the Central Bank of Oman Building in Knowledge Oasis Muscat",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Bid Envelope DG"
+      }
+    },
+    {
+      "tender_number": "2026/14/ب م ع/ م ر -9",
+      "tender_number_en": "14/2026/CBO/HQ-9",
+      "name": "upgrade DDI solution",
+      "entity": "Central Bank of Oman",
+      "category": "Information Technology Services [Excellent,First]",
+      "fee": 200.0,
+      "view": "New/Floated Tenders",
+      "dates": "07-05-2026",
+      "internal_id": "87456",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "00001650",
+          "company": "Gulf Business Machines (Oman) CO",
+          "company_type": "Local",
+          "purchase_date": "12-04-2026 12:11"
+        },
+        {
+          "reg_number": "00000259",
+          "company": "MHD INFOTECH LLC",
+          "company_type": "Local",
+          "purchase_date": "15-04-2026 13:58"
+        },
+        {
+          "reg_number": "00000771",
+          "company": "INTERNATIONAL INFORMATION TECHNOLOGY CO",
+          "company_type": "Local",
+          "purchase_date": "19-04-2026 12:23"
+        }
+      ],
+      "nit": {
+        "title": "upgrade DDI solution",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Bid Envelope DG"
+      }
+    },
+    {
+      "tender_number": "2026/7/ب م ع/ م ر -6",
+      "tender_number_en": "7/2026/CBO/HQ-6",
+      "name": "RFP for Data Center Infrastr.....",
+      "entity": "Central Bank of Oman",
+      "category": "Information Technology Services [Excellent,First,Second]",
+      "fee": 200.0,
+      "view": "New/Floated Tenders",
+      "dates": "23-04-2026",
+      "internal_id": "85198",
+      "bidders": [
+        {
+          "company": "ORIENTAL CONSTRUCTION & TRADING",
+          "offer_type": "Main",
+          "quoted_value": "4651.250",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL RAHBA AL MUTMAIZA ENT",
+          "offer_type": "Main",
+          "quoted_value": "3530.500",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "TALAL AL ANDLOS",
+          "offer_type": "Main",
+          "quoted_value": "5497.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "ADVANCED SUPPLIES TRAD AND CONT",
+          "offer_type": "Main",
+          "quoted_value": "3220.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "NEW VILLAGE BUSINESS",
+          "offer_type": "Main",
+          "quoted_value": "3910.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "THE PRIDE OF THE DISTINGUISHED HOUSE",
+          "offer_type": "Main",
+          "quoted_value": "176.005",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "UNITED TECHNICAL SUPPLIES",
+          "offer_type": "Main",
+          "quoted_value": "4340.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL HASHMI ENGINEERING & BUSINESS LLC",
+          "offer_type": "Main",
+          "quoted_value": "3220.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "BASATEEN AL MSRRAH TRADING",
+          "offer_type": "Main",
+          "quoted_value": "3622.500",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "purchasers": [],
+      "nit": {
+        "title": "Supply and purchase of (115) bottles of dye, expiry date (20) liters",
+        "governorate": "Al Dakhiliyah",
+        "wilayat": "Nizwa",
+        "envelope": "Purchase"
+      }
+    },
+    {
+      "tender_number": "2019/10/ب م ع/د ت م-2",
+      "tender_number_en": "10/2019/CBO/ITD-2",
+      "name": "AMC for KOM Virtualization E.....",
+      "entity": "Central Bank of Oman",
+      "category": "Information Technology Services [Excellent,First]",
+      "fee": 200.0,
+      "view": "New/Floated Tenders",
+      "dates": "23-12-2019",
+      "internal_id": "7804",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "00001650",
+          "company": "Gulf Business Machines (Oman) CO",
+          "company_type": "Local",
+          "purchase_date": "11-11-2019 10:10"
+        },
+        {
+          "reg_number": "00002842",
+          "company": "ADVANCED BUSINESS COMPUTING",
+          "company_type": "Local",
+          "purchase_date": "02-12-2019 15:22"
+        },
+        {
+          "reg_number": "00007305",
+          "company": "ALMAMARI GLOBAL GROUP OF COMMERCE AND INDUSTRY",
+          "company_type": "Local",
+          "purchase_date": "05-12-2019 12:08"
+        }
+      ],
+      "nit": {
+        "title": "AMC for KOM Virtualization Environment Hardware",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/2/م م/ م ك-1",
+      "tender_number_en": "2/2026/MM/QS-1",
+      "name": "Maintenance of Roads in Al A.....",
+      "entity": "Muscat Municipality",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 200.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "84128",
+      "bidders": [
+        {
+          "company": "BLACK BOX TECHNOLOGY",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "TECH IT SUPPORT ADVANCED AND  SERVICES LLC",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "INTERNATIONAL INFORMATION TECHNOLOGY CO",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "SPECIALIZED DATA SYSTEMS",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "AL NAHLA SOLUTIONS",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "OMAN DATA PARK",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "ADVANCED CONTROL SYSTEMS AND COMMUNICATIONS",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        },
+        {
+          "company": "GULF BUSINESS MACHINES (OMAN) CO",
+          "offer_type": "Main",
+          "quoted_value": "Financial Bid Opened",
+          "status": ""
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00000975",
+          "company": "AL NAHLA SOLUTIONS",
+          "company_type": "Local",
+          "purchase_date": "17-02-2026 17:17"
+        },
+        {
+          "reg_number": "00005301",
+          "company": "Specialized Data Systems",
+          "company_type": "Local",
+          "purchase_date": "18-02-2026 11:47"
+        },
+        {
+          "reg_number": "00000259",
+          "company": "MHD INFOTECH LLC",
+          "company_type": "Local",
+          "purchase_date": "18-02-2026 12:53"
+        },
+        {
+          "reg_number": "00015403",
+          "company": "Black Box Technology",
+          "company_type": "Local",
+          "purchase_date": "19-02-2026 08:32"
+        },
+        {
+          "reg_number": "00000017",
+          "company": "Industrial Management Technology and Contracting",
+          "company_type": "Local",
+          "purchase_date": "19-02-2026 15:21"
+        },
+        {
+          "reg_number": "00000771",
+          "company": "INTERNATIONAL INFORMATION TECHNOLOGY CO",
+          "company_type": "Local",
+          "purchase_date": "22-02-2026 09:05"
+        },
+        {
+          "reg_number": "00007333",
+          "company": "GLOBAL TECHNOLOGY SOLUTION LLC",
+          "company_type": "Local",
+          "purchase_date": "22-02-2026 10:49"
+        },
+        {
+          "reg_number": "00001043",
+          "company": "Oman data Park",
+          "company_type": "Local",
+          "purchase_date": "22-02-2026 13:11"
+        },
+        {
+          "reg_number": "00001881",
+          "company": "NASMA TELECOMMUNICATIONS",
+          "company_type": "Local",
+          "purchase_date": "22-02-2026 13:15"
+        },
+        {
+          "reg_number": "00007892",
+          "company": "TECH IT SUPPORT ADVANCED AND  SERVICES LLC",
+          "company_type": "Local",
+          "purchase_date": "22-02-2026 14:12"
+        },
+        {
+          "reg_number": "00002842",
+          "company": "ADVANCED BUSINESS COMPUTING",
+          "company_type": "Local",
+          "purchase_date": "24-02-2026 11:55"
+        },
+        {
+          "reg_number": "00001650",
+          "company": "Gulf Business Machines (Oman) CO",
+          "company_type": "Local",
+          "purchase_date": "24-02-2026 13:43"
+        },
+        {
+          "reg_number": "00001446",
+          "company": "OVERSEAS BUSINESS MACHINES",
+          "company_type": "Local",
+          "purchase_date": "24-02-2026 15:03"
+        },
+        {
+          "reg_number": "00003743",
+          "company": "Advanced control systems and communications",
+          "company_type": "Local",
+          "purchase_date": "24-02-2026 15:29"
+        },
+        {
+          "reg_number": "00000177",
+          "company": "LARSEN AND TOUBRO (OMAN)",
+          "company_type": "Local",
+          "purchase_date": "26-02-2026 17:51"
+        }
+      ],
+      "nit": {
+        "title": "RFP for replacement the virtual environment equipment of the Central Bank of Oman",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Bid Envelope DG"
+      }
+    },
+    {
+      "tender_number": "2025/48/ب م ع/ م ر -28",
+      "tender_number_en": "48/2025/CBO/HQ-28",
+      "name": "Implementation of DATA WAREH.....",
+      "entity": "Central Bank of Oman",
+      "category": "Information Technology Services [Excellent,First,Second,Thir",
+      "fee": 200.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "82420",
+      "bidders": [
+        {
+          "company": "ADVANCED BUSINESS COMPUTING",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "OMAN DATA PARK",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "DIYAR UNITED TRAD AND CONT C.O",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "FUTURE HEALTH",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "SOFTWARE SYSTEMS",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "INTERNATIONAL INFORMATION TECHNOLOGY CO",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "OMAN COMPUTER SERVICES",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "EAST AND WEST INFORMATION TECHNOLOGY SOLUTION",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00010468",
+          "company": "FUTURE HEALTH",
+          "company_type": "Local",
+          "purchase_date": "16-12-2025 19:58"
+        },
+        {
+          "reg_number": "00003184",
+          "company": "SOFTWARE SYSTEMS",
+          "company_type": "Local",
+          "purchase_date": "17-12-2025 09:59"
+        },
+        {
+          "reg_number": "00012026",
+          "company": "EAST AND WEST INFORMATION TECHNOLOGY SOLUTION",
+          "company_type": "Local",
+          "purchase_date": "17-12-2025 10:51"
+        },
+        {
+          "reg_number": "00002842",
+          "company": "ADVANCED BUSINESS COMPUTING",
+          "company_type": "Local",
+          "purchase_date": "17-12-2025 12:13"
+        },
+        {
+          "reg_number": "00001043",
+          "company": "Oman data Park",
+          "company_type": "Local",
+          "purchase_date": "18-12-2025 09:40"
+        },
+        {
+          "reg_number": "00000771",
+          "company": "INTERNATIONAL INFORMATION TECHNOLOGY CO",
+          "company_type": "Local",
+          "purchase_date": "21-12-2025 08:44"
+        },
+        {
+          "reg_number": "00001264",
+          "company": "Oman Computer Services",
+          "company_type": "Local",
+          "purchase_date": "21-12-2025 11:55"
+        },
+        {
+          "reg_number": "00008353",
+          "company": "DIYAR UNITED TRAD AND CONT C.O",
+          "company_type": "Local",
+          "purchase_date": "21-12-2025 14:20"
+        }
+      ],
+      "nit": {
+        "title": "Implementation of DATA WAREHOUSE and ANALYTICS",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Bid Envelope DG"
+      }
+    },
+    {
+      "tender_number": "2026/31/و إ ت ع/ م ر -6",
+      "tender_number_en": "31/2026/MHUP/HQ-6",
+      "name": "Sultan Haitham City Phase 01.....",
+      "entity": "Ministry of Housing and Urban Planning",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 190.0,
+      "view": "New/Floated Tenders",
+      "dates": "19-05-2026",
+      "internal_id": "87111",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "00011267",
+          "company": "Al Raki Engineering and Contracting",
+          "company_type": "Local",
+          "purchase_date": "14-03-2026 13:28"
+        },
+        {
+          "reg_number": "00001882",
+          "company": "STRABAG OMAN",
+          "company_type": "Local",
+          "purchase_date": "15-03-2026 08:08"
+        },
+        {
+          "reg_number": "00006596",
+          "company": "United Gulf Construction Co. Oman Branch",
+          "company_type": "Local",
+          "purchase_date": "15-03-2026 09:59"
+        },
+        {
+          "reg_number": "00003199",
+          "company": "AL-SHAFAQ CONSTRUCTIONS CO.",
+          "company_type": "SME",
+          "purchase_date": "15-03-2026 10:14"
+        },
+        {
+          "reg_number": "",
+          "company": "SERKA TAAHHUT INSAAT AS",
+          "company_type": "International",
+          "purchase_date": "15-03-2026 11:53"
+        },
+        {
+          "reg_number": "00003776",
+          "company": "AZ ENGINEERS AND PARTNERS",
+          "company_type": "Local",
+          "purchase_date": "15-03-2026 15:40"
+        },
+        {
+          "reg_number": "",
+          "company": "GONUC INSAAT AS",
+          "company_type": "International",
+          "purchase_date": "16-03-2026 08:49"
+        },
+        {
+          "reg_number": "00000464",
+          "company": "GALFAR ENGINEERING AND CONTRACTING",
+          "company_type": "Local",
+          "purchase_date": "16-03-2026 10:46"
+        },
+        {
+          "reg_number": "00001733",
+          "company": "ARABIAN SEA LIGHTS TRADING AND SERVICES",
+          "company_type": "SME",
+          "purchase_date": "16-03-2026 11:52"
+        },
+        {
+          "reg_number": "00003976",
+          "company": "JALMOOD NATIONAL",
+          "company_type": "Local",
+          "purchase_date": "17-03-2026 09:17"
+        },
+        {
+          "reg_number": "00009996",
+          "company": "Salman AL Askari",
+          "company_type": "SME",
+          "purchase_date": "17-03-2026 09:59"
+        },
+        {
+          "reg_number": "00008139",
+          "company": "SAD AL KHALEJ ENGENEERING",
+          "company_type": "SME",
+          "purchase_date": "17-03-2026 10:45"
+        },
+        {
+          "reg_number": "00000430",
+          "company": "HIGH TOWER DEVELOPMENT & INVESTMENT",
+          "company_type": "SME",
+          "purchase_date": "17-03-2026 11:20"
+        },
+        {
+          "reg_number": "00003112",
+          "company": "AL TASNIM ENTERPRISES",
+          "company_type": "Local",
+          "purchase_date": "17-03-2026 13:27"
+        },
+        {
+          "reg_number": "00002320",
+          "company": "OMAN GULF COMPANY SAOC",
+          "company_type": "Local",
+          "purchase_date": "17-03-2026 13:49"
+        },
+        {
+          "reg_number": "00001255",
+          "company": "The Arab Contractors Oman Limited",
+          "company_type": "Local",
+          "purchase_date": "18-03-2026 10:25"
+        },
+        {
+          "reg_number": "00002729",
+          "company": "MARMUL CONTRACTING AND TRADING",
+          "company_type": "Local",
+          "purchase_date": "18-03-2026 11:12"
+        },
+        {
+          "reg_number": "",
+          "company": "EDECS EL DAWLIA FOR CONTRACTING",
+          "company_type": "International",
+          "purchase_date": "18-03-2026 14:20"
+        },
+        {
+          "reg_number": "",
+          "company": "CONCRETE PLUS FOR CONTRACTING AND INDUSTRY",
+          "company_type": "International",
+          "purchase_date": "18-03-2026 14:38"
+        },
+        {
+          "reg_number": "00000177",
+          "company": "LARSEN AND TOUBRO (OMAN)",
+          "company_type": "Local",
+          "purchase_date": "24-03-2026 09:04"
+        },
+        {
+          "reg_number": "00008289",
+          "company": "OMAN ENGINEERING AND CONTRACTING CO",
+          "company_type": "SME",
+          "purchase_date": "24-03-2026 13:11"
+        },
+        {
+          "reg_number": "",
+          "company": "PORTEX INSAAT SANAYII TICARET LIMITED SIRKETI",
+          "company_type": "International",
+          "purchase_date": "24-03-2026 16:05"
+        },
+        {
+          "reg_number": "00009501",
+          "company": "Hassan Allam Construction",
+          "company_type": "Local",
+          "purchase_date": "24-03-2026 16:12"
+        },
+        {
+          "reg_number": "00014701",
+          "company": "EAMR AL-Mustagbal Engineering",
+          "company_type": "SME",
+          "purchase_date": "24-03-2026 18:33"
+        },
+        {
+          "reg_number": "00008201",
+          "company": "BINMALAZI TRADING",
+          "company_type": "SME",
+          "purchase_date": "25-03-2026 09:53"
+        },
+        {
+          "reg_number": "00002305",
+          "company": "Sarooj Construction Company",
+          "company_type": "Local",
+          "purchase_date": "26-03-2026 10:36"
+        },
+        {
+          "reg_number": "00008619",
+          "company": "NAJED AL AHLIYA",
+          "company_type": "Local",
+          "purchase_date": "26-03-2026 13:21"
+        },
+        {
+          "reg_number": "00000415",
+          "company": "TILAL NIMAR TRADING AND CONSTRACTING",
+          "company_type": "Local",
+          "purchase_date": "26-03-2026 15:59"
+        },
+        {
+          "reg_number": "",
+          "company": "CONCORD FOR ENGINEERING AND CONTRACTING",
+          "company_type": "International",
+          "purchase_date": "27-03-2026 01:31"
+        },
+        {
+          "reg_number": "00016943",
+          "company": "HASSAN ALLAM CONTRACTING AND CONSTRUCTION",
+          "company_type": "Local",
+          "purchase_date": "28-03-2026 10:29"
+        },
+        {
+          "reg_number": "00008006",
+          "company": "WHITE PEARL INTERNATIONAL LLC",
+          "company_type": "Local",
+          "purchase_date": "28-03-2026 16:22"
+        },
+        {
+          "reg_number": "00005742",
+          "company": "SHANFARI AND PARTNERS CO",
+          "company_type": "Local",
+          "purchase_date": "29-03-2026 08:39"
+        },
+        {
+          "reg_number": "00002693",
+          "company": "TARGET",
+          "company_type": "Local",
+          "purchase_date": "29-03-2026 11:31"
+        },
+        {
+          "reg_number": "00005690",
+          "company": "Yellow Horizon Trading",
+          "company_type": "SME",
+          "purchase_date": "29-03-2026 16:39"
+        }
+      ],
+      "nit": {
+        "title": "Sultan Haitham City Phase 01, WP16 - Construction of Transport Network Connectivities from Sultan Qaboos Road and Associ",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2021/8/ ن ا د",
+      "tender_number_en": "8/2021/ANP",
+      "name": "Tender for New Asphalt Road .....",
+      "entity": "A Namaa Poultry Co. SAOC",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 100.0,
+      "view": "New/Floated Tenders",
+      "dates": "21-03-2021",
+      "internal_id": "13026",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "00007972",
+          "company": "RAWASI ROAD SERVICES L.L.C",
+          "company_type": "Local",
+          "purchase_date": "20-01-2021 12:12"
+        },
+        {
+          "reg_number": "00005742",
+          "company": "SHANFARI AND PARTNERS CO",
+          "company_type": "Local",
+          "purchase_date": "20-01-2021 12:41"
+        },
+        {
+          "reg_number": "00000113",
+          "company": "RIMAL GLOBAL TECHNICAL SERVICES",
+          "company_type": "Local",
+          "purchase_date": "24-01-2021 17:06"
+        },
+        {
+          "reg_number": "00000496",
+          "company": "ANWAAR FAHUDFOR TRADING LLC",
+          "company_type": "Local",
+          "purchase_date": "03-02-2021 14:49"
+        },
+        {
+          "reg_number": "00006195",
+          "company": "SUHOOL HAMRA AL DAROU CO ASSTD",
+          "company_type": "Local",
+          "purchase_date": "03-02-2021 18:04"
+        }
+      ],
+      "nit": {
+        "title": "Tender for New Asphalt Road on Existing External Road From Dhank Roundabout to All A'Namaa Poultry Plots",
+        "governorate": "Al Dhahira",
+        "wilayat": "Ibri",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/39/م م ش ش/ م ر -16 - اعادة طرح - 1",
+      "tender_number_en": "39/2025/NSGO/HQ-16 - Recall - 1",
+      "name": "DESIGN AND CONSTRUCTION OF I.....",
+      "entity": "North Al Sharqiyah Governor Office",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 100.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "84124",
+      "bidders": [
+        {
+          "company": "BINMALAZI TRADING",
+          "offer_type": "Main",
+          "quoted_value": "1698675.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "WHITE PEARL INTERNATIONAL LLC",
+          "offer_type": "Main",
+          "quoted_value": "2428815.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "YELLOW HORIZON TRADING",
+          "offer_type": "Main",
+          "quoted_value": "3189276.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SHUAA ALFATH GOLDEN TRADING",
+          "offer_type": "Main",
+          "quoted_value": "2539580.756",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL TEHOON TRAD AND CONT CO",
+          "offer_type": "Main",
+          "quoted_value": "1922866.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "ِAWTAD ENGINEERING SERVICES",
+          "offer_type": "Main",
+          "quoted_value": "2786048.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SALMAN AL ASKARI",
+          "offer_type": "Main",
+          "quoted_value": "2064880.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "EKK INTERNATIONAL",
+          "offer_type": "Main",
+          "quoted_value": "2413886.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL RAKI ENGINEERING AND CONTRACTING",
+          "offer_type": "Main",
+          "quoted_value": "1889018.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL HOOTI ENGINEERING AND SERVICES LLC",
+          "offer_type": "Main",
+          "quoted_value": "1975201.250",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL FAZARI UNITED TRADING AND CONTRACTION",
+          "offer_type": "Main",
+          "quoted_value": "2770913.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL MUR AL NAJADI ENTERPRISES",
+          "offer_type": "Main",
+          "quoted_value": "1575000.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "EAMR AL-MUSTAGBAL ENGINEERING",
+          "offer_type": "Main",
+          "quoted_value": "3892545.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "GLOBAL DEVELOPMENT TRADING & CONT.LLC",
+          "offer_type": "Main",
+          "quoted_value": "1921500.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "MUSCAT SMART PROJECTS",
+          "offer_type": "Main",
+          "quoted_value": "2109217.853",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "BAHJAT ALKHAWIR UNITED",
+          "offer_type": "Main",
+          "quoted_value": "1882750.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "INTERNATIONAL AIRLINES COMPREHENSIVE CONTRACTING COMPANY",
+          "offer_type": "Main",
+          "quoted_value": "1973450.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "FAHUD TOWERS TRADING",
+          "offer_type": "Main",
+          "quoted_value": "2061181.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "HORMUZ EAGLE",
+          "offer_type": "Main",
+          "quoted_value": "2358510.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "ALEMTIAZ ALAHLIA",
+          "offer_type": "Main",
+          "quoted_value": "2450000.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "GLOBAL INDUSTRIES AND COMMERCIAL SERVICES",
+          "offer_type": "Main",
+          "quoted_value": "1867585.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AMJAAD RUWI TRADING AND CONT LLC",
+          "offer_type": "Main",
+          "quoted_value": "2364233.495",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "GULF ISLAND INTERNATIONAL LLC",
+          "offer_type": "Main",
+          "quoted_value": "1848095.444",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "DUNES INTERNATIONAL PROJECTS LLC",
+          "offer_type": "Main",
+          "quoted_value": "2848850.000",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00004976",
+          "company": "Bahjat Alkhawir united",
+          "company_type": "SME",
+          "purchase_date": "27-01-2026 16:26"
+        },
+        {
+          "reg_number": "00009996",
+          "company": "Salman AL Askari",
+          "company_type": "SME",
+          "purchase_date": "27-01-2026 16:38"
+        },
+        {
+          "reg_number": "00012745",
+          "company": "International Airlines Comprehensive Contracting Company",
+          "company_type": "SME",
+          "purchase_date": "27-01-2026 17:08"
+        },
+        {
+          "reg_number": "00015558",
+          "company": "GULF ISLAND INTERNATIONAL LLC",
+          "company_type": "SME",
+          "purchase_date": "27-01-2026 18:12"
+        },
+        {
+          "reg_number": "00000430",
+          "company": "HIGH TOWER DEVELOPMENT & INVESTMENT",
+          "company_type": "SME",
+          "purchase_date": "27-01-2026 18:52"
+        },
+        {
+          "reg_number": "00014701",
+          "company": "EAMR AL-Mustagbal Engineering",
+          "company_type": "SME",
+          "purchase_date": "28-01-2026 09:18"
+        },
+        {
+          "reg_number": "00005485",
+          "company": "AL MUR AL NAJADI ENTERPRISES",
+          "company_type": "SME",
+          "purchase_date": "28-01-2026 11:13"
+        },
+        {
+          "reg_number": "00004861",
+          "company": "AL FAZARI UNITED TRADING AND CONTRACTION",
+          "company_type": "SME",
+          "purchase_date": "28-01-2026 11:58"
+        },
+        {
+          "reg_number": "00011090",
+          "company": "AL HOOTI ENGINEERING AND SERVICES LLC",
+          "company_type": "SME",
+          "purchase_date": "28-01-2026 14:10"
+        },
+        {
+          "reg_number": "00005958",
+          "company": "MUSCAT SMART PROJECTS",
+          "company_type": "SME",
+          "purchase_date": "28-01-2026 18:33"
+        },
+        {
+          "reg_number": "00003339",
+          "company": "ALEMTIAZ ALAHLIA",
+          "company_type": "Local",
+          "purchase_date": "29-01-2026 10:14"
+        },
+        {
+          "reg_number": "00011003",
+          "company": "MARMUL MINING",
+          "company_type": "Local",
+          "purchase_date": "29-01-2026 13:57"
+        },
+        {
+          "reg_number": "00001599",
+          "company": "DESERT CONVOY LLC",
+          "company_type": "Local",
+          "purchase_date": "29-01-2026 15:10"
+        },
+        {
+          "reg_number": "00005359",
+          "company": "FAHUD TOWERS TRADING",
+          "company_type": "SME",
+          "purchase_date": "29-01-2026 19:03"
+        },
+        {
+          "reg_number": "00010467",
+          "company": "HORMUZ EAGLE",
+          "company_type": "SME",
+          "purchase_date": "30-01-2026 21:47"
+        },
+        {
+          "reg_number": "00001876",
+          "company": "AL TEHOON TRAD AND CONT CO",
+          "company_type": "SME",
+          "purchase_date": "31-01-2026 18:25"
+        },
+        {
+          "reg_number": "00006387",
+          "company": "ِAwtad Engineering services",
+          "company_type": "Local",
+          "purchase_date": "01-02-2026 13:15"
+        },
+        {
+          "reg_number": "00001695",
+          "company": "GLOBAL INDUSTRIES AND COMMERCIAL SERVICES",
+          "company_type": "SME",
+          "purchase_date": "01-02-2026 13:25"
+        },
+        {
+          "reg_number": "00005690",
+          "company": "Yellow Horizon Trading",
+          "company_type": "SME",
+          "purchase_date": "03-02-2026 09:58"
+        },
+        {
+          "reg_number": "00003080",
+          "company": "AL ZARRAQ TRADING ENTERPRISES LLC",
+          "company_type": "Local",
+          "purchase_date": "03-02-2026 10:51"
+        },
+        {
+          "reg_number": "00002830",
+          "company": "DUNES INTERNATIONAL PROJECTS LLC",
+          "company_type": "Local",
+          "purchase_date": "04-02-2026 09:08"
+        },
+        {
+          "reg_number": "00014961",
+          "company": "EKK INTERNATIONAL",
+          "company_type": "Local",
+          "purchase_date": "07-02-2026 09:27"
+        },
+        {
+          "reg_number": "00011267",
+          "company": "Al Raki Engineering and Contracting",
+          "company_type": "Local",
+          "purchase_date": "07-02-2026 10:53"
+        },
+        {
+          "reg_number": "00010340",
+          "company": "MASHAA TRADING AND CONTRACTING",
+          "company_type": "SME",
+          "purchase_date": "08-02-2026 10:08"
+        },
+        {
+          "reg_number": "00002125",
+          "company": "AMJAAD RUWI TRADING AND CONT LLC",
+          "company_type": "Local",
+          "purchase_date": "08-02-2026 10:52"
+        },
+        {
+          "reg_number": "00008201",
+          "company": "BINMALAZI TRADING",
+          "company_type": "SME",
+          "purchase_date": "08-02-2026 11:20"
+        },
+        {
+          "reg_number": "00009841",
+          "company": "SHUAA ALFATH GOLDEN TRADING",
+          "company_type": "SME",
+          "purchase_date": "08-02-2026 12:15"
+        },
+        {
+          "reg_number": "00008289",
+          "company": "OMAN ENGINEERING AND CONTRACTING CO",
+          "company_type": "SME",
+          "purchase_date": "08-02-2026 15:20"
+        },
+        {
+          "reg_number": "00003495",
+          "company": "GLOBAL DEVELOPMENT TRADING & CONT.LLC",
+          "company_type": "Local",
+          "purchase_date": "08-02-2026 15:25"
+        },
+        {
+          "reg_number": "00008006",
+          "company": "WHITE PEARL INTERNATIONAL LLC",
+          "company_type": "Local",
+          "purchase_date": "10-02-2026 11:56"
+        }
+      ],
+      "nit": {
+        "title": "DESIGN AND CONSTRUCTION OF INTERNAL ROADS IN WILAYAT WADI BANI KHALID- NORTH AL SHARQIYA GOVERNORATE",
+        "governorate": "Al Sharqiyah North",
+        "wilayat": "Ibra",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/3/ا ع م م",
+      "tender_number_en": "3/2026/GSTB",
+      "name": "Construction of Asphalt Road.....",
+      "entity": "South Al Batinah Governor Office",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 91.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "87194",
+      "bidders": [
+        {
+          "company": "QEMAT AL EHTIRAF TRADING AND SERVICES",
+          "offer_type": "Main",
+          "quoted_value": "54.300",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "ALPHABET UNITED",
+          "offer_type": "Main",
+          "quoted_value": "97.500",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "THE WORD FOR LEGAL TRANSLATION",
+          "offer_type": "Main",
+          "quoted_value": "489.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "DIAMOND BUSINESS SHIELD",
+          "offer_type": "Main",
+          "quoted_value": "24162.600",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "BRAND PUBLIC RELATIONS",
+          "offer_type": "Main",
+          "quoted_value": "88.200",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "CREATIVE CONTETN",
+          "offer_type": "Main",
+          "quoted_value": "79.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "DANAT ASAADA TRADING AND CONTRACTING",
+          "offer_type": "Main",
+          "quoted_value": "38.500",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL TARJUMAN TRDG AND CONST",
+          "offer_type": "Main",
+          "quoted_value": "110.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "BADR AL BAYAN LEGAL TRANSLATIONS",
+          "offer_type": "Main",
+          "quoted_value": "69.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "PREMIERS SERVICES",
+          "offer_type": "Main",
+          "quoted_value": "58.800",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "ZEENAH",
+          "offer_type": "Main",
+          "quoted_value": "67.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "ACCESS CENTRE TRANSLATION",
+          "offer_type": "Main",
+          "quoted_value": "39.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SEMAH",
+          "offer_type": "Main",
+          "quoted_value": "68.000",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "SMAA AL FKER",
+          "offer_type": "Main",
+          "quoted_value": "36.000",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00000232",
+          "company": "BRAND PUBLIC RELATIONS",
+          "company_type": "SME",
+          "purchase_date": "24-03-2026 09:07"
+        },
+        {
+          "reg_number": "00006377",
+          "company": "ALPHABET UNITED",
+          "company_type": "SME",
+          "purchase_date": "24-03-2026 11:50"
+        },
+        {
+          "reg_number": "00011175",
+          "company": "FEKRAH FOR MEDIA SERVICES",
+          "company_type": "SME",
+          "purchase_date": "24-03-2026 19:38"
+        },
+        {
+          "reg_number": "00017464",
+          "company": "DANAT ASAADA Trading and Contracting",
+          "company_type": "Local",
+          "purchase_date": "25-03-2026 10:50"
+        },
+        {
+          "reg_number": "00000530",
+          "company": "ZEENAH",
+          "company_type": "Local",
+          "purchase_date": "25-03-2026 12:45"
+        },
+        {
+          "reg_number": "00017194",
+          "company": "Dar Almaany For Translation and Services",
+          "company_type": "Local",
+          "purchase_date": "25-03-2026 15:55"
+        },
+        {
+          "reg_number": "00002388",
+          "company": "AL TARJUMAN TRDG AND CONST",
+          "company_type": "Local",
+          "purchase_date": "26-03-2026 09:44"
+        },
+        {
+          "reg_number": "00013119",
+          "company": "QEMAT AL EHTIRAF TRADING AND SERVICES",
+          "company_type": "SME",
+          "purchase_date": "26-03-2026 10:32"
+        },
+        {
+          "reg_number": "00009247",
+          "company": "CREATIVE CONTETN",
+          "company_type": "SME",
+          "purchase_date": "29-03-2026 09:17"
+        },
+        {
+          "reg_number": "00010726",
+          "company": "premiers services",
+          "company_type": "SME",
+          "purchase_date": "29-03-2026 12:13"
+        },
+        {
+          "reg_number": "00015524",
+          "company": "SMAA AL FKER",
+          "company_type": "SME",
+          "purchase_date": "30-03-2026 14:02"
+        },
+        {
+          "reg_number": "00013808",
+          "company": "The Word for Legal Translation",
+          "company_type": "SME",
+          "purchase_date": "31-03-2026 09:52"
+        },
+        {
+          "reg_number": "00004731",
+          "company": "Badr Al Bayan Legal Translations",
+          "company_type": "SME",
+          "purchase_date": "31-03-2026 13:29"
+        },
+        {
+          "reg_number": "00012181",
+          "company": "DIGITAL VISUALS",
+          "company_type": "SME",
+          "purchase_date": "31-03-2026 14:05"
+        },
+        {
+          "reg_number": "00007183",
+          "company": "Access Centre Translation",
+          "company_type": "Local",
+          "purchase_date": "01-04-2026 18:57"
+        },
+        {
+          "reg_number": "00008577",
+          "company": "SEMAH",
+          "company_type": "SME",
+          "purchase_date": "02-04-2026 16:37"
+        },
+        {
+          "reg_number": "00014694",
+          "company": "Diamond Business Shield",
+          "company_type": "SME",
+          "purchase_date": "03-04-2026 21:48"
+        }
+      ],
+      "nit": {
+        "title": "translation Services",
+        "governorate": "Muscat",
+        "wilayat": "ASeeb",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2026/4/ا ع م م",
+      "tender_number_en": "4/2026/GSTB",
+      "name": "CONSTRUCTION OF FLOOD PROTEC.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 79.0,
+      "view": "In-Process Tenders",
+      "dates": "",
+      "internal_id": "87486",
+      "bidders": [
+        {
+          "company": "AAUDAZ MARITIME PTE LTD",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "AL RAQI INTERNATIONAL BUSINESS COMPANY",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "HYUNDAI GLOBAL SERVICE MIDDLE EAST FZE",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "KAIZEN OFFSHORE & MARINE SOLUTIONS PTE LTD",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "SEAWORKS COMPANY",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "ENERGY SERVICES",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "SAFE TECHNICAL SUPPLY COMPANY LLC",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "KHIMJI RAMDAS",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "DAN MARINE SHANGHAI LTD",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "TARABUT TRADING",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "ALLSET INDUSTRIES AS",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        },
+        {
+          "company": "JOME ENGINEERING LLC",
+          "offer_type": "Main",
+          "quoted_value": "",
+          "status": "Technical Bid Opened"
+        }
+      ],
+      "purchasers": [],
+      "nit": {
+        "title": "Supply of Anchor Chain Shackles and associated items for 5 Silver Vessels",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Envelope"
+      }
+    },
+    {
+      "tender_number": "2025/798/و ز ث س م/ م ر -90 - اعادة طرح - 1",
+      "tender_number_en": "798/2025/MAFWR/HQ-90 - Recall - 1",
+      "name": "EPC for Detailed Design and .....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 60.0,
+      "view": "New/Floated Tenders",
+      "dates": "31-05-2026",
+      "internal_id": "87135",
+      "bidders": [
+        {
+          "company": "DETONATON BLASTING CONTRACTING",
+          "offer_type": "",
+          "quoted_value": "",
+          "status": "Bid Submitted"
+        }
+      ],
+      "purchasers": [
+        {
+          "reg_number": "00014981",
+          "company": "Marmol Integrated",
+          "company_type": "SME",
+          "purchase_date": "13-04-2026 14:49"
+        },
+        {
+          "reg_number": "00001330",
+          "company": "MASITAH INTERNATIONAL TECHNICAL AND MARINE SERVICES LLC",
+          "company_type": "Local",
+          "purchase_date": "15-04-2026 10:04"
+        },
+        {
+          "reg_number": "00002074",
+          "company": "DETONATON BLASTING CONTRACTING",
+          "company_type": "Local",
+          "purchase_date": "19-04-2026 13:08"
+        },
+        {
+          "reg_number": "00000453",
+          "company": "Khimji Ramdas Construction",
+          "company_type": "Local",
+          "purchase_date": "19-04-2026 18:09"
+        }
+      ],
+      "nit": {
+        "title": "EPC for Detailed Design and Construction - Modification to the Existing Breakwater at Gamdah ‘Marfa’ in Musandam Governo",
+        "governorate": "Muscat",
+        "wilayat": "Bowsher",
+        "envelope": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "2021/43/م م/ م ر -31",
+      "tender_number_en": "43/2021/MM/HQ-31",
+      "name": "Design and Construction of t.....",
+      "entity": "Muscat Municipality",
+      "category": "Construction of Ports Roads Bridges Railways Dams and Mainte",
+      "fee": 50.0,
+      "view": "New/Floated Tenders",
+      "dates": "04-11-2021",
+      "internal_id": "15303",
+      "bidders": [],
+      "purchasers": [
+        {
+          "reg_number": "00007972",
+          "company": "RAWASI ROAD SERVICES L.L.C",
+          "company_type": "Local",
+          "purchase_date": "09-08-2021 10:13"
+        },
+        {
+          "reg_number": "00000415",
+          "company": "TILAL NIMAR TRADING AND CONSTRACTING",
+          "company_type": "Local",
+          "purchase_date": "10-08-2021 13:41"
+        },
+        {
+          "reg_number": "00006465",
+          "company": "MIDDLE EAST TRAD AND CONT CO LTD",
+          "company_type": "Local",
+          "purchase_date": "12-08-2021 17:19"
+        },
+        {
+          "reg_number": "00001599",
+          "company": "DESERT CONVOY LLC",
+          "company_type": "Local",
+          "purchase_date": "28-08-2021 09:24"
+        }
+      ],
+      "nit": {
+        "title": "Design and Construction of the widening of Al Qurm Street (PRE/20/039)",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope": "Two Envelope"
+      }
+    }
+  ]
+}

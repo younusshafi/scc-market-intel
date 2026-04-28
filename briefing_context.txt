@@ -67,6 +67,27 @@ Re-tenders in historical data: 2 total
   2026/1/ع ح ج/ م ر -1 — Refloating the tender of Reh..... (Construction and Maintenance [Excellent,)
   2022/29/م م ش ب/ م ر -20 — Re-tender the construction o..... (Construction and Maintenance [Second])
 
+=== COMPETITIVE INTELLIGENCE ===
+
+SCC BID: DESIGN AND BUILD UPGRADING AND DUALIZATION OF SOHAR LINK ROAD FROM SLAUGHTERHOUSE ROUNDABOUT TO BATINAH EXPRESSWAY IN NO
+  Sarooj bid: OMR 7,350,547.680
+  Al Tasnim: OMR 7,999,537.390 (+8.8% vs SCC)
+
+MULTI-COMPETITOR TENDERS:
+  CONSTRUCTION OF INFRASTRUCTURE AND FACILITIES (FACILITY BUILDING, PLUG AND PLAY, GREEN HOUSE) AT SUWAIQ INDUSTRIAL CITY : 5 tracked competitors (Arab Contractors, Galfar, Hassan Allam, Strabag, Towell), 16 total purchasers
+  DESIGN AND BUILD UPGRADING AND DUALIZATION OF SOHAR LINK ROAD FROM SLAUGHTERHOUSE ROUNDABOUT TO BATINAH EXPRESSWAY IN NO: 3 tracked competitors (Al Tasnim, Sarooj, Strabag), 23 total purchasers
+  Sultan Haitham City Phase-01, WP09B Construction of Big Park Including Structures and Wet/Dry Infrastructure: 6 tracked competitors (Al Tasnim, Galfar, Hassan Allam, Sarooj, Strabag, Towell), 30 total purchasers
+  Sultan Haitham City Phase 01, WP16 - Construction of Transport Network Connectivities from Sultan Qaboos Road and Associ: 7 tracked competitors (Al Tasnim, Arab Contractors, Galfar, Hassan Allam, L&T, Sarooj, Strabag), 34 total purchasers
+
+LARGEST COMPETITOR BIDS:
+  Galfar: OMR 71,688,668.000 on CONSTRUCTION OF INFRASTRUCTURE AND FACILITIES (FACILITY BUIL
+  Arab Contractors: OMR 61,837,641.056 on CONSTRUCTION OF INFRASTRUCTURE AND FACILITIES (FACILITY BUIL
+  Towell: OMR 59,407,808.999 on CONSTRUCTION OF INFRASTRUCTURE AND FACILITIES (FACILITY BUIL
+  Hassan Allam: OMR 45,420,801.857 on CONSTRUCTION OF INFRASTRUCTURE AND FACILITIES (FACILITY BUIL
+  Galfar: OMR 15,995,399.000 on CONSTRUCTION OF PRIORITY INTERNAL INTEGTATED ROADS FOR BLOCK
+  Al Tasnim: OMR 7,999,537.390 on DESIGN AND BUILD UPGRADING AND DUALIZATION OF SOHAR LINK ROA
+  Sarooj: OMR 7,350,547.680 on DESIGN AND BUILD UPGRADING AND DUALIZATION OF SOHAR LINK ROA
+
 === FIELD DEFINITIONS ===
 - Fee: Tender DOCUMENT PURCHASE fee, NOT project value. 25-50 OMR is standard.
 - Guarantee: Bank guarantee PERCENTAGE, not absolute amount. 1 means 1%.
@@ -91,7 +112,7 @@ Re-tenders in historical data: 2 total
 ... and 34 more matching tenders
 
 
-=== GENERAL MARKET NEWS (61 articles) ===
+=== GENERAL MARKET NEWS (60 articles) ===
 Syria: First trial of Assad-era officials opens in Damascus | Times of Oman | 2026-04-27T10:36:24 | Damascus: A Syrian court on Sunday held a preparatory session for a trial of several former officials in President Bashar Assad's deposed government, with...
 Next 5 years will shape robotics future: WEF warns of diverging global paths | Times of Oman | 2026-04-27T10:16:14 | New Delhi: The next five years will be crucial in determining how physical autonomous systems evolve globally by 2031, according to a World Economic Forum...
 India, New Zealand sign FTA with tariff relief, $20bn investment commitment | Times of Oman | 2026-04-27T10:13:22 | New Delhi: India and New Zealand signed the Free Trade Agreement (FTA) on Monday, marking a significant step in strengthening bilateral economic ties, with...
@@ -139,9 +160,4 @@ Oman, Kazakhstan strengthen economic ties | Oman Observer — Oman News | 2026-0
 Oman-based MEG backs $500m digital energy infrastructure platform - Oman Observer | Google News — Oman Infrastructure | 2026-04-23T15:29:55 | Oman-based MEG backs $500m digital energy infrastructure platform Oman Observer
 Omanis return home as Iran shows off its control over strait | Oman Observer — Oman News | 2026-04-23T14:32:25 | MUSCAT: The Foreign Ministry, in light of current regional developments and in coordination with relevant authorities in the Sultanate of Oman, continues to implement necessary arr...
 Oman-based MEG backs $500m digital energy infrastructure platform | Oman Observer — Business | 2026-04-23T11:16:32 | MUSCAT: Oman-based energy infrastructure company Masirah Energy Gateway (MEG) has joined forces with Dubai-headquartered Ento Capital to advance a $500 million digital energy infra...
-Government drives localisation of Oman’s fisheries sector | Oman Observer — Business | 2026-04-23T11:14:50 | MUSCAT: Government entities representing the Sultanate of Oman at the Seafood Expo Global in Barcelona, Spain, are intensifying efforts to highlight Oman’s strategic investment pot...
-SpaceX conquered the stars, now eyes bigger opportunity in AI | Oman Observer — Business | 2026-04-23T11:02:34 | NEW YORK/SAN FRANCISCO: SpaceX sees artificial intelligence as its biggest long-term growth opportunity, with more than 90 per cent of its estimated total addressable market tied t...
-HH Sayyid Theyazin arrives in Kazakhstan | Oman Observer — Oman News | 2026-04-23T10:15:06 | Astana: HH Sayyid Theyazin bin Haitham al Said, Deputy Prime Minister for Economic Affairs has arrived in the Republic of Kazakhstan.Upon his arrival at Astana International Airpor...
-Oman healthy life expectancy rises to 66.07 years | Oman Observer — Oman News | 2026-04-23T08:07:57 | Muscat: Ministry of Health Oman said healthy life expectancy at birth in the Sultanate reached 66.07 years in 2023, marking steady progress towards national health targets under Om...
-Deputy Prime Minister leaves for Kazakhstan | Oman Observer — Oman News | 2026-04-23T04:19:58 | Muscat: Sayyid Theyazin bin Haitham Al Said, Deputy Prime Minister for Economic Affairs, has departed the Sultanate of Oman for the friendly Republic of Kazakhstan on an official v...
-... truncated (61 total)
+... truncated (60 total)

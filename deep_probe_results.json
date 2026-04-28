@@ -1,0 +1,3312 @@
+{
+  "probe_at": "2026-04-27T19:57:55.276509",
+  "elapsed_seconds": 67,
+  "tenders_scanned": 250,
+  "tenders_with_bidders": 30,
+  "total_bid_appearances": 189,
+  "unique_bidders": 125,
+  "competitor_appearances": {},
+  "competitor_details": {},
+  "tenders": [
+    {
+      "tender_number": "10/2026/ASYAD",
+      "tender_name": "Procurement of Vehicles for .....",
+      "entity": "ASYAD",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86672",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "SAUD BAHWAN AUTOMOTIVE",
+          "offer_type": "Main",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "FUTURE MOMENTUM",
+          "offer_type": "Main",
+          "status": "Financial Bid Opened"
+        },
+        {
+          "company": "AL HASHAR AND COMPANY LLC",
+          "offer_type": "Main",
+          "status": "Financial Bid Opened"
+        }
+      ],
+      "nit_details": {
+        "tender_title": "Procurement of Vehicles for Asyad Group (Re-Float)",
+        "evaluation_type": "Schedule Wise",
+        "tender_type": "Open",
+        "category": "Supply",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope_type": "Two Envelope"
+      }
+    },
+    {
+      "tender_number": "55/2026/MOF/PRC-49",
+      "tender_name": "Print",
+      "entity": "Ministry of Finance",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88861",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "WARD & ZAHRA TRADING",
+          "offer_type": "Main",
+          "status": "7310.000"
+        },
+        {
+          "company": "SEMAH",
+          "offer_type": "Main",
+          "status": "6056.000"
+        },
+        {
+          "company": "TSAMEM MEDIA",
+          "offer_type": "Main",
+          "status": "7188.000"
+        },
+        {
+          "company": "TAIF AL ZAFARAN TRAD AND CONT EST",
+          "offer_type": "Alternate1",
+          "status": "3558.000"
+        },
+        {
+          "company": "TAIF AL ZAFARAN TRAD AND CONT EST",
+          "offer_type": "Main",
+          "status": "5416.000"
+        },
+        {
+          "company": "ALPHABET UNITED",
+          "offer_type": "Main",
+          "status": "13280.000"
+        }
+      ],
+      "nit_details": {
+        "tender_title": "Print",
+        "evaluation_type": "Item Wise",
+        "tender_type": "SME",
+        "category": "Services",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope_type": "Purchase"
+      }
+    },
+    {
+      "tender_number": "163/2026/MOSD/PRC-46- Recall - 1",
+      "tender_name": "Purchase and supply of tricy.....",
+      "entity": "Ministry of Social Development",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88767",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "QAWAFIL ALBATINA MODREN",
+          "offer_type": "Main",
+          "status": "13300.000"
+        },
+        {
+          "company": "FIAFE ALHAJAR TRADING",
+          "offer_type": "Main",
+          "status": "8529.675"
+        }
+      ],
+      "nit_details": {
+        "tender_title": "Purchase and supply of tricycle and football racing equipment",
+        "evaluation_type": "Item Wise",
+        "tender_type": "SME",
+        "category": "Supply",
+        "governorate": "Muscat",
+        "wilayat": "ASeeb",
+        "envelope_type": "Purchase"
+      }
+    },
+    {
+      "tender_number": "56/2026/MOF/PRC-50",
+      "tender_name": "Print",
+      "entity": "Ministry of Finance",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88868",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "TSAMEM MEDIA",
+          "offer_type": "Main",
+          "status": "7188.000"
+        },
+        {
+          "company": "TOP LEADERS FOR INVESTMENT",
+          "offer_type": "Main",
+          "status": "7065.000"
+        },
+        {
+          "company": "AMIMA BINT ALI BIN SALIM AL SHAMSI TRADING",
+          "offer_type": "Main",
+          "status": "3660.800"
+        },
+        {
+          "company": "SEMAH",
+          "offer_type": "Main",
+          "status": "6056.000"
+        }
+      ],
+      "nit_details": {
+        "tender_title": "Print",
+        "evaluation_type": "Item Wise",
+        "tender_type": "SME",
+        "category": "Supply",
+        "governorate": "Muscat",
+        "wilayat": "Muscat",
+        "envelope_type": "Purchase"
+      }
+    },
+    {
+      "tender_number": "351/2026/UTAS/HCTDO-129",
+      "tender_name": "Supply of shields",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88727",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "TELAL ALWARYA TRD AND CONT CO",
+          "offer_type": "Main",
+          "status": "1400.000"
+        },
+        {
+          "company": "AL TANFITH ALDWALIAH SPC",
+          "offer_type": "Main",
+          "status": "3501.875"
+        },
+        {
+          "company": "TSAMEM MEDIA",
+          "offer_type": "Main",
+          "status": "2900.000"
+        },
+        {
+          "company": "MAHMOUD AND PARTNER INVESTMENT COMPANY",
+          "offer_type": "Main",
+          "status": "4000.000"
+        },
+        {
+          "company": "GULF COLOR INTERNATIONAL",
+          "offer_type": "Main",
+          "status": "3250.000"
+        }
+      ],
+      "nit_details": {
+        "tender_title": "Supply of shields",
+        "evaluation_type": "Item Wise",
+        "tender_type": "Open",
+        "category": "Supply",
+        "governorate": "Muscat",
+        "wilayat": "Bowsher",
+        "envelope_type": "Single Envelope"
+      }
+    },
+    {
+      "tender_number": "9/2026/OMSB/PAC-8",
+      "tender_name": "Annual Maintenance Contract .....",
+      "entity": "Oman Medical Specialty Board",
+      "category": "Information Technology Services [Excellent,First,Second,Thir",
+      "internal_id": "88379",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "MODERN TECHNO SOURCES",
+          "offer_type": "Main",
+          "status": "934.200"
+        },
+        {
+          "company": "MUSCAT SOLUTIONS AND SYSTEMS",
+          "offer_type": "Main",
+          "status": "3996.300"
+        },
+        {
+          "company": "QUALITY CASTLE",
+          "offer_type": "Main",
+          "status": "475.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "222/2026/UTAS/ICTDO-19",
+      "tender_name": "Purchase and supply of offic.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87187",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "AL SANAIDI MODERN ENT EST",
+          "offer_type": "Main",
+          "status": "6399.225"
+        },
+        {
+          "company": "SHARIKAH FANNIYAH OMANIYA (MUSCAT) LLC",
+          "offer_type": "Main",
+          "status": "16445.000"
+        },
+        {
+          "company": "AL JASSAR",
+          "offer_type": "Main",
+          "status": "17936.000"
+        },
+        {
+          "company": "SAWARI INTERNATIONAL TRADING AND CONTRACTING",
+          "offer_type": "Main",
+          "status": "9950.000"
+        },
+        {
+          "company": "HASHIMANI FURNITURE LLC",
+          "offer_type": "Main",
+          "status": "10240.675"
+        },
+        {
+          "company": "MULTI MEDIA GATE",
+          "offer_type": "Main",
+          "status": "13521.900"
+        },
+        {
+          "company": "KNOWLEDGA PIONEERS LLC",
+          "offer_type": "Main",
+          "status": "16504.950"
+        },
+        {
+          "company": "ANWAR AL MAHROOQI TRADING",
+          "offer_type": "Main",
+          "status": "14410.000"
+        },
+        {
+          "company": "FIAFE ALHAJAR TRADING",
+          "offer_type": "Main",
+          "status": "24163.860"
+        },
+        {
+          "company": "FANTASTIC WORLD",
+          "offer_type": "Main",
+          "status": "15267.000"
+        },
+        {
+          "company": "AHMED SALIM ALAMRI AND PARTENAR",
+          "offer_type": "Main",
+          "status": "12985.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "381/2026/UTAS/HCTDO-136",
+      "tender_name": "the poster day in utas muscat",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "89163",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "GULF CORNER ESTABLISHMENT",
+          "offer_type": "Main",
+          "status": "995.125"
+        },
+        {
+          "company": "SEMAH",
+          "offer_type": "Main",
+          "status": "417.000"
+        },
+        {
+          "company": "TELAL ALWARYA TRD AND CONT CO",
+          "offer_type": "Main",
+          "status": "484.400"
+        },
+        {
+          "company": "MANSOOR ALALAWI",
+          "offer_type": "Main",
+          "status": "776.018"
+        },
+        {
+          "company": "TSAMEM MEDIA",
+          "offer_type": "Main",
+          "status": "484.400"
+        }
+      ]
+    },
+    {
+      "tender_number": "1372/2026/MOH/DGHSMP-21",
+      "tender_name": "Validation and calibration f.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88204",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "AL MAZROUI MEDICAL AND CHEMICAL SUPPLY L L C",
+          "offer_type": "Main",
+          "status": "2362.500"
+        },
+        {
+          "company": "AL HASHAR PHARMACY",
+          "offer_type": "Main",
+          "status": "1575.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "178/2026/MAFWR/DGAP-9",
+      "tender_name": "Beekeeping and Honey Product.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87584",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "ASQLAN",
+          "offer_type": "Main",
+          "status": "42658.630"
+        },
+        {
+          "company": "BASATEEN AL MSRRAH TRADING",
+          "offer_type": "Main",
+          "status": "57284.020"
+        },
+        {
+          "company": "ABDULLAH ALRAWAHI TRAD AND CONT",
+          "offer_type": "Main",
+          "status": "32785.200"
+        }
+      ]
+    },
+    {
+      "tender_number": "575/2025/MOSD/HQ-76 - Recall - 1",
+      "tender_name": "Supply of tools and equipmen.....",
+      "entity": "Ministry of Social Development",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88040",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "QAWAFIL ALBATINA MODREN",
+          "offer_type": "Main",
+          "status": "11616.000"
+        },
+        {
+          "company": "ASAS INTEGRATED PROJECTS LLC",
+          "offer_type": "Main",
+          "status": "6390.300"
+        }
+      ]
+    },
+    {
+      "tender_number": "1376/2026/MOH/DGHSMP-22",
+      "tender_name": "Supplying of Spare Parts an.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87832",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "MUSCAT PHARMACY AND STORES LLC",
+          "offer_type": "Main",
+          "status": "2266.500"
+        },
+        {
+          "company": "MUSCAT PHARMACY AND STORES LLC",
+          "offer_type": "Alternate1",
+          "status": "2396.500"
+        },
+        {
+          "company": "OMAN MEDICAL SUPPLIES AND SERVICE",
+          "offer_type": "Alternate2",
+          "status": "800.000"
+        },
+        {
+          "company": "OMAN MEDICAL SUPPLIES AND SERVICE",
+          "offer_type": "Alternate1",
+          "status": "1267.000"
+        },
+        {
+          "company": "OMAN MEDICAL SUPPLIES AND SERVICE",
+          "offer_type": "Main",
+          "status": "1757.000"
+        },
+        {
+          "company": "SHAH NAGARDAS MANJI AND CO  LLC",
+          "offer_type": "Alternate3",
+          "status": "1737.500"
+        },
+        {
+          "company": "SHAH NAGARDAS MANJI AND CO  LLC",
+          "offer_type": "Alternate2",
+          "status": "1775.500"
+        },
+        {
+          "company": "SHAH NAGARDAS MANJI AND CO  LLC",
+          "offer_type": "Alternate1",
+          "status": "1949.500"
+        },
+        {
+          "company": "SHAH NAGARDAS MANJI AND CO  LLC",
+          "offer_type": "Main",
+          "status": "2846.500"
+        },
+        {
+          "company": "MOHSIN HAIDER DARWISH INFRASTRUCTURE SERVICES LLC",
+          "offer_type": "Main",
+          "status": "195.000"
+        },
+        {
+          "company": "WALEED PHARMACY AND STORES LLC",
+          "offer_type": "Main",
+          "status": "936.600"
+        },
+        {
+          "company": "THAIBA MEDSERV LLC",
+          "offer_type": "Main",
+          "status": "480.000"
+        },
+        {
+          "company": "BAHWAN HEALTHCARE CENTRE",
+          "offer_type": "Main",
+          "status": "1675.900"
+        },
+        {
+          "company": "GULF MEDICAL AND PHARMACEUTICAL",
+          "offer_type": "Main",
+          "status": "630.000"
+        },
+        {
+          "company": "GULF MEDICAL AND PHARMACEUTICAL",
+          "offer_type": "Alternate1",
+          "status": "720.000"
+        },
+        {
+          "company": "GULF MEDICAL AND PHARMACEUTICAL",
+          "offer_type": "Alternate2",
+          "status": "840.000"
+        },
+        {
+          "company": "ARAB TEAM",
+          "offer_type": "Main",
+          "status": "1164.500"
+        },
+        {
+          "company": "MUSCAT MEDICAL EQUIPMENT COMPANY",
+          "offer_type": "Main",
+          "status": "1040.000"
+        },
+        {
+          "company": "ARABIAN SMART ESTABLISHMENT",
+          "offer_type": "Main",
+          "status": "974.000"
+        },
+        {
+          "company": "MEAD MEDICAL",
+          "offer_type": "Main",
+          "status": "1840.000"
+        },
+        {
+          "company": "ALSHAHBARI NATIONAL TRADING",
+          "offer_type": "Main",
+          "status": "60.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "78/2026/MOI/HQ-1",
+      "tender_name": "GENERAL CLEANING SERVICES FO.....",
+      "entity": "Ministry of Information",
+      "category": "Services [Excellent,First]",
+      "internal_id": "86906",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "BAIT AL OSOOL REAL ESTATE CO LLC",
+          "offer_type": "Main",
+          "status": "355482.864"
+        },
+        {
+          "company": "AL JALALI",
+          "offer_type": "Main",
+          "status": "345240.000"
+        },
+        {
+          "company": "NASEEM IBRA CLEANING SERVICES",
+          "offer_type": "Main",
+          "status": "365752.800"
+        },
+        {
+          "company": "PERFECT REFLECTION",
+          "offer_type": "Main",
+          "status": "544824.000"
+        },
+        {
+          "company": "AL YAFEI INTERNATIONAL",
+          "offer_type": "Main",
+          "status": "373968.000"
+        },
+        {
+          "company": "KABAS ALTAREEK TRAD",
+          "offer_type": "Main",
+          "status": "346224.000"
+        },
+        {
+          "company": "OMAN INTERNATIONAL GROUP",
+          "offer_type": "Main",
+          "status": "369079.200"
+        },
+        {
+          "company": "NABILNASSERSUIMANALKINDITRADINGANDCONT",
+          "offer_type": "Main",
+          "status": "327196.800"
+        },
+        {
+          "company": "MAJAN FACILITIES MANAGEMENT",
+          "offer_type": "Main",
+          "status": "17076.000"
+        },
+        {
+          "company": "GOLDEN CITY",
+          "offer_type": "Main",
+          "status": "277848.000"
+        },
+        {
+          "company": "AMLAK LIWA INTERNATIONAL LLC",
+          "offer_type": "Main",
+          "status": "349218.450"
+        },
+        {
+          "company": "AL NABA SERVICES LLC",
+          "offer_type": "Main",
+          "status": "417942.000"
+        },
+        {
+          "company": "AL NABA SERVICES LLC",
+          "offer_type": "Alternate1",
+          "status": "509040.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "74/2026/SMES/VPFI-3",
+      "tender_name": "pre incubation in tourism an.....",
+      "entity": "Small and Medium Enterprises Development Authority",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88366",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "JADARAT FOR DEVELOPMENT",
+          "offer_type": "Main",
+          "status": "9985.000"
+        },
+        {
+          "company": "ESNAD INTEGRATED SERVICES",
+          "offer_type": "Main",
+          "status": "7010.000"
+        },
+        {
+          "company": "EJADA DEVELOPMENT",
+          "offer_type": "Main",
+          "status": "7425.000"
+        },
+        {
+          "company": "ARTIFICIAL INTELLIGENCE ACADEMY",
+          "offer_type": "Main",
+          "status": "12340.000"
+        },
+        {
+          "company": "GROWTH INVESTMENT AND DEVELOPMENT",
+          "offer_type": "Main",
+          "status": "9900.000"
+        },
+        {
+          "company": "ALJODA ALKHALIDHA INVESTMENT",
+          "offer_type": "Main",
+          "status": "8772.500"
+        },
+        {
+          "company": "ALMANAR TRAINING INSTITUTE",
+          "offer_type": "Main",
+          "status": "6000.000"
+        },
+        {
+          "company": "PIONEERING INNOVATION GATEWAY FOR BUSINESS AND SERVICES",
+          "offer_type": "Main",
+          "status": "9818.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "577/2025/MOSD/HQ-78 - Recall - 1",
+      "tender_name": "Supply of tools and equipmen.....",
+      "entity": "Ministry of Social Development",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88192",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "QAWAFIL ALBATINA MODREN",
+          "offer_type": "Main",
+          "status": "61220.000"
+        },
+        {
+          "company": "ASAS INTEGRATED PROJECTS LLC",
+          "offer_type": "Main",
+          "status": "47087.775"
+        }
+      ]
+    },
+    {
+      "tender_number": "99/2026/MOI/PRC-98",
+      "tender_name": "scanner compatible with Land.....",
+      "entity": "Ministry of Information",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88256",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "DURATH ALAYOON TRADING CO",
+          "offer_type": "Main",
+          "status": "898.000"
+        },
+        {
+          "company": "R&E PETROLEUM EQUIPMENTS COMPANY",
+          "offer_type": "Main",
+          "status": "1031.320"
+        }
+      ]
+    },
+    {
+      "tender_number": "221/2026/MAFWR/DGAP-11",
+      "tender_name": "Supply of card printer, cert.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87876",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "ISLAND WIDE HIGH TECHNOLOGY",
+          "offer_type": "Main",
+          "status": "3354.750"
+        },
+        {
+          "company": "AL MUKHAINI SERVICES",
+          "offer_type": "Main",
+          "status": "3402.000"
+        },
+        {
+          "company": "ZAIN SOLUTIONS",
+          "offer_type": "Main",
+          "status": "8632.680"
+        },
+        {
+          "company": "NOOR ARABIAN GULF TRADING",
+          "offer_type": "Main",
+          "status": "4189.500"
+        },
+        {
+          "company": "BRIGHT ENR TRADING",
+          "offer_type": "Main",
+          "status": "24680.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "1310/2026/MOH/DGRHPP-105",
+      "tender_name": "SUPPLY OF SURGICAL ITEAMS FO.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88206",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "IBN SINA PHARMACY",
+          "offer_type": "Main",
+          "status": "6750.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "1305/2026/MOH/DGRHPP-104",
+      "tender_name": "SUPPLY OF SURGICAL ITEAMS FO.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88180",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "AL ZAHRAWI MEDICAL SUPPLIES",
+          "offer_type": "Main",
+          "status": "402.000"
+        },
+        {
+          "company": "GLOBAL EMPOWERMENT",
+          "offer_type": "Main",
+          "status": "375.000"
+        },
+        {
+          "company": "GULF MEDICAL AND PHARMACEUTICAL",
+          "offer_type": "Alternate1",
+          "status": "50.000"
+        },
+        {
+          "company": "GULF MEDICAL AND PHARMACEUTICAL",
+          "offer_type": "Main",
+          "status": "55.000"
+        },
+        {
+          "company": "GULF MEDICAL AND PHARMACEUTICAL",
+          "offer_type": "Alternate2",
+          "status": "55.000"
+        },
+        {
+          "company": "IMTNAN COMPANY FOR MEDICAL SUPPLIES",
+          "offer_type": "Main",
+          "status": "900.000"
+        },
+        {
+          "company": "IBN SINA PHARMACY",
+          "offer_type": "Main",
+          "status": "301.000"
+        },
+        {
+          "company": "GLOBAL LEADING EXCELENCE",
+          "offer_type": "Main",
+          "status": "3454.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "1324/2026/MOH/DGRHPP-108",
+      "tender_name": "Supply of Laboratory and Con.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88205",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "NEXT POWER ELECTRONICS",
+          "offer_type": "Main",
+          "status": "129.150"
+        }
+      ]
+    },
+    {
+      "tender_number": "538/2025/MOSD/GDSDBG-49- Recall - 1",
+      "tender_name": "Maintenance of the agricultu.....",
+      "entity": "Ministry of Social Development",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88089",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "QAWAFIL ALBATINA MODREN",
+          "offer_type": "Main",
+          "status": "9989.000"
+        },
+        {
+          "company": "SAIF BIN SAID AL FALITI TRADE",
+          "offer_type": "Main",
+          "status": "1083.600"
+        }
+      ]
+    },
+    {
+      "tender_number": "1331/2026/MOH/DGRHPP-109",
+      "tender_name": "SUPPLY OF SURGICAL ITEMS Q:.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88258",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "ARABIAN MEDICAL DEVICES LLC",
+          "offer_type": "Main",
+          "status": "1200.000"
+        },
+        {
+          "company": "OMCARE",
+          "offer_type": "Main",
+          "status": "7500.000"
+        },
+        {
+          "company": "GLOBAL LEADING EXCELENCE",
+          "offer_type": "Main",
+          "status": "5880.000"
+        },
+        {
+          "company": "NEXT POWER ELECTRONICS",
+          "offer_type": "Main",
+          "status": "472.000"
+        },
+        {
+          "company": "TALAL ALSHARQIYA ALSHAMILA TRAD ENT",
+          "offer_type": "Main",
+          "status": "1200.000"
+        },
+        {
+          "company": "INTRAMEDICA COMPANY",
+          "offer_type": "Main",
+          "status": "5700.000"
+        },
+        {
+          "company": "INTRAMEDICA COMPANY",
+          "offer_type": "Alternate1",
+          "status": "5700.000"
+        },
+        {
+          "company": "AL UMNIA MEDICAL STORE",
+          "offer_type": "Main",
+          "status": "4660.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "169/2026/MOSD/DSDDG-14",
+      "tender_name": "Replacing the windows of the.....",
+      "entity": "Ministry of Social Development",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88638",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "QAWAFIL ALBATINA MODREN",
+          "offer_type": "Main",
+          "status": "2398.500"
+        },
+        {
+          "company": "AL MAJAD TRAD CONT",
+          "offer_type": "Main",
+          "status": "3485.000"
+        },
+        {
+          "company": "TARIQ ALALAWI INTERNATIONAL PROJECTS",
+          "offer_type": "Main",
+          "status": "2624.000"
+        },
+        {
+          "company": "EAMAR ALSHAMAL ALALAMIYAH",
+          "offer_type": "Main",
+          "status": "3280.000"
+        },
+        {
+          "company": "ABAQ ALZAHOOR ALUMAIZAH TAAD",
+          "offer_type": "Main",
+          "status": "3444.000"
+        },
+        {
+          "company": "ALKHATM SKY TRADING",
+          "offer_type": "Main",
+          "status": "2665.000"
+        },
+        {
+          "company": "DAYAR ALMURTAFA TRD",
+          "offer_type": "Main",
+          "status": "3321.000"
+        },
+        {
+          "company": "JIBAL AL DHAHIRA FOR BUSINESS",
+          "offer_type": "Main",
+          "status": "4821.600"
+        },
+        {
+          "company": "AIDEM TECHNICAL TRADING COMPANY",
+          "offer_type": "Main",
+          "status": "6242.250"
+        },
+        {
+          "company": "ABU AL MUHALB AL HATMI",
+          "offer_type": "Main",
+          "status": "8200.000"
+        },
+        {
+          "company": "KINGDOM OF FURNITURE",
+          "offer_type": "Main",
+          "status": "5424.300"
+        },
+        {
+          "company": "AL MAWADA FOR REAL STATE DEVELOPING",
+          "offer_type": "Main",
+          "status": "2378.000"
+        },
+        {
+          "company": "EFFICIENCY INTEGRATED SOLUTIONS",
+          "offer_type": "Main",
+          "status": "4012.260"
+        },
+        {
+          "company": "ETEN LIGHT TRADING COMPANY",
+          "offer_type": "Main",
+          "status": "5125.000"
+        },
+        {
+          "company": "BLACK HAWK TRADING AND CONTRACTING",
+          "offer_type": "Main",
+          "status": "3382.500"
+        },
+        {
+          "company": "TARMEEM SERVICES INTEGRATED",
+          "offer_type": "Main",
+          "status": "3690.000"
+        },
+        {
+          "company": "RAWASI AL MAJD BUSINESS AND CONTRACTING",
+          "offer_type": "Alternate2",
+          "status": "1763.000"
+        },
+        {
+          "company": "RAWASI AL MAJD BUSINESS AND CONTRACTING",
+          "offer_type": "Alternate1",
+          "status": "1886.000"
+        },
+        {
+          "company": "RAWASI AL MAJD BUSINESS AND CONTRACTING",
+          "offer_type": "Main",
+          "status": "1968.000"
+        },
+        {
+          "company": "DHAFFAF MUSCAT AL HADITHA ENT",
+          "offer_type": "Main",
+          "status": "4677.772"
+        },
+        {
+          "company": "SAMAA ALKHALIJ ALDUWLIAT LILTIJARAT WALMUQAWALAT",
+          "offer_type": "Main",
+          "status": "3690.000"
+        },
+        {
+          "company": "RAWNAQ SWAIDA ALMAA",
+          "offer_type": "Main",
+          "status": "3099.600"
+        },
+        {
+          "company": "ABU HANAN AL MAHROOQI TRAD CONT ENT",
+          "offer_type": "Main",
+          "status": "2665.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "1332/2026/MOH/DGRHPP-110",
+      "tender_name": "SUPPLY OF SURGICAL ITEMS Q:.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88261",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "GLOBAL EMPOWERMENT",
+          "offer_type": "Main",
+          "status": "537.600"
+        },
+        {
+          "company": "THAIBA MEDSERV LLC",
+          "offer_type": "Main",
+          "status": "10560.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "1241/2026/MOH/DGRHPP-99",
+      "tender_name": "SUPPLY OF SURGICAL ITEAMS FO.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87864",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "GLOBAL EMPOWERMENT",
+          "offer_type": "Main",
+          "status": "16184.000"
+        },
+        {
+          "company": "SHAM HABIB FOR TRADING",
+          "offer_type": "Main",
+          "status": "8050.000"
+        },
+        {
+          "company": "AL ZAHRAWI MEDICAL SUPPLIES",
+          "offer_type": "Main",
+          "status": "8680.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "1277/2026/MOH/DGRHPP-101",
+      "tender_name": "SUPPLY OF SURGICAL ITEMS Q:.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88049",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "MUSCAT SMART PROJECTS",
+          "offer_type": "Main",
+          "status": "6300.000"
+        },
+        {
+          "company": "AL ZAHRAWI MEDICAL SUPPLIES",
+          "offer_type": "Main",
+          "status": "2008.000"
+        },
+        {
+          "company": "TALAL ALSHARQIYA ALSHAMILA TRAD ENT",
+          "offer_type": "Alternate1",
+          "status": "4500.000"
+        },
+        {
+          "company": "TALAL ALSHARQIYA ALSHAMILA TRAD ENT",
+          "offer_type": "Alternate3",
+          "status": "5700.000"
+        },
+        {
+          "company": "TALAL ALSHARQIYA ALSHAMILA TRAD ENT",
+          "offer_type": "Main",
+          "status": "7800.000"
+        },
+        {
+          "company": "TALAL ALSHARQIYA ALSHAMILA TRAD ENT",
+          "offer_type": "Alternate2",
+          "status": "10200.000"
+        },
+        {
+          "company": "AL MAZROUI MEDICAL AND CHEMICAL SUPPLY L L C",
+          "offer_type": "Main",
+          "status": "17325.000"
+        },
+        {
+          "company": "MAZIN ABIN ALI BIN SAID ALWAHIBI TRADING",
+          "offer_type": "Main",
+          "status": "8274.500"
+        },
+        {
+          "company": "WALEED PHARMACY AND STORES LLC",
+          "offer_type": "Main",
+          "status": "12865.000"
+        },
+        {
+          "company": "ARABIAN MEDICAL DEVICES LLC",
+          "offer_type": "Main",
+          "status": "480.000"
+        },
+        {
+          "company": "GLOBAL SOURCE TRADING LLC",
+          "offer_type": "Main",
+          "status": "7692.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "1269/2026/MOH/DGRHP-51",
+      "tender_name": "SUPPLY OF SURGICAL ITEMS FOR.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88008",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "SAFECARE MEDICAL SUPPLIES",
+          "offer_type": "Main",
+          "status": "46000.000"
+        },
+        {
+          "company": "ARABIAN MEDICAL DEVICES LLC",
+          "offer_type": "Main",
+          "status": "44000.000"
+        },
+        {
+          "company": "TALAL ALSHARQIYA ALSHAMILA TRAD ENT",
+          "offer_type": "Main",
+          "status": "46000.000"
+        },
+        {
+          "company": "SHAHAD AL HAYA",
+          "offer_type": "Main",
+          "status": "39600.000"
+        },
+        {
+          "company": "GULF MEDICAL AND PHARMACEUTICAL",
+          "offer_type": "Main",
+          "status": "48000.000"
+        },
+        {
+          "company": "GOLDEN TOWEL FACTORY",
+          "offer_type": "Main",
+          "status": "44000.000"
+        },
+        {
+          "company": "GLOBAL SOURCE TRADING LLC",
+          "offer_type": "Main",
+          "status": "21600.000"
+        },
+        {
+          "company": "GLOBAL SOURCE TRADING LLC",
+          "offer_type": "Alternate1",
+          "status": "24000.000"
+        },
+        {
+          "company": "GLOBAL SOURCE TRADING LLC",
+          "offer_type": "Alternate2",
+          "status": "32000.000"
+        },
+        {
+          "company": "GLOBAL SOURCE TRADING LLC",
+          "offer_type": "Alternate3",
+          "status": "35200.000"
+        },
+        {
+          "company": "GLOBAL SOURCE TRADING LLC",
+          "offer_type": "Alternate4",
+          "status": "39200.000"
+        },
+        {
+          "company": "IBN SINA PHARMACY",
+          "offer_type": "Alternate1",
+          "status": "36000.000"
+        },
+        {
+          "company": "IBN SINA PHARMACY",
+          "offer_type": "Main",
+          "status": "37600.000"
+        },
+        {
+          "company": "MEDIOM",
+          "offer_type": "Main",
+          "status": "65000.000"
+        },
+        {
+          "company": "ALRAZI PHARMACY LLC",
+          "offer_type": "Alternate3",
+          "status": "25600.000"
+        },
+        {
+          "company": "ALRAZI PHARMACY LLC",
+          "offer_type": "Alternate2",
+          "status": "41400.000"
+        },
+        {
+          "company": "ALRAZI PHARMACY LLC",
+          "offer_type": "Main",
+          "status": "52200.000"
+        },
+        {
+          "company": "ALRAZI PHARMACY LLC",
+          "offer_type": "Alternate1",
+          "status": "57600.000"
+        },
+        {
+          "company": "GLOBAL EMPOWERMENT",
+          "offer_type": "Main",
+          "status": "30200.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "231/2026/MAFWR/DGAFAP-21",
+      "tender_name": "Supplying electrical equipme.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "85968",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "ZAIN SOLUTIONS",
+          "offer_type": "Main",
+          "status": "920.325"
+        },
+        {
+          "company": "ALBARAKAH INTERNATIONAL COMPREHENSIVE",
+          "offer_type": "Main",
+          "status": "1559.250"
+        }
+      ]
+    },
+    {
+      "tender_number": "135/2026/MOSD/GDSDSG-22",
+      "tender_name": "Supplying a sterilization de.....",
+      "entity": "Ministry of Social Development",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87368",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "MUSCAT MEDICAL EQUIPMENT COMPANY",
+          "offer_type": "Main",
+          "status": "75.000"
+        },
+        {
+          "company": "MUSCAT MEDICAL EQUIPMENT COMPANY",
+          "offer_type": "Alternate1",
+          "status": "85.000"
+        },
+        {
+          "company": "MUSCAT MEDICAL EQUIPMENT COMPANY",
+          "offer_type": "Alternate2",
+          "status": "175.000"
+        },
+        {
+          "company": "MUSCAT MEDICAL EQUIPMENT COMPANY",
+          "offer_type": "Alternate3",
+          "status": "450.000"
+        },
+        {
+          "company": "QAWAFIL ALBATINA MODREN",
+          "offer_type": "Main",
+          "status": "490.000"
+        },
+        {
+          "company": "ARAB TEAM",
+          "offer_type": "Main",
+          "status": "525.000"
+        }
+      ]
+    },
+    {
+      "tender_number": "41/2026/MHT/DFA-35",
+      "tender_name": "Providing support materials .....",
+      "entity": "Ministry of Heritage and Tourism",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88007",
+      "has_nit": true,
+      "has_opening": true,
+      "bidders": [
+        {
+          "company": "BARKA DIAMOND BRIDGE",
+          "offer_type": "Main",
+          "status": "10710.000"
+        },
+        {
+          "company": "ALI SAID KHAMIS ALYAHYAAI",
+          "offer_type": "Main",
+          "status": "4214.000"
+        },
+        {
+          "company": "ROWNAK ALAASMA TRADING",
+          "offer_type": "Main",
+          "status": "5400.000"
+        },
+        {
+          "company": "ALSAROOQ ALOMANI ASSO",
+          "offer_type": "Main",
+          "status": "5650.000"
+        },
+        {
+          "company": "NOKHEDAT AL MOHEET TRADING AND CONTRACTING",
+          "offer_type": "Main",
+          "status": "8850.000"
+        },
+        {
+          "company": "ALSAFA NEW ENTERPRISES",
+          "offer_type": "Main",
+          "status": "4335.408"
+        }
+      ]
+    },
+    {
+      "tender_number": "42/2026/MHT/DFA-36",
+      "tender_name": "Providing materials for the .....",
+      "entity": "Ministry of Heritage and Tourism",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88019",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1335/2026/MOH/NIZHP-94",
+      "tender_name": "CALIBRATION OF ION CHAMBET M.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86864",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1229/2026/MOH/DGRHPP-95",
+      "tender_name": "REPAIR OF CYSTOSCOPE (REPR/2.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87766",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1344/2026/MOH/DGRHPP-111",
+      "tender_name": "Repair and calibration of bi.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "82614",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1216/2026/MOH/DGRHP-49",
+      "tender_name": "NEW SCRUB TROUGH FOR ERH OT .....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87675",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "40/2026/MHT/DFA-34",
+      "tender_name": "Providing Kendal wood for Al.....",
+      "entity": "Ministry of Heritage and Tourism",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87940",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1436/2026/MOH/DGRHPP-129",
+      "tender_name": "SUPPLY OF ELECTRICAL SPARE P.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88669",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1360/2026/MOH/DGRHPP-114",
+      "tender_name": "SUPPLY OF MECHANICAL SPARE P.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88371",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "51/2026/MTCIT/DGRLTD-1",
+      "tender_name": "Air conditioning timer",
+      "entity": "Ministry of Transport Communications and Information Technol",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87918",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "12/2026/APSR/HQ-9",
+      "tender_name": "Consultancy Services for Fa.....",
+      "entity": "Authority for Public Services Regulation",
+      "category": "Consulting Offices [Excellent,First]",
+      "internal_id": "88410",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "70/2026/EA/PRC-55",
+      "tender_name": "Maintenance and supply of th.....",
+      "entity": "Environment Authority",
+      "category": "Construction and Maintenance [Third,Fourth]",
+      "internal_id": "88352",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "43/2026/MHT/DFA-37",
+      "tender_name": "Subscription and renewal of .....",
+      "entity": "Ministry of Heritage and Tourism",
+      "category": "Information Technology Services [Excellent,First,Second,Thir",
+      "internal_id": "88044",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1201/2026/MOH/DGHSDKP-67",
+      "tender_name": "SUPPLY CARPENTARY MATERIALS",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87714",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1381/2026/MOH/DGRHPP-115",
+      "tender_name": "SUPPLY OF BUILDING (CARPENTR.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88456",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1347/2026/MOH/DGRHPP-113",
+      "tender_name": "SUPPLY AND INSTALLATION OF M.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88334",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "242/2026/UTAS/MCTDO-33",
+      "tender_name": "Metal Filing Shelves Heavy D.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87492",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "284/2026/UTAS/MCTDO-37",
+      "tender_name": "Hard Disk HDD 3.5 6TB Fo.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87824",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "6/2026/OMRAN/HQ-6",
+      "tender_name": "Tender No.01/2026: System &a.....",
+      "entity": "Oman Tourism Development Company",
+      "category": "Information Technology Services [Excellent,First,Second]",
+      "internal_id": "87736",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "122/2026/MOSD/GDPD-18",
+      "tender_name": "Supply of educational and of.....",
+      "entity": "Ministry of Social Development",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86713",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "76/2026/EA/PRC-58",
+      "tender_name": "Request to provide workers, .....",
+      "entity": "Environment Authority",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88967",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "16/2026/OPP/PROC-14",
+      "tender_name": "TRAINING SERVICES",
+      "entity": "Public Prosecution",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88515",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "102/2026/MOE/MOE2-56- Recall - 1",
+      "tender_name": "Tender for the supply of ele.....",
+      "entity": "Ministry of Education",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88450",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "168/2026/MOSD/PRC-49",
+      "tender_name": "Purchase and supply of regul.....",
+      "entity": "Ministry of Social Development",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88589",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "208/2026/MAFWR/DGALR-20",
+      "tender_name": "Providing computers for the .....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88568",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "2/2026/CBO/HQ-1",
+      "tender_name": "RFP for replacement the virt.....",
+      "entity": "Central Bank of Oman",
+      "category": "Information Technology Services [Excellent,First]",
+      "internal_id": "84128",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "214/2026/MAFWR/DGALR-22",
+      "tender_name": "Renting field vehicles for t.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88644",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "416/2026/MOH/IBRIP-9- Recall - 1",
+      "tender_name": "SUPPLY AND INSTALATION OF CA.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88021",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1458/2026/MOH/DGHSSBP-60",
+      "tender_name": "Supply Of Switches & .....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88640",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1374/2026/MOH/SOHP-107",
+      "tender_name": "supply of sanitary materials",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88353",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1460/2026/MOH/SOHP-112",
+      "tender_name": "VASCULAR DOPPLER",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88701",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "4751/2025/MOH/SOHP-410- Recall - 2",
+      "tender_name": "Replacement of condensate pi.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88751",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "63/2025/SQUH/HQ-62 - Recall - 1",
+      "tender_name": "Contract: TRANS-CATHETER AOR.....",
+      "entity": "Sultan Qaboos University Hospital",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87237",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "10/2026/SQUH/HQ-10",
+      "tender_name": "LEASE CONTRACT FOR MULTIPLEX.....",
+      "entity": "Sultan Qaboos University Hospital",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86555",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "29/2025/MALAA/HQ-1",
+      "tender_name": "Design and Establishment of .....",
+      "entity": "Oman Credit and Financial Information Centre",
+      "category": "Consulting Offices [Excellent,First,Second]",
+      "internal_id": "83266",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "177/2026/MOSD/PRC-51",
+      "tender_name": "Rafqa Hayat Initiative 2026",
+      "entity": "Ministry of Social Development",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88842",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "2/2026/BEAH/HQ-1",
+      "tender_name": "Prequalification for Special.....",
+      "entity": "Oman Environmental Services Holding Company (S.A.O.C)",
+      "category": "Specialized Companies [All Grades]",
+      "internal_id": "84605",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1188/2026/MOH/DGHSNBP-50",
+      "tender_name": "Supply of MATTRESS FOR STRYK.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87329",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1444/2026/MOH/RSTQHP-117",
+      "tender_name": "Supply of plastic cups with .....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88542",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1255/2026/MOH/DGHSSSP-36",
+      "tender_name": "SUPPLY OF FLAG OMAN",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86944",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "6/2026/DGO/FD-5- Recall - 1",
+      "tender_name": "Tailioring and sewing clothe.....",
+      "entity": "Al Dakhiliyah Governor Office",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88240",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "156/2026/MAFWR/DGFS-17",
+      "tender_name": "Buying Fumigation Covers",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87338",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "171/2026/MAFWR/DGAWRDK-18- Recall - 1",
+      "tender_name": "Renting four-wheel drive veh.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88940",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "70/2026/SMES/GDAFA-32",
+      "tender_name": "Training program: Applied en.....",
+      "entity": "Small and Medium Enterprises Development Authority",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88188",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "328/2026/UTAS/NCTDO-27",
+      "tender_name": "Buying foodstuffs",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88378",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "48/2026/DM/HQ-31",
+      "tender_name": "Construction of a canopy at .....",
+      "entity": "Dhofar Municipality",
+      "category": "Construction and Maintenance [Fourth]",
+      "internal_id": "88679",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "226/2026/MAFWR/DGAWRDH-13",
+      "tender_name": "Rent a four-wheel drive pick.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88757",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "227/2026/MAFWR/DGAWRDH-14",
+      "tender_name": "Rent a four-wheel drive pick.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88759",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "228/2026/MAFWR/DGAWRDH-15",
+      "tender_name": "Rent a four-wheel drive pick.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88761",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "71/2026/SMES/GDAFA-33",
+      "tender_name": "Equipping the craft house ou.....",
+      "entity": "Small and Medium Enterprises Development Authority",
+      "category": "Construction and Maintenance [Third,Fourth]",
+      "internal_id": "88326",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "200/2026/MAFWR/DGAFWRBS-11",
+      "tender_name": "Supply and fixing of waterpr.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Construction and Maintenance [Third,Fourth]",
+      "internal_id": "88453",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "229/2026/MAFWR/DGAWRDH-16",
+      "tender_name": "Rent a four-wheel drive pick.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88762",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "230/2026/MAFWR/DGAWRDH-17",
+      "tender_name": "Rent a four-wheel drive pick.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88763",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "413/2026/MOH/DGHSNSP-7- Recall - 1",
+      "tender_name": "Supply stiching fixing new .....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88002",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "749/2026/MOH/PRC-19- Recall - 1",
+      "tender_name": "Documentation and Production.....",
+      "entity": "Ministry of Health",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87761",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "180/2026/MAFWR/DGAFWRBS-9",
+      "tender_name": "Rehabilitation and Maintenan.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Construction and Maintenance [Fourth]",
+      "internal_id": "88118",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1559/2026/MOH/RSTQHP-135",
+      "tender_name": "Modification Work in Finance.....",
+      "entity": "Ministry of Health",
+      "category": "Construction and Maintenance [Third,Fourth]",
+      "internal_id": "89021",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "337/2026/UTAS/ICTDO-32",
+      "tender_name": "Renewal of License & Tec.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88534",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1268/2026/MOH/DGHSDHP-49",
+      "tender_name": "Supply, Installation &.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87888",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "671/2026/MOH/DGHSDKP-40- Recall - 1",
+      "tender_name": "DENTAL X-RAY PROCESSOR UPDAT.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87808",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1412/2026/MOH/DGHSDKP-80",
+      "tender_name": "SUPPLY AND INSTALLATION OF V.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88593",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1382/2026/MOH/DGHSDHP-51",
+      "tender_name": "SUPPLY OF INKS D.G.H.S./DH/.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88396",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1445/2026/MOH/SOHP-110",
+      "tender_name": "Supply spare parts for medic.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88670",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "172/2026/MOSD/DSDDHG-9",
+      "tender_name": "Supply and installation of f.....",
+      "entity": "Ministry of Social Development",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88747",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1418/2026/MOH/SOHP-109",
+      "tender_name": "supply of spare parts for wa.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88561",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "373/2026/MOH/DGHSDHP-14- Recall - 1",
+      "tender_name": "SUPPLING COMMODITY SUPPLI.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88376",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "10/2026/TA/PRC-8",
+      "tender_name": "buying office supplies",
+      "entity": "Tax Authority",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88643",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1107/2026/MOH/DGHSSSP-28- Recall - 1",
+      "tender_name": "MAINTENANCE OF MEDICAL AIR C.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88257",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "685/2026/MOH/DGHSDHP-29- Recall - 1",
+      "tender_name": "SUPPLYING THE FLAG OF THE SU.....",
+      "entity": "Ministry of Health",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88375",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "924/2026/MOH/SOHP-66- Recall - 1",
+      "tender_name": "Supply of chemicals for Boil.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87611",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "343/2026/UTAS/ICTDO-34",
+      "tender_name": "Renewal of Veeam Backup Stor.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88616",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1066/2026/MOH/DGHSD-7",
+      "tender_name": "SUPPLY 2 NOS PACKAGE UNIT OF.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86662",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "360/2026/UTAS/ICTDO-37",
+      "tender_name": "IT services: Installation of.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88897",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "230/2026/UTAS/MCTDO-30",
+      "tender_name": "equipment for mechanical eng.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86930",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "287/2026/UTAS/HCTDO-102",
+      "tender_name": "extend cctv infrastructure .....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87844",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1285/2026/MOH/DGHSDKP-73",
+      "tender_name": "Creating street signs to gui.....",
+      "entity": "Ministry of Health",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88084",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "51/2026/MHT/DFA-44",
+      "tender_name": "Providing technical needs",
+      "entity": "Ministry of Heritage and Tourism",
+      "category": "Information Technology Services [Excellent,First,Second,Thir",
+      "internal_id": "88858",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "312/2026/UTAS/HCTDO-113",
+      "tender_name": "Purcheas new aspen plus soft.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88196",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "946/2026/MOH/DGHSNS-1",
+      "tender_name": "SUPPLY,INSTALATION AND COMM.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "85976",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "342/2026/UTAS/HCTDO-126",
+      "tender_name": "Supplying office furniture f.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88606",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "8/2026/ASC",
+      "tender_name": "Supply Main Engine Turbo Cha.....",
+      "entity": "Asyad Shipping Company S.A.O.G.",
+      "category": "Supply [Excellent,First,Second]",
+      "internal_id": "88064",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "344/2026/UTAS/HCTDO-127",
+      "tender_name": "Supplying educational furnit.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88607",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "194/2026/MOE/MOE2-130",
+      "tender_name": "Tender for the supply of com.....",
+      "entity": "Ministry of Education",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88127",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1361/2026/MOH/DGHSNSP-78",
+      "tender_name": "Rehabilitation of Emergency .....",
+      "entity": "Ministry of Health",
+      "category": "Construction and Maintenance [Fourth]",
+      "internal_id": "88154",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "3750/2025/MOH/DGHSSBP-143- Recall - 5",
+      "tender_name": "health facility furniture",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87708",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1394/2026/MOH/DGHSSBP-58",
+      "tender_name": "FIXED FRAME WHEEL CHAIR",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88494",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "63/2026/SMES/DSMEDAD-5",
+      "tender_name": "Startup Project Idea Camps",
+      "entity": "Small and Medium Enterprises Development Authority",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87785",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "469/2026/MOH/DGHSSBP-25- Recall - 2",
+      "tender_name": "supply and installation of L.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88208",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "306/2026/UTAS/MCTDO-42",
+      "tender_name": "Project consumables requirem.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87939",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "349/2026/UTAS/HCTDO-128",
+      "tender_name": "Repairing air conditioning u.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88693",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "56/2026/MCSY/PRC-51",
+      "tender_name": "Sports City Needs",
+      "entity": "Ministry of Culture Sports And Youth",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88484",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "50/2026/MOF/PRC-44",
+      "tender_name": "Supplies",
+      "entity": "Ministry of Finance",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88491",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "52/2026/MOF/PRC-46",
+      "tender_name": "M 3 ULTRA STUDIO MAC",
+      "entity": "Ministry of Finance",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88709",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1319/2026/MOH/SOHP-101",
+      "tender_name": "Laboratory cans",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88213",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1123/2026/MOH/SOHP-83- Recall - 1",
+      "tender_name": "RTI ELECTRONICS AB PIRANHA C.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88349",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "155/2026/MOSD/MSDCCC-6",
+      "tender_name": "Eductional program to improv.....",
+      "entity": "Ministry of Social Development",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88252",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "15/2026/ASYAD",
+      "tender_name": "Provision of Group Medical, .....",
+      "entity": "ASYAD",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88164",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "9/2026/ASYAD",
+      "tender_name": "Consultancy Services for Qua.....",
+      "entity": "ASYAD",
+      "category": "Consulting Offices [Excellent,First,Second,Third]",
+      "internal_id": "85922",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "96/2026/MOH/DGHSNBP-5- Recall - 1",
+      "tender_name": "Supply and installation of .....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88037",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "348/2026/UTAS/ICTDO-36",
+      "tender_name": "Execution of interior décor .....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Construction and Maintenance [Third,Fourth]",
+      "internal_id": "88688",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "33/2026/NODC/PRC-27",
+      "tender_name": "supply Personal Protective E.....",
+      "entity": "Nakheel Oman Development Company",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87760",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "140/2026/MAFWR/DGAFWRBN-8- Recall - 1",
+      "tender_name": "Providing furniture for docu.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88671",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1443/2026/MOH/RSTQHP-116",
+      "tender_name": "Supply of medical stickers",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88631",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "37/2026/NBGO/NBPS-25",
+      "tender_name": "Custom-made aluminum shelves.....",
+      "entity": "North Al Batinah Governor Office",
+      "category": "Services [Third,Fourth]",
+      "internal_id": "88572",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "11/2026/ASYAD",
+      "tender_name": "Purchase of 2 x Fish Loader .....",
+      "entity": "ASYAD",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87168",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "224/2026/MAFWR/DGAFWRBS-18",
+      "tender_name": "Purchase of supplies for the.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88736",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1098/2026/MOH/DGHSDKP-64",
+      "tender_name": "SUPPLY PLUMBING MATERIALS",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87367",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "6/2026/APSR/HQ-4",
+      "tender_name": "Oracle Licenses Renewal",
+      "entity": "Authority for Public Services Regulation",
+      "category": "Information Technology Services [Excellent,First,Second,Thir",
+      "internal_id": "87320",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1202/2026/MOH/DGHSDKP-68",
+      "tender_name": "SUPPLING CARPENTARY MATERIA.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87643",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1442/2026/MOH/RSTQHP-115",
+      "tender_name": "SUPPLY OF BABY CUP FEEDER",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88630",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1299/2026/MOH/SUHP-32",
+      "tender_name": "SUPPLY OF SPARE PARTS FOR M.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Second,Third,Fourth]",
+      "internal_id": "87903",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1300/2026/MOH/SUHP-33",
+      "tender_name": "SUPPLY OF MISCELLANEOUS GOOD.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [First,Second,Third,Fourth]",
+      "internal_id": "87576",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1375/2026/MOH/DGHSBRP-10",
+      "tender_name": "e-Signature Pad",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88004",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1373/2026/MOH/DGHSBRP-9",
+      "tender_name": "Medical Equipment required a.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87919",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "223/2026/MAFWR/DGAFWRBS-17",
+      "tender_name": "Printing official documents .....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88728",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1371/2026/MOH/DGHSBRP-8",
+      "tender_name": "MEDICAL DEVICES AND EQUIPMEN.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87412",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "101/2026/MOI/PRC-100",
+      "tender_name": "Printer",
+      "entity": "Ministry of Information",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88565",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1369/2026/MOH/DGHSBRP-7",
+      "tender_name": "MEDICAL EQUIPMENT REQUIRED A.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87031",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "3431/2025/MOH/DGHSBR-3- Recall - 2",
+      "tender_name": "Renovation works at Rawdah H.....",
+      "entity": "Ministry of Health",
+      "category": "Construction and Maintenance [Second]",
+      "internal_id": "86871",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1411/2026/MOH/RSTQHP-113",
+      "tender_name": "supply of Maternal pads in .....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88351",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "55/2026/MTCIT/DGPRC-47",
+      "tender_name": "Purchasing display screens f.....",
+      "entity": "Ministry of Transport Communications and Information Technol",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88229",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "56/2026/MTCIT/DGPRC-48",
+      "tender_name": "Buying Apple MacBook devices",
+      "entity": "Ministry of Transport Communications and Information Technol",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88235",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "197/2026/MAFWR/DGAFAP-19",
+      "tender_name": "Supply of LED lighting for t.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88332",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "47/2026/MHT/DFA-40",
+      "tender_name": "Comprehensive maintenance",
+      "entity": "Ministry of Heritage and Tourism",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88473",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "945/2026/MOH/DGHSNSP-64",
+      "tender_name": "SPLIT & WAC SUPPLY,INS.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86349",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "196/2026/MAFWR/DGAFAP-18",
+      "tender_name": "Maintenance of the waiting r.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Construction and Maintenance [Fourth]",
+      "internal_id": "87521",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "120/2026/MOH/DGKHP-11- Recall - 1",
+      "tender_name": "SUPPLY OF BENCHES CHAIRS OUT.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87439",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "209/2026/MOH/DGKHP-30- Recall - 1",
+      "tender_name": "MODIFICATION WORKS GARBAGE R.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Fourth]",
+      "internal_id": "87423",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1250/2026/MOH/DGKHP-45",
+      "tender_name": "REPAIR OF ARTHREX (CAMERA CO.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87334",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1252/2026/MOH/DGKHP-47",
+      "tender_name": "SUPPLY OF MECHANICAL SPARE P.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86806",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1253/2026/MOH/DGKHP-48",
+      "tender_name": "SUPPLY OF BIOMEDICAL SPARE P.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86548",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1257/2026/MOH/DGKHP-50",
+      "tender_name": "REPAIR OF 30 DEGREE SCOPE AT.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86510",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "129/2025/MM/HQ-37",
+      "tender_name": "IAM Identity and Access Mana.....",
+      "entity": "Muscat Municipality",
+      "category": "Information Technology Services [Excellent,First]",
+      "internal_id": "76388",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1273/2026/MOH/DGKHP-51",
+      "tender_name": "REPAIR OF SHAVER HANDPIECE A.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "85728",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "138/2023/MM/HQ-66 - Recall - 1",
+      "tender_name": "Design, Implement, Support &.....",
+      "entity": "Muscat Municipality",
+      "category": "Information Technology Services [Excellent,First,Second,Thir",
+      "internal_id": "80837",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1/2026/MM/HQ-1",
+      "tender_name": "Consultancy Services for.....",
+      "entity": "Muscat Municipality",
+      "category": "Consulting Offices [Excellent,First]",
+      "internal_id": "83479",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "21/2026/MM/QS-16",
+      "tender_name": "(PRE-26-025)Renewal Licenses.....",
+      "entity": "Muscat Municipality",
+      "category": "Information Technology Services [Excellent,First,Second]",
+      "internal_id": "87931",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "222/2026/MAFWR/DGAFWRBS-16",
+      "tender_name": "Manufacturing and supplying .....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88725",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1238/2026/MOH/IBRIP-39",
+      "tender_name": "SUPPLY, INTALLATION, TESTING.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87744",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1036/2026/MOH/IBRIP-32",
+      "tender_name": "SUPPLY , INSTALLATION AND TR.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87096",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "202/2026/MAFWR/DGAWRDK-20",
+      "tender_name": "Supply and installation of a.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88506",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1/2026/MOSD/PRC-1- Recall - 3",
+      "tender_name": "Implementation of a car main.....",
+      "entity": "Ministry of Social Development",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88370",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "8/2026/SQUH/HQ-8",
+      "tender_name": "Irrigation and Landscaping S.....",
+      "entity": "Sultan Qaboos University Hospital",
+      "category": "Services [Excellent,First,Second]",
+      "internal_id": "86305",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "11/2026/SQUH/HQ-11",
+      "tender_name": "supply of medicine",
+      "entity": "Sultan Qaboos University Hospital",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86491",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "12/2026/SQUH/HQ-12",
+      "tender_name": "Supply of medicine",
+      "entity": "Sultan Qaboos University Hospital",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86324",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "13/2026/SQUH/HQ-13",
+      "tender_name": "supply of medicine",
+      "entity": "Sultan Qaboos University Hospital",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87097",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "14/2026/SQUH/HQ-14",
+      "tender_name": "supply of medicine",
+      "entity": "Sultan Qaboos University Hospital",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87101",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "15/2026/SQUH/HQ-15",
+      "tender_name": "supply of medicine",
+      "entity": "Sultan Qaboos University Hospital",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87100",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "16/2026/SQUH/HQ-16",
+      "tender_name": "SUPPLY, INSTALLATION, COMMIS.....",
+      "entity": "Sultan Qaboos University Hospital",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "85751",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "75/2026/EA/PRC-57",
+      "tender_name": "Supply of tables and chairs",
+      "entity": "Environment Authority",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88801",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "58/2026/MCSY/PRC-53",
+      "tender_name": "Providing an office chair (i.....",
+      "entity": "Ministry of Culture Sports And Youth",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88529",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "173/2026/MAFWR/DGALR-16",
+      "tender_name": "Providing office furniture f.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87829",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "15/2026/OPP/PROC-13",
+      "tender_name": "Legal Documents Translation .....",
+      "entity": "Public Prosecution",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88437",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "580/2026/MOH/DGHSMP-5",
+      "tender_name": "SUPPLY OF BED CURTAIN FABRIC.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "85100",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1286/2026/MOH/NIZHP-91",
+      "tender_name": "SUPPLY SPARE PARTS OF CATH L.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88068",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1231/2026/MOH/NIZHP-86",
+      "tender_name": "Purchase of office telephone.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87807",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "199/2026/MAFWR/DGAFWRD-14",
+      "tender_name": "Providing desktop computers,.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Supply [First,Second,Third,Fourth]",
+      "internal_id": "88448",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "8/2026/MJLA/DSP-4",
+      "tender_name": "Redesign and rehabilitation .....",
+      "entity": "Ministry of Justice And Legal Affairs",
+      "category": "Services [Third,Fourth]",
+      "internal_id": "86082",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "137/2025/EA/HQ-28 - Recall - 1",
+      "tender_name": "Development of Al-Sail Natur.....",
+      "entity": "Environment Authority",
+      "category": "Construction and Maintenance [Excellent,First]",
+      "internal_id": "86173",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "65/2026/SMES/DSMEDDG-4",
+      "tender_name": "Startup Project Idea Camps f.....",
+      "entity": "Small and Medium Enterprises Development Authority",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87863",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1451/2026/MOH/PRC-46",
+      "tender_name": "Organizing an Event for Worl.....",
+      "entity": "Ministry of Health",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88666",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "66/2026/SMES/DSMEDDG-5",
+      "tender_name": "Technology and Crafts Exhibi.....",
+      "entity": "Small and Medium Enterprises Development Authority",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87905",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "51/2026/MOF/PRC-45",
+      "tender_name": "BOXE FILE MAKIING WITH 4 COL.....",
+      "entity": "Ministry of Finance",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88597",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "6/2026/CCCRC",
+      "tender_name": "SUPPLY, INSTALLATION, TESTIN.....",
+      "entity": "Sultan Qaboos Comprehensive Cancer Care and Research Center",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86978",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "5/2026/CCCRC",
+      "tender_name": "DESIGN AND BUILT OF ADDITION.....",
+      "entity": "Sultan Qaboos Comprehensive Cancer Care and Research Center",
+      "category": "Construction and Maintenance [First,Second]",
+      "internal_id": "87021",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1002/2026/MOH/DGHSNBP-36",
+      "tender_name": "Rental Contract for New Phot.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86228",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "271/2026/UTAS/ICTDO-24",
+      "tender_name": "Purchase and supply of windo.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87742",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "98/2026/MOI/PRC-97",
+      "tender_name": "Production Monitors",
+      "entity": "Ministry of Information",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88232",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "11/2026/MOMP/HQ-11",
+      "tender_name": "Renewal of Network Access Co.....",
+      "entity": "Ministry of Manpower",
+      "category": "Information Technology Services [Excellent,First,Second,Thir",
+      "internal_id": "88003",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "255/2026/UTAS/SCTDO-11",
+      "tender_name": "Request for AI Edge Server f.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87546",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "10/2026/CBO/HQ-7",
+      "tender_name": "Renewal of Medical and Life .....",
+      "entity": "Central Bank of Oman",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "86673",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "295/2026/UTAS/SCTDO-19",
+      "tender_name": "SUPLAY OF CCTV CAMERA",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87997",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "32/2026/AFDF/HQ-12",
+      "tender_name": "Rent a car",
+      "entity": "Agriculture and Fisheries Development Fund",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87776",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "321/2026/UTAS/SCTDO-21",
+      "tender_name": "radzen Blazor studio team li.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Information Technology Services [Excellent,First,Second,Thir",
+      "internal_id": "88309",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "324/2026/UTAS/SCTDO-24",
+      "tender_name": "purchase solidworks licsnses",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Information Technology Services [Excellent,First,Second,Thir",
+      "internal_id": "88279",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "325/2026/UTAS/SCTDO-25",
+      "tender_name": "machine repair and spare",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88275",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "827/2025/MAFWR/DGAFAP-49- Recall - 1",
+      "tender_name": "Contract for the maintenance.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87230",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "53/2026/MTCIT/DGPRC-45- Recall - 1",
+      "tender_name": "Maintenance of the Ship Regi.....",
+      "entity": "Ministry of Transport Communications and Information Technol",
+      "category": "Construction and Maintenance [Third,Fourth]",
+      "internal_id": "88080",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "4942/2025/MOH/DGKH-12- Recall - 1",
+      "tender_name": "PROPOSED CHEST UNIT IN MALE .....",
+      "entity": "Ministry of Health",
+      "category": "Construction and Maintenance [Third,Fourth]",
+      "internal_id": "87945",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1271/2026/MOH/DGHSDHP-50",
+      "tender_name": "SUPPLY OF SPLIT A/Cs FOR HEA.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87920",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1212/2026/MOH/HQ-85",
+      "tender_name": "Supply of Pharmaceutical (On.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "85975",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "976/2026/MOH/HQ-71",
+      "tender_name": "Supply and Installation of a.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "84048",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "11/2026/CBO/HQ-8",
+      "tender_name": "Endpoint Backup Solution",
+      "entity": "Central Bank of Oman",
+      "category": "Information Technology Services [Excellent,First,Second,Thir",
+      "internal_id": "85310",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1217/2026/MOH/HQ-88",
+      "tender_name": "Supply & Installation of.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "84437",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1230/2026/MOH/HQ-91",
+      "tender_name": "Supply & Installation of.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87144",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "816/2026/MOH/NIZHP-55- Recall - 1",
+      "tender_name": "SUPPLY SPARE PARTS OF SYRING.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87228",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "948/2026/MOH/NIZHP-64- Recall - 1",
+      "tender_name": "BATTERY REPLACEMENT FOR MOBI.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87581",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1191/2026/MOH/ANHP-12",
+      "tender_name": "Supply Spare Part for Cone B.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second]",
+      "internal_id": "86691",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1182/2026/MOH/ANHP-11",
+      "tender_name": "Repair Exchange of ENT Fiber.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First]",
+      "internal_id": "86368",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1197/2026/MOH/ANHP-13",
+      "tender_name": "Repair Exchange of ENT Fiber.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First]",
+      "internal_id": "86389",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1279/2026/MOH/NIZHP-89",
+      "tender_name": "SUPPLY X16 T B ENTERPRISE HA.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87991",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1064/2026/MOH/ANHP-8",
+      "tender_name": "Supply of Dental Handpiece .....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second]",
+      "internal_id": "86689",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1046/2026/MOH/ANHP-6",
+      "tender_name": "supply of spare parts for In.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second]",
+      "internal_id": "86690",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1090/2026/MOH/ANHP-10",
+      "tender_name": "Supply Spare parts for Ophth.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second]",
+      "internal_id": "86692",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1070/2026/MOH/ANHP-9",
+      "tender_name": "Service and Maintenance of R.....",
+      "entity": "Ministry of Health",
+      "category": "Electromechanical and Telecommunications Contracting and Mai",
+      "internal_id": "86118",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "983/2026/MOH/ANHP-5",
+      "tender_name": "REPLACEMENT OF PIPELINE AND .....",
+      "entity": "Ministry of Health",
+      "category": "Construction and Maintenance [Third,Fourth]",
+      "internal_id": "79584",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1280/2026/MOH/NIZHP-90",
+      "tender_name": "REPAIR AND REPLACEMENT OF 30.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87972",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "14/2026/ASYAD",
+      "tender_name": "Consultancy Services for Cor.....",
+      "entity": "ASYAD",
+      "category": "Consulting Offices [Excellent,First,Second,Third]",
+      "internal_id": "87604",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "319/2026/UTAS/HCTDO-118",
+      "tender_name": "Purcheas for consumables it.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88305",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "288/2026/UTAS/HCTDO-103",
+      "tender_name": "buy camera",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87897",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "290/2026/UTAS/HCTDO-105",
+      "tender_name": "Request for Pharmacy Departm.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87912",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "10/2026/SSS/PD-10",
+      "tender_name": "Camera with accessories",
+      "entity": "Security and Safety Services",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87739",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1311/2026/MOH/DGHSNBP-62",
+      "tender_name": "Supply Of ACCESSORIES FOR BP.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88076",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "2/2026/HJI/PD-2",
+      "tender_name": "supply of photocopier mach.....",
+      "entity": "Higher Judicial Institute",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88304",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1359/2026/MOH/DGHSSSP-38",
+      "tender_name": "electrical material supply 1.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87573",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1295/2026/MOH/DGHSSSP-37",
+      "tender_name": "SUPPLY PRINTER DESKJET DGHS",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87917",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "303/2026/UTAS/HCTDO-110",
+      "tender_name": "Providing tablecloths for th.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88048",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "317/2026/UTAS/HCTDO-116",
+      "tender_name": "Renting a central air condit.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88254",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "326/2026/UTAS/HCTDO-119",
+      "tender_name": "Purcheas of equipment item.....",
+      "entity": "University Of Technology And Applied Sciences",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88325",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "211/2026/MAFWR/DGAFWRD-15",
+      "tender_name": "Supplying food supplies to t.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resourc",
+      "category": "Supply [First,Second,Third,Fourth]",
+      "internal_id": "88613",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "139/2026/MOSD/PRC-37",
+      "tender_name": "Providing nutrition meals fo.....",
+      "entity": "Ministry of Social Development",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87768",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "140/2026/MOSD/PRC-38",
+      "tender_name": "Providing feeding meals to d.....",
+      "entity": "Ministry of Social Development",
+      "category": "Services [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87805",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1303/2026/MOH/DGHSNBP-56",
+      "tender_name": "Supply of VITAL SIGN MONITOR.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "87893",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1306/2026/MOH/DGHSNBP-58",
+      "tender_name": "Supply of VITAL SIGN MONITOR.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88060",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "1314/2026/MOH/DGHSNBP-65",
+      "tender_name": "Supply of ANALYTICAL BALANCE.....",
+      "entity": "Ministry of Health",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88119",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "29/2026/MOF/HQ-2",
+      "tender_name": "Pre-Qualification for the Ap.....",
+      "entity": "Ministry of Finance",
+      "category": "Specialized Companies [All Grades]",
+      "internal_id": "86364",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "34/2026/MOF/HQ-4",
+      "tender_name": "Prequalification for the App.....",
+      "entity": "Ministry of Finance",
+      "category": "Specialized Companies [All Grades]",
+      "internal_id": "86996",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "170/2026/MOSD/MSDCCC-7",
+      "tender_name": "Mothers day celebration",
+      "entity": "Ministry of Social Development",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88691",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "36/2026/MOF/PRC-32",
+      "tender_name": "Matrix - CCTV Annual Mainten.....",
+      "entity": "Ministry of Finance",
+      "category": "Information Technology Services [Excellent,First,Second,Thir",
+      "internal_id": "87628",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "7/2026/ASC",
+      "tender_name": "Appointing Shipyard for ASC .....",
+      "entity": "Asyad Shipping Company S.A.O.G.",
+      "category": "Services [Excellent,First,Second,Third]",
+      "internal_id": "88033",
+      "has_nit": true,
+      "has_opening": true
+    },
+    {
+      "tender_number": "210/2026/MOE/MOE2-141",
+      "tender_name": "Tender for the supply of a l.....",
+      "entity": "Ministry of Education",
+      "category": "Supply [Excellent,First,Second,Third,Fourth]",
+      "internal_id": "88455",
+      "has_nit": true,
+      "has_opening": true
+    }
+  ]
+}

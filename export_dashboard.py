@@ -7,7 +7,8 @@ if sys.platform == "win32":
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 from dashboard import (build_html, extract_articles, extract_tenders,
-    load_file, load_json_file, is_scc, is_pagination, NEWS_KW, COMPETITORS)
+    load_file, load_json_file, is_scc, is_pagination, NEWS_KW, COMPETITORS,
+    build_competitive_intel)
 
 OUT_DIR = os.path.join(SCRIPT_DIR, "dashboard-static")
 
@@ -15,6 +16,7 @@ def main():
     tr = load_json_file("tenders.json")
     nr = load_json_file("news.json")
     hr = load_json_file("historical_tenders.json")
+    ir = load_json_file("major_project_intelligence.json")
     bm = load_file("briefing_output.md")
     tenders = extract_tenders(tr) if tr else []
     articles = extract_articles(nr) if nr else []
@@ -26,7 +28,9 @@ def main():
     relevant = [a for a in deduped if any(k in (a.get("title","")+" "+a.get("summary","")).lower() for k in NEWS_KW)]
     comp = [a for a in relevant if any(c.lower() in a.get("title","").lower() for c in COMPETITORS)]
 
-    html_str = build_html(tenders, articles, bm, tr, hist)
+    major_projects, h2h, live_comp, activity = build_competitive_intel(ir)
+
+    html_str = build_html(tenders, articles, bm, tr, hist, intel_data=ir)
     os.makedirs(OUT_DIR, exist_ok=True)
     with open(os.path.join(OUT_DIR, "index.html"), "w", encoding="utf-8") as f:
         f.write(html_str)
@@ -35,6 +39,7 @@ def main():
     print(f"\nAbove the fold:")
     print(f"  Metric cards: 4 (Pipeline: {len(clean)}, SCC: {len(scc)}, News: {len(relevant)})")
     print(f"  Executive briefing + trend chart")
+    print(f"  Competitive Intelligence: {len(major_projects)} major projects, {len(h2h)} head-to-head, {len(live_comp)} live competitive")
     print(f"  SCC-relevant tenders table: {len(scc)}")
     print(f"  Market composition + top entities")
     print(f"\nBelow the fold (collapsed):")
