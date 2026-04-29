@@ -1,6 +1,6 @@
 databases:
   - name: scc-intel-db
-    plan: basic-256mb
+    plan: free
     databaseName: scc_intel
     user: scc_admin
 
@@ -9,7 +9,7 @@ services:
   - type: web
     name: scc-intel-api
     runtime: python
-    plan: starter
+    plan: free
     buildCommand: cd backend && pip install -r requirements.txt
     startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
