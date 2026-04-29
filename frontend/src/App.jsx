@@ -6,6 +6,7 @@ import TenderTable from './components/TenderTable'
 import NewsSection from './components/NewsSection'
 import BriefingCard from './components/BriefingCard'
 import TrendChart from './components/TrendChart'
+import QueryBar from './components/QueryBar'
 
 export default function App() {
   const { data: stats, loading: statsLoading } = useAPI(api.getTenderStats, [])
@@ -30,6 +31,9 @@ export default function App() {
       </nav>
 
       <main className="max-w-[1400px] mx-auto px-6 py-6 space-y-6">
+        {/* NLP Query Bar */}
+        <QueryBar />
+
         {/* Metric Cards */}
         <MetricCards stats={stats} newsStats={newsStats} loading={statsLoading} />
 

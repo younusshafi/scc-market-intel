@@ -27,6 +27,9 @@ export const api = {
   getLatestBriefing: () => fetchAPI('/briefings/latest'),
   getBriefingHistory: () => fetchAPI('/briefings/history'),
 
+  // Query
+  query: (q) => fetchAPI('/query/', { q }),
+
   // System
   getHealth: () => fetchAPI('/system/health'),
   getScrapeStatus: () => fetchAPI('/system/scrape-status'),
