@@ -112,6 +112,27 @@ class ScrapeLog(Base):
     details = Column(JSON, nullable=True)
 
 
+class TenderProbe(Base):
+    """Stores deep-probed tender detail data (bidders, purchasers, NIT)."""
+    __tablename__ = "tender_probes"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    tender_number = Column(String(100), index=True, unique=True)
+    tender_name = Column(Text, nullable=True)
+    entity = Column(String(300), nullable=True)
+    category = Column(String(200), nullable=True)
+    fee = Column(Float, nullable=True)
+    view = Column(String(50), nullable=True)
+
+    # Probed detail data stored as JSON
+    bidders = Column(JSON, nullable=True)      # [{company, offer_type, quoted_value, status}]
+    purchasers = Column(JSON, nullable=True)    # [{company, purchase_date}]
+    nit = Column(JSON, nullable=True)           # {title, governorate, scope, ...}
+
+    probed_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+
+
 class CompetitorMention(Base):
     __tablename__ = "competitor_mentions"
 

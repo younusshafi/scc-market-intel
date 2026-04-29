@@ -7,6 +7,7 @@ import NewsSection from './components/NewsSection'
 import BriefingCard from './components/BriefingCard'
 import TrendChart from './components/TrendChart'
 import QueryBar from './components/QueryBar'
+import CompetitiveIntel from './components/CompetitiveIntel'
 
 export default function App() {
   const { data: stats, loading: statsLoading } = useAPI(api.getTenderStats, [])
@@ -46,6 +47,9 @@ export default function App() {
             <TrendChart data={trend} />
           </div>
         </div>
+
+        {/* Competitive Intelligence */}
+        <CompetitiveIntel />
 
         {/* SCC-Relevant Tenders */}
         <TenderTable title="SCC-Relevant Opportunities" sccOnly={true} />

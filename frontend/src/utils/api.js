@@ -30,6 +30,9 @@ export const api = {
   // Query
   query: (q) => fetchAPI('/query/', { q }),
 
+  // Competitive Intelligence
+  getCompetitiveIntel: () => fetchAPI('/competitive-intel/'),
+
   // System
   getHealth: () => fetchAPI('/system/health'),
   getScrapeStatus: () => fetchAPI('/system/scrape-status'),

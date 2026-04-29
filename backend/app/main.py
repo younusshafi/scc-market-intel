@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import get_settings
 from app.core.database import engine, Base
-from app.api import tenders, news, briefings, system, query
+from app.api import tenders, news, briefings, system, query, competitive_intel
 
 settings = get_settings()
 
@@ -36,6 +36,7 @@ app.include_router(news.router, prefix="/api")
 app.include_router(briefings.router, prefix="/api")
 app.include_router(system.router, prefix="/api")
 app.include_router(query.router, prefix="/api")
+app.include_router(competitive_intel.router, prefix="/api")
 
 
 @app.get("/")
