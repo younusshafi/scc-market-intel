@@ -27,8 +27,7 @@ app.add_middleware(
 # Create tables on startup (dev convenience — use Alembic migrations in production)
 @app.on_event("startup")
 def startup():
-    if settings.environment == "development":
-        Base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
 
 
 # Register routers
