@@ -161,18 +161,23 @@ def persist_news(db: Session, articles: list[dict]) -> dict:
             skipped += 1
             continue
 
-        news = NewsArticle(
-            source=article["source"],
-            title=article["title"],
-            link=link,
-            published=article.get("published"),
-            summary=article.get("summary"),
-            is_competitor_mention=article.get("is_competitor_mention", False),
-            mentioned_competitors=article.get("mentioned_competitors"),
-            is_relevant=article.get("is_relevant", True),
-        )
-        db.add(news)
-        new_count += 1
+        try:
+            news = NewsArticle(
+                source=article["source"],
+                title=article["title"],
+                link=link,
+                published=article.get("published"),
+                summary=article.get("summary"),
+                is_competitor_mention=article.get("is_competitor_mention", False),
+                mentioned_competitors=article.get("mentioned_competitors"),
+                is_relevant=article.get("is_relevant", True),
+            )
+            db.add(news)
+            db.flush()
+            new_count += 1
+        except Exception:
+            db.rollback()
+            skipped += 1
 
     db.commit()
     return {"new": new_count, "skipped": skipped, "total": len(articles)}
