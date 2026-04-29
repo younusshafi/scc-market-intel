@@ -1,6 +1,6 @@
 databases:
   - name: scc-intel-db
-    plan: basic
+    plan: basic-256mb
     databaseName: scc_intel
     user: scc_admin
 
