@@ -8,6 +8,7 @@ import BriefingCard from './components/BriefingCard'
 import TrendChart from './components/TrendChart'
 import QueryBar from './components/QueryBar'
 import CompetitiveIntel from './components/CompetitiveIntel'
+import GeoDistribution from './components/GeoDistribution'
 
 export default function App() {
   const { data: stats, loading: statsLoading } = useAPI(api.getTenderStats, [])
@@ -47,6 +48,9 @@ export default function App() {
             <TrendChart data={trend} />
           </div>
         </div>
+
+        {/* Geographic Distribution */}
+        <GeoDistribution />
 
         {/* Competitive Intelligence */}
         <CompetitiveIntel />

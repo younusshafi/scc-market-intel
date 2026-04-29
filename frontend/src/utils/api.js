@@ -33,6 +33,9 @@ export const api = {
   // Competitive Intelligence
   getCompetitiveIntel: () => fetchAPI('/competitive-intel/'),
 
+  // Geography
+  getGeoDistribution: () => fetchAPI('/geo/distribution'),
+
   // System
   getHealth: () => fetchAPI('/system/health'),
   getScrapeStatus: () => fetchAPI('/system/scrape-status'),
