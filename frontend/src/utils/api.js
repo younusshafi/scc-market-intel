@@ -22,6 +22,8 @@ export const api = {
   // News
   getNews: (params) => fetchAPI('/news/', params),
   getNewsStats: () => fetchAPI('/news/stats'),
+  getJvMentions: (params) => fetchAPI('/news/jv-mentions', params),
+  getJvStats: () => fetchAPI('/news/jv-stats'),
 
   // Briefings
   getLatestBriefing: () => fetchAPI('/briefings/latest'),

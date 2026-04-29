@@ -85,6 +85,46 @@ def check_competitor_mentions(title: str, summary: str) -> list[str]:
     return mentioned
 
 
+# JV detection patterns
+JV_PATTERNS = [
+    re.compile(r"\bjoint\s+venture\b", re.IGNORECASE),
+    re.compile(r"\bJV\b"),
+    re.compile(r"\bjv\s+(?:partner|agreement|consortium|bid|project)\b", re.IGNORECASE),
+    re.compile(r"\bconsortium\b", re.IGNORECASE),
+    re.compile(r"\bpartnership\s+(?:agreement|deal|formed|signed)\b", re.IGNORECASE),
+    re.compile(r"\bteaming\s+agreement\b", re.IGNORECASE),
+    re.compile(r"\balliance\b", re.IGNORECASE),
+]
+
+# Known company names to identify JV partners
+ALL_TRACKED = ["Sarooj"] + list(settings.scc_competitors)
+
+
+def detect_jv_mentions(title: str, summary: str) -> list[dict] | None:
+    """Detect joint venture mentions and try to identify partners."""
+    text = title + " " + summary
+
+    is_jv = any(pat.search(text) for pat in JV_PATTERNS)
+    if not is_jv:
+        return None
+
+    # Find which tracked companies are mentioned as potential partners
+    text_lower = text.lower()
+    partners = [c for c in ALL_TRACKED if c.lower() in text_lower]
+
+    # Extract context — sentence containing JV keyword
+    context = ""
+    for pat in JV_PATTERNS:
+        m = pat.search(text)
+        if m:
+            start = max(0, m.start() - 80)
+            end = min(len(text), m.end() + 80)
+            context = text[start:end].strip()
+            break
+
+    return [{"partners": partners, "context": context}]
+
+
 def fetch_feed(source: str, url: str) -> list[dict]:
     """Fetch and parse a single RSS feed."""
     logger.info(f"Fetching: {source}")
@@ -119,6 +159,7 @@ def fetch_feed(source: str, url: str) -> list[dict]:
 
         title = strip_html(entry.get("title", ""))
         competitors = check_competitor_mentions(title, summary)
+        jv_details = detect_jv_mentions(title, summary)
         text = (title + " " + summary).lower()
         is_relevant = any(kw in text for kw in NEWS_KW)
 
@@ -131,6 +172,8 @@ def fetch_feed(source: str, url: str) -> list[dict]:
             "is_competitor_mention": len(competitors) > 0,
             "mentioned_competitors": competitors if competitors else None,
             "is_relevant": is_relevant,
+            "is_jv_mention": jv_details is not None,
+            "jv_details": jv_details,
         })
 
     return articles
@@ -171,6 +214,8 @@ def persist_news(db: Session, articles: list[dict]) -> dict:
                 is_competitor_mention=article.get("is_competitor_mention", False),
                 mentioned_competitors=article.get("mentioned_competitors"),
                 is_relevant=article.get("is_relevant", True),
+                is_jv_mention=article.get("is_jv_mention", False),
+                jv_details=article.get("jv_details"),
             )
             db.add(news)
             db.flush()

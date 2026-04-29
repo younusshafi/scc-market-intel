@@ -5,7 +5,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy import desc
 
 from app.core.database import get_db
-from app.models import ScrapeLog
+from app.models import ScrapeLog, NewsArticle
+from app.scrapers.news_scraper import detect_jv_mentions
 
 router = APIRouter(prefix="/system", tags=["system"])
 
@@ -41,3 +42,19 @@ def scrape_status(db: Session = Depends(get_db)):
             status[scrape_type] = {"status": "never_run"}
 
     return status
+
+
+@router.post("/backfill-jv")
+def backfill_jv_mentions(db: Session = Depends(get_db)):
+    """One-time backfill: scan existing news articles for JV mentions."""
+    articles = db.query(NewsArticle).all()
+    updated = 0
+    for a in articles:
+        jv_details = detect_jv_mentions(a.title or "", a.summary or "")
+        is_jv = jv_details is not None
+        if is_jv != a.is_jv_mention or (is_jv and jv_details != a.jv_details):
+            a.is_jv_mention = is_jv
+            a.jv_details = jv_details
+            updated += 1
+    db.commit()
+    return {"total_scanned": len(articles), "updated": updated}

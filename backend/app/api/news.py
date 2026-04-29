@@ -75,6 +75,56 @@ def news_stats(db: Session = Depends(get_db)):
     }
 
 
+@router.get("/jv-mentions")
+def jv_mentions(
+    page: int = Query(1, ge=1),
+    page_size: int = Query(30, ge=10, le=100),
+    db: Session = Depends(get_db),
+):
+    """List news articles that mention joint ventures, consortiums, or partnerships."""
+    q = db.query(NewsArticle).filter(NewsArticle.is_jv_mention == True)
+    total = q.count()
+    articles = (
+        q.order_by(desc(NewsArticle.published))
+        .offset((page - 1) * page_size)
+        .limit(page_size)
+        .all()
+    )
+    return {
+        "total": total,
+        "page": page,
+        "pages": (total + page_size - 1) // page_size,
+        "articles": [_serialize_article(a) for a in articles],
+    }
+
+
+@router.get("/jv-stats")
+def jv_stats(db: Session = Depends(get_db)):
+    """JV mention summary statistics."""
+    total_jv = db.query(NewsArticle).filter(NewsArticle.is_jv_mention == True).count()
+
+    # Get all JV articles to count partner appearances
+    jv_articles = (
+        db.query(NewsArticle)
+        .filter(NewsArticle.is_jv_mention == True)
+        .all()
+    )
+
+    partner_counts = {}
+    for a in jv_articles:
+        if a.jv_details:
+            for jv in a.jv_details:
+                for partner in jv.get("partners", []):
+                    partner_counts[partner] = partner_counts.get(partner, 0) + 1
+
+    top_partners = sorted(partner_counts.items(), key=lambda x: -x[1])
+
+    return {
+        "total_jv_mentions": total_jv,
+        "top_partners": [{"name": p[0], "count": p[1]} for p in top_partners],
+    }
+
+
 def _serialize_article(a: NewsArticle) -> dict:
     return {
         "id": a.id,
@@ -85,4 +135,6 @@ def _serialize_article(a: NewsArticle) -> dict:
         "summary": a.summary,
         "is_competitor_mention": a.is_competitor_mention,
         "mentioned_competitors": a.mentioned_competitors,
+        "is_jv_mention": getattr(a, "is_jv_mention", False),
+        "jv_details": getattr(a, "jv_details", None),
     }

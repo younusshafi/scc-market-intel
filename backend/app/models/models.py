@@ -75,6 +75,8 @@ class NewsArticle(Base):
     is_competitor_mention = Column(Boolean, default=False)
     mentioned_competitors = Column(JSON, nullable=True)  # list of competitor names
     is_relevant = Column(Boolean, default=True)
+    is_jv_mention = Column(Boolean, default=False)
+    jv_details = Column(JSON, nullable=True)  # [{partners: [...], context: "..."}]
 
     scraped_at = Column(DateTime, default=func.now())
 

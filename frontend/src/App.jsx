@@ -9,6 +9,7 @@ import TrendChart from './components/TrendChart'
 import QueryBar from './components/QueryBar'
 import CompetitiveIntel from './components/CompetitiveIntel'
 import GeoDistribution from './components/GeoDistribution'
+import JvMentions from './components/JvMentions'
 
 export default function App() {
   const { data: stats, loading: statsLoading } = useAPI(api.getTenderStats, [])
@@ -62,6 +63,9 @@ export default function App() {
         <CollapsibleSection title="All Tenders" defaultOpen={false}>
           <TenderTable title="" sccOnly={false} />
         </CollapsibleSection>
+
+        {/* JV & Consortium Mentions */}
+        <JvMentions />
 
         {/* News */}
         <CollapsibleSection title="Market & Infrastructure News" defaultOpen={false}>
