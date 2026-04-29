@@ -1,5 +1,8 @@
 """System health and scrape status endpoints."""
 
+import threading
+import logging
+
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
@@ -7,6 +10,8 @@ from sqlalchemy import desc
 from app.core.database import get_db
 from app.models import ScrapeLog, NewsArticle
 from app.scrapers.news_scraper import detect_jv_mentions
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/system", tags=["system"])
 
@@ -19,7 +24,7 @@ def health_check():
 @router.get("/scrape-status")
 def scrape_status(db: Session = Depends(get_db)):
     """Get the latest scrape status for each type."""
-    types = ["tenders", "news", "briefing"]
+    types = ["tenders", "news", "briefing", "tender_probe"]
     status = {}
 
     for scrape_type in types:
@@ -42,6 +47,49 @@ def scrape_status(db: Session = Depends(get_db)):
             status[scrape_type] = {"status": "never_run"}
 
     return status
+
+
+@router.post("/run-probe")
+def trigger_tender_probe():
+    """Trigger the deep tender probe in a background thread.
+
+    The probe scrapes tender detail pages for bidder/purchaser/NIT data.
+    This is a long-running operation (can take 10+ minutes).
+    """
+    from app.jobs.probe_tenders import run_probe_job
+
+    def _run():
+        try:
+            run_probe_job()
+        except Exception as e:
+            logger.error(f"Background probe failed: {e}")
+
+    thread = threading.Thread(target=_run, daemon=True)
+    thread.start()
+    return {"status": "started", "message": "Tender probe running in background. Check /api/system/scrape-status for progress."}
+
+
+@router.get("/probe-status")
+def probe_status(db: Session = Depends(get_db)):
+    """Get the latest tender probe status."""
+    latest = (
+        db.query(ScrapeLog)
+        .filter(ScrapeLog.scrape_type == "tender_probe")
+        .order_by(desc(ScrapeLog.started_at))
+        .first()
+    )
+    if not latest:
+        return {"status": "never_run"}
+    return {
+        "status": latest.status,
+        "started_at": latest.started_at.isoformat() if latest.started_at else None,
+        "completed_at": latest.completed_at.isoformat() if latest.completed_at else None,
+        "records_found": latest.records_found,
+        "records_new": latest.records_new,
+        "records_updated": latest.records_updated,
+        "error": latest.error_message,
+        "details": latest.details,
+    }
 
 
 @router.post("/backfill-jv")
