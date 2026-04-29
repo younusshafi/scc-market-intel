@@ -1,0 +1,914 @@
+<!doctype html>
+
+
+
+
+
+
+
+<HTML DIR="LTR">
+<meta https-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/product/css/OMANLTR.css">
+
+
+<title>NIT View Parameters</title>
+
+<link rel="stylesheet" href="/product/css/dashboard/reset.css">
+<link rel="stylesheet" href="/product/css/dashboard/grid.css">
+<link rel="stylesheet" href="/product/css/dashboard/jquery-ui.css">
+<link rel="stylesheet" href="/product/css/dashboard/tables.css">
+<link rel="stylesheet" href="/product/css/dashboard/ad.css">
+  <!---jQuery Files-->
+ <script src="/product/js/dashboard/jquery-1.7.1.min.js"></script>
+ <script src="/product/js/dashboard/jquery-ui-1.8.17.min.js"></script>
+ <script src="/product/js/dashboard/global.js"></script>
+ <script src="/product/js/dashboard/jquery.dataTables.min.js"></script>
+  <!---Fonts-->
+ <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+ <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!--[if lte IE 8]>
+  <script language="javascript" type="text/javascript" src="js/flot/excanvas.min.js"></script>
+  <![endif]-->
+
+<script language="javascript" src="/product/js/Validate.js"></script>
+<script language="javascript" src="/product/js/FormValidate.js"></script>
+<script language="JavaScript" src="/product/js/date-pickerNewNormal.js"></script>
+<script>
+var isSecurityDisableAtPublicDash='';
+var isUserId='null';
+if(isUserId!='' && isUserId!='null' && trim(isUserId)!='')
+    isSecurityDisableAtPublicDash="0";
+function viewDescription(strLongDesc){
+    var path;
+    if(isSecurityDisableAtPublicDash=='1')
+    {
+        path="/product/jsp/tender/viewLongDesc.jsp?strText="+strLongDesc+"&PublicUrl=1";
+        path=createUrlWithoutSecurity(document.forms[0],path);
+    }
+    else{
+        path="/product/jsp/tender/viewLongDesc.jsp?strText="+strLongDesc+"&PublicUrl=1";
+        path=getPublicFinalURL(document.forms[0],path);
+    }
+    window.open(path,"NonAttachedForms","scrollbars=yes,menubar=no,height=200,width=400,resizable=yes,toolbar=no,location=no,status=1,top=80,left=80");
+}
+function viewTenderBOQ(tenderno,LeneitemNo)
+{
+    nitV.callvalue.value="Description";
+    nitV.ViewType.value="LineItem";
+    nitV.callvalue.value="";
+    
+    if(tenderno==null || tenderno=='')
+    {
+        tenderno = document.nitV.tenderTxnNo.value;
+    }
+
+    var path;
+    if(isSecurityDisableAtPublicDash=='1')
+    {
+        path="/product/boqItemsView?flag=1&fromPage=TCV&callValue="+nitV.callvalue.value+"&ViewType="+nitV.ViewType.value+"&PublicUrl=1" +
+        "&tenderTxnNo="+tenderno+"&tenderLineItemNo="+LeneitemNo+"&PublicUrl=1";
+        path=createUrlWithoutSecurity(document.forms[0],path);
+    }
+    else{
+    path="/product/boqItemsView?flag=1&fromPage=TCV&callValue="+nitV.callvalue.value+"&ViewType="+nitV.ViewType.value+"&PublicUrl=1" +
+    "&tenderTxnNo="+tenderno+"&tenderLineItemNo="+LeneitemNo+"&PublicUrl=1";
+    path=getPublicFinalURL(document.forms[0],path);
+    }
+    window.open(path,"view",'width=640,height=480,scrollbars=1,resizeable=0')
+}
+function viewBIDBOQ(tenderno,LeneitemNo)
+{
+    nitV.ViewType.value="LineItem";
+    nitV.callvalue.value="";
+    
+    if(tenderno==null || tenderno=='')
+    {
+        tenderno = document.nitV.tenderTxnNo.value;
+    }
+    var path;
+    if(isSecurityDisableAtPublicDash=='1')
+    {
+        path="/product/boqItemsView?flag=2&fromPage=TCV&callValue="+nitV.callvalue.value+"&ViewType="+nitV.ViewType.value+"" +
+        "&tenderTxnNo="+tenderno+"&tenderLineItemNo="+LeneitemNo+"&PublicUrl=1";
+        path=createUrlWithoutSecurity(document.forms[0],path);
+    }
+    else{
+    path="/product/boqItemsView?flag=2&fromPage=TCV&callValue="+nitV.callvalue.value+"&ViewType="+nitV.ViewType.value+"" +
+    "&tenderTxnNo="+tenderno+"&tenderLineItemNo="+LeneitemNo+"&PublicUrl=1";
+    path=getPublicFinalURL(document.forms[0],path);
+    }
+    window.open(path,"view",'width=640,height=480,scrollbars=1,resizeable=0')   
+}
+
+function evalParamView(tenderno){
+    
+    document.forms[0].method="post";
+    var path;
+    if(isSecurityDisableAtPublicDash=='1')
+    {
+         path="/product/tenderEvalScore?tenTxnNo="+tenderno+"&callvalue=nit&PublicUrl=1";
+         path=createUrlWithoutSecurity(document.forms[0],path);
+    }
+    else{
+     path="/product/tenderEvalScore?tenTxnNo="+tenderno+"&callvalue=nit&PublicUrl=1";
+     path=getPublicFinalURL(document.forms[0],path);
+    }
+    window.open(path,"view",'status=1,scrollbars=1,resizable=yes,width=800,height=550');
+}
+
+function backToDashBoard(flag,cancelMode)
+{
+
+    if("cancelTender"==cancelMode)
+        document.nitV.action="/product/CanceledTendersForPublic";
+    else
+    document.nitV.action="/product/publicDash";
+    if(isSecurityDisableAtPublicDash=='1')
+    {
+        document.forms[0].submit();
+    }
+    else{
+        submitPage(document.forms[0]);
+    }
+    
+}
+
+ function getTeplate(tenNo,parId,mode){
+      
+     nitV.hndTenNo.value = tenNo;
+     nitV.hndparId.value = parId;
+     nitV.hndmode.value = mode;
+     nitV.callvalue.value = "nitTemplate";
+     if(isSecurityDisableAtPublicDash=='1')
+        {
+            document.forms[0].submit();
+        }
+        else{
+            submitPage(document.forms[0]);
+        }
+ }
+ function getVisitTemplete(tenNo,parId,mode){
+     
+     nitV.hndTenNo.value = tenNo;
+     nitV.hndparId.value = parId;
+     nitV.hndmode.value = mode;
+     nitV.callvalue.value = "SiteVisit";
+     if(isSecurityDisableAtPublicDash=='1')
+        {
+            document.forms[0].submit();
+        }
+        else{
+            submitPage(document.forms[0]);
+        }
+ }
+ 
+ function showLongDesc(item)
+  {
+    var longDesc=document.getElementById("pack"+item).value;
+    var path;
+    if(isSecurityDisableAtPublicDash=='1')
+    {
+        path="/product/jsp/FrmEngscrBid/showLongDesc.jsp?LongDesc="+longDesc+"&itemNo="+item+"&PublicUrl=1";
+        document.forms[0].method="post";
+        path=createUrlWithoutSecurity(document.forms[0],path);
+    }
+    else{
+    path="/product/jsp/FrmEngscrBid/showLongDesc.jsp?LongDesc="+longDesc+"&itemNo="+item+"&PublicUrl=1";
+    document.forms[0].method="post";
+    path=getPublicFinalURL(document.forms[0],path);
+    }
+    window.open(path,"LongDescription","status=1,toolbar=0, scrollbars=1"); 
+
+ }
+ 
+ function generateTenderDoc(tenderNo){
+     var path;
+  
+}
+
+ function viewNDATenderDoc(tenderNo)
+    { 
+       
+             var publicUrl =document.forms[0].PublicUrl.value; 
+             var tenderno=tenderNo;
+             var fileName
+             var viewPath
+             var NDADocFlag
+             NDADocFlag='Yes';
+         
+     
+            fileName=document.getElementById("NDAnewFileName").value;
+            viewPath=document.getElementById("NDAuploadPath").value;
+      
+            
+             document.getElementById("flag").value="tenderbaseinfo";
+             document.getElementById("fileName").value=fileName;
+             document.getElementById("viewPath").value=viewPath;
+             document.getElementById("NDADocFlag").value=NDADocFlag;
+             document.getElementById("PublicUrl").value=publicUrl;
+            
+            if(fileName=='null' || fileName==''){
+                alert("Tender NDA Document Not Available");
+                return;
+            }
+            
+         
+     
+        //var path="/product"+viewPath+"/"+fileName;
+        var path;
+        
+        path="/product/showTenderDocument";
+   	    document.forms[0].method="post";
+   	    document.forms[0].action=path;
+   	 
+        if(isSecurityDisableAtPublicDash=='1')
+        {
+            path="/product/showTenderDocument";
+            path=createUrlWithoutSecurity(document.forms[0],path);
+        }
+        else{
+            path="/product/showTenderDocument";
+            path=getPublicFinalURL(document.forms[0],path);
+        }
+     /*    window.open(path,"view",'status=0,scrollbars=1,resizable=yes '); */
+        
+         window.open("",'view','toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,copyhistory=no,width=700,height=500,left=150,top=100');
+      	 document.forms[0].target="view";
+      	 document.forms[0].submit();
+    }
+ 
+ 
+ /*added for JiraId:OM_18-4046*/
+ function viewSpecialConditionTenderDoc(filename,path,tenderNo)
+{    var fileName;
+     var viewPath;
+     fileName=filename;
+     viewPath=path;
+     if(filename==='null'||filename===undefined||filename===null||(filename!=null && filename.trim()==="")) { 
+		   alert("Tender Special Condition Document Not Available");
+		   return;
+		   }
+
+	var openPath = "/product/showTenderDocument?flag=viewSpecialTenderDoc&newFileName="+filename+"&viewPath="+path+"&tenderNo="+tenderNo+"&PublicUrl=1";
+	 document.forms[0].method="post";
+	    document.forms[0].action=openPath;
+	openPath= getFinalURL(document.forms[0],openPath);
+	var winctrl="status=0,scrollbars=1,resizable=yes,top=110,left=120,width=1100,height=500";
+	window.open(openPath,"view",winctrl);
+}
+ 
+ 
+ function showSpecialConditionTender(tenderno)
+ {
+ 	document.forms[0].method="get";
+ 	var path="/product/nitParameterView?mode=buyer&tenderNo="+tenderno+"&callvalue=ShowSpecialConditionDetails&PublicUrl=1";
+ 	 path= getFinalURL(document.forms[0],path);
+ 	window.open(path,"view",'status=1,scrollbars=1,resizable=yes,width=700,height=400');
+ }
+ 
+</script> 
+</head>
+<body onmousedown="isKeyPressed(event)" onKeyDown="onKeyDown(event);" onLoad="setVal();">
+<form name="nitV" method="post" action="nitParameterView">
+
+
+
+	
+ 
+ 
+
+<link rel="stylesheet" type="text/css" href="/product/css/OMANLTR.css">
+
+<script src="/product/js/dashboard/jquery-1.7.1.min.js"></script>
+<script language="javascript" src="/product/js/ScreenReader.js?v1.3"></script>
+  
+<div class="new-strip container_12 box-content ">
+  <div class="new-strip-second">
+	 <span><a class="btn-increase" title="text increase" onclick="applyFontSizeP(1);">A<sup>+</sup></a></span>
+	 <span><a class="btn-orig" title="Standard normal" onclick="applyFontSizeP(0);">A<sup></sup></a></span>
+	 <span><a class="btn-decrease" title="text decrease" onclick="applyFontSizeP(-1);">A<sup>-</sup></a></span>
+	 <span style="cursor: pointer;"><a class="new-strip_content" id="convertButton" onclick="goToConvertTextToSpeech()">ScreenReader</a></span>
+     <span style="cursor: pointer;"><img src="/product/images/sun_light.svg" alt="Theme change" class="img-responsive" id="theme_change_id" title="Theme_change" tabindex="0"></span>
+  </div>
+</div>
+
+<script>
+
+ //Apply theme on page load
+    
+  window.onload = function() {
+    const isDarkTheme = localStorage.getItem("isDarkTheme");
+    if (isDarkTheme === "1") {
+      document.body.classList.add("dark_theme");
+      theme_change_id.src = "/product/images/moon.svg";
+    } else {
+      document.body.classList.remove("dark_theme");
+      theme_change_id.src = "/product/images/sun_light.svg";
+    }
+  };
+
+  // Toggle theme on icon click
+  
+  var icon = document.getElementById("theme_change_id")
+  icon.onclick= function (){
+  document.body.classList.toggle("dark_theme");
+    if(document.body.classList.contains("dark_theme")){
+    	theme_change_id.src ="/product/images/moon.svg";       
+    	isDarkTheme = '1';
+    }
+    else{
+    	isDarkTheme = '0';
+    	theme_change_id.src ="/product/images/sun_light.svg";       	        	
+    }
+        
+   // Save to localStorage
+        localStorage.setItem("isDarkTheme", isDarkTheme);      
+    }
+    
+  function goToConvertTextToSpeech(){
+	  var isRtl = '0'; 
+	  if(isRtl == '1'){
+		 alert('null');
+		 convertTextToSpeech();
+	  } else {
+		 convertTextToSpeech();
+	  }
+	  
+  }
+  
+  var fontIncCount = 0;
+  var normalFontSize = 12.5;  
+  const lastIontIncCount = localStorage.getItem("lastIontIncCount");
+  function applyFontSizeP(direction) {
+      const affectedElementsP = Array.from(document.body.querySelectorAll("p, h1, h2, h3, h4, h5, h6, span, div, input, th, td, a, select, b"));
+      console.log(affectedElementsP.length);
+
+      if (direction === 0) {
+              affectedElementsP.forEach(el => {
+              el.style.fontSize = normalFontSize + "px";
+          });
+          fontIncCount = 0;  
+          return;
+      }
+    
+      if (direction > 0 && fontIncCount < 3) {
+          fontIncCount++;  
+          localStorage.setItem("lastIontIncCount", fontIncCount);
+      } else if (direction < 0 && fontIncCount > -3) {
+    	  localStorage.setItem("lastIontIncCount", fontIncCount);
+          fontIncCount--;  
+      } else {
+         return;
+      }
+
+      affectedElementsP.forEach(el => {
+          const style = window.getComputedStyle(el);
+          const fontSize = parseFloat(style.fontSize);
+          if (!isNaN(fontSize)) {
+              el.style.fontSize = (fontSize + direction) + "px";
+          }
+      });
+  }
+  function applyFontSizeDflt(){
+	  applyFontSizeP(lastIontIncCount); 
+  }
+  setTimeout('applyFontSizeDflt', 1000);
+</script>
+
+	
+	
+
+
+<input type="hidden" id="callvalue" name="callvalue"> 
+<input type="hidden" id="strDirection" name="strDirection" value="LTR">
+<input type="hidden" id="CTRL_STRDIRECTION" name="CTRL_STRDIRECTION" value="LTR">
+<input type="hidden" id="ViewType" name="ViewType">
+<input type="hidden" id="hndTenNo" name="hndTenNo">
+<input type="hidden" id="hndparId" name="hndparId">
+<input type="hidden" id="hndmode" name="hndmode">
+<input type="hidden" id="tenderNo" name="tenderNo" value="87111" > 
+<input type="hidden" id="sourceName" name="sourceName" value="">
+<input type="hidden" id="mode" name="mode" value="public" >
+<input type="hidden" id="PublicUrl" name="PublicUrl" value="1">
+<input type="hidden" id="tabFlag" name="tabFlag" value="null">
+
+
+
+<script>
+	var ctxPath="/product";
+	var processMsg='Processing Request, Please Wait. DO NOT CLICK REFRESH OR BACK';
+	var popupMsg='New Window is opened.Close the new window to continue working on this page.';
+	var ALERT_TITLE ='ESNAD';
+	var ALERT_BUTTON_TEXT ='Ok';;
+	
+</script>
+
+
+
+<input type="hidden" id="securityFlag" name="securityFlag" value="1">
+<input type="text" style="display:none" style="width:430px" id="randomno"  name="randomno" value="fixedrandomno">
+<input type="hidden" id="encparam" name="encparam">
+<input type="hidden" id="hashval" name="hashval">
+
+
+
+<script language="javascript" >
+/* A JavaScript implementation of the Secure Hash Standard
+ * Version 0.3 Copyright Angel Marin 2003-2004 - http://anmar.eu.org/
+ * Distributed under the BSD License
+ * Some bits taken from Paul Johnston's SHA-1 implementation
+ */
+var chrsz   = 8;  /* bits per input character. 8 - ASCII; 16 - Unicode      */
+var hexcase = 0;/* hex output format. 0 - lowercase; 1 - uppercase        */
+
+function safe_add (x, y) {
+  var lsw = (x & 0xFFFF) + (y & 0xFFFF);
+  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+  return (msw << 16) | (lsw & 0xFFFF);
+}
+
+function S (X, n) {return ( X >>> n ) | (X << (32 - n));}
+
+function R (X, n) {return ( X >>> n );}
+
+function Ch(x, y, z) {return ((x & y) ^ ((~x) & z));}
+
+function Maj(x, y, z) {return ((x & y) ^ (x & z) ^ (y & z));}
+
+function Sigma0256(x) {return (S(x, 2) ^ S(x, 13) ^ S(x, 22));}
+
+function Sigma1256(x) {return (S(x, 6) ^ S(x, 11) ^ S(x, 25));}
+
+function Gamma0256(x) {return (S(x, 7) ^ S(x, 18) ^ R(x, 3));}
+
+function Gamma1256(x) {return (S(x, 17) ^ S(x, 19) ^ R(x, 10));}
+
+function Sigma0512(x) {return (S(x, 28) ^ S(x, 34) ^ S(x, 39));}
+
+function Sigma1512(x) {return (S(x, 14) ^ S(x, 18) ^ S(x, 41));}
+
+function Gamma0512(x) {return (S(x, 1) ^ S(x, 8) ^ R(x, 7));}
+
+function Gamma1512(x) {return (S(x, 19) ^ S(x, 61) ^ R(x, 6));}
+
+function core_sha256 (m, l) {
+    var K = new Array(0x428A2F98,0x71374491,0xB5C0FBCF,0xE9B5DBA5,0x3956C25B,0x59F111F1,0x923F82A4,0xAB1C5ED5,0xD807AA98,0x12835B01,0x243185BE,0x550C7DC3,0x72BE5D74,0x80DEB1FE,0x9BDC06A7,0xC19BF174,0xE49B69C1,0xEFBE4786,0xFC19DC6,0x240CA1CC,0x2DE92C6F,0x4A7484AA,0x5CB0A9DC,0x76F988DA,0x983E5152,0xA831C66D,0xB00327C8,0xBF597FC7,0xC6E00BF3,0xD5A79147,0x6CA6351,0x14292967,0x27B70A85,0x2E1B2138,0x4D2C6DFC,0x53380D13,0x650A7354,0x766A0ABB,0x81C2C92E,0x92722C85,0xA2BFE8A1,0xA81A664B,0xC24B8B70,0xC76C51A3,0xD192E819,0xD6990624,0xF40E3585,0x106AA070,0x19A4C116,0x1E376C08,0x2748774C,0x34B0BCB5,0x391C0CB3,0x4ED8AA4A,0x5B9CCA4F,0x682E6FF3,0x748F82EE,0x78A5636F,0x84C87814,0x8CC70208,0x90BEFFFA,0xA4506CEB,0xBEF9A3F7,0xC67178F2);
+    var HASH = new Array(0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19);
+    var W = new Array(64);
+    var a, b, c, d, e, f, g, h, i, j;
+    var T1, T2;
+
+    /* append padding */
+    m[l >> 5] |= 0x80 << (24 - l % 32);
+    m[((l + 64 >> 9) << 4) + 15] = l;
+
+    for ( var i = 0; i<m.length; i+=16 ) {
+        a = HASH[0];
+        b = HASH[1];
+        c = HASH[2];
+        d = HASH[3];
+        e = HASH[4];
+        f = HASH[5];
+        g = HASH[6];
+        h = HASH[7];
+
+        for ( var j = 0; j<64; j++) {
+            if (j < 16) W[j] = m[j + i];
+            else W[j] = safe_add(safe_add(safe_add(Gamma1256(W[j - 2]), W[j - 7]), Gamma0256(W[j - 15])), W[j - 16]);
+
+            T1 = safe_add(safe_add(safe_add(safe_add(h, Sigma1256(e)), Ch(e, f, g)), K[j]), W[j]);
+            T2 = safe_add(Sigma0256(a), Maj(a, b, c));
+
+            h = g;
+            g = f;
+            f = e;
+            e = safe_add(d, T1);
+            d = c;
+            c = b;
+            b = a;
+            a = safe_add(T1, T2);
+        }
+        
+        HASH[0] = safe_add(a, HASH[0]);
+        HASH[1] = safe_add(b, HASH[1]);
+        HASH[2] = safe_add(c, HASH[2]);
+        HASH[3] = safe_add(d, HASH[3]);
+        HASH[4] = safe_add(e, HASH[4]);
+        HASH[5] = safe_add(f, HASH[5]);
+        HASH[6] = safe_add(g, HASH[6]);
+        HASH[7] = safe_add(h, HASH[7]);
+    }
+    return HASH;
+}
+
+function core_sha512 (m, l) {
+    var K = new Array(0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f, 0xe9b5dba58189dbbc, 0x3956c25bf348b538, 0x59f111f1b605d019, 0x923f82a4af194f9b, 0xab1c5ed5da6d8118, 0xd807aa98a3030242, 0x12835b0145706fbe, 0x243185be4ee4b28c, 0x550c7dc3d5ffb4e2, 0x72be5d74f27b896f, 0x80deb1fe3b1696b1, 0x9bdc06a725c71235, 0xc19bf174cf692694, 0xe49b69c19ef14ad2, 0xefbe4786384f25e3, 0x0fc19dc68b8cd5b5, 0x240ca1cc77ac9c65, 0x2de92c6f592b0275, 0x4a7484aa6ea6e483, 0x5cb0a9dcbd41fbd4, 0x76f988da831153b5, 0x983e5152ee66dfab, 0xa831c66d2db43210, 0xb00327c898fb213f, 0xbf597fc7beef0ee4, 0xc6e00bf33da88fc2, 0xd5a79147930aa725, 0x06ca6351e003826f, 0x142929670a0e6e70, 0x27b70a8546d22ffc, 0x2e1b21385c26c926, 0x4d2c6dfc5ac42aed, 0x53380d139d95b3df, 0x650a73548baf63de, 0x766a0abb3c77b2a8, 0x81c2c92e47edaee6, 0x92722c851482353b, 0xa2bfe8a14cf10364, 0xa81a664bbc423001, 0xc24b8b70d0f89791, 0xc76c51a30654be30, 0xd192e819d6ef5218, 0xd69906245565a910, 0xf40e35855771202a, 0x106aa07032bbd1b8, 0x19a4c116b8d2d0c8, 0x1e376c085141ab53, 0x2748774cdf8eeb99, 0x34b0bcb5e19b48a8, 0x391c0cb3c5c95a63, 0x4ed8aa4ae3418acb, 0x5b9cca4f7763e373, 0x682e6ff3d6b2b8a3, 0x748f82ee5defb2fc, 0x78a5636f43172f60, 0x84c87814a1f0ab72, 0x8cc702081a6439ec, 0x90befffa23631e28, 0xa4506cebde82bde9, 0xbef9a3f7b2c67915, 0xc67178f2e372532b, 0xca273eceea26619c, 0xd186b8c721c0c207, 0xeada7dd6cde0eb1e, 0xf57d4f7fee6ed178, 0x06f067aa72176fba, 0x0a637dc5a2c898a6, 0x113f9804bef90dae, 0x1b710b35131c471b, 0x28db77f523047d84, 0x32caab7b40c72493, 0x3c9ebe0a15c9bebc, 0x431d67c49c100d4c, 0x4cc5d4becb3e42b6, 0x597f299cfc657e2a, 0x5fcb6fab3ad6faec, 0x6c44198c4a475817);
+    var HASH = new Array(0x6a09e667f3bcc908, 0xbb67ae8584caa73b, 0x3c6ef372fe94f82b, 0xa54ff53a5f1d36f1, 0x510e527fade682d1, 0x9b05688c2b3e6c1f, 0x1f83d9abfb41bd6b, 0x5be0cd19137e2179);
+    var W = new Array(80);
+    var a, b, c, d, e, f, g, h, i, j;
+    var T1, T2;
+
+}
+
+function str2binb (str) {
+  var bin = Array();
+  var mask = (1 << chrsz) - 1;
+  for(var i = 0; str != null && str != 'undefined' && i < str.length * chrsz; i += chrsz)
+    bin[i>>5] |= (str.charCodeAt(i / chrsz) & mask) << (24 - i%32);
+  return bin;
+}
+
+function binb2str (bin) {
+  var str = "";
+  var mask = (1 << chrsz) - 1;
+  for(var i = 0; i < bin.length * 32; i += chrsz)
+    str += String.fromCharCode((bin[i>>5] >>> (24 - i%32)) & mask);
+  return str;
+}
+
+function binb2hex (binarray) {
+  var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
+  var str = "";
+  for(var i = 0; i < binarray.length * 4; i++)
+  {
+    str += hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8+4)) & 0xF) +
+           hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8  )) & 0xF);
+  }
+  return str;
+}
+
+function binb2b64 (binarray) {
+  var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  var str = "";
+  for(var i = 0; i < binarray.length * 4; i += 3)
+  {
+    var triplet = (((binarray[i   >> 2] >> 8 * (3 -  i   %4)) & 0xFF) << 16)
+                | (((binarray[i+1 >> 2] >> 8 * (3 - (i+1)%4)) & 0xFF) << 8 )
+                |  ((binarray[i+2 >> 2] >> 8 * (3 - (i+2)%4)) & 0xFF);
+    for(var j = 0; j < 4; j++)
+    {
+      if(i * 8 + j * 6 > binarray.length * 32) str += b64pad;
+      else str += tab.charAt((triplet >> 6*(3-j)) & 0x3F);
+    }
+  }
+  return str;
+}
+
+function Utf8Encode(string) {
+	   string = string.replace(/\r\n/g,"\n");
+	   var utftext = "";
+
+	   for (var n = 0; n < string.length; n++) {
+
+	     var c = string.charCodeAt(n);
+
+	     if (c < 128) {
+	       utftext += String.fromCharCode(c);
+	     }
+	     else if((c > 127) && (c < 2048)) {
+	       utftext += String.fromCharCode((c >> 6) | 192);
+	       utftext += String.fromCharCode((c & 63) | 128);
+	     }
+	     else {
+	       utftext += String.fromCharCode((c >> 12) | 224);
+	       utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+	       utftext += String.fromCharCode((c & 63) | 128);
+	     }
+
+	   }
+
+	   return utftext;
+	 }
+
+function hex_sha256(s){
+	
+	 s = Utf8Encode(s);
+	// alert("andsnd Form Validaqte"+s);
+	return binb2hex(core_sha256(str2binb(s),s.length * chrsz));
+	}
+function b64_sha256(s){return binb2b64(core_sha256(str2binb(s),s.length * chrsz));}
+function str_sha256(s){return binb2str(core_sha256(str2binb(s),s.length * chrsz));}
+
+</script>
+
+
+<script>
+var enableServerSideEncDec = 1;//mentis id 0021036
+//alert('in jsp '+enableServerSideEncDec);
+$(document).ready(function() {
+	var hex='null';
+	$('.box-head, #colorSelector-box-head').css('backgroundColor', '#' + hex);	
+			
+});
+
+</script>
+<input type="hidden" id="cancelMode" name="cancelMode" value="null" >
+<input type="hidden" id="CTRL_USERID" name="CTRL_USERID" value="null">
+<input type="hidden" id="CTRL_ROLEID" name="CTRL_ROLEID" value="null">
+<input type="hidden" id="CTRL" name="CTRL" value="null">
+
+<input type="hidden" id="flag" name="flag">
+<input type="hidden" id="fileName" name="fileName">
+<input type="hidden" id="viewPath" name="viewPath">
+<input type="hidden" id="NDADocFlag" name="NDADocFlag">
+
+<br>
+<div class="container">
+
+
+
+<div class="container_12" style="width:78%; float:left; margin-top: 19px">
+
+    <div class="box-head box-head3"><h2>
+        Notice Inviting Tender
+    </h2></div>
+           
+    <div class="box-content no-pad">
+          <table class="display" id="" style="height: 78px;">
+           <tr class="even gradeA">
+                <td width="100%" colspan="2"><b>Tender ID :   87111 | Entity  Name  :   Ministry of Housing and Urban Planning</b></td>
+            </tr>
+          
+            
+         </table></div>
+         </div>
+            <div  style="width:15%; float:left ; margin-top: 18px;margin-left: 10px;">
+       <div class="box-content no-pad">
+	<div class="" style="border-top: 1px solid #bbb;
+    height: 112px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;">
+   <img src="/product/images/MinAndCompLogo/MinistryWise/MHUP.png" class="  " alt="logo"  
+	data-src="/product/images/MinAndCompLogo/MinistryWise/MHUP.png"  style="border-top: 0; max-width: 100%;
+    max-height: 100%;
+    "> 
+    </div>
+    </div>
+      </div> 
+	</div>
+<br>
+  
+  <div class="box-content no-pad container_12"> 
+    <!-- <div class="box-content no-pad container_12"> -->
+    <table class="display" id="">
+    <tr class="even gradeA">
+    <td>
+   
+                <div class="box-head box-head3"><h2>Tender Basic Information</h2></div>
+                <div class="box-content no-pad">
+                <table class="display" id="">
+                    
+                     <tr class="even gradeA">
+                             <input type="hidden" name="tenderTxnNo" value="31/2026/MHUP-و إ ت ع/HQ- م ر -6">
+                             <td  width="25%" ><b>Tender No :</b></td>
+                             <td width="25%" STYLE="word-wrap:break-word;">31/2026/MHUP/HQ-6</td>
+
+                             <td  width="25%"><b>Tender Published Date :</b></td>
+
+                            <td width="25%">13-03-2026</td>
+                             
+                       </tr>
+                        <tr class="odd gradeA">
+                         <td ><b>Evaluation Type : </b></td><td width="300px" STYLE="word-wrap:break-word;">Schedule Wise</td>
+                          
+                         <td ><b>Tender Type :</b></td><td>International
+                       &nbsp;(
+				   International)</td>
+                       </tr>
+                       <tr class="even gradeA">
+                         <td ><b>Tender Title :</b></td><td width="300px" colspan="3" STYLE="word-wrap:break-word;">Sultan Haitham City Phase 01, WP16 - Construction of Transport Network Connectivities from Sultan Qaboos Road and Associated Extension of Roads, Infrastructure and Utilities</td>
+                       </tr>
+                        
+                  
+                            <tr class="odd gradeA">
+                                <td ><b>Tender Title in Arabic :</b></td>
+                                <td width="500px" colspan="3" STYLE="word-wrap:break-word;"> انشاء وتنفيذ مناقصة الأعمال الإنشائية لشبكة الطرق الخارجية من شارع السلطان قابوس وربطها مع الطرق، وأعمال البنية الأساسية والخدمات . المرحلة الاولى - الحزمة 16.</td>
+    
+                            </tr>
+                        
+                
+                    <tr class="even gradeA">
+                        <td ><b></b></td>
+                        <td colspan="3" width="300px" STYLE="word-wrap:break-word;"></td>
+                                 
+                    </tr> 
+                    
+                
+            
+
+                       <tr class="even gradeA">                   
+                              <td><b>Procurement Category :</b></td>
+                             
+                        <td  STYLE="word-wrap:break-word;" colspan="3">Construction of Ports Roads Bridges Railways Dams and Maintenance</td>
+                        
+                        </tr>
+                         <tr class="odd gradeA">    
+                            
+                       </tr>
+
+                       
+                    <tr class="odd gradeA">
+                        
+                            <td align="center" colspan="4"><b>Procurement Sub Category Names </b></td>
+                    </tr>
+                    <tr class="even gradeA">
+                            <td colspan="4" >
+                            
+                                    Contracting of main roads
+                                </td>
+                        
+                
+                        
+                 </tr>
+                <tr class="odd gradeA">
+                        
+                              <td width="20%"><b>Vendor Grades :</b></td>
+                                <td width="15%">
+                           
+                                            Excellent,
+                                        
+                                    
+                                            First
+                                        
+                                    
+                     
+                     <!--  below block is added for JiraID:OM_18-4046 --> 
+	
+               </td>      
+                     
+                     
+                     
+                     
+                     
+                     
+                        <td><b>PreBid Clarification :</b></td>
+                        <td >Online</td>
+                		</tr>
+
+
+                    
+                   
+                   
+                     
+                      
+                     
+                    
+            
+                       <tr class="even gradeA">
+                            <td><b>Governorate :</b></td>
+                            <td>Muscat </td>
+                            <td><b>Wilayat :</b></td>
+                            <td>  Muscat</td>
+                       </tr>
+                    
+                   <tr class="odd gradeA">
+                        <td><b>Envelope Type:</b></td>
+                        <td colspan="">
+            
+                        Single Envelope</td>
+                   
+                    <td><b>Is Alternate Bid Allowed :</b></td>
+                   <td>Yes</td>
+                   </tr>
+                
+                       
+                   
+                
+              
+             </tr>
+             
+                        <tr class="even gradeA">
+                             <td><b>Tender Document Fee  (RO) : 
+                             <br>Payment Mode&nbsp;:&nbsp;&nbsp;Online</b></td>
+                             <td>190.000</td>
+                             <td><b>Tender Bond Value :</b></td>
+                             <td>
+                             1.000 (% of Quoted Value) , E-Bond Applicable
+                             </td>
+                         </tr>
+                         <tr><td colspan="2">Note</td><td></td><td></td></tr>
+               
+                
+                         
+              </table></div>
+              <br>
+   
+                 <div class="box-content no-pad"   > 
+                    <table class="display" id="">
+                
+                            
+
+
+
+
+
+
+<div class="box-head"><h2>
+			Tender Calendar Dates (Oman Time) : 
+</h2></div>
+
+<!-- <div class="box-content no-pad container_12"> -->
+<div class="box-content no-pad">
+<table class="display" id="">
+<tr class="odd gradeA">
+	<td width="25%">Tender Document Sales Start Date</td>
+	<td width="25%" >13-03-2026 15:00</td>
+	<td width="25%">Tender Document Sales End Date</td>
+	<td width="25%">29-03-2026 17:00</td>
+</tr>
+<tr class="even gradeA">
+	<td width="25%">PreBid Clarification Start</td>
+	<td width="25%">29-03-2026 17:00</td>
+	<td width="25%">PreBid Clarification End</td>
+	<td width="25%">10-05-2026 17:00</td>
+</tr>
+<tr class="odd gradeA">
+	<td width="25%">Bid Submission Closing</td>
+	<td width="25%">19-05-2026 17:00</td>
+
+	<td width="25%">Priced Bid Opening</td>
+	
+	<td width="25%">20-05-2026 10:00</td>
+
+</tr>
+
+
+
+</table></div>
+<br />
+
+
+
+
+
+                        
+             </tbody> </table></div>
+              <br>
+      
+     <td valign="top" align="center">
+     
+            <!-- <div class="box-head box-head3 container_12"> -->
+            <div class="box-head box-head3 container_12">           
+            <h2>Forms & Other Details</h2></div>
+            <!-- <div class="box-content no-pad container_12"> -->
+           <div class="box-content no-pad container_12"> 
+            <table class="display" id="">
+                             
+                              <tr class='even gradeA'>
+                                    <td>
+                                        Brief Scope of Work   
+                                        
+                                    </td>
+                                    <td>
+                                    <a href="#" onclick="javascript:getTeplate('87111','5','public')" title="Click to View  Brief Scope of Work"><img class="skipDataSpeechHeader" alt="Brief Scope of Work" border="0" src="/product/images/ProImgPNGFormat/ViewPreview.png"></a>
+                                    </td>
+                                
+                             
+                             
+                         
+                              
+                                    
+                               
+                              
+                               </tr>
+                               <tr>
+                             <td>
+                                        Site Visit Information
+                                    </td>
+                                    <td>
+                                    <a href="#" onclick="javascript:getVisitTemplete()" title="Click to View  Site Visit Information"><img class="skipDataSpeechHeader" alt="Site Visit Information" border="0" src="/product/images/ProImgPNGFormat/ViewPreview.png"></a>
+                                    </td>   
+                            </tr>
+              </table></div>
+     </td></tr>
+        
+        
+           
+            <tr>
+                
+                <td align="center">
+                <input type="button" name="Close" value="Close" class="button small green extra_btn_class"  onclick="window.close()"/>
+                </td>
+            </tr>
+       
+      
+       
+   
+</div>
+</form>
+<script>
+$(document).ready(function() {
+	document.getElementById("homeButton").style.display = 'none';
+	
+});
+
+</script>
+</body>
+
+
+</html>

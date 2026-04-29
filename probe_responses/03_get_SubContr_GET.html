@@ -1,0 +1,2155 @@
+<!doctype html>
+
+
+
+
+<HTML DIR="RTL">
+<link rel="stylesheet" type="text/css" href="/product/css/OMANRTL.css">
+<link href="/product/css/lightGreen.css" rel="stylesheet" type="text/css" media="screen">
+<link href="/product/css/nivo-slider.css" rel="stylesheet" type="text/css" media="screen">
+<link rel="stylesheet" href="/product/css/dashboard/ad.css">
+<HEAD> 
+
+<meta https-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<title>الصفحة الرئيسية</title>
+
+    <link rel="stylesheet" type="text/css" href="/product/css/styleRTL.css">
+
+
+<link rel="stylesheet" href="/product/css/dashboard/reset.css">
+<link rel="stylesheet" href="/product/css/dashboard/grid.css">
+<link rel="stylesheet" href="/product/css/dashboard/jquery-ui.css">
+<link rel="stylesheet" href="/product/css/dashboard/tables.css">
+<link rel="stylesheet" href="/product/css/dashboard/ad.css">
+  <!---jQuery Files-->
+ <script src="/product/js/dashboard/jquery-1.7.1.min.js"></script>
+ <script src="/product/js/dashboard/jquery-ui-1.8.17.min.js"></script>
+ <script src="/product/js/dashboard/global.js"></script>
+ <script src="/product/js/dashboard/jquery.dataTables.min.js"></script>
+  <!---Fonts-->
+ <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="/product/template.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/product/css/tabsArabic.css" >
+<script language="JavaScript" src="/product/js/date-pickerNewAlternate.js"></script>
+<script language="JavaScript" src="/product/js/Validate.js"></script>
+<script language="javascript" src="/product/js/FormValidate.js"></script>
+
+<script type="text/javascript">
+var isSecurityDisableAtPublicDash='';
+var isUserId='null';
+if(isUserId!='' && isUserId!='null' && trim(isUserId)!='')
+    isSecurityDisableAtPublicDash="0";
+
+var strContext='/product';
+var strLnkUrl = 'publicDash?viewFlag=NewTenders';
+var strAlert = 'الرجاء أدخال قيمه رقميه';
+var strInvalidPage = 'رقم الصفحه غير صالح';
+var strOf = 'من';
+
+    function ShowNewTenders(n){
+        document.bDashboard.subContractTenderPubpageNo.value=n;
+        document.bDashboard.callvalue.value="";
+        document.bDashboard.action="/product/publicDash?viewFlag=NewTenders";
+        if(isSecurityDisableAtPublicDash=='1')
+        {
+            document.forms[0].submit();
+        }
+        else{
+            submitPage(document.forms[0]);
+        }
+    }
+
+  
+    
+    function showParticipated(tenderNo){
+        // alert("In showParticipated() tenderNo ->"+tenderNo);
+    var path;
+        if(isSecurityDisableAtPublicDash=='1')
+        {
+            path="/product/publicDash?viewFlag=showParticipatedVendors&tenderNo="+tenderNo+"&PublicUrl=1";
+            path=createUrlWithoutSecurity(document.forms[0],path);
+        }
+        else{
+            path="/product/publicDash?viewFlag=showParticipatedVendors&tenderNo="+tenderNo+"&PublicUrl=1";
+            path=getPublicFinalURL(document.forms[0],path);
+        }
+        var winctrl="status=0,scrollbars=1,resizable=yes,top=110,left=120,width=1100,height=500";
+        window.open(path,'ParticipatedCompany',winctrl);
+    }
+    
+  
+    
+    function getNit(tenNo){
+        //document.bDashboard.mode.value="public";
+        //document.bDashboard.tenderNo.value=tenNo; 
+        var url ;
+        if(isSecurityDisableAtPublicDash=='1')
+        {
+            url =" /product/nitParameterView?mode=public&tenderNo="+tenNo+"&PublicUrl=1";
+            url = getFinalURL(document.forms[0],url);
+        }
+        else{
+        url =" /product/nitParameterView?mode=public&tenderNo="+tenNo+"&PublicUrl=1";
+        url = getFinalURL(document.forms[0],url);
+        }
+        var winctrl="status=0,scrollbars=1,resizable=yes,top=110,left=120,width=1100,height=500";
+        
+        
+       		 window.open(url,'ViewNIT',winctrl);
+    	
+    
+    	
+    }
+    
+    
+    function homePage(){
+        document.bDashboard.action="/product/publicDash";
+        if(isSecurityDisableAtPublicDash=='1')
+        {
+            document.forms[0].submit();
+        }
+        else{
+            submitPage(document.forms[0]);
+        }
+    }
+    
+    function backToDashBoard(){
+        document.bDashboard.action="/product/publicDash";
+        if(isSecurityDisableAtPublicDash=='1')
+        {
+            document.forms[0].submit();
+        }
+        else{
+            submitPage(document.forms[0]);
+        }
+    }
+
+    function backToDashBoardReplica(){      
+        document.bDashboard.action="/product/publicDashReplica?viewFlag=newDash";
+        if(isSecurityDisableAtPublicDash=='1')
+        {
+            document.forms[0].submit();
+        }
+        else{
+            submitPage(document.forms[0]);
+        }
+    }
+    var keyflag = 0;
+    function checkInvalid()
+    {
+        if(keyflag == 1){
+            keyflag = 0;
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    function setValue(){
+        document.forms[0].pnoVal.focus();
+        document.forms[0].pnoVal.select();
+        document.forms[0].prevPageNo.value=document.forms[0].pnoVal.value;
+    }
+    function ShowPage(pageNo){
+         //alert("call To ShowPage()"+pageNo);
+        
+        if(pageNo==0){
+            newPageNo=document.forms[0].pnoVal.value;
+            var flag = CheckNumericDigit(newPageNo);
+            if(flag == 0){
+                alert('الرجاء أدخال قيمه رقميه');
+              document.forms[0].pnoVal.value = document.forms[0].prevPageNo.value;
+              if(window.event.keyCode == 13){
+                    keyflag = 1;
+              }
+              return;
+            }
+            var index = newPageNo.indexOf(" ");
+            //alert(' index '+index)
+            if(index != -1)
+                newPageNo = newPageNo.substring(0,index);
+            //alert(newPageNo+' '+newPageNo.length);
+            if(parseInt(newPageNo)>parseInt(document.forms[0].hidMax.value) || parseInt(newPageNo)< 1 ){
+                alert('رقم الصفحه غير صالح '+newPageNo +' من '+document.forms[0].hidMax.value);
+                document.forms[0].pnoVal.value = document.forms[0].prevPageNo.value;
+                document.forms[0].pnoVal.focus();
+                document.forms[0].pnoVal.select();
+                if(window.event.keyCode == 13){
+                    keyflag = 1;
+                }
+                return;
+            }
+            
+            document.bDashboard.pageNo.value=newPageNo;
+            
+        }
+        else{
+            
+            document.bDashboard.pageNo.value=pageNo;
+            
+        }   
+        //document.WF_MAIN_FORM.method="post";      
+        var divCode='N';
+        if(divCode=='Y'){
+            document.bDashboard.action="/product/publicDashReplica?viewFlag=NewTenders";
+        }
+        else{
+            document.bDashboard.action="/product/publicDash?viewFlag=NewTenders";
+        }
+        if(isSecurityDisableAtPublicDash=='1')
+        {
+            document.forms[0].submit();
+        }
+        else{
+            submitPage(document.forms[0]);
+        }
+        
+    }
+    function ShowPageNIU(n){
+        //alert("call To ShowPage()");
+        var divCode='N';
+        document.bDashboard.CurrentPagePublicSubContractTender.value=n;
+        document.bDashboard.searchPageNo.value=n;
+        document.bDashboard.method="post";
+        //alert(divCode);
+        if(divCode=='Y'){
+            document.bDashboard.action="/product/publicDashReplica?viewFlag=NewTenders";
+        }
+        else{
+            document.bDashboard.action="/product/publicDash?viewFlag=NewTenders";
+        }
+        if(isSecurityDisableAtPublicDash=='1')
+        {
+            document.forms[0].submit();
+        }
+        else{
+            submitPage(document.forms[0]);
+        }
+    }
+function ViewAllCorrigendum(tenNo){
+    var url;
+    if(isSecurityDisableAtPublicDash=='1')
+    {
+        url = "/product/ViewAllCorrigendum?pubFlag=Yes&tenderTxnNo="+tenNo+"&PublicUrl=1";
+        url = createUrlWithoutSecurity(document.forms[0],url);
+    }
+    else{
+        url = "/product/ViewAllCorrigendum?pubFlag=Yes&tenderTxnNo="+tenNo+"&PublicUrl=1";
+    url = getFinalURL(document.forms[0],url);
+    }
+    window.open(url,'ViewCorrig','toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=700,height=500,left=150,top=100');
+}
+
+function showTndDesc(obj,num){
+    var msg=document.getElementById(obj+num).value;
+    // alert("In showTndDesc ->"+msg);
+    Tip(msg,WIDTH ,'-240',TITLE,'وصف المناقصة');
+}
+ function getProcSubCategory()
+{
+    var selProcCode = "";
+    var length = document.getElementById("procCategory").options.length;
+    for(var i=0;length!=null && i<length;i++)
+    {
+        if(document.getElementById("procCategory").options[i].selected)
+        {
+            document.getElementById("procSubCategory").options.length = "1";
+            var value = document.getElementById("procCategory").options[i].value;
+            if(value=="" || value=="undefined" || value=="null")
+                return false;
+            else
+            {
+                selProcCode = document.getElementById("procCategory").options[i].value;
+                break;
+            }
+        }
+    }
+    if(selProcCode!=null && selProcCode!="")
+    {
+        var url;
+        if(isSecurityDisableAtPublicDash=='1')
+        {
+            url="/product/publicDash?addRandomNo=yes&CTRL_STRDIRECTION="+"RTL";
+            url = createUrlWithoutSecurity(document.forms[0],url);
+        }
+        else{
+            url="/product/publicDash?addRandomNo=yes&CTRL_STRDIRECTION="+"RTL"; 
+            url = getPublicFinalURL(document.forms[0],url);
+        }
+        if(window.ActiveXObject) 
+            httpRequest = new ActiveXObject("Microsoft.XMLHTTP"); 
+        else if(window.XMLHttpRequest) 
+            httpRequest = new XMLHttpRequest(); 
+        httpRequest.open("POST", url, true);
+        httpRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        httpRequest.onreadystatechange = function() { processRequestDesc(); 
+         } ;
+        var queryStr = "ajaxCall=getProcSubCateg&procCode="+selProcCode;
+        httpRequest.send(queryStr);
+    }
+}
+
+function processRequestDesc() 
+{ 
+    if (httpRequest.readyState == 4) 
+    { 
+        if(httpRequest.status == 200) 
+            updateHTMLDesc(httpRequest.responseXML);
+        else
+            alert("خطأ في تحميل الصفحة "+ httpRequest.status +":"+ httpRequest.statusText);
+    }
+}
+
+function updateHTMLDesc(responseXML) 
+{ 
+   var employees="";
+   var update="";
+   employees = responseXML.getElementsByTagName("employees")[0];
+   var loop=0;
+   for(loop=0;loop<employees.childNodes.length-1;loop++) 
+   {
+        var employee = employees.childNodes[loop];
+        var firstNameId = employee.getElementsByTagName("firstNameId")[0].childNodes[0].nodeValue;
+        var firstName = employee.getElementsByTagName("firstName")[0].childNodes[0].nodeValue;
+        with(document.getElementById("procSubCategory"))
+            options[options.length] = new Option(firstName,firstNameId);
+   }
+   var nodeselectedValue='null';
+   var a='null';
+   
+   var b=document.forms[0].elements["procCategory"].value;
+   if(a==b)
+   document.forms[0].elements["procSubCategory"].value =nodeselectedValue;
+   else
+   document.forms[0].elements["procSubCategory"].selectedIndex =0;
+   
+   if(employees.getElementsByTagName("NewRandomNo")[0]!=null)
+    {
+       var newRandNo = employees.getElementsByTagName("NewRandomNo")[0].childNodes[0].nodeValue;
+       setRandomNo(newRandNo);
+    }
+}
+
+ /*  validate special character except'/' and '-' regarding CR OM-645--- */
+function blockSpecialChar(e){
+        var k;
+        document.all ? k = e.keyCode : k = e.which;
+        return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57) ||(k == 47 || k == 45));
+        }
+        
+
+function formSubmit()
+{
+	
+
+	
+	//document.getElementById("viewFlag").value="NewTenders";
+	var statusFlag = document.getElementById("status").value;
+    var divCode = "";
+    var procCode = "";
+    var procSubCode = "";
+    var tenderNo ="";
+    var showtenderGrade = "";
+    var tendersAndRfqProcurement = "";
+    
+    if(document.getElementById("tenderNumber")!=null)
+    	tenderNo = document.getElementById("tenderNumber").value;
+    if(document.getElementById("tenderGrade")!=null)
+    	showtenderGrade = document.getElementById("tenderGrade").value;
+    //alert("showtenderGrade==>>>"+showtenderGrade);
+    if(document.getElementById("TendersAndRfqProcurement")!=null)
+    	tendersAndRfqProcurement = document.getElementById("TendersAndRfqProcurement").value;
+  
+    if(document.getElementById("division")!=null)
+         divCode = document.getElementById("division").value;
+    if(document.getElementById("procCategory")!=null)
+        procCode = document.getElementById("procCategory").value;
+    if(document.getElementById("procSubCategory")!=null)
+        procSubCode = document.getElementById("procSubCategory").value;
+    var submissionFromDate = document.getElementById("submissionFromDate").value;
+    var submissionToDate = document.getElementById("submissionToDate").value;
+//     if(divCode=="" && procCode=="" && tendersAndRfqProcurement == "" && procSubCode=="" && submissionFromDate=="" && submissionToDate=="" && tenderNo=="" && showtenderGrade=="")
+//     {
+
+//         return false;
+//     }
+//     else 
+    if(submissionFromDate!="" && submissionToDate=="")
+    { 
+        alert("الرجاء أختيار تاريخ عرض العطاء من والى");
+        return false;
+    }else if(submissionFromDate=="" && submissionToDate!="")
+    {
+        alert("الرجاء أختيار تاريخ عرض العطاء من والى");
+        return false;
+    }
+//     else if(tenderNo=="" && tenderNo!="")
+//     {
+
+//         return false;
+//     }
+//     else if(showtenderGrade=="" && showtenderGrade!="")
+//     {
+
+//         return false;
+//     }
+    document.forms[0].tabFlag.value="1";
+    document.forms[0].status.value=statusFlag;
+    document.bDashboard.method="post";
+        document.bDashboard.action="/product/publicDash?viewFlag=SubContractTenders&statusFlag="+statusFlag;
+        if(isSecurityDisableAtPublicDash=='1')
+        {
+            document.forms[0].submit();
+        }
+        else{
+            submitPage(document.forms[0]);
+        }
+   }
+
+function showOpeningStatus_Report(tenderNo){
+    var path;
+    if(isSecurityDisableAtPublicDash=='1')
+    {
+        path="/product/tmsbidopen/TenderOpeningQCRStatusAction.action?callAction=showOpeningStatus_public&strTenderNo="+tenderNo+"&PublicUrl=1";
+    }
+    else{
+        path="/product/tmsbidopen/TenderOpeningQCRStatusAction.action?callAction=showOpeningStatus_public&strTenderNo="+tenderNo+"&PublicUrl=1";
+        path=getPublicFinalURL(document.forms[0],path);
+    }
+    var winctrl="status=0,scrollbars=1,resizable=yes,top=110,left=120,width=1100,height=500";
+   
+    
+    	window.open(path,'Help',winctrl);
+	
+
+	
+    
+}
+
+
+
+
+</script> 
+
+ 
+</HEAD>
+<body onmousedown="isKeyPressed(event)" onKeyDown="onKeyDown(event);">
+<form name="bDashboard" method="post" action="buyerDash" onsubmit="return checkInvalid();">
+
+
+
+<script>
+	var ctxPath="/product";
+	var processMsg='Processing Request, Please Wait. DO NOT CLICK REFRESH OR BACK';
+	var popupMsg='New Window is opened.Close the new window to continue working on this page.';
+	var ALERT_TITLE ='ESNAD';
+	var ALERT_BUTTON_TEXT ='Ok';;
+	
+</script>
+
+
+
+<input type="hidden" id="securityFlag" name="securityFlag" value="1">
+<input type="text" style="display:none" style="width:430px" id="randomno"  name="randomno" value="fixedrandomno">
+<input type="hidden" id="encparam" name="encparam">
+<input type="hidden" id="hashval" name="hashval">
+
+
+
+<script language="javascript" >
+/* A JavaScript implementation of the Secure Hash Standard
+ * Version 0.3 Copyright Angel Marin 2003-2004 - http://anmar.eu.org/
+ * Distributed under the BSD License
+ * Some bits taken from Paul Johnston's SHA-1 implementation
+ */
+var chrsz   = 8;  /* bits per input character. 8 - ASCII; 16 - Unicode      */
+var hexcase = 0;/* hex output format. 0 - lowercase; 1 - uppercase        */
+
+function safe_add (x, y) {
+  var lsw = (x & 0xFFFF) + (y & 0xFFFF);
+  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+  return (msw << 16) | (lsw & 0xFFFF);
+}
+
+function S (X, n) {return ( X >>> n ) | (X << (32 - n));}
+
+function R (X, n) {return ( X >>> n );}
+
+function Ch(x, y, z) {return ((x & y) ^ ((~x) & z));}
+
+function Maj(x, y, z) {return ((x & y) ^ (x & z) ^ (y & z));}
+
+function Sigma0256(x) {return (S(x, 2) ^ S(x, 13) ^ S(x, 22));}
+
+function Sigma1256(x) {return (S(x, 6) ^ S(x, 11) ^ S(x, 25));}
+
+function Gamma0256(x) {return (S(x, 7) ^ S(x, 18) ^ R(x, 3));}
+
+function Gamma1256(x) {return (S(x, 17) ^ S(x, 19) ^ R(x, 10));}
+
+function Sigma0512(x) {return (S(x, 28) ^ S(x, 34) ^ S(x, 39));}
+
+function Sigma1512(x) {return (S(x, 14) ^ S(x, 18) ^ S(x, 41));}
+
+function Gamma0512(x) {return (S(x, 1) ^ S(x, 8) ^ R(x, 7));}
+
+function Gamma1512(x) {return (S(x, 19) ^ S(x, 61) ^ R(x, 6));}
+
+function core_sha256 (m, l) {
+    var K = new Array(0x428A2F98,0x71374491,0xB5C0FBCF,0xE9B5DBA5,0x3956C25B,0x59F111F1,0x923F82A4,0xAB1C5ED5,0xD807AA98,0x12835B01,0x243185BE,0x550C7DC3,0x72BE5D74,0x80DEB1FE,0x9BDC06A7,0xC19BF174,0xE49B69C1,0xEFBE4786,0xFC19DC6,0x240CA1CC,0x2DE92C6F,0x4A7484AA,0x5CB0A9DC,0x76F988DA,0x983E5152,0xA831C66D,0xB00327C8,0xBF597FC7,0xC6E00BF3,0xD5A79147,0x6CA6351,0x14292967,0x27B70A85,0x2E1B2138,0x4D2C6DFC,0x53380D13,0x650A7354,0x766A0ABB,0x81C2C92E,0x92722C85,0xA2BFE8A1,0xA81A664B,0xC24B8B70,0xC76C51A3,0xD192E819,0xD6990624,0xF40E3585,0x106AA070,0x19A4C116,0x1E376C08,0x2748774C,0x34B0BCB5,0x391C0CB3,0x4ED8AA4A,0x5B9CCA4F,0x682E6FF3,0x748F82EE,0x78A5636F,0x84C87814,0x8CC70208,0x90BEFFFA,0xA4506CEB,0xBEF9A3F7,0xC67178F2);
+    var HASH = new Array(0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19);
+    var W = new Array(64);
+    var a, b, c, d, e, f, g, h, i, j;
+    var T1, T2;
+
+    /* append padding */
+    m[l >> 5] |= 0x80 << (24 - l % 32);
+    m[((l + 64 >> 9) << 4) + 15] = l;
+
+    for ( var i = 0; i<m.length; i+=16 ) {
+        a = HASH[0];
+        b = HASH[1];
+        c = HASH[2];
+        d = HASH[3];
+        e = HASH[4];
+        f = HASH[5];
+        g = HASH[6];
+        h = HASH[7];
+
+        for ( var j = 0; j<64; j++) {
+            if (j < 16) W[j] = m[j + i];
+            else W[j] = safe_add(safe_add(safe_add(Gamma1256(W[j - 2]), W[j - 7]), Gamma0256(W[j - 15])), W[j - 16]);
+
+            T1 = safe_add(safe_add(safe_add(safe_add(h, Sigma1256(e)), Ch(e, f, g)), K[j]), W[j]);
+            T2 = safe_add(Sigma0256(a), Maj(a, b, c));
+
+            h = g;
+            g = f;
+            f = e;
+            e = safe_add(d, T1);
+            d = c;
+            c = b;
+            b = a;
+            a = safe_add(T1, T2);
+        }
+        
+        HASH[0] = safe_add(a, HASH[0]);
+        HASH[1] = safe_add(b, HASH[1]);
+        HASH[2] = safe_add(c, HASH[2]);
+        HASH[3] = safe_add(d, HASH[3]);
+        HASH[4] = safe_add(e, HASH[4]);
+        HASH[5] = safe_add(f, HASH[5]);
+        HASH[6] = safe_add(g, HASH[6]);
+        HASH[7] = safe_add(h, HASH[7]);
+    }
+    return HASH;
+}
+
+function core_sha512 (m, l) {
+    var K = new Array(0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f, 0xe9b5dba58189dbbc, 0x3956c25bf348b538, 0x59f111f1b605d019, 0x923f82a4af194f9b, 0xab1c5ed5da6d8118, 0xd807aa98a3030242, 0x12835b0145706fbe, 0x243185be4ee4b28c, 0x550c7dc3d5ffb4e2, 0x72be5d74f27b896f, 0x80deb1fe3b1696b1, 0x9bdc06a725c71235, 0xc19bf174cf692694, 0xe49b69c19ef14ad2, 0xefbe4786384f25e3, 0x0fc19dc68b8cd5b5, 0x240ca1cc77ac9c65, 0x2de92c6f592b0275, 0x4a7484aa6ea6e483, 0x5cb0a9dcbd41fbd4, 0x76f988da831153b5, 0x983e5152ee66dfab, 0xa831c66d2db43210, 0xb00327c898fb213f, 0xbf597fc7beef0ee4, 0xc6e00bf33da88fc2, 0xd5a79147930aa725, 0x06ca6351e003826f, 0x142929670a0e6e70, 0x27b70a8546d22ffc, 0x2e1b21385c26c926, 0x4d2c6dfc5ac42aed, 0x53380d139d95b3df, 0x650a73548baf63de, 0x766a0abb3c77b2a8, 0x81c2c92e47edaee6, 0x92722c851482353b, 0xa2bfe8a14cf10364, 0xa81a664bbc423001, 0xc24b8b70d0f89791, 0xc76c51a30654be30, 0xd192e819d6ef5218, 0xd69906245565a910, 0xf40e35855771202a, 0x106aa07032bbd1b8, 0x19a4c116b8d2d0c8, 0x1e376c085141ab53, 0x2748774cdf8eeb99, 0x34b0bcb5e19b48a8, 0x391c0cb3c5c95a63, 0x4ed8aa4ae3418acb, 0x5b9cca4f7763e373, 0x682e6ff3d6b2b8a3, 0x748f82ee5defb2fc, 0x78a5636f43172f60, 0x84c87814a1f0ab72, 0x8cc702081a6439ec, 0x90befffa23631e28, 0xa4506cebde82bde9, 0xbef9a3f7b2c67915, 0xc67178f2e372532b, 0xca273eceea26619c, 0xd186b8c721c0c207, 0xeada7dd6cde0eb1e, 0xf57d4f7fee6ed178, 0x06f067aa72176fba, 0x0a637dc5a2c898a6, 0x113f9804bef90dae, 0x1b710b35131c471b, 0x28db77f523047d84, 0x32caab7b40c72493, 0x3c9ebe0a15c9bebc, 0x431d67c49c100d4c, 0x4cc5d4becb3e42b6, 0x597f299cfc657e2a, 0x5fcb6fab3ad6faec, 0x6c44198c4a475817);
+    var HASH = new Array(0x6a09e667f3bcc908, 0xbb67ae8584caa73b, 0x3c6ef372fe94f82b, 0xa54ff53a5f1d36f1, 0x510e527fade682d1, 0x9b05688c2b3e6c1f, 0x1f83d9abfb41bd6b, 0x5be0cd19137e2179);
+    var W = new Array(80);
+    var a, b, c, d, e, f, g, h, i, j;
+    var T1, T2;
+
+}
+
+function str2binb (str) {
+  var bin = Array();
+  var mask = (1 << chrsz) - 1;
+  for(var i = 0; str != null && str != 'undefined' && i < str.length * chrsz; i += chrsz)
+    bin[i>>5] |= (str.charCodeAt(i / chrsz) & mask) << (24 - i%32);
+  return bin;
+}
+
+function binb2str (bin) {
+  var str = "";
+  var mask = (1 << chrsz) - 1;
+  for(var i = 0; i < bin.length * 32; i += chrsz)
+    str += String.fromCharCode((bin[i>>5] >>> (24 - i%32)) & mask);
+  return str;
+}
+
+function binb2hex (binarray) {
+  var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
+  var str = "";
+  for(var i = 0; i < binarray.length * 4; i++)
+  {
+    str += hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8+4)) & 0xF) +
+           hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8  )) & 0xF);
+  }
+  return str;
+}
+
+function binb2b64 (binarray) {
+  var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  var str = "";
+  for(var i = 0; i < binarray.length * 4; i += 3)
+  {
+    var triplet = (((binarray[i   >> 2] >> 8 * (3 -  i   %4)) & 0xFF) << 16)
+                | (((binarray[i+1 >> 2] >> 8 * (3 - (i+1)%4)) & 0xFF) << 8 )
+                |  ((binarray[i+2 >> 2] >> 8 * (3 - (i+2)%4)) & 0xFF);
+    for(var j = 0; j < 4; j++)
+    {
+      if(i * 8 + j * 6 > binarray.length * 32) str += b64pad;
+      else str += tab.charAt((triplet >> 6*(3-j)) & 0x3F);
+    }
+  }
+  return str;
+}
+
+function Utf8Encode(string) {
+	   string = string.replace(/\r\n/g,"\n");
+	   var utftext = "";
+
+	   for (var n = 0; n < string.length; n++) {
+
+	     var c = string.charCodeAt(n);
+
+	     if (c < 128) {
+	       utftext += String.fromCharCode(c);
+	     }
+	     else if((c > 127) && (c < 2048)) {
+	       utftext += String.fromCharCode((c >> 6) | 192);
+	       utftext += String.fromCharCode((c & 63) | 128);
+	     }
+	     else {
+	       utftext += String.fromCharCode((c >> 12) | 224);
+	       utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+	       utftext += String.fromCharCode((c & 63) | 128);
+	     }
+
+	   }
+
+	   return utftext;
+	 }
+
+function hex_sha256(s){
+	
+	 s = Utf8Encode(s);
+	// alert("andsnd Form Validaqte"+s);
+	return binb2hex(core_sha256(str2binb(s),s.length * chrsz));
+	}
+function b64_sha256(s){return binb2b64(core_sha256(str2binb(s),s.length * chrsz));}
+function str_sha256(s){return binb2str(core_sha256(str2binb(s),s.length * chrsz));}
+
+</script>
+
+
+<script>
+var enableServerSideEncDec = 1;//mentis id 0021036
+//alert('in jsp '+enableServerSideEncDec);
+$(document).ready(function() {
+	var hex='null';
+	$('.box-head, #colorSelector-box-head').css('backgroundColor', '#' + hex);	
+			
+});
+
+</script>
+
+
+
+<input type="hidden" id="CurrentPagePublicSubContractTender" name="CurrentPagePublicSubContractTender" value="1">
+<input type="hidden" id="CTRL_STRDIRECTION" name="CTRL_STRDIRECTION" value="RTL">
+<input type="hidden" id="searchPageNo" name="searchPageNo">
+<input type="hidden" id="callvalue" name="callvalue">
+<input type="hidden" id="callValue" name="callValue">
+<input type="hidden" id="pageNo" name="pageNo">
+<input type="hidden" id="prevPageNo" name="prevPageNo">
+<input type="hidden" id="paraVal" name="paraVal">
+<input type="hidden" id="mode" name="mode">
+<input type="hidden" id="tenderNo" name="tenderNo">
+<input type="hidden" id="subContractTenderPubpageNo" name="subContractTenderPubpageNo" value="1">
+<input type="hidden" id="allCorrigs" name="allCorrigs" value="null">
+<input type="hidden" id="PublicUrl" name="PublicUrl" value="1">
+<input type="hidden" id="tabFlag" name="tabFlag" value="null">
+<input type="hidden" id="viewFlag" name="viewFlag" value="null">
+<input type="hidden" id="statusFlag" name="statusFlag">
+
+
+
+
+ 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N" crossorigin="anonymous">
+
+
+
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+<script type="text/javascript" src="/product/js/dashboard/cookie.min.js"></script>
+<!-- Bootstrap js cdn -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+ <script src="/product/js/dashboard/jquery-1.7.1.min.js"></script>
+ <script language="javascript" src="/product/js/ScreenReader.js?v1.3"></script>
+<meta https-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+</head>
+ <input type="hidden" name="callValue" value="">
+ <input type="hidden" name="callValueM" id="callValueM" value="">
+
+ <!-- Navbar Start -->
+ 
+
+  <header>
+   <!-- New Strip Start -->
+<div class="new-strip d-flex justify-content-end align-items-center">
+<div class="d-flex justify-content-around align-items-center w-25 px-2">
+
+<span><a href="#" id="btn-increase" title="text increase" class="skipDataSpeechHeader">A<sup>+</sup></a></span>
+<span><a href="#" id="btn-orig" title="Standard normal" class="skipDataSpeechHeader">A</a></span>
+<span><a href="#" id="btn-decrease" title="text decrease" class="skipDataSpeechHeader">A<sup>-</sup></a></span>
+<span style="cursor: pointer;"><a class="new-strip_content skipDataSpeechHeader" id="convertButton" onclick="goToConvertTextToSpeech()" tabindex="0">قارئ الشاشة</a></span>
+<span style="cursor: pointer;"><img src="/product/images/sun_light.svg" alt="Theme change" class="img-responsive skipDataSpeechHeader" id="theme_change_id" title="Theme_change" tabindex="0"></span>
+</div>
+</div>
+
+<!-- New Strip End -->
+      <nav class="navbar navbar-expand-lg ">
+        <div class="container-fluid">
+        	<a class="navbar-brand skipDataSpeechHeader" href="#" title="null">
+        		<img src="/product/images/dashboard/NewHomeImg/logo.svg" alt="" class="img-fluid skipDataSpeechHeader" tabindex="-1"></a>
+        	</a>
+        	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            	<!-- <span class="navbar-toggler-icon"></span> -->
+            	   <i class="fa fa-bars text-light"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            	<ul class="navbar-nav ms-auto">
+            		  <li class="nav-item mt-3" title="Home" tabindex="-1">
+		                <a class="nav-link skipDataSpeechHeader" title="home" aria-current="page" href="#" onclick="homePage()" onmouseout="document.images.home.src='/product/images/dashboard/NewHomeImg/home.svg';">
+		                	<img src="/product/images/dashboard/NewHomeImg/home.svg"  tabindex="-1" alt="home" title="Home" class="img-fluid skipDataSpeechHeader" name="home">
+		                </a>
+		              </li>
+		              <li class="nav-item mt-3" title="Site-Map" tabindex="-1">
+		                <a class="nav-link skipDataSpeechHeader"  aria-current="page" title="site-map" href="#" onclick="showSiteMap()"  onmouseout="document.images.sitemap.src='/product/images/dashboard/NewHomeImg/site-map.svg';">
+		                	<img src="/product/images/dashboard/NewHomeImg/site-map.svg" tabindex="-1" alt="site-map" title="Site-Map" class="img-fluid skipDataSpeechHeader" name="sitemap">
+		                </a>
+		              </li>
+		              <li class="nav-item mt-3" title="Contact Us" tabindex="-1">
+		                <a class="nav-link skipDataSpeechHeader" aria-current="page" title="contact-us" href="#" onclick="viewCommonContent('ContactUs')"  onmouseout="document.images.contactus.src='/product/images/dashboard/NewHomeImg/contact-us.svg';">
+		                	<img src="/product/images/dashboard/NewHomeImg/contact-us.svg" tabindex="-1" alt="contact-us" title="Contact Us" class="img-fluid skipDataSpeechHeader" name="contactus">
+		                </a>
+		              </li>
+		              <li class="nav-item mt-3" title="FAQ" tabindex="-1">
+		                <a class="nav-link skipDataSpeechHeader" aria-current="page" title="FAQ" href="#" onclick="listOfFAQ()"  onmouseout="document.images.faq.src='/product/images/dashboard/NewHomeImg/faq.svg';">
+		                	<img src="/product/images/dashboard/NewHomeImg/faq.svg" tabindex="-1" alt="faq" title="FAQ" class="img-fluid skipDataSpeechHeader" name="faq">
+		                </a>
+		              </li>
+		              <li class="nav-item mt-3" tabindex="-1">
+		                <a name="arb" id="arb" class="nav-link skipDataSpeechHeader" title="Arabic" aria-current="page" href="#" style='display:none' onclick="switchLangauge('RTL')"  onmouseout="document.images.arabic.src='/product/images/dashboard/NewHomeImg/Homelanguage2.svg';">
+		                	<img src="/product/images/dashboard/NewHomeImg/Homelanguage2.svg" tabindex="-1" alt="language" title="Arabic" class="img-fluid skipDataSpeechHeader" name="arabic">
+		                </a>
+		                <a name="eng" id="eng" class="nav-link" aria-current="page" title="English" href="#"  onclick="switchLangauge('LTR')"  onmouseout="document.images.english.src='/product/images/dashboard/NewHomeImg/Homelanguage1.svg';">
+		                	<img src="/product/images/dashboard/NewHomeImg/Homelanguage1.svg" tabindex="-1" alt="language" title="English" class="img-fluid skipDataSpeechHeader" name="english">
+		                </a>
+		              </li>
+		              <li class="nav-item mt-3 d-none">
+		                <a class="nav-link skipDataSpeechHeader" aria-current="page" href="#"><img src="/product/images/dashboard/NewHomeImg/language2.svg" alt="language" class="img-fluid skipDataSpeechHeader"></a>
+		              </li>
+		              <li class="nav-item"  tabindex="-1">
+		                <a class="nav-link skipDataSpeechHeader" aria-current="page" title="null" href="#">
+		                	<img src="/product/images/dashboard/NewHomeImg/right-logo.png" tabindex="-1" alt="" title="" class="img-fluid skipDataSpeechHeader" name="esnadlogo">
+		                </a>
+		              </li>
+		               <li class="nav-item d-none"  tabindex="-1">
+		                <a name="esnad-logo" class="nav-link skipDataSpeechHeader" aria-current="page" title="null">
+		                <img src="/product/images/dashboard/NewHomeImg/right-logo.png" 
+		                	alt="null"
+		                	tabindex="-1" class="img-fluid rightlogo skipDataSpeechHeader">
+		                </a>
+		              </li>
+            	</ul>
+            	
+            </div>
+        </div>
+      </nav>
+    
+  </header>
+ 
+  
+  <!-- Navbar End -->
+  
+        <section class="mb-3">
+        	<!-- Moving Strip Start -->
+		    <marquee behavior="scroll" tabindex="0" direction="right" scrolldelay="2" scrollamount="3" class="pt-1 text-danger fw-bold skipDataSpeechHeader" style="background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgb(229, 228, 226)100%);">
+		    	تنبيه لمستخدمي النظام من الجهات الحكومية: نودّ لفت انتباهكم إلى أن الملف التعريفي للشركات يتضمن الخبرات العملية المعتمدة، والتي يمكن الاستفادة منها خلال مرحلة تقييم العطاءات؛ بما يسهم في رفع كفاءة التقييم وتسريع إجراءاته.
+		    </marquee>
+    		<!-- Moving Strip End --> 		
+        </section>      
+
+
+
+  
+
+           
+
+<script type="text/javascript">
+function switchLangauge(language)
+{ 
+ // alert(language);
+ Cookies.set('etndLngCo',language);
+		 var pathname ='';
+	
+         
+      	if (pathname==''){
+         pathname = window.location.pathname;
+        var queries = {};
+          $.each(document.location.search.substr(1).split('?'),function(c,q){ 
+              if(q != null && q != ''){
+            	  if(language=='RTL'){
+                 pathname = pathname+"?"+q.replace('LTR', 'RTL')+"&switchLangFlag=1";
+            	  }
+            	  else
+            		  {
+            		  pathname = pathname+"?"+q.replace('RTL', 'LTR')+"&switchLangFlag=1";
+            		  
+            		  }
+             //alert("pathname..."+pathname);
+              }
+          });
+      	} 
+        // mentis id : 0020810 start
+          if(pathname != null && pathname != '/product/loginUserN'){
+              
+                document.forms[0].action=pathname;
+                
+        }
+          else{
+      
+            if(document.forms[0].elements["WF_TxnType"] != null && document.forms[0].elements["WF_TxnType"] != 'undefined' && document.forms[0].elements["WF_TxnType"].value.length!=0){
+                var isSupRegDet = document.forms[0].elements["WF_TxnType"].value;
+                document.forms[0].action="/product/jsp/Registration/regDetails.jsp";
+            }
+            else {
+            	document.forms[0].action=pathname;
+           }
+        }
+          
+          
+         // mentis id : 0020810 end
+        // mentis id: 0021034 point 5 start
+        if(document.forms[0].CTRL_STRDIRECTION.length != null  && document.forms[0].CTRL_STRDIRECTION.length != 'undefined'){
+        	var dirLen = document.forms[0].CTRL_STRDIRECTION.length;
+        	for(var k=0;k<dirLen;k++){
+        		document.forms[0].CTRL_STRDIRECTION[k].value=language;
+        	}
+        	
+        }else{
+        	document.forms[0].CTRL_STRDIRECTION.value=language;
+        }
+        document.forms[0].target="";
+        //alert("path"+pathname);
+     // mentis id: 0021034 point 5 end
+       document.forms[0].method="post";
+        //alert(document.forms[0].CTRL_STRDIRECTION.value);
+        submitPage(document.forms[0]);
+        
+}
+function listOfFAQ(){
+//     document.forms[0].callValue.value = "view";
+	var strBanDir;
+	strBanDir ='RTL';
+if(strBanDir == 'null'){
+		strBanDir = document.getElementById('CTRL_STRDIRECTION').value;
+	}
+	
+    document.forms[0].action = "/product/DefineFAQ?callValue=view&CTRL_STRDIRECTION=" + strBanDir;
+//     submitPage(document.forms[0]);
+    var mySiteUrl = document.forms[0].action;
+    //alert(myUrl);
+    window.location.href = mySiteUrl;
+}
+function viewCommonContent(parameter){
+//     document.forms[0].callValue.value = "pubDashLinkContent";
+	var strBanDir;
+	strBanDir ='RTL';
+	
+	
+ if(strBanDir == 'null'){
+		strBanDir = document.getElementById('CTRL_STRDIRECTION').value;
+	}	    
+    document.forms[0].action = "/product/DefineFAQ?callValue=pubDashLinkContent&CTRL_STRDIRECTION="+strBanDir+"&parameter="+parameter;    
+    var mySiteUrl = document.forms[0].action;
+    //alert(myUrl);
+    window.location.href = mySiteUrl;
+//     submitPage(document.forms[0]);
+}
+function showSiteMap(){
+	var strBanDir;
+	strBanDir ='RTL';
+	if(strBanDir == 'null'){
+		strBanDir = document.getElementById('CTRL_STRDIRECTION').value;
+	}
+	
+	document.forms[0].action="/product/publicDash?viewFlag=ViewSiteMap&pageView=P&CTRL_STRDIRECTION="+strBanDir;
+   // submitPage(document.forms[0]);
+    var mySiteUrl = document.forms[0].action;
+    //alert(myUrl);
+    window.location.href = mySiteUrl;
+   //submitPage('bDashboard');
+}
+</script>
+
+<script>
+	
+$('.navbar-toggler').click(function() {
+	  $(this).find('i').toggleClass('fa fa-bars text-light fa fa-close text-light')
+});
+
+function showDefaultChart(){
+	 document.forms[0].method="post";
+	 document.forms[0].callValueM.value="mbChart";
+	 document.forms[0].callValue.value="";
+	 if(document.forms[0].viewFlag != undefined){
+		 document.forms[0].viewFlag.value = ""; 
+	 }
+	 
+	 document.forms[0].action="/product/publicDash";
+	 submitPage(document.forms[0]) ;
+	 //removeCustomAlert();	
+}
+var showdefaultBoxTimout = null;
+function showdefaultBox(){
+	if(showdefaultBoxTimout != null){
+		clearTimeout(showdefaultBoxTimout);
+	}
+	$('#boxes').modal('show');
+	 //After 30 Seconds popup hide automatically
+	showdefaultBoxTimout = setTimeout(function(){ 
+         $('#boxes').modal('hide');
+    }, 60000);
+}
+$('#boxes').modal('hide');
+
+
+$(document).ready(function() {
+    var popupflag='1';
+ 	 var browsername=$.browser.name;
+//  	 alert('Browser Name-->'+browsername);
+ 	// if(browsername==='chrome' && popupflag==='1'){
+			 if(popupflag==='1'){
+ 		 var id = '#dialog';
+
+          //Get the screen height and width
+          var maskHeight = $(document).height();
+          var maskWidth = $(window).width();
+
+          //Set heigth and width to mask to fill up the whole screen
+          $('#mask').css({'width':maskWidth,'height':maskHeight});
+
+          //transition effect
+          $('#mask').fadeIn(500);
+          $('#mask').fadeTo("slow",0.9);
+
+          //Get the window height and width
+          var winH = $(window).height();
+          var winW = $(window).width();
+
+          //Set the popup window to center
+          $(id).css('top',  winH/2-$(id).height()/2);
+          $(id).css('left', winW/2-$(id).width()/2);
+
+          //transition effect
+          $(id).fadeIn(2000);
+
+          //if close button is clicked
+          $('.window .close').click(function (e) {
+              //Cancel the link behavior
+              e.preventDefault();
+
+              $('#mask').hide();
+              $('.window').hide();
+          });
+
+          //if mask is clicked
+          $('#mask').click(function () {
+              $(this).hide();
+              $('.window').hide();
+          });
+          
+ 	 }
+ 	    
+    
+     
+ });
+</script>
+<script>
+ var isScreenReaderStarted = '0';
+ //Apply theme on page load
+    
+  window.onload = function() {
+    const isDarkTheme = localStorage.getItem("isDarkTheme");
+    if (isDarkTheme === "1") {
+      document.body.classList.add("dark_theme");
+      theme_change_id.src = "/product/images/moon.svg";
+    } else {
+      document.body.classList.remove("dark_theme");
+      theme_change_id.src = "/product/images/sun_light.svg";
+    }
+  };
+
+  // Toggle theme on icon click
+  
+  var icon = document.getElementById("theme_change_id")
+  icon.onclick= function (){
+  document.body.classList.toggle("dark_theme");
+    if(document.body.classList.contains("dark_theme")){
+    	theme_change_id.src ="/product/images/moon.svg";       
+    	isDarkTheme = '1';
+    }
+    else{
+    	isDarkTheme = '0';
+    	theme_change_id.src ="/product/images/sun_light.svg";       	        	
+    }
+        
+   // Save to localStorage
+        localStorage.setItem("isDarkTheme", isDarkTheme); 
+   		if(isScreenReaderStarted == '1'){
+   			stopConvertTextToSpeech();
+   			convertTextToSpeech();
+   		}
+        
+    }
+  
+    
+  </script>
+<!-- <script>
+	
+$('.navbar-toggler').click(function() {
+	  $(this).find('i').toggleClass('fa fa-bars text-light fa fa-close text-light');
+});
+	
+</script> -->
+<script type="text/javascript">
+function goToConvertTextToSpeech(){
+	
+	  isScreenReaderStarted = '1';
+	  var isRtl = '1'; 
+	  if(isRtl == '1'){
+		 var flag = confirm('null');
+		 if(flag){
+			convertTextToSpeech(); 
+		 }else {
+			convertTextToSpeech();
+		 }
+		 
+	  } else {
+		  convertTextToSpeech();
+	  }
+	  
+}
+function addTabIndexToTD(){
+	const tdEls = document.querySelectorAll('td, h2'); 
+	  for (let i = 0; i < tdEls.length; i++) {
+		  if(tdEls[i].getAttribute("tabindex") !== '-1'){
+			  tdEls[i].setAttribute("tabindex", "0");
+		  }
+		  
+	  }	
+	  addTitleToTableTd();
+}
+setTimeout("addTabIndexToTD()", 2000);
+</script>
+
+<script>
+function addForReader(){
+	document.body.setAttribute('tabindex', '-1');
+	const liEments = document.querySelectorAll('li');
+	liEments.forEach(el => {
+		
+		if (el.children.length == 0 || el.tagName =='LI' ){
+			el.setAttribute('data-speech', '');
+			if (el.getAttribute('tabindex') !== '-1') {
+				el.setAttribute('tabindex', '0');
+			}
+		}
+	});
+	
+}
+addForReader();
+</script>
+
+<script>                    
+function openDatePicker(event, id) {
+	
+	if (event.key === 'Enter') {
+        const dateInput = document.getElementById(id);
+        // Try to use the showPicker() method if available
+        if (typeof dateInput.showPicker === 'function') {
+          dateInput.showPicker();
+        } else {
+          // Fallback: focus the input to possibly trigger the native picker
+          dateInput.focus();
+        }     
+     }
+}
+</script>
+
+<script>
+function formatAndSetDatetime(obj, target_id) {
+    const input = document.getElementById(target_id);
+	if (!obj.value) {input.value = ''; return;};
+    const date = new Date(obj.value);
+    const pad = (num) => num.toString().padStart(2, '0');
+    const day = pad(date.getDate());
+    const month = pad(date.getMonth() + 1);
+    const year = date.getFullYear();
+    let hours = date.getHours();
+    const minutes = pad(date.getMinutes());
+    const strHours = pad(hours);
+    input.value = day+'-'+month+'-'+year+' '+strHours+':'+minutes;
+}
+var zIndex = 2147483640+1;
+function openFullscreenModal(url, winName) {
+	createCustomLoader();
+	document.getElementById("fullscreenModalIframe").src = url+"&mobilePopup=1&winName="+winName+"&zIndex="+zIndex+1;
+   	document.getElementById("fullscreenModal").style.display = "block";
+   
+   	document.getElementById("fullscreenModal").style.width="100vw";
+   	document.getElementById("fullscreenModal").style.height="100vh";
+   	document.getElementById("fullscreenModal").style.position="fixed";
+   	document.getElementById("fullscreenModal").style.zIndex=zIndex+1;
+   
+   	document.getElementById("fullscreenModalIframe").style.width="100%";
+   	document.getElementById("fullscreenModalIframe").style.height="100%";
+   	//removeCustomAlert();
+}
+
+function closeFullscreenModal() {
+	closeCustomLoader();
+   if('null' == '1'){
+	   window.parent.document.getElementById("fullscreenModal").style.display = "none";
+	   window.parent.document.getElementById("fullscreenModalIframe").src = "";
+	   //console.log("1111111111111111111111");
+	   window.parent.closeCustomLoader();
+   } else if (window.self !== window.top) {
+       try {
+    	   //console.log("1111111111111111111111_2");
+    	   // Loop through all iframes in the parent
+           const iframes = window.parent.document.getElementsByTagName('iframe');
+           for (let iframe of iframes) {
+               if (iframe.contentWindow === window && iframe.id === "fullscreenModalIframe") {
+            	   window.parent.document.getElementById("fullscreenModal").style.display = "none";
+            	   window.parent.document.getElementById("fullscreenModalIframe").src = "";
+                   return true;
+               }
+           }
+       } catch (e) {
+           console.warn("Access denied to parent document. Possibly cross-origin.");
+       }
+   } else {
+	   var lblBack = 'Back';
+	   var lblClose = 'Close';
+	   const backButton = document.querySelector('input[type="button"][value="'+lblBack+'"]');
+	   const closeButton = document.querySelector('input[type="button"][value="'+lblClose+'"]');
+	   if(backButton){
+		   //console.log("111111111111_B");
+		   backButton.click();
+		  
+	   } else if(closeButton){
+		   //console.log("111111111111_C");
+		   closeButton.click();
+		   
+	   } else{
+		   
+		   //console.log("home_btnMbl");
+		   document.getElementById("home_btnMbl").click();
+		   
+	   }
+	   //console.log("2222222222222222");
+   }
+} 
+
+var pressEnterToExpand = 'اضغط أدخال للتوسعة';
+lblEnterToExpand = pressEnterToExpand;
+var txtLink = 'رابط';
+lblLink = txtLink;
+
+  </script>
+
+<br>
+
+
+        
+    <html>
+
+<head>
+
+
+<script>
+function ViewNewTenders(){
+	document.getElementById("viewFlag").value="NewTenders";
+	document.forms[0].action="/product/publicDash";
+    submitPage(document.forms[0]) ;
+}
+function ViewInProcessTenders(){
+	document.getElementById("viewFlag").value="InProcessTenders";
+    document.forms[0].action="/product/publicDash";
+    submitPage(document.forms[0]) ;
+}
+
+function getCompletedTenders(){
+    document.forms[0].action = '/product/CompletedTendersForPublic';
+    submitPage(document.forms[0]);
+}
+function getCanceledTenders(){
+    document.forms[0].action = "/product/CanceledTendersForPublic";
+    submitPage(document.forms[0]);
+}
+
+function getRegVendors(){	
+	document.getElementById("viewFlag").value="RegVendorPublic";
+	document.forms[0].action = '/product/ReportAction';
+    submitPage(document.forms[0]);
+}
+
+function ViewSubContractTenders(){
+	document.getElementById("viewFlag").value="SubContractTenders";
+	document.getElementById("statusFlag").value="NewTenders";
+	document.forms[0].action="/product/publicDash";
+    submitPage(document.forms[0]) ;
+}
+
+</script>
+</head>
+<body>
+<input type="hidden" name="viewFlag" id="viewFlag" >
+<input type="hidden" name="statusFlag" id="statusFlag" >
+	<div class="container-fluid" style="margin-top: -27px;">
+		<div class="tender_statusPublic">
+		<ul>
+			<li class=""><a href="#" onclick="ViewNewTenders()">المطروحة</a></li>
+			<li class=""><a href="#" onclick="ViewInProcessTenders()">المفتوحة</a></li>
+			<li class=""><a href="#" onclick="getCompletedTenders()">المسندة</a></li>
+			<li class=""><a href="#" onclick="getCanceledTenders()">الملغية</a></li>
+			<li class=""><a href="#" onclick="getRegVendors()">الشركات المسجلة</a></li>
+			<li class="active"><a href="#" onclick="ViewSubContractTenders()">عقود المناقصات الفرعية</a></li>
+		</ul>
+		</div>
+	</div>
+</body>
+</html>
+     
+<div class="container-fluid margin_mbl">
+     <div class="box-head" style="max-height: 35px; display: flex;justify-content: space-between;margin-bottom: 8px;"><h2>
+         عقود المناقصات الفرعية :  البحث عن طريق : 
+      </h2>
+      <a href="#" class="ChevronArrow"><img src="/product/images/ChevronArrow.svg"></a>
+      </div>  
+          
+             
+<!--    Search By Start -->
+
+
+   
+    <div class="box-content no-pad">
+ <table class="display" id="">
+      
+    <tbody><tr class="odd gradeA">
+    
+    
+    <td  tabindex="-1">
+        <select id="division"  style="font-size: 12px; width:299px;" name="division" >
+                <option value="">"اختيار الشركة</option>
+
+            <option  value="PREMIER">الاولى العالمية للمشروعات ش م م</option>
+    
+            <option  value="AKCLLC">الخليلي للانشاءات</option>
+    
+            <option  value="UGK">الخنجر الذهبية العالمية</option>
+    
+            <option  value="PCCC">الشركة الصينية المحدودة لإنشاءات الطاقة فرع عمان</option>
+    
+            <option  value="GET">الشركة العامة للتجارة والكهرباء</option>
+    
+            <option  value="SFOLLC">الشركة الفنية العمانية مسقط ش م م</option>
+    
+            <option  value="ATPCOLLC">الشركة المتقدمة للتكنولوجيا والمشاريع ش م م</option>
+    
+            <option  value="GRTC">الشعاع الذهبي للتجارة والمقاولات-توصية</option>
+    
+            <option  value="TISCO">الطاؤوس للخدمات الصناعيه ش م م</option>
+    
+            <option  value="OIG">المجموعة العمانية الدولية</option>
+    
+            <option  value="AKIS">المحور الهندسية ش م م</option>
+    
+            <option  value="GSTOMANLLC">المصدر العالمي للتجاره ش م م</option>
+    
+            <option  value="ANSL">النبع للخدمات ش.م.م</option>
+    
+            <option  value="ALNAHLA">النحلة للحلول</option>
+    
+            <option  value="ALANAMA">النماء للخدمات الهندسية والتجارة ش م م</option>
+    
+            <option  value="RENAISSANCE">النهضة للتموين و الخدمات ش.م.م</option>
+    
+            <option  value="CBS">انظمه المشاهير</option>
+    
+            <option  value="BURJOMAN">بــرج عمــــان ش.م.م</option>
+    
+            <option  value="BCT">بهوان سايبرتك ش م م</option>
+    
+            <option  value="GALFAR">جلفار للهندسة والمقاولات</option>
+    
+            <option  value="HAC">حسن علام للإنشاءات</option>
+    
+            <option  value="DSMLLC">خدمات التطوير والصيانة ش م م</option>
+    
+            <option  value="RENARDET">ريناردية اس ايه وشركاه للاستشارات الهندسية</option>
+    
+            <option  value="ZAHRAT">زهرة الداليا للتجارة</option>
+    
+            <option  value="SAIFALHARASI">سيف بن سالم بن عيسى الحراصي وشركاه</option>
+    
+            <option  value="ALADRRAK">شركة الأدراك للتجارة والمقاولات ش م م</option>
+    
+            <option  value="HASHAR">شركة الحشار للأكترونيات ش م م</option>
+    
+            <option  value="MEC">شركة المكتشف الحديثة</option>
+    
+            <option  value="PSI">شركة المهارات الدقيقة الدولية</option>
+    
+            <option  value="BEC">شركة بهوان الهندسية</option>
+    
+            <option  value="SANDROSE">شركة سندروس للتجارة</option>
+    
+            <option  value="KHIMJI">شركة كيمجي رامداس</option>
+    
+            <option  value="NAFAL1">شركة نفل للمقاولات والتجارة ش م م</option>
+    
+            <option  value="WACOM">شركة وليد لأجهزة الإتصالات المحدودة</option>
+    
+            <option  value="UESL">شركة يونيفرسال للخدمات الهندسية ش م م</option>
+    
+            <option  value="MACE">شركه مسقط للتكييف والالكترونيات ش م م</option>
+    
+            <option  value="LTO">لارسن وتوبرو وشركاه (عمان)</option>
+    
+            <option  value="BISHARA">مؤسسة بشارة ش م م</option>
+    
+            <option  value="JAHDHAM">مؤسسة جهضم للمقاولات والتجارة</option>
+    
+            <option  value="BADRALSAMAA">مجمع بدرالسماء الطبي ش م م</option>
+    
+            <option  value="MHD">محسن حيدر درويش لتقنية المعلومات	</option>
+    
+            <option  value="ALYAMLLC">مشاريع اليم ش م م</option>
+    
+            <option  value="NEBRAS">مشاريع نبراس البركه ش م م</option>
+    
+            <option  value="OOI">مها الشرق الدولية ش م م</option>
+    
+            <option  value="NASMA">نسمــة للاتصــالات</option>
+    
+                    </select>
+    </td>
+
+    
+    <!-- ====MOHIT ====== -->
+
+<td tabindex="-1">
+
+
+<select id="TendersAndRfqProcurement"  style="font-size: 12px;width: 90%; " name="TendersAndRfqProcurement" >
+
+
+                   
+                     <option value="">المناقصات و أوامر الشراء / المشتريات</option>
+                <option value="RFQ">أوامر الشراء / المشتريات</option>
+            <option value="NON_DG">المناقصات والبائعين</option>
+
+                    
+                    </select> 
+
+</td>
+    
+    
+    
+      
+  
+	
+	<td  tabindex="-1">
+          <select id="procCategory" style="font-size: 12px; width: 231px; "  name="procCategory" onchange='javascript:getProcSubCategory()'  style="margin-left:15px;margin-right:15px">
+                <option value="">نوعية الأعمال</option>
+        
+                <option  value="C2">أعمال الإستشارات - القديم</option>
+    	
+                <option  value="T1">أعمال التدريب - القديم</option>
+    	
+                <option  value="Z8">التوريدات</option>
+    	
+                <option  value="I1">التوريدات والخدمات - القديم</option>
+    	
+                <option  value="Z6">الخدمات</option>
+    	
+                <option  value="Z1">المقاولات العمرانيه والصيانة</option>
+    	
+                <option  value="Z5">المكاتب الإستــشــارية</option>
+    	
+                <option  value="Z7">خدمات تقنية المعلومات</option>
+    	
+                <option  value="C1">مقاولات - القديم</option>
+    	
+                <option  value="G">مقاولات - القديم</option>
+    	
+                <option  value="Z4">مقاولات الكهروميكانيكية والإتصالات والصيانة</option>
+    	
+                <option  value="Z2">مقاولات المواني والطرق والجسور والسكك الحديدية  والسدود والصيانة</option>
+    	
+                <option  value="Z3">مقاولات شبكات خطوط الانابيب وحفر الأبار</option>
+    	
+          </select>
+    </td>
+    
+
+    
+    <td class=""  tabindex="-1">
+      
+        <select id="procSubCategory"  name="procSubCategory" class="ProcSubCategory">
+             : 
+        
+            <option value="" >الفئة الفرعية لنوعية الأعمال</option>
+            </select>
+    
+    
+        </td>
+     
+      <!--  ----anurag----OM-645  -->
+        <td colspan="4" class=""  tabindex="-1">
+      
+        <select id="tenderGrade" style="font-size: 12px; width:134px;"  name="tenderGrade" >
+           
+        
+            <option value="" >اختر درجة المناقصة</option>
+                
+                <option  value="1">الممتازة</option>
+    
+                <option  value="2">الأولى</option>
+    
+                <option  value="3">الثانية</option>
+    
+                <option  value="4">الثالثة</option>
+    
+                <option  value="5">الرابعة</option>
+    
+            </select>
+    
+    
+    
+        
+    </td>
+        
+    </tr>
+
+    <tr class="even gradeA">
+    
+    <td class="">
+    
+        تاريخ تسليم العطاء :&nbsp;&nbsp;
+        </td>
+        <td class="" tabindex="-1">
+        <font style="padding-left:15px;padding-right:15px">من</font>&nbsp;&nbsp;
+        
+        
+        
+        <input type="text" readonly="readonly" tabindex="-1" id="submissionFromDate" name="submissionFromDate" style="width:100px" class="" value=''> 
+        <a href="#" title="تاريخ تسليم العطاء من"><img src="/product/images/ProImgPNGFormat/Calendar.svg" onClick="javascript:show_calendarAT('bDashboard.submissionFromDate','7-2-2009-hol1#4-1-2009-hol3#8-3-2009-hol4#9-4-2009-hol5#31-11-2008-hol6#3-0-2009-hol11#18-10-2009-Amitesh....Test...');" width="15" height="15" border="0" align="top"></a>&nbsp;&nbsp;
+    
+    </td>
+          
+    <td class=""  tabindex="-1">
+        <font style="padding-left:15px;padding-right:15px">الى</font>&nbsp;&nbsp;&nbsp;
+     	
+     	
+     	
+     	<input type="text" readonly="true" id="submissionToDate" tabindex="-1" name="submissionToDate" style="width:100px" class="" value=''> 
+     	<a href="#" title="تاريخ تسليم العطاء الى"><img src="/product/images/ProImgPNGFormat/Calendar.svg" onClick="javascript:show_calendarAT('bDashboard.submissionToDate','7-2-2009-hol1#4-1-2009-hol3#8-3-2009-hol4#9-4-2009-hol5#31-11-2008-hol6#3-0-2009-hol11#18-10-2009-Amitesh....Test...');" width="15" height="15" border="0" align="top"></a>&nbsp;&nbsp;
+    
+    </td>
+   
+   <td tabindex="-1">
+   
+   <font style="padding-left:4px;padding-right:15px">رقم المناقصة :</font>&nbsp;&nbsp;
+   
+   <input type="text"  id="tenderNumber" name="tenderNumber" style="width:75px;" value="" onkeypress="return blockSpecialChar(event)" 
+   		title="أدخل رقم المناقصة"
+   		placeholder="رقم المناقصة"/>&nbsp;&nbsp;
+ </td>
+ <td class="" tabindex="-1">
+        <select id="status"  style="font-size: 12px; width:134px;" name="status" >
+                <option selected="selected" value="NewTenders">المطروحة</option>
+                <option  value="InProcessTenders">المفتوحة</option>
+                <option  value="AwardedTenders">المسندة</option>
+                <option  value="CancelledTenders">الملغية</option>
+        </select>
+    </td>
+    </tr>
+    
+ 	</tbody> 	
+</table>
+</div>
+
+
+ <div class="odd gradeA" align="center" style="margin:10px;">
+	   <div colspan="5" align="center" class="Btn_Btn">
+	    <input type="button" name="btn_search" value="بحث" onclick="formSubmit()" class="Primary-btn">&nbsp;
+	   </div>
+ 	</div>
+    
+<!--  Search By End -->
+        <!-- <div class="box-head"><h2></h2></div> -->
+        
+        <div class="box-content no-pad">
+          <table class="display" id="">
+            <thead>
+            <tr>
+                <th width="5%">رقم التسلسل</th>    <!-- Label Hardcoding removed by M   on 22-02-08 -->
+                <th width="26%"> رقم المناقصة الأساسية [ أسم المناقصة الأساسية ]</th>
+                <th width="16%">رقم المناقصة</th><!-- Label Hardcoding removed by M   on 22-02-08 -->
+                <th width="18%" STYLE="word-wrap:break-word;">إسم المناقصة</th>
+                <th width="18%" style="display: none;">الجهة/الوحدة الحكومية</th>
+                
+                    <th width="25%">[  الدرجة]فئة المشتريات</th>
+                
+                <th width="10%">إجْراء &nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            
+                <tr class='oddo gradeA'>
+                    <td width="5px" align="center">1.</td>
+                    <td width="26px">
+                    	2023/3254/و ص/ م ر -271
+                    	[ توريد وتركيب مولد كهربائي في مستشفى النهضة ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','1')">2026/21/ع ف/ش ب ه-5</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc1"  name="tendDesc1" value="توريد فتحات التهوية في مستشفى النهضة">
+                    <td width="18px" nowrap onmouseover="Tip('توريد فتحات التهوية')" onmouseout="UnTip()">توريد فتحات التهوية</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('التوريدات [الممتازة,الأولى,الثانية,الثالثة,الرابعة]')" onmouseout="UnTip()">التوريدات [الممتازة,الأولى,الثانية,الثالثة,الرابعة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('89040')"  title="عرض إشعار دعوة العطاء [ 89040 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 89040 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('89040')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='even gradeA'>
+                    <td width="5px" align="center">2.</td>
+                    <td width="26px">
+                    	2025/3/ ح ق
+                    	[ تصميم وبناء مرافق السكك الحديدية ومحطات الركاب – القسم العماني – الحزمة أي 2 ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','2')">2026/20/ع ف/ش ص م ط-2</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc2"  name="tendDesc2" value="يشمل نطاق العمل توريد ووضع وضغط الخرسانة مع الصخور لردم ما مجموعه 3 آبار وفقًا لبيان الطريقة المعتمد في موقع مرفق شحن صحار.
+">
+                    <td width="18px" nowrap onmouseover="Tip('توريد ووضع وضغط الخرسانة مع الصخور لردم ما مجموعه 3 آبار وفقًا لبيان الطريقة المعتمد في موقع مرفق شحن صحار.')" onmouseout="UnTip()">توريد ووضع وضغط الخرسانة مع .....</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('المقاولات العمرانيه والصيانة [الأولى]')" onmouseout="UnTip()">المقاولات العمرانيه والصيانة [الأولى]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('87816')"  title="عرض إشعار دعوة العطاء [ 87816 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 87816 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('87816')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='oddo gradeA'>
+                    <td width="5px" align="center">3.</td>
+                    <td width="26px">
+                    	2021/4/ م ق
+                    	[ توفير خدمات النظافة والغسيل ومكافحة الحشرات لعدد من المستشفيات والمجمعات الصحية التابعة لوزارة الصحة ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','3')">2026/12/ع ف/الطاؤوس-2</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc3"  name="tendDesc3" value="توفير الأسماك الطازجة لجميع مواقع وزارة الصحة">
+                    <td width="18px" nowrap onmouseover="Tip('توفير الأسماك الطازجة لجميع مواقع وزارة الصحة')" onmouseout="UnTip()">توفير الأسماك الطازجة لجميع .....</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('التوريدات [الممتازة,الأولى,الثانية,الثالثة,الرابعة]')" onmouseout="UnTip()">التوريدات [الممتازة,الأولى,الثانية,الثالثة,الرابعة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('85886')"  title="عرض إشعار دعوة العطاء [ 85886 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 85886 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('85886')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='even gradeA'>
+                    <td width="5px" align="center">4.</td>
+                    <td width="26px">
+                    	2025/2/ ح ق
+                    	[ تصميم و بناء أنظمة السكك الحديدية - الحزمة د ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','4')">2026/5/ع ف/ح ع إ-2</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc4"  name="tendDesc4" value="توريد كابلات الياف ضوئية لمشروع قطار حفيت للربط بين دولتي الامارات و عمان">
+                    <td width="18px" nowrap onmouseover="Tip('توريد كابلات الياف ضوئية لمشروع قطار حفيت للربط بين دولتي الامارات و عمان')" onmouseout="UnTip()">توريد كابلات الياف ضوئية لمش.....</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('التوريدات [الممتازة]')" onmouseout="UnTip()">التوريدات [الممتازة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('84493')"  title="عرض إشعار دعوة العطاء [ 84493 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 84493 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('84493')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='oddo gradeA'>
+                    <td width="5px" align="center">5.</td>
+                    <td width="26px">
+                    	2025/2/ ح ق
+                    	[ تصميم و بناء أنظمة السكك الحديدية - الحزمة د ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','5')">2026/4/ع ف/ح ع إ-1</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc5"  name="tendDesc5" value="توريد كابلات جهد   متوسط لمشروع القطار السريع بين أبو ظبي و عمان">
+                    <td width="18px" nowrap onmouseover="Tip('توريد كابلات جهد متوسط لمشروع القطار السريع بين أبو ظبي و عمان')" onmouseout="UnTip()">توريد كابلات جهد متوسط لمشرو.....</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('التوريدات [الممتازة]')" onmouseout="UnTip()">التوريدات [الممتازة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('84246')"  title="عرض إشعار دعوة العطاء [ 84246 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 84246 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('84246')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='even gradeA'>
+                    <td width="5px" align="center">6.</td>
+                    <td width="26px">
+                    	2023/1151/و ص/ م ر -82
+                    	[ توفير خدمات الصيانة لوحدات التكييف بالمجمع السكني بالمستشفى السلطاني ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','6')">2026/3/ع ف/ش م ح-1</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc6"  name="tendDesc6" value="توفير فنيين تكييف لخدمات التشغيل والصيانة في مستشفى السلطاني">
+                    <td width="18px" nowrap onmouseover="Tip('توفير فنيين تكييف لخدمات التشغيل والصيانة في مستشفى السلطاني')" onmouseout="UnTip()">توفير فنيين تكييف لخدمات الت.....</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('الخدمات [الثالثة]')" onmouseout="UnTip()">الخدمات [الثالثة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('84257')"  title="عرض إشعار دعوة العطاء [ 84257 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 84257 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('84257')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='oddo gradeA'>
+                    <td width="5px" align="center">7.</td>
+                    <td width="26px">
+                    	2023/19/ ا ع م م -اعادة طرح- 1
+                    	[ إنشاء مستشفى الفلاح بمحافظة جنوب الشرقية ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','7')">2025/66/ع ف/ا خ ا ء-5</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc7"  name="tendDesc7" value="توريد وتركيب خلية مبطنة على الحائط
+">
+                    <td width="18px" nowrap onmouseover="Tip('توريد وتركيب خلية مبطنة على الحائط')" onmouseout="UnTip()">توريد وتركيب خلية مبطنة على .....</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('المقاولات العمرانيه والصيانة [الممتازة]')" onmouseout="UnTip()">المقاولات العمرانيه والصيانة [الممتازة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('79259')"  title="عرض إشعار دعوة العطاء [ 79259 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 79259 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('79259')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='even gradeA'>
+                    <td width="5px" align="center">8.</td>
+                    <td width="26px">
+                    	2023/19/ ا ع م م -اعادة طرح- 1
+                    	[ إنشاء مستشفى الفلاح بمحافظة جنوب الشرقية ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','8')">2025/65/ع ف/ا خ ا ء-4</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc8"  name="tendDesc8" value="استفسار عن أعمال رمي الحجارة / ">
+                    <td width="18px" nowrap onmouseover="Tip('استفسار عن أعمال رمي الحجارة / ')" onmouseout="UnTip()">استفسار عن أعمال رمي الحجارة.....</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('المقاولات العمرانيه والصيانة [الممتازة]')" onmouseout="UnTip()">المقاولات العمرانيه والصيانة [الممتازة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('81436')"  title="عرض إشعار دعوة العطاء [ 81436 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 81436 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('81436')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='oddo gradeA'>
+                    <td width="5px" align="center">9.</td>
+                    <td width="26px">
+                    	2023/19/ ا ع م م -اعادة طرح- 1
+                    	[ إنشاء مستشفى الفلاح بمحافظة جنوب الشرقية ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','9')">2025/64/ع ف/ا خ ا ء-3</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc9"  name="tendDesc9" value="العمل بالقطعة لتركيب واختبار الأنابيب">
+                    <td width="18px" nowrap onmouseover="Tip('العمل بالقطعة لتركيب واختبار الأنابيب')" onmouseout="UnTip()">العمل بالقطعة لتركيب واختبار.....</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('المقاولات العمرانيه والصيانة [الممتازة]')" onmouseout="UnTip()">المقاولات العمرانيه والصيانة [الممتازة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('81516')"  title="عرض إشعار دعوة العطاء [ 81516 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 81516 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('81516')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='even gradeA'>
+                    <td width="5px" align="center">10.</td>
+                    <td width="26px">
+                    	2023/19/ ا ع م م -اعادة طرح- 1
+                    	[ إنشاء مستشفى الفلاح بمحافظة جنوب الشرقية ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','10')">2025/63/ع ف/ا خ ا ء-2</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc10"  name="tendDesc10" value="استئجار كهربائي
+">
+                    <td width="18px" nowrap onmouseover="Tip('استئجار كهربائي')" onmouseout="UnTip()">استئجار كهربائي</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('المقاولات العمرانيه والصيانة [الممتازة]')" onmouseout="UnTip()">المقاولات العمرانيه والصيانة [الممتازة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('81437')"  title="عرض إشعار دعوة العطاء [ 81437 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 81437 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('81437')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='oddo gradeA'>
+                    <td width="5px" align="center">11.</td>
+                    <td width="26px">
+                    	2023/19/ ا ع م م -اعادة طرح- 1
+                    	[ إنشاء مستشفى الفلاح بمحافظة جنوب الشرقية ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','11')">2025/61/ع ف/ا خ ا ء-1</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc11"  name="tendDesc11" value="أعمال العمالة بنظام القطعة لتركيب البلوك واللياسة">
+                    <td width="18px" nowrap onmouseover="Tip('أعمال العمالة بنظام القطعة لتركيب البلوك واللياسة')" onmouseout="UnTip()">أعمال العمالة بنظام القطعة ل.....</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('المقاولات العمرانيه والصيانة [الممتازة]')" onmouseout="UnTip()">المقاولات العمرانيه والصيانة [الممتازة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('79341')"  title="عرض إشعار دعوة العطاء [ 79341 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 79341 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('79341')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='even gradeA'>
+                    <td width="5px" align="center">12.</td>
+                    <td width="26px">
+                    	2021/4/ م ق
+                    	[ توفير خدمات النظافة والغسيل ومكافحة الحشرات لعدد من المستشفيات والمجمعات الصحية التابعة لوزارة الصحة ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','12')">2025/49/ع ف/الطاؤوس-11</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc12"  name="tendDesc12" value="مكافحة الآفات في مواقع وزارة الصحة من نوفمبر 2025 إلى يونيو 2026">
+                    <td width="18px" nowrap onmouseover="Tip('مكافحة الآفات في مواقع وزارة الصحة من نوفمبر 2025 إلى يونيو 2026')" onmouseout="UnTip()">مكافحة الآفات في مواقع وزارة.....</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('الخدمات [الممتازة,الأولى,الثانية,الثالثة,الرابعة]')" onmouseout="UnTip()">الخدمات [الممتازة,الأولى,الثانية,الثالثة,الرابعة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('79407')"  title="عرض إشعار دعوة العطاء [ 79407 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 79407 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('79407')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='oddo gradeA'>
+                    <td width="5px" align="center">13.</td>
+                    <td width="26px">
+                    	2021/4/ م ق
+                    	[ توفير خدمات النظافة والغسيل ومكافحة الحشرات لعدد من المستشفيات والمجمعات الصحية التابعة لوزارة الصحة ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','13')">2025/27/ع ف/الطاؤوس-3</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc13"  name="tendDesc13" value="مكافحة الآفات لمواقع وزارة الصحة">
+                    <td width="18px" nowrap onmouseover="Tip('مكافحة الآفات لمواقع وزارة الصحة')" onmouseout="UnTip()">مكافحة الآفات لمواقع وزارة ا.....</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('الخدمات [الممتازة,الأولى,الثانية,الثالثة,الرابعة]')" onmouseout="UnTip()">الخدمات [الممتازة,الأولى,الثانية,الثالثة,الرابعة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('75674')"  title="عرض إشعار دعوة العطاء [ 75674 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 75674 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('75674')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='even gradeA'>
+                    <td width="5px" align="center">14.</td>
+                    <td width="26px">
+                    	2021/4/ م ق
+                    	[ توفير خدمات النظافة والغسيل ومكافحة الحشرات لعدد من المستشفيات والمجمعات الصحية التابعة لوزارة الصحة ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','14')">2025/23/ع ف/الطاؤوس-2</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc14"  name="tendDesc14" value="توريد الفواكه والخضروات لمواقع وزارة الصحة">
+                    <td width="18px" nowrap onmouseover="Tip('توريد الفواكه والخضروات لمواقع وزارة الصحة')" onmouseout="UnTip()">توريد الفواكه والخضروات لموا.....</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('التوريدات [الممتازة,الأولى,الثانية,الثالثة,الرابعة]')" onmouseout="UnTip()">التوريدات [الممتازة,الأولى,الثانية,الثالثة,الرابعة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('73524')"  title="عرض إشعار دعوة العطاء [ 73524 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 73524 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('73524')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='oddo gradeA'>
+                    <td width="5px" align="center">15.</td>
+                    <td width="26px">
+                    	2023/4672/و ص/ م ر -374
+                    	[ إنشاء مركز جعلان بني بو علي الصحي بمحافظة جنوب الشرقية ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','15')">2025/18/ع ف/نبراس-1</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc15"  name="tendDesc15" value="توريد كتل صلبة مقاس 200 مم">
+                    <td width="18px" nowrap onmouseover="Tip('توريد وتسليم كتل صلبة (200 × 200 × 400 مم، قوة ضغط 10.5 نيوتن/مم²)')" onmouseout="UnTip()">توريد وتسليم كتل صلبة (200 ×.....</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('المقاولات العمرانيه والصيانة [الممتازة,الأولى,الثانية,الثالثة,الرابعة]')" onmouseout="UnTip()">المقاولات العمرانيه والصيانة [الممتازة,الأولى,الثانية,الثالثة,الرابعة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('71737')"  title="عرض إشعار دعوة العطاء [ 71737 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 71737 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('71737')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='even gradeA'>
+                    <td width="5px" align="center">16.</td>
+                    <td width="26px">
+                    	2023/18/ ا ع م م
+                    	[ تصميم و توريد و تركيب و تنفيذ وصيانة النظام الوطني لإدارة المشاريع و المشتريات الحكومية ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','16')">2024/4/ع ف/ب س ت-2</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc16"  name="tendDesc16" value="تطوير تطبيقات الهاتف المحمول">
+                    <td width="18px" nowrap onmouseover="Tip('تطوير تطبيقات الهاتف المحمول')" onmouseout="UnTip()">تطوير تطبيقات الهاتف المحمول</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('خدمات تقنية المعلومات [الأولى]')" onmouseout="UnTip()">خدمات تقنية المعلومات [الأولى]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('61616')"  title="عرض إشعار دعوة العطاء [ 61616 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 61616 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('61616')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='oddo gradeA'>
+                    <td width="5px" align="center">17.</td>
+                    <td width="26px">
+                    	2019/20/ م ق
+                    	[ انشاء مبنى هيئة الادعاء العام بمدينة العرفان ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','17')">2023/1/ع ف/ش ا ل م-1</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc17"  name="tendDesc17" value="توريد وتركيب عازل ضد الماء للأسطح الرطبة ">
+                    <td width="18px" nowrap onmouseover="Tip('عازل ضد الماء للأسطح الرطبة')" onmouseout="UnTip()">عازل ضد الماء للأسطح الرطبة</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('المقاولات العمرانيه والصيانة [الممتازة,الأولى,الثانية]')" onmouseout="UnTip()">المقاولات العمرانيه والصيانة [الممتازة,الأولى,الثانية]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('31785')"  title="عرض إشعار دعوة العطاء [ 31785 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 31785 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('31785')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+                <tr class='even gradeA'>
+                    <td width="5px" align="center">18.</td>
+                    <td width="26px">
+                    	2015/9/ وزارة -اعادة طرح- 1
+                    	[  مشروع إنشاء مسجد جديد بالمنفذ الحدودي بالربع الخالي   بولاية عبري. ]
+                    </td>
+                    <td width="16px" nowrap onmouseout="UnTip()">
+                    	<span onmouseover="showTndDesc('tendDesc','18')">2021/2/ع ف/م ج م و ت-1</span>
+                 
+                
+                    </td>
+                            <input type="hidden" id="tendDesc18"  name="tendDesc18" value="تنفيذ اعمال الديكور الداخلي لمسجد قيد الانشاء بولاية عبري بالمنفذ الحدودي بالربع الخالي">
+                    <td width="18px" nowrap onmouseover="Tip('تنفيذ اعمال الديكور الداخلي لمسجد قيد الانشاء بولاية عبري بالربع الخالي')" onmouseout="UnTip()">تنفيذ اعمال الديكور الداخلي .....</td>
+                    <td  style="display: none;">عقود فرعية</td>
+                    
+                        <td  width="25px" nowrap onmouseover="Tip('المقاولات العمرانيه والصيانة [الثالثة]')" onmouseout="UnTip()">المقاولات العمرانيه والصيانة [الثالثة]</td>
+                    
+                 <td width="10px" align="center" class="table_icon">
+                 
+                     
+                  <a href="#" onclick="javascript:getNit('15011')"  title="عرض إشعار دعوة العطاء [ 15011 ]">
+                  <img title="عرض إشعار دعوة العطاء [ 15011 ]" border="0" src="/product/images/AdminRegBondPNG/search.png"></a>
+                   <!--  &nbsp; --><a href="#" style="text-decoration:none;" onclick="showOpeningStatus_Report('15011')">
+                               <img border="0" title="عرض حالة فتح المناقصة" src="/product/images/AdminRegBondPNG/viewTenderOpen.png">
+                       </a> 
+                       
+               <!--   OM-18-1982    9. Tender Document Purchase Details -->  
+               
+            
+                  
+                 </td>
+               </tr>
+       
+         <tr class="rownohover">
+          <td  colspan="6" align="center">
+             <table cellpadding='1' cellspacing=0 border=0 align='center' class='Pagination_table'><tbody class='Pagination_tbody'><tr class='TD_Button_Panel' align='center' style='font-weight:bold'><td class='Pagination_td'> <A href='#banner' class='pageLinks Pagination_button' style='pointer-events: none'> &laquo;الأولى</A></td> <td class='Pagination_td'> <A href='#banner' class='pageLinks Pagination_button' style='pointer-events: none'> &laquo;السابقة</td> <td class='Pagination_td Pagination_Data'>&nbsp;الصفحة&nbsp;</td> <td><input type='text' size='4'  name='pnoVal' value='1' onClick='javascript:setValue()'  onKeyDown='javascript:if(window.event.keyCode == 13) ShowPage(0)' onChange='javascript:ShowPage(0)'></td> <td class='Pagination_td Pagination_Data'>&nbsp;من</td> <td class='Pagination_td Pagination_Data'>1&nbsp;</td><input type='hidden' name='hidMax' value='1'> &nbsp;<td class='Pagination_td'> <A href='#banner' class='pageLinks Pagination_button1' style='pointer-events: none'><b>التالية&raquo;</A></td> <td class='Pagination_td'> <A href='#banner' class='pageLinks Pagination_button1' style='pointer-events: none'><b>الأخيرة&raquo;</A></td> </tr></tbody></table>            
+         </td>
+        </tr></tbody>
+     
+     
+         <!--tr class="td_button_panel"><td colspan="6" align="center"><input type="button" name="btnBack" value="عودة"  class="button_all"   onclick="javascript:backToDashBoard()"></td></tr-->
+  
+ <!--  <tr rowspan="30"><td colspan="6">&nbsp;</td></tr>
+  <tr rowspan="30"><td colspan="6">&nbsp;</td></tr> -->
+ </table></div>
+ 
+ 
+  
+  <input type="button" name="Back1" style="display:none;"  value="Back" onclick="homePage()"/>&nbsp;
+</div>
+    <br>
+
+
+</form>
+<script type="text/javascript" src="/product/js/wz_tooltip.js" language="javascript" /></script>
+<script>
+
+
+	getProcSubCategory();
+    if(document.getElementById("clock")!=null)
+    getTime1();
+    removeCustomAlert();
+</script>
+<script src="/product/js/font-scaler.js"></script>
+</body>
+</html>

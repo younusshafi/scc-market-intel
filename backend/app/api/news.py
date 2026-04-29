@@ -1,0 +1,88 @@
+"""News API endpoints."""
+
+from fastapi import APIRouter, Depends, Query
+from sqlalchemy.orm import Session
+from sqlalchemy import func, desc
+
+from app.core.database import get_db
+from app.models import NewsArticle
+
+router = APIRouter(prefix="/news", tags=["news"])
+
+
+@router.get("/")
+def list_news(
+    competitor_only: bool = False,
+    source: str | None = None,
+    search: str | None = None,
+    page: int = Query(1, ge=1),
+    page_size: int = Query(30, ge=10, le=100),
+    db: Session = Depends(get_db),
+):
+    """List news articles with filtering."""
+    q = db.query(NewsArticle).filter(NewsArticle.is_relevant == True)
+
+    if competitor_only:
+        q = q.filter(NewsArticle.is_competitor_mention == True)
+    if source:
+        q = q.filter(NewsArticle.source.ilike(f"%{source}%"))
+    if search:
+        pattern = f"%{search}%"
+        q = q.filter(
+            (NewsArticle.title.ilike(pattern))
+            | (NewsArticle.summary.ilike(pattern))
+        )
+
+    total = q.count()
+    articles = (
+        q.order_by(desc(NewsArticle.published))
+        .offset((page - 1) * page_size)
+        .limit(page_size)
+        .all()
+    )
+
+    return {
+        "total": total,
+        "page": page,
+        "pages": (total + page_size - 1) // page_size,
+        "articles": [_serialize_article(a) for a in articles],
+    }
+
+
+@router.get("/stats")
+def news_stats(db: Session = Depends(get_db)):
+    """News summary statistics."""
+    total = db.query(NewsArticle).filter(NewsArticle.is_relevant == True).count()
+    competitor_mentions = (
+        db.query(NewsArticle)
+        .filter(NewsArticle.is_competitor_mention == True)
+        .count()
+    )
+
+    # By source
+    by_source = (
+        db.query(NewsArticle.source, func.count(NewsArticle.id))
+        .filter(NewsArticle.is_relevant == True)
+        .group_by(NewsArticle.source)
+        .order_by(desc(func.count(NewsArticle.id)))
+        .all()
+    )
+
+    return {
+        "total": total,
+        "competitor_mentions": competitor_mentions,
+        "by_source": [{"source": s[0], "count": s[1]} for s in by_source],
+    }
+
+
+def _serialize_article(a: NewsArticle) -> dict:
+    return {
+        "id": a.id,
+        "source": a.source,
+        "title": a.title,
+        "link": a.link,
+        "published": a.published.isoformat() if a.published else None,
+        "summary": a.summary,
+        "is_competitor_mention": a.is_competitor_mention,
+        "mentioned_competitors": a.mentioned_competitors,
+    }

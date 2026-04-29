@@ -1,0 +1,403 @@
+<!doctype html>
+
+
+
+
+
+<HTML DIR="LTR">
+<head>
+<meta https-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+<title>Document Purchase Details</title>
+<link rel="stylesheet" type="text/css" href="/product/css/OMANLTR.css">
+
+<link rel="stylesheet" href="/product/css/dashboard/reset.css">
+<link rel="stylesheet" href="/product/css/dashboard/grid.css">
+<link rel="stylesheet" href="/product/css/dashboard/jquery-ui.css">
+<link rel="stylesheet" href="/product/css/dashboard/tables.css">
+<link rel="stylesheet" href="/product/css/dashboard/ad.css">
+  <!---jQuery Files-->
+ <script src="/product/js/dashboard/jquery-1.7.1.min.js"></script>
+ <script src="/product/js/dashboard/jquery-ui-1.8.17.min.js"></script>
+ <script src="/product/js/dashboard/global.js"></script>
+ <script src="/product/js/dashboard/jquery.dataTables.min.js"></script>
+  <!---Fonts-->
+ <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+
+<script language="javascript1.2" src="/product/js/Validate.js"></script>  
+</head>
+<body onmousedown="isKeyPressed(event)" onKeyDown="onKeyDown(event);">
+<form method="post" >
+
+<br>
+
+
+ 
+ 
+
+<link rel="stylesheet" type="text/css" href="/product/css/OMANLTR.css">
+
+<script src="/product/js/dashboard/jquery-1.7.1.min.js"></script>
+<script language="javascript" src="/product/js/ScreenReader.js?v1.3"></script>
+  
+<div class="new-strip container_12 box-content ">
+  <div class="new-strip-second">
+	 <span><a class="btn-increase" title="text increase" onclick="applyFontSizeP(1);">A<sup>+</sup></a></span>
+	 <span><a class="btn-orig" title="Standard normal" onclick="applyFontSizeP(0);">A<sup></sup></a></span>
+	 <span><a class="btn-decrease" title="text decrease" onclick="applyFontSizeP(-1);">A<sup>-</sup></a></span>
+	 <span style="cursor: pointer;"><a class="new-strip_content" id="convertButton" onclick="goToConvertTextToSpeech()">ScreenReader</a></span>
+     <span style="cursor: pointer;"><img src="/product/images/sun_light.svg" alt="Theme change" class="img-responsive" id="theme_change_id" title="Theme_change" tabindex="0"></span>
+  </div>
+</div>
+
+<script>
+
+ //Apply theme on page load
+    
+  window.onload = function() {
+    const isDarkTheme = localStorage.getItem("isDarkTheme");
+    if (isDarkTheme === "1") {
+      document.body.classList.add("dark_theme");
+      theme_change_id.src = "/product/images/moon.svg";
+    } else {
+      document.body.classList.remove("dark_theme");
+      theme_change_id.src = "/product/images/sun_light.svg";
+    }
+  };
+
+  // Toggle theme on icon click
+  
+  var icon = document.getElementById("theme_change_id")
+  icon.onclick= function (){
+  document.body.classList.toggle("dark_theme");
+    if(document.body.classList.contains("dark_theme")){
+    	theme_change_id.src ="/product/images/moon.svg";       
+    	isDarkTheme = '1';
+    }
+    else{
+    	isDarkTheme = '0';
+    	theme_change_id.src ="/product/images/sun_light.svg";       	        	
+    }
+        
+   // Save to localStorage
+        localStorage.setItem("isDarkTheme", isDarkTheme);      
+    }
+    
+  function goToConvertTextToSpeech(){
+	  var isRtl = '0'; 
+	  if(isRtl == '1'){
+		 alert('null');
+		 convertTextToSpeech();
+	  } else {
+		 convertTextToSpeech();
+	  }
+	  
+  }
+  
+  var fontIncCount = 0;
+  var normalFontSize = 12.5;  
+  const lastIontIncCount = localStorage.getItem("lastIontIncCount");
+  function applyFontSizeP(direction) {
+      const affectedElementsP = Array.from(document.body.querySelectorAll("p, h1, h2, h3, h4, h5, h6, span, div, input, th, td, a, select, b"));
+      console.log(affectedElementsP.length);
+
+      if (direction === 0) {
+              affectedElementsP.forEach(el => {
+              el.style.fontSize = normalFontSize + "px";
+          });
+          fontIncCount = 0;  
+          return;
+      }
+    
+      if (direction > 0 && fontIncCount < 3) {
+          fontIncCount++;  
+          localStorage.setItem("lastIontIncCount", fontIncCount);
+      } else if (direction < 0 && fontIncCount > -3) {
+    	  localStorage.setItem("lastIontIncCount", fontIncCount);
+          fontIncCount--;  
+      } else {
+         return;
+      }
+
+      affectedElementsP.forEach(el => {
+          const style = window.getComputedStyle(el);
+          const fontSize = parseFloat(style.fontSize);
+          if (!isNaN(fontSize)) {
+              el.style.fontSize = (fontSize + direction) + "px";
+          }
+      });
+  }
+  function applyFontSizeDflt(){
+	  applyFontSizeP(lastIontIncCount); 
+  }
+  setTimeout('applyFontSizeDflt', 1000);
+</script>
+
+<!-- <div class="container_12"> -->
+<div class="container_12">
+	<div class="box-head box-head3"><h2>
+		Document Purchase Details
+	</h2></div>
+	<div class="box-content no-pad">
+        <table class="display" id="">
+        <thead>
+        <tr>
+        <th>S.No.</th>  
+        <th>PTLC Registration Number</th> 
+		<th>Company Name</th> 
+		<th>Company Type</th>
+		<th>Tender Document Purchase Date & Time</th>  
+	</tr></thead>
+	<tbody>
+	
+	
+	
+		   
+		 <tr class="odd gradeA">  
+		    <td width="9%"  align="center">1</td>
+		    <td width="20%"  align="center">
+				00005359
+			</td> 
+		  	<td width="40%" >FAHUD TOWERS TRADING</td>
+		  	<td> SME
+								
+					</td>
+		  	<td width="15%"  align="center">23-02-2026 12:02</td> 
+		 </tr>
+	
+		   
+		 <tr class="even gradeA">  
+		    <td width="9%"  align="center">2</td>
+		    <td width="20%"  align="center">
+				00004861
+			</td> 
+		  	<td width="40%" >AL FAZARI UNITED TRADING AND CONTRACTION</td>
+		  	<td> SME
+								
+					</td>
+		  	<td width="15%"  align="center">24-02-2026 07:42</td> 
+		 </tr>
+	
+		   
+		 <tr class="odd gradeA">  
+		    <td width="9%"  align="center">3</td>
+		    <td width="20%"  align="center">
+				00001255
+			</td> 
+		  	<td width="40%" >The Arab Contractors Oman Limited</td>
+		  	<td> Local
+								
+					</td>
+		  	<td width="15%"  align="center">24-02-2026 11:12</td> 
+		 </tr>
+	
+		   
+		 <tr class="even gradeA">  
+		    <td width="9%"  align="center">4</td>
+		    <td width="20%"  align="center">
+				00000752
+			</td> 
+		  	<td width="40%" >AL- GHARBIA ENTERPRISES TRADIG AND CONTRACTING COMPANY</td>
+		  	<td> Local
+								
+					</td>
+		  	<td width="15%"  align="center">24-02-2026 12:42</td> 
+		 </tr>
+	
+		   
+		 <tr class="odd gradeA">  
+		    <td width="9%"  align="center">5</td>
+		    <td width="20%"  align="center">
+				00005690
+			</td> 
+		  	<td width="40%" >Yellow Horizon Trading</td>
+		  	<td> SME
+								
+					</td>
+		  	<td width="15%"  align="center">24-02-2026 14:32</td> 
+		 </tr>
+	
+		   
+		 <tr class="even gradeA">  
+		    <td width="9%"  align="center">6</td>
+		    <td width="20%"  align="center">
+				00008139
+			</td> 
+		  	<td width="40%" >SAD AL KHALEJ ENGENEERING </td>
+		  	<td> SME
+								
+					</td>
+		  	<td width="15%"  align="center">26-02-2026 09:08</td> 
+		 </tr>
+	
+		   
+		 <tr class="odd gradeA">  
+		    <td width="9%"  align="center">7</td>
+		    <td width="20%"  align="center">
+				00001330
+			</td> 
+		  	<td width="40%" >MASITAH INTERNATIONAL TECHNICAL AND MARINE SERVICES LLC</td>
+		  	<td> Local
+								
+					</td>
+		  	<td width="15%"  align="center">26-02-2026 09:22</td> 
+		 </tr>
+	
+		   
+		 <tr class="even gradeA">  
+		    <td width="9%"  align="center">8</td>
+		    <td width="20%"  align="center">
+				00002074
+			</td> 
+		  	<td width="40%" >DETONATON BLASTING CONTRACTING </td>
+		  	<td> Local
+								
+					</td>
+		  	<td width="15%"  align="center">01-03-2026 10:00</td> 
+		 </tr>
+	
+		   
+		 <tr class="odd gradeA">  
+		    <td width="9%"  align="center">9</td>
+		    <td width="20%"  align="center">
+				00000135
+			</td> 
+		  	<td width="40%" >ARABIAN PROJECTS AND TRANSPORT CO LLC</td>
+		  	<td> Local
+								
+					</td>
+		  	<td width="15%"  align="center">01-03-2026 13:15</td> 
+		 </tr>
+	
+		   
+		 <tr class="even gradeA">  
+		    <td width="9%"  align="center">10</td>
+		    <td width="20%"  align="center">
+				00003776
+			</td> 
+		  	<td width="40%" >AZ ENGINEERS AND PARTNERS</td>
+		  	<td> Local
+								
+					</td>
+		  	<td width="15%"  align="center">02-03-2026 00:30</td> 
+		 </tr>
+	
+		   
+		 <tr class="odd gradeA">  
+		    <td width="9%"  align="center">11</td>
+		    <td width="20%"  align="center">
+				00014701
+			</td> 
+		  	<td width="40%" >EAMR AL-Mustagbal Engineering</td>
+		  	<td> SME
+								
+					</td>
+		  	<td width="15%"  align="center">02-03-2026 10:03</td> 
+		 </tr>
+	
+		   
+		 <tr class="even gradeA">  
+		    <td width="9%"  align="center">12</td>
+		    <td width="20%"  align="center">
+				0013199
+			</td> 
+		  	<td width="40%" >CAHIT TRADING &amp; CONTRACTING</td>
+		  	<td> Local
+								
+					</td>
+		  	<td width="15%"  align="center">03-03-2026 15:09</td> 
+		 </tr>
+	
+		   
+		 <tr class="odd gradeA">  
+		    <td width="9%"  align="center">13</td>
+		    <td width="20%"  align="center">
+				00011254
+			</td> 
+		  	<td width="40%" >Nursah Business</td>
+		  	<td> Local
+								
+					</td>
+		  	<td width="15%"  align="center">08-03-2026 15:47</td> 
+		 </tr>
+	
+		   
+		 <tr class="even gradeA">  
+		    <td width="9%"  align="center">14</td>
+		    <td width="20%"  align="center">
+				00003668
+			</td> 
+		  	<td width="40%" >FAGER OMAN TRAD AND CONT CO</td>
+		  	<td> SME
+								
+					</td>
+		  	<td width="15%"  align="center">12-03-2026 11:24</td> 
+		 </tr>
+	
+		   
+		 <tr class="odd gradeA">  
+		    <td width="9%"  align="center">15</td>
+		    <td width="20%"  align="center">
+				00008987
+			</td> 
+		  	<td width="40%" >Masirah Island International</td>
+		  	<td> SME
+								
+					</td>
+		  	<td width="15%"  align="center">01-04-2026 12:07</td> 
+		 </tr>
+	
+		   
+		 <tr class="even gradeA">  
+		    <td width="9%"  align="center">16</td>
+		    <td width="20%"  align="center">
+				00000453
+			</td> 
+		  	<td width="40%" >Khimji Ramdas Construction</td>
+		  	<td> Local
+								
+					</td>
+		  	<td width="15%"  align="center">06-04-2026 17:05</td> 
+		 </tr>
+	
+		   
+		 <tr class="odd gradeA">  
+		    <td width="9%"  align="center">17</td>
+		    <td width="20%"  align="center">
+				00009885
+			</td> 
+		  	<td width="40%" >China Communications Construction Company</td>
+		  	<td> Local
+								
+					</td>
+		  	<td width="15%"  align="center">08-04-2026 10:45</td> 
+		 </tr>
+	
+		   
+		 <tr class="even gradeA">  
+		    <td width="9%"  align="center">18</td>
+		    <td width="20%"  align="center">
+				00011003
+			</td> 
+		  	<td width="40%" >MARMUL MINING</td>
+		  	<td> Local
+								
+					</td>
+		  	<td width="15%"  align="center">13-04-2026 19:09</td> 
+		 </tr>
+	
+	
+	  
+		 <tr class="rownohover">
+			<td align="center" colspan="5" class="">
+			            <input type="button" class="Secondary-btn" value="Close" name="btnSubmit" onclick="window.close()">
+			</td>  
+		 </tr>
+		  
+		 </tbody>		
+	 </table></div>
+</div>
+</form>
+</body>
+</html>
