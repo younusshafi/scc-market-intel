@@ -1,6 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_URL
-  ? `https://${import.meta.env.VITE_API_URL}/api`
-  : '/api'
+const API_BASE = 'https://scc-intel-api.onrender.com/api'
 
 async function fetchAPI(endpoint, params = {}) {
   const url = new URL(`${API_BASE}${endpoint}`, window.location.origin)
