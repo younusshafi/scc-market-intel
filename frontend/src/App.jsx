@@ -7,9 +7,13 @@ import NewsSection from './components/NewsSection'
 import BriefingCard from './components/BriefingCard'
 import TrendChart from './components/TrendChart'
 import QueryBar from './components/QueryBar'
-import CompetitiveIntel from './components/CompetitiveIntel'
+import CompetitiveBattlefield from './components/CompetitiveBattlefield'
+import EarlyWarnings from './components/EarlyWarnings'
+import CompetitorTimeline from './components/CompetitorTimeline'
+import GalfarProfile from './components/GalfarProfile'
 import GeoDistribution from './components/GeoDistribution'
-import JvMentions from './components/JvMentions'
+import PTLCContext from './components/PTLCContext'
+import RetenderRadar from './components/RetenderRadar'
 
 export default function App() {
   const { data: stats, loading: statsLoading } = useAPI(api.getTenderStats, [])
@@ -18,29 +22,35 @@ export default function App() {
   const { data: trend } = useAPI(api.getTenderTrend, [])
 
   return (
-    <div className="min-h-screen bg-slate-900">
-      {/* Header */}
-      <nav className="sticky top-0 z-50 bg-slate-950 border-b border-slate-700/50 px-6 py-3 flex justify-between items-center">
+    <div className="min-h-screen bg-[#0a0e17]">
+      {/* 1. Nav Bar */}
+      <nav className="sticky top-0 z-50 bg-[#020617] border-b border-[#334155] px-8 py-3.5 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <svg viewBox="0 0 28 28" fill="none" className="w-7 h-7">
             <rect width="28" height="28" rx="6" fill="#3B82F6" />
             <path d="M7 14h4l3-6 3 10 3-4h4" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <span className="text-lg font-bold text-white tracking-tight">SCC Tender Intelligence</span>
+          <div>
+            <span className="text-lg font-bold text-[#e8ecf4] tracking-tight">Market Intelligence</span>
+            <span className="text-[11px] text-[#5a6a85] ml-2 font-normal">Sarooj Construction Company</span>
+          </div>
         </div>
-        <span className="text-xs text-slate-500">
-          Powered by Zavia-ai
-        </span>
+        <div className="flex items-center gap-4">
+          <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-red-500 uppercase tracking-wider">
+            <span className="w-[7px] h-[7px] rounded-full bg-red-500 animate-pulse" />
+            LIVE
+          </span>
+          <span className="text-[12px] text-[#5a6a85]">
+            Powered by <strong className="text-[#8896b0]">Zavia-ai</strong>
+          </span>
+          <div className="w-8 h-8 rounded-full bg-[#1E293B] border border-[#334155] flex items-center justify-center text-[11px] font-semibold text-[#8896b0]">
+            JF
+          </div>
+        </div>
       </nav>
 
-      <main className="max-w-[1400px] mx-auto px-6 py-6 space-y-6">
-        {/* NLP Query Bar */}
-        <QueryBar />
-
-        {/* Metric Cards */}
-        <MetricCards stats={stats} newsStats={newsStats} loading={statsLoading} />
-
-        {/* Briefing + Trend */}
+      <main className="max-w-[1400px] mx-auto px-8 py-6 space-y-6">
+        {/* 2. Executive Briefing + Trend */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
           <div className="lg:col-span-3">
             <BriefingCard briefing={briefing?.briefing} />
@@ -50,50 +60,77 @@ export default function App() {
           </div>
         </div>
 
-        {/* Geographic Distribution */}
-        <GeoDistribution />
+        {/* 3. Metric Cards */}
+        <MetricCards stats={stats} newsStats={newsStats} loading={statsLoading} />
 
-        {/* Competitive Intelligence */}
-        <CompetitiveIntel />
+        {/* Section divider */}
+        <SectionDivider label="Competitive Intelligence" />
 
-        {/* SCC-Relevant Tenders */}
-        <TenderTable title="SCC-Relevant Opportunities" sccOnly={true} />
+        {/* 4. Competitive Battlefield + 5. Early Warnings */}
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-5">
+          <div className="xl:col-span-3">
+            <CompetitiveBattlefield />
+          </div>
+          <div className="xl:col-span-1 space-y-5">
+            <EarlyWarnings />
+          </div>
+        </div>
 
-        {/* All Tenders (collapsed by default) */}
-        <CollapsibleSection title="All Tenders" defaultOpen={false}>
-          <TenderTable title="" sccOnly={false} />
-        </CollapsibleSection>
+        {/* 6. Competitor Activity Timeline + 7. Galfar Profile */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <div className="lg:col-span-2">
+            <CompetitorTimeline />
+          </div>
+          <div className="lg:col-span-1">
+            <GalfarProfile />
+          </div>
+        </div>
 
-        {/* JV & Consortium Mentions */}
-        <JvMentions />
+        {/* Section divider */}
+        <SectionDivider label="Market Context" />
 
-        {/* News */}
-        <CollapsibleSection title="Market & Infrastructure News" defaultOpen={false}>
-          <NewsSection />
-        </CollapsibleSection>
+        {/* 8. Geographic Distribution + 9. PTLC Pipeline Context */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <GeoDistribution />
+          <PTLCContext />
+        </div>
+
+        {/* Section divider */}
+        <SectionDivider label="Tender Pipeline" />
+
+        {/* NLP Query Bar */}
+        <QueryBar />
+
+        {/* 10. SCC-Addressable Tenders Table */}
+        <TenderTable />
+
+        {/* 11. Re-Tender Radar */}
+        <RetenderRadar />
+
+        {/* Section divider */}
+        <SectionDivider label="News Intelligence" />
+
+        {/* 12. News Intelligence */}
+        <NewsSection />
       </main>
 
-      <footer className="border-t border-slate-700/50 px-6 py-6 text-center text-xs text-slate-500 mt-8">
+      {/* 13. Footer */}
+      <footer className="border-t border-[#334155] px-8 py-6 text-center text-[11px] text-[#5a6a85] mt-8">
         Data sourced from etendering.tenderboard.gov.om · Oman news RSS · Google News
         <br />
-        Powered by <strong className="text-slate-400">Zavia-ai</strong> · Intelligence refresh: daily
+        Powered by <strong className="text-[#8896b0]">Zavia-ai</strong> · Intelligence refresh: daily
       </footer>
     </div>
   )
 }
 
-function CollapsibleSection({ title, children, defaultOpen = false }) {
-  const [open, setOpen] = useState(defaultOpen)
+
+function SectionDivider({ label }) {
   return (
-    <div>
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center gap-3 px-6 py-4 bg-surface border border-slate-700/50 rounded-xl hover:bg-surface-hover transition-colors"
-      >
-        <span className={`text-xs text-slate-500 transition-transform ${open ? 'rotate-90' : ''}`}>▶</span>
-        <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{title}</h3>
-      </button>
-      {open && <div className="mt-4">{children}</div>}
+    <div className="flex items-center gap-4 py-2">
+      <div className="flex-1 h-px bg-[#1e2a42]" />
+      <span className="text-[10px] font-semibold text-[#5a6a85] uppercase tracking-widest">{label}</span>
+      <div className="flex-1 h-px bg-[#1e2a42]" />
     </div>
   )
 }
