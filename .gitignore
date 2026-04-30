@@ -26,3 +26,9 @@ Thumbs.db
 
 # Logs
 *.log
+
+# SQLite local database
+backend/scc_intel.db
+backend/scc_intel.db-shm
+backend/scc_intel.db-wal
+backend/scc_intel.db-journal
