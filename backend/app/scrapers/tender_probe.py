@@ -27,8 +27,8 @@ settings = get_settings()
 
 BASE = settings.tender_board_base_url
 DELAY = 2.0
-MAX_LISTING_PAGES = 30
-MAX_PROBES = 50
+MAX_LISTING_PAGES = 60
+MAX_PROBES = 100
 
 HEADERS = {
     "User-Agent": (
@@ -99,9 +99,8 @@ def _load_targets_from_db(db: Session) -> list[dict]:
 
     for t in tenders:
         fee = t.fee or 0
-        cat = (t.category_en or t.category_ar or "")
-        is_infra = any(kw.lower() in cat.lower() for kw in INFRA_KEYWORDS)
-        is_target = fee >= 200 or (fee >= 50 and is_infra) or (t.is_scc_relevant and t.view == "InProcessTenders")
+        is_scc_inprocess = t.is_scc_relevant and t.view == "InProcessTenders"
+        is_target = fee >= 200 or fee >= 50 or is_scc_inprocess
 
         if not is_target:
             continue
