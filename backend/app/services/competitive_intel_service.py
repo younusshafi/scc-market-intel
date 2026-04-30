@@ -26,9 +26,31 @@ COMPETITORS = {
     "Ozkar": ["ozkar"],
 }
 
+TRACKED_ALIASES = {
+    "SAROOJ CONSTRUCTION COMPANY": "Sarooj",
+    "Sarooj Construction Company": "Sarooj",
+    "GALFAR ENGINEERING AND CONTRACTING": "Galfar",
+    "STRABAG OMAN": "Strabag",
+    "AL TASNIM ENTERPRISES": "Al Tasnim",
+    "LARSEN AND TOUBRO (OMAN)": "L&T",
+    "LARSEN AND TOUBRO": "L&T",
+    "TOWELL CONSTRUCTION AND CO LLC": "Towell",
+    "TOWELL INFRASTRUCTURE PROJECTS CO": "Towell",
+    "HASSAN ALLAM CONSTRUCTION": "Hassan Allam",
+    "Hassan Allam Construction": "Hassan Allam",
+    "HASSAN ALLAM CONTRACTING AND CONSTRUCTION": "Hassan Allam",
+    "THE ARAB CONTRACTORS OMAN LIMITED": "Arab Contractors",
+    "The Arab Contractors Oman Limited": "Arab Contractors",
+    "OZKAR": "Ozkar",
+}
+
 
 def resolve_competitor(company_name: str) -> str | None:
     """Map a company name to a tracked competitor short name, or None."""
+    # Try exact alias match first
+    if company_name in TRACKED_ALIASES:
+        return TRACKED_ALIASES[company_name]
+    # Then keyword matching
     low = company_name.lower()
     for comp, keywords in COMPETITORS.items():
         if any(kw in low for kw in keywords):
@@ -55,6 +77,9 @@ def build_competitive_intel(db: Session) -> dict:
 
     # Activity tracker
     activity = {comp: {"docs": 0, "bids": 0, "max_bid": 0} for comp in COMPETITORS}
+    # Track per-competitor tender sets for withdrawal detection
+    comp_bid_tenders = {comp: set() for comp in COMPETITORS}
+    comp_doc_tenders = {comp: set() for comp in COMPETITORS}
 
     for probe in probes:
         fee = probe.fee or 0
@@ -70,6 +95,7 @@ def build_competitive_intel(db: Session) -> dict:
             if name and name in activity and name not in seen_bid:
                 seen_bid.add(name)
                 activity[name]["bids"] += 1
+                comp_bid_tenders[name].add(probe.tender_number)
                 try:
                     val = float(b.get("quoted_value", 0) or 0)
                 except (ValueError, TypeError):
@@ -81,6 +107,7 @@ def build_competitive_intel(db: Session) -> dict:
             if name and name in activity and name not in seen_doc:
                 seen_doc.add(name)
                 activity[name]["docs"] += 1
+                comp_doc_tenders[name].add(probe.tender_number)
 
         # --- Major Projects (fee >= 200 OMR) ---
         if fee >= 200:
@@ -177,13 +204,17 @@ def build_competitive_intel(db: Session) -> dict:
     major_projects.sort(key=lambda x: -x["fee"])
     live_competitive.sort(key=lambda x: -x["tracked_count"])
 
-    # Build activity summary
+    # Build activity summary with withdrawal detection
     activity_summary = []
     for comp, d in activity.items():
         conv = round(d["bids"] / max(d["docs"], 1) * 100) if d["docs"] else 0
+        # Withdrawal: purchased docs but did not bid
+        withdrew_from = comp_doc_tenders[comp] - comp_bid_tenders[comp]
         activity_summary.append({
             "name": comp, "docs": d["docs"], "bids": d["bids"],
             "conv": conv, "max_bid": d["max_bid"],
+            "withdrawals": len(withdrew_from),
+            "withdrew_from": list(withdrew_from),
         })
     activity_summary.sort(key=lambda x: -(x["docs"] + x["bids"]))
 

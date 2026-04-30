@@ -13,7 +13,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import desc
 
 from app.core.config import get_settings
-from app.models import Tender, NewsArticle, Briefing
+from app.models import Tender, NewsArticle, Briefing, TenderProbe
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
@@ -58,6 +58,177 @@ SYSTEM_PROMPT = (
 )
 
 MAX_CONTEXT_WORDS = 3200
+
+TRACKED_ALIASES = {
+    "SAROOJ CONSTRUCTION COMPANY": "Sarooj",
+    "Sarooj Construction Company": "Sarooj",
+    "GALFAR ENGINEERING AND CONTRACTING": "Galfar",
+    "STRABAG OMAN": "Strabag",
+    "AL TASNIM ENTERPRISES": "Al Tasnim",
+    "LARSEN AND TOUBRO (OMAN)": "L&T",
+    "LARSEN AND TOUBRO": "L&T",
+    "TOWELL CONSTRUCTION AND CO LLC": "Towell",
+    "TOWELL INFRASTRUCTURE PROJECTS CO": "Towell",
+    "HASSAN ALLAM CONSTRUCTION": "Hassan Allam",
+    "Hassan Allam Construction": "Hassan Allam",
+    "HASSAN ALLAM CONTRACTING AND CONSTRUCTION": "Hassan Allam",
+    "THE ARAB CONTRACTORS OMAN LIMITED": "Arab Contractors",
+    "The Arab Contractors Oman Limited": "Arab Contractors",
+    "OZKAR": "Ozkar",
+}
+
+
+def _resolve_comp(name: str) -> str | None:
+    """Resolve company name to tracked competitor short name."""
+    if name in TRACKED_ALIASES:
+        return TRACKED_ALIASES[name]
+    low = name.lower()
+    for comp in settings.scc_competitors + ["Sarooj"]:
+        if comp.lower() in low:
+            return comp
+    return None
+
+
+def build_competitive_intel_context(db: Session) -> str:
+    """Build competitive intelligence context from TenderProbe data for the LLM."""
+    probes = db.query(TenderProbe).all()
+    if not probes:
+        return ""
+
+    lines = ["=== COMPETITIVE INTELLIGENCE ==="]
+
+    # Find Sarooj's bids and head-to-head
+    for probe in probes:
+        bidders = probe.bidders or []
+        nit = probe.nit or {}
+        sarooj_val = None
+        comp_vals = []
+        for b in bidders:
+            rn = _resolve_comp(b.get("company", ""))
+            val_str = b.get("quoted_value", "")
+            try:
+                val = float(val_str) if val_str else 0
+            except (ValueError, TypeError):
+                val = 0
+            if rn == "Sarooj" and val > 0:
+                sarooj_val = val
+            elif rn and rn != "Sarooj" and val > 0:
+                comp_vals.append((rn, val))
+
+        if sarooj_val:
+            title = nit.get("title", "") or probe.tender_name or ""
+            lines.append(f"\nSCC BID: {title}")
+            lines.append(f"  Sarooj bid: OMR {sarooj_val:,.3f}")
+            for cn, cv in sorted(comp_vals, key=lambda x: x[1]):
+                diff_pct = round((cv - sarooj_val) / sarooj_val * 100, 1)
+                lines.append(f"  {cn}: OMR {cv:,.3f} ({'+' if diff_pct >= 0 else ''}{diff_pct}% vs SCC)")
+
+    # Find tenders with many tracked competitors
+    lines.append("\nMULTI-COMPETITOR TENDERS:")
+    for probe in probes:
+        purchasers = probe.purchasers or []
+        nit = probe.nit or {}
+        tracked = set()
+        for p in purchasers:
+            rn = _resolve_comp(p.get("company", ""))
+            if rn:
+                tracked.add(rn)
+        if len(tracked) >= 3:
+            title = nit.get("title", "") or probe.tender_name or ""
+            lines.append(f"  {title}: {len(tracked)} tracked competitors ({', '.join(sorted(tracked))}), {len(purchasers)} total purchasers")
+
+    # Largest competitor bids
+    lines.append("\nLARGEST COMPETITOR BIDS:")
+    big_bids = []
+    for probe in probes:
+        for b in (probe.bidders or []):
+            rn = _resolve_comp(b.get("company", ""))
+            val_str = b.get("quoted_value", "")
+            try:
+                val = float(val_str) if val_str else 0
+            except (ValueError, TypeError):
+                val = 0
+            if rn and val > 5_000_000:
+                nit = probe.nit or {}
+                big_bids.append((rn, val, nit.get("title", "") or probe.tender_name or ""))
+    big_bids.sort(key=lambda x: -x[1])
+    for cn, cv, title in big_bids[:8]:
+        lines.append(f"  {cn}: OMR {cv:,.3f} on {title[:60]}")
+
+    return "\n".join(lines)
+
+
+def build_trend_direction(db: Session) -> str:
+    """Build trend direction labels from monthly tender data."""
+    tenders = db.query(Tender).all()
+    if not tenders:
+        return ""
+
+    by_month = defaultdict(int)
+    scc_by_month = defaultdict(int)
+    rt_by_month = defaultdict(int)
+    entity_counts = defaultdict(int)
+    retenders = []
+
+    for t in tenders:
+        # Extract year-month from bid_closing_date or first_seen
+        d = t.bid_closing_date or (t.first_seen.date() if t.first_seen else None)
+        if not d:
+            continue
+        key = f"{d.year}-{d.month:02d}"
+        by_month[key] += 1
+
+        if t.is_scc_relevant:
+            scc_by_month[key] += 1
+            entity = t.entity_en or t.entity_ar or "Unknown"
+            entity_counts[entity] += 1
+
+        if t.is_retender:
+            retenders.append(t)
+            rt_by_month[key] += 1
+
+    all_months = sorted(by_month.keys())
+    if not all_months:
+        return ""
+
+    recent_months = all_months[-6:] if len(all_months) >= 6 else all_months
+
+    lines = []
+    lines.append(f"=== HISTORICAL TRENDS ===")
+    lines.append(f"Data spans {all_months[0]} to {all_months[-1]} ({len(all_months)} months, {len(tenders)} tenders)")
+
+    lines.append("\nMonthly tender volume (last 6 months):")
+    for m in recent_months:
+        scc = scc_by_month.get(m, 0)
+        rt = rt_by_month.get(m, 0)
+        pct_scc = round(scc / max(by_month[m], 1) * 100, 1)
+        rt_str = f", re-tenders: {rt}" if rt else ""
+        lines.append(f"  {m}: {by_month[m]:>5} total, {scc:>4} SCC-relevant ({pct_scc}%){rt_str}")
+
+    # SCC-relevant trend direction
+    if len(recent_months) >= 2:
+        first_half = sum(scc_by_month.get(m, 0) for m in recent_months[:3])
+        second_half = sum(scc_by_month.get(m, 0) for m in recent_months[3:])
+        if second_half > first_half:
+            lines.append(f"  Trend: SCC-relevant tenders INCREASING ({first_half} -> {second_half} in last 3 vs prior 3 months)")
+        elif second_half < first_half:
+            lines.append(f"  Trend: SCC-relevant tenders DECREASING ({first_half} -> {second_half} in last 3 vs prior 3 months)")
+        else:
+            lines.append(f"  Trend: SCC-relevant tenders FLAT ({first_half} = {second_half})")
+
+    # Top issuing entities for SCC categories
+    lines.append("\nTop entities issuing SCC-relevant tenders:")
+    for entity, count in sorted(entity_counts.items(), key=lambda x: -x[1])[:10]:
+        lines.append(f"  {entity[:50]}: {count}")
+
+    # Re-tender summary
+    lines.append(f"\nRe-tenders total: {len(retenders)}")
+    for t in retenders[:5]:
+        name = t.tender_name_en or t.tender_name_ar or "?"
+        cat = t.category_en or t.category_ar or ""
+        lines.append(f"  {t.tender_number} — {name[:50]} ({cat[:40]})")
+
+    return "\n".join(lines)
 
 
 def build_context_from_db(db: Session) -> str:
@@ -170,8 +341,26 @@ def build_context_from_db(db: Session) -> str:
     if news_lines:
         sections.append("\n".join(news_lines))
 
+    # Historical trend direction
+    trend_ctx = build_trend_direction(db)
+    if trend_ctx:
+        sections.append(trend_ctx)
+
+    # Competitive intelligence from probe data
+    comp_intel_ctx = build_competitive_intel_context(db)
+    if comp_intel_ctx:
+        sections.append(comp_intel_ctx)
+
     context = "\n\n".join(sections)
+
+    # Enforce word budget
     word_count = len(context.split())
+    if word_count > MAX_CONTEXT_WORDS:
+        words = context.split()
+        context = " ".join(words[:MAX_CONTEXT_WORDS])
+        logger.warning(f"Context truncated from {word_count} to {MAX_CONTEXT_WORDS} words")
+        word_count = MAX_CONTEXT_WORDS
+
     logger.info(f"Context built: {word_count} words, {len(context)} chars")
     return context
 
