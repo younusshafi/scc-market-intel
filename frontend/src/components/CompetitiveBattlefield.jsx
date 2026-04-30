@@ -45,8 +45,8 @@ function CompetitorPill({ name, type }) {
 }
 
 function MajorProjectCard({ project }) {
-  const bidders = project.bidders_count || project.bidders || 0
-  const docs = project.doc_purchasers_count || project.doc_purchasers || 0
+  const bidders = project.num_bidders || 0
+  const docs = project.num_purchasers || 0
   const borderColor = getBorderColor(bidders)
   const saroojPresent = project.sarooj_present || project.competitors?.some(c => c.name?.toLowerCase().includes('sarooj'))
   const bgClass = saroojPresent ? 'bg-blue-900/20' : 'bg-[#1E293B]'
@@ -76,7 +76,7 @@ function MajorProjectCard({ project }) {
       {project.competitors && project.competitors.length > 0 && (
         <div className="flex flex-wrap">
           {project.competitors.map((c, i) => (
-            <CompetitorPill key={i} name={c.name || c} type={c.type || c.status || 'DOCS'} />
+            <CompetitorPill key={i} name={c.name || c} type={c.role || 'DOCS'} />
           ))}
         </div>
       )}
@@ -95,7 +95,8 @@ function HeadToHead({ data }) {
       <div className="space-y-4">
         {data.map((item, idx) => (
           <div key={idx} className="bg-[#1E293B] rounded-xl border border-[#334155] p-4 overflow-x-auto">
-            <p className="text-[#e8ecf4] font-medium text-sm mb-3">{item.tender_name || item.project}</p>
+            <p className="text-[#e8ecf4] font-medium text-sm mb-1">{item.project}</p>
+            <p className="text-[#5a6a85] text-xs mb-3 font-mono">{item.tender_number}</p>
             <table className="w-full text-xs">
               <thead>
                 <tr className="text-[#5a6a85]">
@@ -105,9 +106,8 @@ function HeadToHead({ data }) {
                 </tr>
               </thead>
               <tbody>
-                {(item.bids || item.bidders || []).map((bid, i) => {
-                  const isSarooj = bid.name?.toLowerCase().includes('sarooj')
-                  const diff = bid.difference || bid.diff_pct
+                {(item.rows || []).map((bid, i) => {
+                  const isSarooj = bid.is_scc
                   return (
                     <tr key={i} className={isSarooj ? 'bg-blue-900/30' : ''}>
                       <td className="py-1 text-[#e8ecf4]">
@@ -116,12 +116,12 @@ function HeadToHead({ data }) {
                         {bid.name}
                       </td>
                       <td className="py-1 text-right font-mono text-[#e8ecf4]">
-                        {bid.amount ? `OMR ${bid.amount.toLocaleString()}` : '-'}
+                        {bid.value ? `OMR ${bid.value.toLocaleString()}` : '-'}
                       </td>
                       <td className={`py-1 text-right font-mono ${
-                        diff > 0 ? 'text-green-400' : diff < 0 ? 'text-red-400' : 'text-[#8896b0]'
+                        bid.diff_pct > 0 ? 'text-green-400' : bid.diff_pct < 0 ? 'text-red-400' : 'text-[#8896b0]'
                       }`}>
-                        {isSarooj ? '—' : diff ? `${diff > 0 ? '+' : ''}${diff}%` : '-'}
+                        {isSarooj ? '—' : `${bid.diff_pct > 0 ? '+' : ''}${bid.diff_pct}%`}
                       </td>
                     </tr>
                   )
@@ -146,11 +146,16 @@ function LiveCompetition({ data }) {
       <div className="grid gap-3">
         {data.map((item, idx) => (
           <div key={idx} className="bg-[#1E293B] rounded-xl border border-[#334155] p-4">
-            <p className="text-[#e8ecf4] font-medium text-sm">{item.tender_name || item.name}</p>
-            <p className="text-[#8896b0] text-xs mt-1">{item.entity}</p>
+            <p className="text-[#e8ecf4] font-medium text-sm">{item.project}</p>
+            <p className="text-[#5a6a85] text-xs mt-1 font-mono">{item.tender_number}</p>
+            <div className="flex gap-4 text-xs text-[#8896b0] mt-1 mb-2">
+              <span>{item.total_purchasers} total purchasers</span>
+              <span>{item.tracked_count} tracked</span>
+              {item.has_bids && <span className="text-amber-400">Has bids</span>}
+            </div>
             <div className="flex flex-wrap mt-2">
-              {(item.competitors || []).map((c, i) => (
-                <CompetitorPill key={i} name={c.name || c} type="DOCS" />
+              {(item.tracked || []).map((c, i) => (
+                <CompetitorPill key={i} name={c.name} type="DOCS" />
               ))}
             </div>
           </div>

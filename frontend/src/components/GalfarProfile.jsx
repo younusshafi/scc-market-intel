@@ -53,9 +53,9 @@ export default function GalfarProfile() {
           <div className="animate-pulse bg-[#0F172A] rounded-lg h-16" />
         ) : galfarData ? (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
-            <StatBox label="Docs Purchased" value={galfarData.docs_purchased || 0} />
-            <StatBox label="Bids Submitted" value={galfarData.bids_submitted || 0} />
-            <StatBox label="Withdrawals" value={galfarData.withdrawals || 0} />
+            <StatBox label="Docs Purchased" value={galfarData.docs || 0} />
+            <StatBox label="Bids Submitted" value={galfarData.bids || 0} />
+            <StatBox label="Conversion" value={`${galfarData.conv || 0}%`} />
           </div>
         ) : (
           <p className="text-[#5a6a85] text-sm mb-6">No portal activity data available</p>

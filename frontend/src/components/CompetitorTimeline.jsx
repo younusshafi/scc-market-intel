@@ -66,12 +66,12 @@ export default function CompetitorTimeline() {
 
   // Sort by total activity
   const sorted = [...activity].sort((a, b) => {
-    const totalA = (a.docs_purchased || 0) + (a.bids_submitted || 0)
-    const totalB = (b.docs_purchased || 0) + (b.bids_submitted || 0)
+    const totalA = (a.docs || 0) + (a.bids || 0)
+    const totalB = (b.docs || 0) + (b.bids || 0)
     return totalB - totalA
   })
 
-  const maxActivity = Math.max(...sorted.map(c => (c.docs_purchased || 0) + (c.bids_submitted || 0)), 1)
+  const maxActivity = Math.max(...sorted.map(c => (c.docs || 0) + (c.bids || 0)), 1)
 
   return (
     <div className="bg-[#0F172A] p-6">
@@ -94,9 +94,8 @@ export default function CompetitorTimeline() {
           </thead>
           <tbody>
             {sorted.map((comp, idx) => {
-              const docs = comp.docs_purchased || 0
-              const bids = comp.bids_submitted || 0
-              const conversion = docs > 0 ? ((bids / docs) * 100).toFixed(0) : '0'
+              const docs = comp.docs || 0
+              const bids = comp.bids || 0
               const color = getColor(comp.name)
               const total = docs + bids
 
@@ -110,9 +109,9 @@ export default function CompetitorTimeline() {
                   </td>
                   <td className="p-4 text-right font-mono text-[#e8ecf4]">{docs}</td>
                   <td className="p-4 text-right font-mono text-[#e8ecf4]">{bids}</td>
-                  <td className="p-4 text-right font-mono text-[#e8ecf4]">{conversion}%</td>
+                  <td className="p-4 text-right font-mono text-[#e8ecf4]">{comp.conv || 0}%</td>
                   <td className="p-4 text-right font-mono text-[#e8ecf4]">
-                    {comp.max_bid_value ? `OMR ${comp.max_bid_value.toLocaleString()}` : '-'}
+                    {comp.max_bid ? `OMR ${comp.max_bid.toLocaleString()}` : '-'}
                   </td>
                   <td className="p-4 text-right font-mono text-[#e8ecf4]">{comp.withdrawals || 0}</td>
                   <td className="p-4">
