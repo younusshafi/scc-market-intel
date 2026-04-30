@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Search } from 'lucide-react'
 import { api } from '../utils/api'
 
-export default function TenderTable({ title }) {
+export default function TenderTable({ title, sccOnly = true }) {
   const [tenders, setTenders] = useState([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
@@ -10,16 +10,11 @@ export default function TenderTable({ title }) {
   const [search, setSearch] = useState('')
   const [lang, setLang] = useState('en')
   const [loading, setLoading] = useState(true)
-  const [tab, setTab] = useState('scc') // 'scc' | 'all' | 'sub'
-
-  const sccOnly = tab === 'scc' ? true : tab === 'sub' ? undefined : undefined
-  const subContract = tab === 'sub' ? true : undefined
 
   useEffect(() => {
     setLoading(true)
     api.getTenders({
-      scc_only: tab === 'scc' ? true : undefined,
-      sub_contract: tab === 'sub' ? true : undefined,
+      scc_only: sccOnly ? true : undefined,
       search: search || undefined,
       page,
     })
@@ -30,40 +25,22 @@ export default function TenderTable({ title }) {
       })
       .catch(() => {})
       .finally(() => setLoading(false))
-  }, [tab, search, page])
+  }, [sccOnly, search, page])
 
   const getName = (t) => lang === 'en' ? (t.tender_name_en || t.tender_name_ar) : (t.tender_name_ar || t.tender_name_en)
   const getEntity = (t) => lang === 'en' ? (t.entity_en || t.entity_ar) : (t.entity_ar || t.entity_en)
   const getCat = (t) => lang === 'en' ? (t.category_en || t.category_ar) : (t.category_ar || t.category_en)
   const getGrade = (t) => lang === 'en' ? (t.grade_en || t.grade_ar) : (t.grade_ar || t.grade_en)
-
-  const tabs = [
-    { key: 'scc', label: 'SCC Relevant' },
-    { key: 'all', label: 'All Tenders' },
-    { key: 'sub', label: 'Sub-Contract' },
-  ]
+  const getType = (t) => t.tender_type || '\u2014'
 
   return (
     <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-6">
-      {title && (
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-[11px] font-semibold text-[#5a6a85] uppercase tracking-wider">{title}</h3>
-          <span className="text-xs font-bold bg-blue-500 text-white px-3 py-0.5 rounded-full">{total}</span>
-        </div>
-      )}
-
-      {/* Tab Pills */}
-      <div className="flex gap-2 mb-4">
-        {tabs.map((t) => (
-          <button
-            key={t.key}
-            onClick={() => { setTab(t.key); setPage(1) }}
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-colors
-              ${tab === t.key ? 'bg-blue-500 text-white' : 'bg-[#0F172A] border border-[#334155] text-[#8896b0] hover:text-[#e8ecf4]'}`}
-          >
-            {t.label}
-          </button>
-        ))}
+      {/* Header */}
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-[11px] font-semibold text-[#5a6a85] uppercase tracking-wider">
+          {title || 'SCC-Relevant Opportunities'}
+        </h3>
+        <span className="text-xs font-bold bg-blue-500 text-white px-3 py-0.5 rounded-full">{total}</span>
       </div>
 
       {/* Filters */}
@@ -98,7 +75,7 @@ export default function TenderTable({ title }) {
         <table className="w-full text-sm">
           <thead className="sticky top-0 z-10">
             <tr className="bg-[#0F172A]">
-              {['Tender No', 'Name', 'Entity', 'Category', 'Grade', 'Bid Closing'].map((h) => (
+              {['Tender No', 'Name', 'Entity', 'Category', 'Grade', 'Type', 'Bid Closing'].map((h) => (
                 <th key={h} className="px-3 py-2.5 text-left text-[11px] font-semibold text-[#5a6a85] uppercase tracking-wider border-b border-[#334155] whitespace-nowrap">
                   {h}
                 </th>
@@ -107,9 +84,9 @@ export default function TenderTable({ title }) {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={6} className="px-3 py-8 text-center text-[#5a6a85]">Loading...</td></tr>
+              <tr><td colSpan={7} className="px-3 py-8 text-center text-[#5a6a85]">Loading...</td></tr>
             ) : tenders.length === 0 ? (
-              <tr><td colSpan={6} className="px-3 py-8 text-center text-[#5a6a85]">No tenders found</td></tr>
+              <tr><td colSpan={7} className="px-3 py-8 text-center text-[#5a6a85]">No tenders found</td></tr>
             ) : (
               tenders.map((t) => (
                 <tr
@@ -121,7 +98,8 @@ export default function TenderTable({ title }) {
                   <td className="px-3 py-2 text-[#e8ecf4] max-w-[260px] truncate" title={getName(t)}>{getName(t)}</td>
                   <td className="px-3 py-2 text-[#8896b0]">{getEntity(t)}</td>
                   <td className="px-3 py-2 text-[#8896b0]">{getCat(t)}</td>
-                  <td className="px-3 py-2 text-[#8896b0]">{getGrade(t)}</td>
+                  <td className="px-3 py-2 text-[#8896b0]">{t.grade_en || t.grade_ar || '\u2014'}</td>
+                  <td className="px-3 py-2 text-[#8896b0]">{getType(t)}</td>
                   <td className="px-3 py-2 text-[#e8ecf4] whitespace-nowrap">{t.bid_closing_date || '\u2014'}</td>
                 </tr>
               ))
@@ -137,7 +115,7 @@ export default function TenderTable({ title }) {
             onClick={() => setPage(Math.max(1, page - 1))}
             disabled={page <= 1}
             className="px-3 py-1 border border-[#334155] rounded-md text-xs text-[#8896b0] hover:bg-[#253347] disabled:opacity-30"
-          >\u2190 Prev</button>
+          >&larr; Prev</button>
           {[...Array(Math.min(pages, 7))].map((_, i) => (
             <button
               key={i}
@@ -150,7 +128,7 @@ export default function TenderTable({ title }) {
             onClick={() => setPage(Math.min(pages, page + 1))}
             disabled={page >= pages}
             className="px-3 py-1 border border-[#334155] rounded-md text-xs text-[#8896b0] hover:bg-[#253347] disabled:opacity-30"
-          >Next \u2192</button>
+          >Next &rarr;</button>
         </div>
       )}
     </div>
