@@ -1,4 +1,4 @@
-const API_BASE = 'https://scc-intel-api.onrender.com/api'
+const API_BASE = 'http://localhost:8000/api'
 
 async function fetchAPI(endpoint, params = {}) {
   const url = new URL(`${API_BASE}${endpoint}`, window.location.origin)

@@ -41,8 +41,15 @@ def startup():
 
 def _run_column_migrations():
     """Add columns that create_all won't add to already-existing tables."""
+    from app.core.config import get_settings
+    _settings = get_settings()
+
+    # SQLite: create_all handles everything since we start fresh
+    if _settings.database_url.startswith("sqlite"):
+        return
+
+    # PostgreSQL: add missing columns to existing tables
     migrations = [
-        # news_articles: JV detection columns (added 2026-04-29)
         (
             "news_articles", "is_jv_mention",
             "ALTER TABLE news_articles ADD COLUMN is_jv_mention BOOLEAN DEFAULT FALSE"
