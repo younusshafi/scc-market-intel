@@ -11,19 +11,27 @@ import logging
 from sqlalchemy.orm import Session
 
 from app.models import TenderProbe
-from app.core.config import get_settings
 
 logger = logging.getLogger(__name__)
-settings = get_settings()
 
-TRACKED_COMPETITORS = ["Sarooj"] + settings.scc_competitors
+COMPETITORS = {
+    "Sarooj": ["sarooj", "سروج", "saroj"],
+    "Galfar": ["galfar"],
+    "Strabag": ["strabag"],
+    "Al Tasnim": ["tasnim"],
+    "L&T": ["l&t", "larsen", "l & t", "l and t"],
+    "Towell": ["towell", "tawel"],
+    "Hassan Allam": ["hassan allam", "hassanallam"],
+    "Arab Contractors": ["arab contractor"],
+    "Ozkar": ["ozkar"],
+}
 
 
 def resolve_competitor(company_name: str) -> str | None:
     """Map a company name to a tracked competitor short name, or None."""
     low = company_name.lower()
-    for comp in TRACKED_COMPETITORS:
-        if comp.lower() in low:
+    for comp, keywords in COMPETITORS.items():
+        if any(kw in low for kw in keywords):
             return comp
     return None
 
@@ -46,7 +54,7 @@ def build_competitive_intel(db: Session) -> dict:
     live_competitive = []
 
     # Activity tracker
-    activity = {comp: {"docs": 0, "bids": 0, "max_bid": 0} for comp in TRACKED_COMPETITORS}
+    activity = {comp: {"docs": 0, "bids": 0, "max_bid": 0} for comp in COMPETITORS}
 
     for probe in probes:
         fee = probe.fee or 0
@@ -58,8 +66,6 @@ def build_competitive_intel(db: Session) -> dict:
         seen_bid = set()
         seen_doc = set()
         for b in bidders:
-            if b.get("offer_type") != "Main":
-                continue
             name = resolve_competitor(b.get("company", ""))
             if name and name in activity and name not in seen_bid:
                 seen_bid.add(name)
@@ -81,8 +87,6 @@ def build_competitive_intel(db: Session) -> dict:
             comp_bids = {}
             comp_docs = {}
             for b in bidders:
-                if b.get("offer_type") != "Main":
-                    continue
                 name = resolve_competitor(b.get("company", ""))
                 if name:
                     try:
@@ -104,7 +108,7 @@ def build_competitive_intel(db: Session) -> dict:
                     "value": comp_bids.get(c, {}).get("value", 0),
                 })
 
-            num_bidders = len([b for b in bidders if b.get("offer_type") == "Main"])
+            num_bidders = len(bidders)
             num_purchasers = len(purchasers)
 
             if num_bidders >= 10:
@@ -131,8 +135,6 @@ def build_competitive_intel(db: Session) -> dict:
         sarooj_val = None
         comp_vals = []
         for b in bidders:
-            if b.get("offer_type") != "Main":
-                continue
             name = resolve_competitor(b.get("company", ""))
             try:
                 val = float(b.get("quoted_value", 0) or 0)
