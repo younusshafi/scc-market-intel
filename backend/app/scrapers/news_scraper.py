@@ -52,6 +52,15 @@ NEWS_KW = [
     "arab contractors", "ozkar", "sarooj", "mtcit", "opaz", "riyada",
 ]
 
+# Articles must mention Oman context OR a tracked competitor to be relevant.
+# This filters out India expressways, US military news, etc.
+OMAN_CONTEXT_KW = [
+    "oman", "muscat", "salalah", "sohar", "duqm", "sur ",
+    "sultanate", "omani", "gcc", "gulf", "tender board",
+    "galfar", "strabag", "al tasnim", "l&t", "towell", "hassan allam",
+    "arab contractors", "ozkar", "sarooj",
+]
+
 TAG_RE = re.compile(r"<[^>]+>")
 
 
@@ -161,7 +170,9 @@ def fetch_feed(source: str, url: str) -> list[dict]:
         competitors = check_competitor_mentions(title, summary)
         jv_details = detect_jv_mentions(title, summary)
         text = (title + " " + summary).lower()
-        is_relevant = any(kw in text for kw in NEWS_KW)
+        has_topic_kw = any(kw in text for kw in NEWS_KW)
+        has_oman_context = any(kw in text for kw in OMAN_CONTEXT_KW)
+        is_relevant = has_topic_kw and has_oman_context
 
         articles.append({
             "source": source,

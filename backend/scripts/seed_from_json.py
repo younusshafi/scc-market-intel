@@ -37,7 +37,7 @@ def _load_env():
 _load_env()
 
 from app.core.database import SessionLocal, engine, Base
-from app.models import Tender
+from app.models import Tender, TenderProbe
 from app.scrapers.tender_scraper import (
     split_category_grade, split_type, is_retender, is_scc_relevant, parse_date_str,
 )
@@ -202,6 +202,119 @@ def main():
         print(f"  Total in DB: {total_db}")
         print(f"  SCC-relevant: {scc_count}")
         print(f"  With fee data: {with_fee}")
+
+    finally:
+        db.close()
+
+    # Phase 2: Seed probe data from intelligence JSON files
+    seed_probe_data(data_dir)
+
+
+def seed_probe_data(data_dir: Path):
+    """Load major_project_intelligence.json and competitor_intelligence.json
+    into the tender_probes table (bidders, purchasers, NIT data)."""
+    print(f"\n{'='*70}")
+    print("  Phase 2: Seeding probe data (bidders, purchasers, NIT)")
+    print("=" * 70)
+
+    probe_files = ["major_project_intelligence.json", "competitor_intelligence.json"]
+    all_probes = {}  # tender_number -> probe dict (dedup, major_project wins)
+
+    for filename in probe_files:
+        path = data_dir / filename
+        if not path.exists():
+            print(f"  SKIP: {path.name} does not exist")
+            continue
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        tenders = data.get("tenders", [])
+        print(f"  Loaded {len(tenders)} probed tenders from {path.name}")
+
+        for t in tenders:
+            tn = t.get("tender_number", "") or t.get("tender_number_en", "")
+            if not tn:
+                continue
+            bidders = t.get("bidders", [])
+            purchasers = t.get("purchasers", [])
+            nit = t.get("nit", {})
+            # Only overwrite if this entry has more data
+            existing = all_probes.get(tn)
+            if not existing or len(bidders) + len(purchasers) > len(existing.get("bidders", [])) + len(existing.get("purchasers", [])):
+                all_probes[tn] = {
+                    "tender_number": tn,
+                    "tender_name": t.get("name") or t.get("tender_name") or "",
+                    "entity": t.get("entity", ""),
+                    "category": t.get("category", ""),
+                    "fee": t.get("fee"),
+                    "view": t.get("view", ""),
+                    "bidders": bidders,
+                    "purchasers": purchasers,
+                    "nit": nit,
+                }
+
+    if not all_probes:
+        print("  No probe data found in JSON files.")
+        return
+
+    print(f"  Unique probed tenders after dedup: {len(all_probes)}")
+
+    db = SessionLocal()
+    try:
+        existing_probes = set(
+            r[0] for r in db.query(TenderProbe.tender_number).all()
+        )
+        print(f"  Already in tender_probes: {len(existing_probes)}")
+
+        inserted = 0
+        updated = 0
+        for tn, p in all_probes.items():
+            try:
+                if tn in existing_probes:
+                    # Update existing probe if new data has more bidders/purchasers
+                    existing = db.query(TenderProbe).filter_by(tender_number=tn).first()
+                    if existing:
+                        old_count = len(existing.bidders or []) + len(existing.purchasers or [])
+                        new_count = len(p["bidders"]) + len(p["purchasers"])
+                        if new_count > old_count:
+                            existing.bidders = p["bidders"]
+                            existing.purchasers = p["purchasers"]
+                            existing.nit = p["nit"]
+                            if p.get("tender_name"):
+                                existing.tender_name = p["tender_name"]
+                            if p.get("entity"):
+                                existing.entity = p["entity"]
+                            if p.get("fee"):
+                                existing.fee = p["fee"]
+                            updated += 1
+                else:
+                    probe = TenderProbe(
+                        tender_number=tn,
+                        tender_name=p.get("tender_name"),
+                        entity=p.get("entity"),
+                        category=p.get("category"),
+                        fee=p.get("fee"),
+                        view=p.get("view"),
+                        bidders=p["bidders"],
+                        purchasers=p["purchasers"],
+                        nit=p["nit"],
+                    )
+                    db.add(probe)
+                    inserted += 1
+            except Exception as e:
+                print(f"    WARN: skipped probe {tn}: {e}")
+                db.rollback()
+                continue
+
+        db.commit()
+
+        total_probes = db.query(TenderProbe).count()
+        with_bidders = db.query(TenderProbe).filter(TenderProbe.bidders != None).count()
+
+        print(f"\n  Probe seed complete:")
+        print(f"    Inserted: {inserted}")
+        print(f"    Updated: {updated}")
+        print(f"    Total in tender_probes: {total_probes}")
+        print(f"    With bidder data: {with_bidders}")
 
     finally:
         db.close()

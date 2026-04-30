@@ -9,7 +9,7 @@ from sqlalchemy import desc
 
 from app.core.database import get_db
 from app.models import ScrapeLog, NewsArticle
-from app.scrapers.news_scraper import detect_jv_mentions
+from app.scrapers.news_scraper import detect_jv_mentions, NEWS_KW, OMAN_CONTEXT_KW
 
 logger = logging.getLogger(__name__)
 
@@ -106,3 +106,20 @@ def backfill_jv_mentions(db: Session = Depends(get_db)):
             updated += 1
     db.commit()
     return {"total_scanned": len(articles), "updated": updated}
+
+
+@router.post("/backfill-relevance")
+def backfill_relevance(db: Session = Depends(get_db)):
+    """Re-score existing news articles with stricter Oman-context filter."""
+    articles = db.query(NewsArticle).all()
+    marked_irrelevant = 0
+    for a in articles:
+        text = ((a.title or "") + " " + (a.summary or "")).lower()
+        has_topic = any(kw in text for kw in NEWS_KW)
+        has_oman = any(kw in text for kw in OMAN_CONTEXT_KW)
+        new_relevant = has_topic and has_oman
+        if a.is_relevant and not new_relevant:
+            a.is_relevant = False
+            marked_irrelevant += 1
+    db.commit()
+    return {"total_scanned": len(articles), "marked_irrelevant": marked_irrelevant}
