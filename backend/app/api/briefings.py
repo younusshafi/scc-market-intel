@@ -6,6 +6,7 @@ from sqlalchemy import desc
 
 from app.core.database import get_db
 from app.models import Briefing
+from app.services.briefing_service import generate_and_store_briefing
 
 router = APIRouter(prefix="/briefings", tags=["briefings"])
 
@@ -30,6 +31,19 @@ def get_latest_briefing(db: Session = Depends(get_db)):
             "generated_at": briefing.generated_at.isoformat(),
             "model_used": briefing.model_used,
         }
+    }
+
+
+@router.post("/generate")
+def trigger_briefing(db: Session = Depends(get_db)):
+    """Trigger generation of a new executive briefing."""
+    briefing = generate_and_store_briefing(db)
+    if not briefing:
+        return {"status": "failed", "message": "LLM call returned no result"}
+    return {
+        "status": "success",
+        "briefing_id": briefing.id,
+        "generated_at": briefing.generated_at.isoformat(),
     }
 
 
