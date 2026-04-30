@@ -93,6 +93,7 @@ def _load_targets_from_db(db: Session) -> list[dict]:
     Also includes all SCC-relevant InProcess tenders.
     """
     tenders = db.query(Tender).all()
+    print(f"  Total tenders in DB: {len(tenders)}")
     targets = []
     seen_numbers = set()
 
@@ -125,8 +126,14 @@ def _load_targets_from_db(db: Session) -> list[dict]:
         })
 
     targets.sort(key=lambda x: -(x["fee"] or 0))
-    logger.info(f"Probe targets from DB: {len(targets)}")
-    return targets[:MAX_PROBES * 2]  # cap to avoid over-scanning
+    capped = targets[:MAX_PROBES * 2]
+    print(f"  Probe targets: {len(capped)} (from {len(targets)} eligible)")
+    for t in capped[:5]:
+        print(f"    Fee {t['fee']:>7.0f} | {t['tender_number'][:30]} | {t['name'][:45]}")
+    if len(capped) > 5:
+        print(f"    ... and {len(capped) - 5} more")
+    logger.info(f"Probe targets from DB: {len(capped)}")
+    return capped
 
 
 # ---------------------------------------------------------------------------
@@ -135,6 +142,10 @@ def _load_targets_from_db(db: Session) -> list[dict]:
 
 def _find_internal_ids(session: requests.Session, targets: list[dict]) -> list[dict]:
     """Scan listing pages to match tender numbers to internal portal IDs."""
+    print(f"\n{'='*70}")
+    print("STEP 2: Scanning listing pages for internal tender IDs")
+    print("=" * 70)
+
     lookup = {}
     for t in targets:
         for tn_field in ("tender_number", "tender_number_en"):
@@ -151,6 +162,7 @@ def _find_internal_ids(session: requests.Session, targets: list[dict]) -> list[d
         if found >= needed:
             break
 
+        print(f"\n  Scanning {view_flag}...")
         for pg in range(1, MAX_LISTING_PAGES + 1):
             if found >= needed:
                 break
@@ -162,6 +174,7 @@ def _find_internal_ids(session: requests.Session, targets: list[dict]) -> list[d
             url = f"{BASE}/product/publicDash?" + "&".join(f"{k}={v}" for k, v in params.items())
             r = _get(session, url, f"{view_flag} page {pg}")
             if not r or r.status_code != 200:
+                print(f"    Page {pg}: failed (status={r.status_code if r else 'no response'})")
                 continue
 
             soup = BeautifulSoup(r.content, "html.parser")
@@ -170,6 +183,7 @@ def _find_internal_ids(session: requests.Session, targets: list[dict]) -> list[d
                 continue
 
             dt = max(tables, key=lambda tbl: len(tbl.find_all("tr")))
+            page_found = 0
 
             for row in dt.find_all("tr")[1:]:
                 cells = row.find_all("td")
@@ -185,10 +199,16 @@ def _find_internal_ids(session: requests.Session, targets: list[dict]) -> list[d
                         if m:
                             lookup[row_norm]["internal_id"] = m.group(1)
                             found += 1
+                            page_found += 1
+                            print(f"    Page {pg}: MATCHED {row_tn[:35]} -> ID {m.group(1)}")
                             break
+
+            if pg % 5 == 0:
+                print(f"    Page {pg}: scanned ({found}/{needed} IDs found so far)")
 
             time.sleep(DELAY)
 
+    print(f"\n  Internal IDs found: {found} / {needed}")
     logger.info(f"Internal IDs found: {found} / {needed}")
     return [t for t in targets if t["internal_id"]]
 
@@ -306,22 +326,43 @@ def _fetch_nit(session: requests.Session, tid: str) -> dict:
 
 def _fetch_details(session: requests.Session, targets: list[dict]) -> None:
     """Fetch Opening Report, Purchase Details, and NIT for each target."""
+    print(f"\n{'='*70}")
+    print(f"STEP 3: Fetching details for {len(targets)} tenders")
+    print("=" * 70)
+
     for i, t in enumerate(targets):
         tid = t["internal_id"]
+        print(f"\n  [{i + 1}/{len(targets)}] {t['tender_number'][:35]}")
+        print(f"           {t['name'][:55]}")
+        print(f"           Fee: {t['fee']:.0f} OMR | Entity: {t['entity'][:35]}")
         logger.info(f"[{i + 1}/{len(targets)}] Probing {t['tender_number']} (fee={t['fee']}) ...")
 
+        print(f"           Fetching Opening Report...", end="", flush=True)
         t["bidders"] = _fetch_opening_report(session, tid)
+        print(f" {len(t['bidders'])} bidders")
         time.sleep(DELAY)
 
+        print(f"           Fetching Purchase Details...", end="", flush=True)
         t["purchasers"] = _fetch_purchase_details(session, tid)
+        print(f" {len(t['purchasers'])} purchasers")
         time.sleep(DELAY)
 
+        print(f"           Fetching NIT...", end="", flush=True)
         t["nit"] = _fetch_nit(session, tid)
+        loc = t["nit"].get("governorate", "N/A")
+        print(f" location={loc}")
         time.sleep(DELAY)
+
+        if t["bidders"]:
+            top = ", ".join(b["company"][:25] for b in t["bidders"][:4])
+            extra = f" +{len(t['bidders'])-4} more" if len(t["bidders"]) > 4 else ""
+            print(f"           Bidders: {top}{extra}")
+        if t["nit"].get("scope"):
+            print(f"           Scope: {t['nit']['scope'][:65]}")
 
         logger.info(
             f"  -> bidders={len(t['bidders'])}, purchasers={len(t['purchasers'])}, "
-            f"location={t['nit'].get('governorate', 'N/A')}"
+            f"location={loc}"
         )
 
 
@@ -390,8 +431,12 @@ def run_tender_probe(db: Session) -> dict:
 
     try:
         # 1. Load targets
+        print(f"\n{'='*70}")
+        print("STEP 1: Loading probe targets from database")
+        print("=" * 70)
         targets = _load_targets_from_db(db)
         if not targets:
+            print("  No targets found — nothing to probe.")
             log.status = "success"
             log.completed_at = datetime.utcnow()
             log.details = {"message": "No targets found"}
@@ -399,15 +444,18 @@ def run_tender_probe(db: Session) -> dict:
             return {"status": "no_targets", "probed": 0}
 
         # 2. Establish session
+        print(f"\n  Establishing session with {BASE}...", end="", flush=True)
         session = requests.Session()
         session.headers.update(HEADERS)
         session.get(BASE, timeout=30)  # establish cookies
+        print(" OK")
 
         # 3. Find internal IDs
         targets_with_ids = _find_internal_ids(session, targets)
         logger.info(f"Targets with internal IDs: {len(targets_with_ids)}")
 
         if not targets_with_ids:
+            print("  Could not find any internal IDs — portal may be blocking.")
             log.status = "partial"
             log.completed_at = datetime.utcnow()
             log.records_found = len(targets)
@@ -417,12 +465,17 @@ def run_tender_probe(db: Session) -> dict:
 
         # Cap to MAX_PROBES
         targets_with_ids = targets_with_ids[:MAX_PROBES]
+        print(f"  Will probe {len(targets_with_ids)} tenders")
 
         # 4. Fetch details
         _fetch_details(session, targets_with_ids)
 
         # 5. Persist
+        print(f"\n{'='*70}")
+        print("STEP 4: Saving results to database")
+        print("=" * 70)
         result = _persist_probes(db, targets_with_ids)
+        print(f"  New: {result['new']} | Updated: {result['updated']}")
 
         with_bidders = sum(1 for t in targets_with_ids if t["bidders"])
         with_purchasers = sum(1 for t in targets_with_ids if t["purchasers"])

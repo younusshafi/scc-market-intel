@@ -1,7 +1,12 @@
 """Application configuration loaded from environment variables."""
 
+from pathlib import Path
 from pydantic_settings import BaseSettings
 from functools import lru_cache
+
+# Look for .env in backend/ first, then project root
+_backend_dir = Path(__file__).resolve().parent.parent.parent
+_env_files = [p for p in [_backend_dir / ".env", _backend_dir.parent / ".env"] if p.exists()]
 
 
 class Settings(BaseSettings):
@@ -35,7 +40,10 @@ class Settings(BaseSettings):
         "Towell", "Hassan Allam", "Arab Contractors", "Ozkar",
     ]
 
-    model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
+    model_config = {
+        "env_file": _env_files if _env_files else ".env",
+        "env_file_encoding": "utf-8",
+    }
 
 
 @lru_cache
