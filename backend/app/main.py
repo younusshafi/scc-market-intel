@@ -1,11 +1,16 @@
 """SCC Market Intelligence Module — FastAPI application."""
 
+import logging
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
 
 from app.core.config import get_settings
 from app.core.database import engine, Base
 from app.api import tenders, news, briefings, system, query, competitive_intel, geo
+
+logger = logging.getLogger(__name__)
 
 settings = get_settings()
 
@@ -24,10 +29,43 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Create tables on startup (dev convenience — use Alembic migrations in production)
+# Create tables and run migrations on startup
 @app.on_event("startup")
 def startup():
+    # Create any new tables (e.g. tender_probes)
     Base.metadata.create_all(bind=engine)
+
+    # Add missing columns to existing tables (idempotent)
+    _run_column_migrations()
+
+
+def _run_column_migrations():
+    """Add columns that create_all won't add to already-existing tables."""
+    migrations = [
+        # news_articles: JV detection columns (added 2026-04-29)
+        (
+            "news_articles", "is_jv_mention",
+            "ALTER TABLE news_articles ADD COLUMN is_jv_mention BOOLEAN DEFAULT FALSE"
+        ),
+        (
+            "news_articles", "jv_details",
+            "ALTER TABLE news_articles ADD COLUMN jv_details JSON"
+        ),
+    ]
+
+    with engine.connect() as conn:
+        for table, column, ddl in migrations:
+            exists = conn.execute(text(
+                "SELECT 1 FROM information_schema.columns "
+                "WHERE table_name = :table AND column_name = :column"
+            ), {"table": table, "column": column}).fetchone()
+
+            if not exists:
+                logger.info(f"Migration: adding {table}.{column}")
+                conn.execute(text(ddl))
+                conn.commit()
+            else:
+                logger.debug(f"Column {table}.{column} already exists, skipping")
 
 
 # Register routers
