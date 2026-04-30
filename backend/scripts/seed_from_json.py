@@ -141,72 +141,69 @@ def main():
     for filename in ["historical_tenders.json", "tenders.json"]:
         raw_tenders.extend(load_json(data_dir / filename))
 
-    if not raw_tenders:
-        print("\n  No tenders found in JSON files.")
-        return
-
     # Deduplicate by tender_number (later entries win)
     by_number = {}
     for raw in raw_tenders:
         tn = raw.get("tender_number", "")
         if tn:
             by_number[tn] = raw
-    print(f"\n  Unique tenders after dedup: {len(by_number)} (from {len(raw_tenders)} total)")
+    if by_number:
+        print(f"\n  Unique tenders after dedup: {len(by_number)} (from {len(raw_tenders)} total)")
+    else:
+        print("\n  No tender JSON files found. Skipping Phase 1 insert.")
 
-    # Check existing tenders in DB
+    # Phase 1: Insert new tenders into DB
     db = SessionLocal()
     try:
-        existing_numbers = set(
-            r[0] for r in db.query(Tender.tender_number).all()
-        )
-        print(f"  Already in database: {len(existing_numbers)}")
+        if by_number:
+            existing_numbers = set(
+                r[0] for r in db.query(Tender.tender_number).all()
+            )
+            print(f"  Already in database: {len(existing_numbers)}")
 
-        new_tenders = {tn: raw for tn, raw in by_number.items() if tn not in existing_numbers}
-        print(f"  New tenders to insert: {len(new_tenders)}")
+            new_tenders = {tn: raw for tn, raw in by_number.items() if tn not in existing_numbers}
+            print(f"  New tenders to insert: {len(new_tenders)}")
 
-        if not new_tenders:
-            print("\n  Nothing to insert — database is up to date.")
-            return
+            if not new_tenders:
+                print("  Nothing to insert — database is up to date.")
+            else:
+                batch_size = 200
+                inserted = 0
+                items = list(new_tenders.values())
 
-        # Insert in batches
-        batch_size = 200
-        inserted = 0
-        items = list(new_tenders.values())
+                for i in range(0, len(items), batch_size):
+                    batch = items[i:i + batch_size]
+                    for raw in batch:
+                        try:
+                            kwargs = raw_to_model_kwargs(raw)
+                            tender = Tender(**kwargs)
+                            db.add(tender)
+                            inserted += 1
+                        except Exception as e:
+                            tn = raw.get("tender_number", "?")
+                            print(f"    WARN: skipped {tn}: {e}")
+                            db.rollback()
+                            continue
 
-        for i in range(0, len(items), batch_size):
-            batch = items[i:i + batch_size]
-            for raw in batch:
-                try:
-                    kwargs = raw_to_model_kwargs(raw)
-                    tender = Tender(**kwargs)
-                    db.add(tender)
-                    inserted += 1
-                except Exception as e:
-                    tn = raw.get("tender_number", "?")
-                    print(f"    WARN: skipped {tn}: {e}")
-                    db.rollback()
-                    continue
+                    db.commit()
+                    print(f"    Inserted batch {i // batch_size + 1}: {min(i + batch_size, len(items))}/{len(items)}")
 
-            db.commit()
-            print(f"    Inserted batch {i // batch_size + 1}: {min(i + batch_size, len(items))}/{len(items)}")
+                print(f"  Inserted: {inserted}")
 
         # Summary
         total_db = db.query(Tender).count()
         scc_count = db.query(Tender).filter(Tender.is_scc_relevant == True).count()
         with_fee = db.query(Tender).filter(Tender.fee != None, Tender.fee > 0).count()
 
-        print(f"\n{'='*70}")
-        print(f"  SEED COMPLETE")
-        print(f"{'='*70}")
-        print(f"  Inserted: {inserted}")
-        print(f"  Total in DB: {total_db}")
-        print(f"  SCC-relevant: {scc_count}")
-        print(f"  With fee data: {with_fee}")
+        print(f"\n  Phase 1 summary:")
+        print(f"    Total in DB: {total_db}")
+        print(f"    SCC-relevant: {scc_count}")
+        print(f"    With fee data: {with_fee}")
 
     finally:
         db.close()
 
-    # Phase 2: Seed probe data from intelligence JSON files
+    # Phase 2: Always run — seed probe data from intelligence JSON files
     seed_probe_data(data_dir)
 
 
