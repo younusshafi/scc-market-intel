@@ -115,7 +115,7 @@ def _load_targets_from_db(db: Session) -> list[dict]:
             "tender_number_en": t.tender_number_en or "",
             "name": (t.tender_name_en or t.tender_name_ar or "")[:80],
             "entity": (t.entity_en or t.entity_ar or "")[:60],
-            "category": cat[:60],
+            "category": (t.category_en or t.category_ar or "")[:60],
             "fee": fee,
             "view": t.view or "",
             "internal_id": None,
