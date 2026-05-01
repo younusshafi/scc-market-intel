@@ -13,7 +13,7 @@ from sqlalchemy import desc
 
 from app.core.config import get_settings
 from app.services.llm_client import call_llm
-from app.models import Tender, NewsArticle, Briefing, TenderProbe
+from app.models import Tender, NewsArticle, Briefing, TenderProbe, TenderScore
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
@@ -34,13 +34,12 @@ SYSTEM_PROMPT = (
     "right now? Is SCC's addressable market growing or shrinking relative "
     "to total tender volume? Use specific numbers and percentages.\n\n"
     "PIPELINE OUTLOOK (1 paragraph):\n"
-    "What tenders in SCC's core categories are worth watching? Filter "
-    "ruthlessly — school maintenance and health centre repairs are not "
-    "SCC's business even if they technically match a grade. Only highlight "
-    "tenders that involve roads, bridges, tunnels, marine, dams, pipelines, "
-    "or major civil infrastructure at a scale SCC would realistically bid. "
-    "If nothing qualifies, say so clearly in one sentence and pivot to "
-    "forward-looking signals.\n\n"
+    "Review the AI-SCORED TOP OPPORTUNITIES section. These tenders have "
+    "already been evaluated as strong SCC fits. Highlight the 3-5 most "
+    "strategically important ones, explaining WHY they matter (scale, "
+    "geography, competitive dynamics, strategic value). If SCC has already "
+    "bid on a tender, mention the bid value and positioning. Never say 'there "
+    "are no tenders worth attention' when scored opportunities exist.\n\n"
     "RE-TENDER PATTERNS (1 paragraph):\n"
     "How many re-tenders exist in the current data? What categories are "
     "they concentrated in? Analyse what the pattern suggests.\n\n"
@@ -355,6 +354,38 @@ def build_context_from_db(db: Session) -> str:
     comp_intel_ctx = build_competitive_intel_context(db)
     if comp_intel_ctx:
         sections.append(comp_intel_ctx)
+
+    # AI-scored top opportunities
+    from app.models import TenderScore
+    scored = (
+        db.query(Tender, TenderScore)
+        .join(TenderScore, Tender.tender_number == TenderScore.tender_number)
+        .filter(TenderScore.score >= 70)
+        .order_by(desc(TenderScore.score))
+        .limit(15)
+        .all()
+    )
+    if scored:
+        lines = ["=== AI-SCORED TOP OPPORTUNITIES ===",
+                 "These tenders have been scored by AI as strong SCC fits:\n"]
+        for i, (t, s) in enumerate(scored, 1):
+            name = t.tender_name_en or t.tender_name_ar or "?"
+            entity = t.entity_en or t.entity_ar or ""
+            # Get competitor info from probe
+            probe = db.query(TenderProbe).filter_by(tender_number=t.tender_number).first()
+            comp_info = ""
+            if probe and probe.bidders:
+                from app.services.competitive_intel_service import resolve_competitor
+                tracked = [resolve_competitor(b.get("company","")) for b in probe.bidders]
+                tracked = [c for c in tracked if c]
+                if tracked:
+                    comp_info = f" — {len(tracked)} tracked competitors: {', '.join(set(tracked))}"
+                else:
+                    comp_info = " — No tracked competitors"
+            lines.append(f"{i}. [Score {s.score}] {name[:60]} — {entity[:40]} — Fee: {t.fee or '?'} OMR — {s.recommendation}{comp_info}")
+            if s.reasoning:
+                lines.append(f"   Reasoning: {s.reasoning[:80]}")
+        sections.append("\n".join(lines))
 
     context = "\n\n".join(sections)
 

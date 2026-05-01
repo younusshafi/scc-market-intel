@@ -150,9 +150,23 @@ def build_competitive_intel(db: Session) -> dict:
             else:
                 border_colour = "#10B981"
 
+            EXCLUDED_CATEGORIES = [
+                "consulting offices", "consultancy", "services",
+                "supply", "information technology", "training",
+            ]
+            TITLE_EXCLUSION_KW = [
+                "consultancy", "interior design", "supply of", "furniture",
+                "cleaning", "security guard", "catering", "printing",
+                "advisory", "audit", "insurance",
+            ]
+
+            cat_excluded = any(exc in cat_lower for exc in EXCLUDED_CATEGORIES)
+            title_lower = (nit.get("title", "") or probe.tender_name or "").lower()
+            title_excluded = any(kw in title_lower for kw in TITLE_EXCLUSION_KW)
+
             # Only include if SCC category OR has tracked competitors
             has_competitors = len(all_comp_names) > 0
-            if is_scc_cat or has_competitors:
+            if (is_scc_cat or has_competitors) and not cat_excluded and not title_excluded:
                 major_projects.append({
                     "name": nit.get("title", "") or probe.tender_name or "",
                     "entity": probe.entity or "",

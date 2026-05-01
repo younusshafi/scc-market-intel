@@ -106,26 +106,23 @@ def tender_stats(db: Session = Depends(get_db)):
 @router.get("/trend")
 def tender_trend(db: Session = Depends(get_db)):
     """Monthly tender volume trend."""
-    # Group by month using bid_closing_date
-    results = (
-        db.query(
-            func.date_trunc("month", Tender.bid_closing_date).label("month"),
-            func.count(Tender.id).label("total"),
-            func.count(Tender.id).filter(Tender.is_scc_relevant == True).label("scc"),
-        )
-        .filter(Tender.bid_closing_date != None)
-        .group_by("month")
-        .order_by("month")
-        .all()
-    )
+    from collections import defaultdict
 
+    tenders = db.query(Tender).filter(Tender.bid_closing_date != None).all()
+
+    by_month = defaultdict(lambda: {"total": 0, "scc": 0})
+    for t in tenders:
+        if t.bid_closing_date:
+            key = t.bid_closing_date.strftime("%Y-%m")
+            by_month[key]["total"] += 1
+            if t.is_scc_relevant:
+                by_month[key]["scc"] += 1
+
+    # Sort and return last 6 months
+    sorted_months = sorted(by_month.items())[-6:]
     return [
-        {
-            "month": r.month.strftime("%Y-%m") if r.month else None,
-            "total": r.total,
-            "scc": r.scc,
-        }
-        for r in results[-6:]  # Last 6 months
+        {"month": month, "total": data["total"], "scc": data["scc"]}
+        for month, data in sorted_months
     ]
 
 

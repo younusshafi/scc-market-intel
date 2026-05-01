@@ -101,10 +101,24 @@ NEWS_ANALYSIS_SYSTEM_PROMPT = (
 
 
 
+def _normalize_title_words(title: str) -> set:
+    """Extract significant words, removing source suffixes and stop words."""
+    import re
+    # Remove source attribution (e.g. "- ZAWYA", "- MEED")
+    title = re.sub(r'\s*[-\u2013\u2014]\s*\w+\s*$', '', title)
+    # Remove punctuation
+    title = re.sub(r'[^\w\s]', ' ', title.lower())
+    stop_words = {"the", "a", "an", "in", "on", "at", "to", "for", "of",
+                  "and", "or", "is", "are", "was", "were", "has", "have",
+                  "oman", "omans", "s"}
+    words = set(title.split()) - stop_words
+    return words
+
+
 def _title_word_overlap(title1: str, title2: str) -> float:
-    """Calculate word overlap ratio between two titles."""
-    words1 = set(title1.lower().split())
-    words2 = set(title2.lower().split())
+    """Calculate word overlap ratio between two normalized titles."""
+    words1 = _normalize_title_words(title1)
+    words2 = _normalize_title_words(title2)
     if not words1 or not words2:
         return 0
     intersection = words1 & words2
@@ -137,7 +151,7 @@ def _deduplicate_articles(articles: list) -> list:
         is_dup = False
         for kept in keep:
             overlap = _title_word_overlap(article.title or "", kept.title or "")
-            if overlap > 0.7:
+            if overlap > 0.5:  # was 0.7 — catches more duplicates
                 # Replace if new article is from more authoritative source
                 if _get_source_priority(article.source) > _get_source_priority(kept.source):
                     keep.remove(kept)

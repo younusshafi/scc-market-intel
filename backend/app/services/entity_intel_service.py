@@ -28,6 +28,13 @@ CRITICAL SCORING RULES:
 - MTCIT, OPAZ, SEZAD issue major roads/ports — rate HIGH.
 - High tender COUNT does not mean high strategic value if the tenders are small-scale.
 
+CRITICAL RATING RULES:
+- An entity is CRITICAL if it issues tenders with fee >= 200 OMR in SCC's core categories (roads, bridges, tunnels, dams, marine, pipelines) with Excellent/First grade, OR if SCC is already actively participating in their tenders, OR if multiple tracked competitors are active on their tenders.
+- Average fee does NOT determine rating — one major project makes an entity strategically important regardless of their smaller tenders.
+- Ministry of Housing and Urban Planning issues Sultan Haitham City — this alone makes them CRITICAL.
+- An entity is LOW only if ALL their SCC-relevant tenders are small-scale (fee < 50 OMR, Second/Third grade, school renovations, minor maintenance).
+- Do not rate an entity LOW if it has even one major infrastructure tender in SCC's core categories.
+
 Reference actual numbers. No generic language.
 Respond in JSON only. Return {"entities": [...]}"""
 
@@ -111,11 +118,27 @@ def build_entity_intel(db: Session) -> dict:
 
         avg_fee = round(sum(data["fees"]) / len(data["fees"]), 2) if data["fees"] else 0
 
+        # Get top 3 largest tenders by fee for this entity
+        entity_tenders = [t for t in tenders if (t.entity_en or t.entity_ar or "") == entity_name]
+        top_tenders = sorted([t for t in entity_tenders if t.fee], key=lambda t: -(t.fee or 0))[:3]
+        max_fee = top_tenders[0].fee if top_tenders else 0
+
+        # Check SCC and competitor presence
+        scc_active = any(
+            probe.tender_number in [t.tender_number for t in entity_tenders]
+            and any(resolve_competitor(b.get("company","")) == "Sarooj" for b in (probe.bidders or []) + (probe.purchasers or []))
+            for probe in probes.values()
+            if probe.tender_number in [t.tender_number for t in entity_tenders]
+        )
+
         summary = {
             "entity": entity_name,
             "total_tenders": len(data["tenders"]),
             "scc_relevant_count": data["scc_relevant"],
             "avg_fee": avg_fee,
+            "max_fee": max_fee,
+            "top_tenders": [{"name": (t.tender_name_en or "")[:60], "fee": t.fee, "category": t.category_en or ""} for t in top_tenders],
+            "scc_active": scc_active,
             "top_categories": [c[0] for c in top_cats],
             "top_competitors": [{"name": c[0], "count": c[1]} for c in top_comps],
         }
