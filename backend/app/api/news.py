@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func, desc
 
 from app.core.database import get_db
-from app.models import NewsArticle, NewsIntelligence
+from app.models import NewsArticle, NewsIntelligence, NewsTenderLink
 
 router = APIRouter(prefix="/news", tags=["news"])
 
@@ -179,6 +179,33 @@ def trigger_analysis(db: Session = Depends(get_db)):
     from app.services.news_intelligence_service import analyse_news
     result = analyse_news(db)
     return result
+
+
+@router.get("/tender-links")
+def get_news_tender_links(db: Session = Depends(get_db)):
+    """Get all news-to-tender links."""
+    links = db.query(NewsTenderLink).order_by(desc(NewsTenderLink.linked_at)).all()
+    return {
+        "links": [
+            {
+                "id": l.id,
+                "article_id": l.article_id,
+                "tender_number": l.tender_number,
+                "match_confidence": l.match_confidence,
+                "connection": l.connection,
+                "scc_action": l.scc_action,
+                "linked_at": l.linked_at.isoformat() if l.linked_at else None,
+            }
+            for l in links
+        ]
+    }
+
+
+@router.post("/link-to-tenders")
+def trigger_link_news_to_tenders(db: Session = Depends(get_db)):
+    """Trigger AI news-to-tender linking."""
+    from app.services.news_tender_linker_service import link_news_to_tenders
+    return link_news_to_tenders(db)
 
 
 def _serialize_article(a: NewsArticle) -> dict:

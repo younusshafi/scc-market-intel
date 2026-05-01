@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useAPI } from '../hooks/useAPI'
 import { api } from '../utils/api'
 
@@ -36,7 +36,64 @@ function formatCategory(cat) {
   return cat.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 }
 
-function ArticleCard({ article }) {
+const CONFIDENCE_STYLES = {
+  confirmed: 'bg-green-600 text-white',
+  likely: 'bg-blue-600 text-white',
+  possible: 'bg-slate-600 text-white',
+  future_signal: 'bg-purple-600 text-white',
+}
+
+function LinkedTenders({ links }) {
+  const [expanded, setExpanded] = useState(false)
+
+  if (!links || links.length === 0) return null
+
+  return (
+    <div className="mt-3">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="text-[10px] font-semibold text-green-400 hover:text-green-300 transition-colors flex items-center gap-1"
+      >
+        <span>{expanded ? '\u25BC' : '\u25B6'}</span>
+        Linked Tenders ({links.length})
+      </button>
+      {expanded && (
+        <div className="mt-2 space-y-2">
+          {links.map((link, i) => {
+            const confStyle = CONFIDENCE_STYLES[link.match_confidence?.toLowerCase()] || CONFIDENCE_STYLES.possible
+            const isFutureSignal = link.match_confidence === 'future_signal'
+
+            return (
+              <div key={i} className="bg-[#0F172A] border border-[#334155] rounded-lg px-3 py-2">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded-full uppercase ${confStyle}`}>
+                    {link.match_confidence?.replace('_', ' ') || 'possible'}
+                  </span>
+                  {link.tender_number && (
+                    <span className="text-[10px] font-mono text-[#8896b0]">{link.tender_number}</span>
+                  )}
+                </div>
+                <p className="text-[11px] text-[#8896b0] leading-relaxed">
+                  {isFutureSignal
+                    ? 'No active tender yet \u2014 monitor entity for upcoming publication.'
+                    : link.connection
+                  }
+                </p>
+                {link.scc_action && !isFutureSignal && (
+                  <p className="text-[10px] text-green-400 mt-1">
+                    {link.scc_action}
+                  </p>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ArticleCard({ article, tenderLinks }) {
   const priorityStyle = PRIORITY_STYLES[article.priority?.toLowerCase()] || PRIORITY_STYLES.low
   const catStyle = CATEGORY_STYLES[article.intel_category?.toLowerCase()] || 'border-slate-500 text-slate-400'
   const sourceColor = getSourceColor(article.source)
@@ -88,13 +145,16 @@ function ArticleCard({ article }) {
         </div>
       )}
 
+      {/* Linked Tenders */}
+      <LinkedTenders links={tenderLinks} />
+
       {/* Link */}
       {article.link && (
         <a
           href={article.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[11px] text-blue-400 hover:text-blue-300 font-medium transition-colors"
+          className="text-[11px] text-blue-400 hover:text-blue-300 font-medium transition-colors mt-2 inline-block"
         >
           Read article &rarr;
         </a>
@@ -105,9 +165,21 @@ function ArticleCard({ article }) {
 
 export default function NewsIntelligence() {
   const { data, loading, error, refetch } = useAPI(api.getNewsIntelligence, [])
+  const { data: linksData } = useAPI(api.getNewsTenderLinks, [])
   const [analysing, setAnalysing] = useState(false)
+  const [linking, setLinking] = useState(false)
 
   const articles = (data?.articles || []).filter(a => a.relevant !== false)
+
+  // Group tender links by article_id
+  const linksByArticle = useMemo(() => {
+    const map = {}
+    for (const link of (linksData?.links || [])) {
+      if (!map[link.article_id]) map[link.article_id] = []
+      map[link.article_id].push(link)
+    }
+    return map
+  }, [linksData])
   const priorityOrder = { high: 0, medium: 1, low: 2 }
   const sorted = [...articles].sort((a, b) =>
     (priorityOrder[a.priority?.toLowerCase()] ?? 3) - (priorityOrder[b.priority?.toLowerCase()] ?? 3)
@@ -126,6 +198,18 @@ export default function NewsIntelligence() {
     }
   }
 
+  async function handleLinkTenders() {
+    setLinking(true)
+    try {
+      await api.linkNewsToTenders()
+      await refetch()
+    } catch (e) {
+      console.error('News-tender linking failed:', e)
+    } finally {
+      setLinking(false)
+    }
+  }
+
   return (
     <div>
       {/* Header */}
@@ -141,13 +225,22 @@ export default function NewsIntelligence() {
           )}
         </div>
         {articles.length > 0 && (
-          <button
-            onClick={handleTriggerAnalysis}
-            disabled={analysing}
-            className="text-[10px] font-semibold text-blue-400 hover:text-blue-300 disabled:opacity-50 transition-colors"
-          >
-            {analysing ? 'Analysing...' : 'Re-run Analysis'}
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleLinkTenders}
+              disabled={linking}
+              className="text-[10px] font-semibold text-green-400 hover:text-green-300 disabled:opacity-50 transition-colors"
+            >
+              {linking ? 'Linking...' : 'Link to Tenders'}
+            </button>
+            <button
+              onClick={handleTriggerAnalysis}
+              disabled={analysing}
+              className="text-[10px] font-semibold text-blue-400 hover:text-blue-300 disabled:opacity-50 transition-colors"
+            >
+              {analysing ? 'Analysing...' : 'Re-run Analysis'}
+            </button>
+          </div>
         )}
       </div>
 
@@ -194,7 +287,7 @@ export default function NewsIntelligence() {
       {!loading && !error && articles.length > 0 && (
         <div className="space-y-3">
           {sorted.map((article, i) => (
-            <ArticleCard key={article.id || i} article={article} />
+            <ArticleCard key={article.id || i} article={article} tenderLinks={linksByArticle[article.id]} />
           ))}
         </div>
       )}

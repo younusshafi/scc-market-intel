@@ -14,6 +14,8 @@ import PTLCContext from './components/PTLCContext'
 import RetenderRadar from './components/RetenderRadar'
 import ScoredTenders from './components/ScoredTenders'
 import NewsIntelligence from './components/NewsIntelligence'
+import CompetitorProfiles from './components/CompetitorProfiles'
+import EntityIntelligence from './components/EntityIntelligence'
 
 const SCC_CATEGORIES = ['Construction', 'Ports', 'Roads', 'Bridges', 'Pipeline', 'Electromechanical', 'Dams', 'Marine']
 
@@ -69,10 +71,13 @@ export default function App() {
         {/* c. Competitive Intelligence */}
         <CompetitiveBattlefield />
 
-        {/* d. Market Composition + Top Entities */}
-        {stats && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            {/* Market Composition */}
+        {/* c2. Competitor Behaviour Profiles */}
+        <CompetitorProfiles />
+
+        {/* d. Market Composition + Entity Intelligence */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {/* Market Composition */}
+          {stats && (
             <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-6">
               <h3 className="text-[11px] font-semibold text-[#5a6a85] uppercase tracking-wider mb-4">Market Composition</h3>
               <div className="space-y-2.5">
@@ -96,32 +101,11 @@ export default function App() {
                 })}
               </div>
             </div>
+          )}
+        </div>
 
-            {/* Top Entities */}
-            <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-6">
-              <h3 className="text-[11px] font-semibold text-[#5a6a85] uppercase tracking-wider mb-4">Top Entities</h3>
-              <div className="space-y-2.5">
-                {(stats.top_entities || []).map((ent) => {
-                  const pct = stats.total ? Math.round((ent.count / stats.total) * 100) : 0
-                  return (
-                    <div key={ent.name}>
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-xs text-[#e8ecf4] truncate max-w-[200px]">{ent.name}</span>
-                        <span className="text-xs font-mono text-[#8896b0]">{ent.count} ({pct}%)</span>
-                      </div>
-                      <div className="h-2 bg-[#0F172A] rounded-full overflow-hidden">
-                        <div
-                          className="h-full rounded-full bg-blue-500"
-                          style={{ width: `${pct}%` }}
-                        />
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-          </div>
-        )}
+        {/* d2. Entity Intelligence (replaces basic Top Entities bar chart) */}
+        <EntityIntelligence />
 
         {/* e. TenderTable (SCC-relevant) */}
         <TenderTable sccOnly={true} />

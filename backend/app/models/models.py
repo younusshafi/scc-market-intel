@@ -167,3 +167,46 @@ class NewsIntelligence(Base):
     category = Column(String(50), nullable=True)
     priority = Column(String(20), nullable=True)
     analysed_at = Column(DateTime, default=func.now())
+
+
+class CompetitorProfile(Base):
+    __tablename__ = "competitor_profiles"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    competitor_name = Column(String(100), index=True, unique=True)
+    behaviour_summary = Column(Text, nullable=True)
+    threat_level = Column(String(20), nullable=True)
+    scc_strategy = Column(Text, nullable=True)
+    conversion_rate = Column(Integer, default=0)
+    overlap_with_scc = Column(Integer, default=0)
+    top_categories = Column(JSON, nullable=True)
+    top_governorates = Column(JSON, nullable=True)
+    built_at = Column(DateTime, default=func.now())
+
+
+class EntityIntelligence(Base):
+    __tablename__ = "entity_intelligence"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    entity_name = Column(String(300), index=True, unique=True)
+    total_tenders = Column(Integer, default=0)
+    scc_relevant_count = Column(Integer, default=0)
+    avg_fee = Column(Float, nullable=True)
+    strategic_value = Column(String(20), nullable=True)
+    insight = Column(Text, nullable=True)
+    action = Column(Text, nullable=True)
+    competitors_present = Column(JSON, nullable=True)
+    top_categories = Column(JSON, nullable=True)
+    built_at = Column(DateTime, default=func.now())
+
+
+class NewsTenderLink(Base):
+    __tablename__ = "news_tender_links"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    article_id = Column(Integer, index=True)
+    tender_number = Column(String(100), nullable=True)
+    match_confidence = Column(String(20), nullable=True)
+    connection = Column(Text, nullable=True)
+    scc_action = Column(Text, nullable=True)
+    linked_at = Column(DateTime, default=func.now())

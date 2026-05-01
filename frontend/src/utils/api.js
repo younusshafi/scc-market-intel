@@ -52,6 +52,18 @@ export const api = {
   getNewsIntelligence: () => fetchAPI('/news/intelligence'),
   triggerNewsAnalysis: () => postAPI('/news/analyse'),
 
+  // Competitor Profiles
+  getCompetitorProfiles: () => fetchAPI('/competitive-intel/profiles'),
+  buildCompetitorProfiles: () => postAPI('/competitive-intel/build-profiles'),
+
+  // Entity Intelligence
+  getEntityIntel: () => fetchAPI('/entity-intel/'),
+  buildEntityIntel: () => postAPI('/entity-intel/build'),
+
+  // News-Tender Links
+  getNewsTenderLinks: () => fetchAPI('/news/tender-links'),
+  linkNewsToTenders: () => postAPI('/news/link-to-tenders'),
+
   // System
   getHealth: () => fetchAPI('/system/health'),
   getScrapeStatus: () => fetchAPI('/system/scrape-status'),

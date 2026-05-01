@@ -1,9 +1,11 @@
 from app.models.models import (
     Tender, NewsArticle, Briefing, ScrapeLog, CompetitorMention, TenderProbe,
-    TenderScore, NewsIntelligence,
+    TenderScore, NewsIntelligence, CompetitorProfile, EntityIntelligence,
+    NewsTenderLink,
 )
 
 __all__ = [
     "Tender", "NewsArticle", "Briefing", "ScrapeLog", "CompetitorMention",
-    "TenderProbe", "TenderScore", "NewsIntelligence",
+    "TenderProbe", "TenderScore", "NewsIntelligence", "CompetitorProfile",
+    "EntityIntelligence", "NewsTenderLink",
 ]

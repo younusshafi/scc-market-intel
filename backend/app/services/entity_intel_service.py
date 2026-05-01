@@ -1,0 +1,171 @@
+"""Entity intelligence service — strategic analysis of government entities."""
+import json, logging, re
+from datetime import datetime
+from collections import defaultdict
+
+import requests
+from sqlalchemy.orm import Session
+
+from app.core.config import get_settings
+from app.models import Tender, TenderProbe, EntityIntelligence
+from app.services.competitive_intel_service import resolve_competitor
+
+logger = logging.getLogger(__name__)
+
+ENTITY_SYSTEM_PROMPT = """You are a strategic advisor to Sarooj Construction Company (SCC), a major Omani civil infrastructure contractor. Analyse each government entity's tendering behaviour and recommend SCC's engagement strategy.
+
+For each entity, provide:
+- strategic_value: "critical", "high", "medium", "low"
+- insight: 2-3 sentences about this entity's tender patterns, scale, competition level, and what SCC should expect
+- action: 1 sentence specific action for SCC
+
+Reference actual numbers. No generic language.
+Respond in JSON only. Return {"entities": [...]}"""
+
+
+def _call_groq_json(system_prompt, user_content):
+    settings = get_settings()
+    if not settings.groq_api_key:
+        return None
+    headers = {"Authorization": f"Bearer {settings.groq_api_key}", "Content-Type": "application/json"}
+    payload = {
+        "model": "llama-3.3-70b-versatile",
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_content},
+        ],
+        "temperature": 0.3,
+        "max_tokens": 4096,
+        "response_format": {"type": "json_object"},
+    }
+    try:
+        r = requests.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=payload, timeout=90)
+    except requests.RequestException as e:
+        logger.error(f"Groq API failed: {e}")
+        return None
+    if r.status_code != 200:
+        logger.error(f"Groq {r.status_code}: {r.text[:300]}")
+        return None
+    text = r.json().get("choices", [{}])[0].get("message", {}).get("content", "")
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        m = re.search(r'\[.*\]', text, re.DOTALL)
+        if m:
+            try:
+                return json.loads(m.group())
+            except:
+                pass
+        return None
+
+
+def build_entity_intel(db: Session) -> dict:
+    """Build AI-powered entity intelligence from tender and probe data."""
+    tenders = db.query(Tender).all()
+    probes = {p.tender_number: p for p in db.query(TenderProbe).all()}
+
+    if not tenders:
+        return {"status": "no_data", "built": 0}
+
+    # Group tenders by entity
+    entity_data = defaultdict(lambda: {
+        "tenders": [], "scc_relevant": 0, "fees": [],
+        "categories": [], "competitors": [],
+    })
+
+    for t in tenders:
+        entity_name = t.entity_en or t.entity_ar or ""
+        if not entity_name:
+            continue
+
+        entity_data[entity_name]["tenders"].append(t.tender_number)
+        if t.is_scc_relevant:
+            entity_data[entity_name]["scc_relevant"] += 1
+        if t.fee:
+            entity_data[entity_name]["fees"].append(t.fee)
+        if t.category_en:
+            entity_data[entity_name]["categories"].append(t.category_en)
+
+        # Get competitor info from probes
+        probe = probes.get(t.tender_number)
+        if probe:
+            for b in (probe.bidders or []):
+                comp = resolve_competitor(b.get("company", ""))
+                if comp and comp != "Sarooj":
+                    entity_data[entity_name]["competitors"].append(comp)
+
+    if not entity_data:
+        return {"status": "no_entity_data", "built": 0}
+
+    # Build summaries for top 15 entities by tender count
+    sorted_entities = sorted(entity_data.items(), key=lambda x: -len(x[1]["tenders"]))[:15]
+
+    entity_summaries = []
+    for entity_name, data in sorted_entities:
+        cat_counts = defaultdict(int)
+        for cat in data["categories"]:
+            cat_counts[cat] += 1
+        top_cats = sorted(cat_counts.items(), key=lambda x: -x[1])[:3]
+
+        comp_counts = defaultdict(int)
+        for comp in data["competitors"]:
+            comp_counts[comp] += 1
+        top_comps = sorted(comp_counts.items(), key=lambda x: -x[1])[:5]
+
+        avg_fee = round(sum(data["fees"]) / len(data["fees"]), 2) if data["fees"] else 0
+
+        summary = {
+            "entity": entity_name,
+            "total_tenders": len(data["tenders"]),
+            "scc_relevant_count": data["scc_relevant"],
+            "avg_fee": avg_fee,
+            "top_categories": [c[0] for c in top_cats],
+            "top_competitors": [{"name": c[0], "count": c[1]} for c in top_comps],
+        }
+        entity_summaries.append(summary)
+
+    # Call LLM
+    user_content = json.dumps(entity_summaries, ensure_ascii=False)
+    result = _call_groq_json(ENTITY_SYSTEM_PROMPT, user_content)
+
+    if not result:
+        return {"status": "llm_failed", "built": 0}
+
+    entities = result if isinstance(result, list) else result.get("entities", [])
+
+    # Store in database
+    built = 0
+    for entity in entities:
+        entity_name = entity.get("entity", "")
+        if not entity_name:
+            continue
+
+        stats = next((s for s in entity_summaries if s["entity"] == entity_name), {})
+
+        existing = db.query(EntityIntelligence).filter_by(entity_name=entity_name).first()
+        if existing:
+            existing.total_tenders = stats.get("total_tenders", 0)
+            existing.scc_relevant_count = stats.get("scc_relevant_count", 0)
+            existing.avg_fee = stats.get("avg_fee")
+            existing.strategic_value = entity.get("strategic_value", "")
+            existing.insight = entity.get("insight", "")
+            existing.action = entity.get("action", "")
+            existing.competitors_present = [c["name"] for c in stats.get("top_competitors", [])]
+            existing.top_categories = stats.get("top_categories", [])
+            existing.built_at = datetime.utcnow()
+        else:
+            db.add(EntityIntelligence(
+                entity_name=entity_name,
+                total_tenders=stats.get("total_tenders", 0),
+                scc_relevant_count=stats.get("scc_relevant_count", 0),
+                avg_fee=stats.get("avg_fee"),
+                strategic_value=entity.get("strategic_value", ""),
+                insight=entity.get("insight", ""),
+                action=entity.get("action", ""),
+                competitors_present=[c["name"] for c in stats.get("top_competitors", [])],
+                top_categories=stats.get("top_categories", []),
+            ))
+        built += 1
+
+    db.commit()
+    return {"status": "success", "built": built}
