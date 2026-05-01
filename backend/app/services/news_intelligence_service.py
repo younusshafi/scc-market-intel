@@ -4,16 +4,14 @@ Uses Groq LLM to analyse news articles for SCC strategic implications.
 """
 
 import json
-import re
 import time
 import logging
 from datetime import datetime, timedelta
 
-import requests
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
 
-from app.core.config import get_settings
+from app.services.llm_client import call_llm_json
 from app.models import NewsArticle, NewsIntelligence
 
 logger = logging.getLogger(__name__)
@@ -101,57 +99,6 @@ NEWS_ANALYSIS_SYSTEM_PROMPT = (
     "Return a JSON object with key 'analyses' containing an array.\n"
 )
 
-
-def _call_groq_json(system_prompt: str, user_content: str) -> dict | list | None:
-    """Call Groq API expecting JSON response."""
-    settings = get_settings()
-    if not settings.groq_api_key:
-        logger.error("GROQ_API_KEY not set")
-        return None
-
-    headers = {
-        "Authorization": f"Bearer {settings.groq_api_key}",
-        "Content-Type": "application/json",
-    }
-    payload = {
-        "model": "llama-3.3-70b-versatile",
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_content},
-        ],
-        "temperature": 0.3,
-        "max_tokens": 4096,
-        "response_format": {"type": "json_object"},
-    }
-
-    logger.info("Calling Groq API for news analysis...")
-    try:
-        r = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
-            headers=headers,
-            json=payload,
-            timeout=90,
-        )
-    except requests.RequestException as e:
-        logger.error(f"Groq API request failed: {e}")
-        return None
-
-    if r.status_code != 200:
-        logger.error(f"Groq API returned {r.status_code}: {r.text[:300]}")
-        return None
-
-    text = r.json().get("choices", [{}])[0].get("message", {}).get("content", "")
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        m = re.search(r'\[.*\]', text, re.DOTALL)
-        if m:
-            try:
-                return json.loads(m.group())
-            except json.JSONDecodeError:
-                pass
-        logger.error(f"Failed to parse JSON from Groq: {text[:200]}")
-        return None
 
 
 def _title_word_overlap(title1: str, title2: str) -> float:
@@ -248,7 +195,7 @@ def analyse_news(db: Session) -> dict:
             })
 
         user_content = json.dumps(article_descs, ensure_ascii=False)
-        result = _call_groq_json(NEWS_ANALYSIS_SYSTEM_PROMPT, user_content)
+        result = call_llm_json(NEWS_ANALYSIS_SYSTEM_PROMPT, user_content)
 
         if result:
             items = result if isinstance(result, list) else result.get("analyses", result.get("articles", [result]))
@@ -275,6 +222,6 @@ def analyse_news(db: Session) -> dict:
             db.commit()
 
         if i + batch_size < len(to_analyse):
-            time.sleep(2)  # Rate limit
+            time.sleep(0.5)  # Rate limit
 
     return {"status": "success", "analysed": analysed, "total_recent": len(recent_articles)}

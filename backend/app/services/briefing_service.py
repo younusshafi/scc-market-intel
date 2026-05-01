@@ -8,11 +8,11 @@ import logging
 from datetime import datetime, timedelta
 from collections import defaultdict
 
-import requests
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
 
 from app.core.config import get_settings
+from app.services.llm_client import call_llm
 from app.models import Tender, NewsArticle, Briefing, TenderProbe
 
 logger = logging.getLogger(__name__)
@@ -370,54 +370,6 @@ def build_context_from_db(db: Session) -> str:
     return context
 
 
-def call_groq(context: str) -> dict | None:
-    """Call Groq API with the context. Returns {text, usage} or None."""
-    api_key = settings.groq_api_key
-    if not api_key:
-        logger.error("GROQ_API_KEY not set")
-        return None
-
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json",
-    }
-    payload = {
-        "model": "llama-3.3-70b-versatile",
-        "messages": [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": context},
-        ],
-        "temperature": 0.4,
-        "max_tokens": 2048,
-    }
-
-    logger.info("Calling Groq API...")
-    try:
-        r = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
-            headers=headers,
-            json=payload,
-            timeout=60,
-        )
-    except requests.RequestException as e:
-        logger.error(f"Groq API request failed: {e}")
-        return None
-
-    if r.status_code != 200:
-        logger.error(f"Groq API returned {r.status_code}: {r.text[:300]}")
-        return None
-
-    data = r.json()
-    choices = data.get("choices", [])
-    if not choices:
-        logger.error("No choices in Groq response")
-        return None
-
-    text = choices[0].get("message", {}).get("content", "")
-    usage = data.get("usage", {})
-    logger.info(f"Groq response: {len(text)} chars, tokens={usage}")
-    return {"text": text, "usage": usage}
-
 
 def md_to_html(md: str) -> str:
     """Simple markdown to HTML converter for briefings."""
@@ -452,7 +404,7 @@ def _inline(t: str) -> str:
 def generate_and_store_briefing(db: Session) -> Briefing | None:
     """Full pipeline: build context → call LLM → store briefing."""
     context = build_context_from_db(db)
-    result = call_groq(context)
+    result = call_llm(system_prompt=SYSTEM_PROMPT, user_content=context)
 
     if not result:
         logger.error("Failed to generate briefing")
@@ -462,7 +414,7 @@ def generate_and_store_briefing(db: Session) -> Briefing | None:
         content_md=result["text"],
         content_html=md_to_html(result["text"]),
         context_summary=f"{len(context.split())} words context",
-        model_used="llama-3.3-70b-versatile",
+        model_used="gpt-4o-mini",
         token_usage=result["usage"],
     )
     db.add(briefing)

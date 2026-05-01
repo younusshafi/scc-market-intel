@@ -1,12 +1,11 @@
 """Competitor behaviour profile service."""
-import json, time, logging, re
+import json, time, logging
 from datetime import datetime
 from collections import defaultdict
 
-import requests
 from sqlalchemy.orm import Session
 
-from app.core.config import get_settings
+from app.services.llm_client import call_llm_json
 from app.models import TenderProbe, CompetitorProfile
 from app.services.competitive_intel_service import resolve_competitor, COMPETITORS
 
@@ -22,41 +21,6 @@ For each competitor, write:
 Be specific — reference actual numbers, tender names, and patterns. Do not use generic language.
 Respond in JSON only. Return {"profiles": [...]}"""
 
-
-def _call_groq_json(system_prompt, user_content):
-    settings = get_settings()
-    if not settings.groq_api_key:
-        return None
-    headers = {"Authorization": f"Bearer {settings.groq_api_key}", "Content-Type": "application/json"}
-    payload = {
-        "model": "llama-3.3-70b-versatile",
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_content},
-        ],
-        "temperature": 0.3,
-        "max_tokens": 4096,
-        "response_format": {"type": "json_object"},
-    }
-    try:
-        r = requests.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=payload, timeout=90)
-    except requests.RequestException as e:
-        logger.error(f"Groq API failed: {e}")
-        return None
-    if r.status_code != 200:
-        logger.error(f"Groq {r.status_code}: {r.text[:300]}")
-        return None
-    text = r.json().get("choices", [{}])[0].get("message", {}).get("content", "")
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        m = re.search(r'\[.*\]', text, re.DOTALL)
-        if m:
-            try:
-                return json.loads(m.group())
-            except:
-                pass
-        return None
 
 
 def build_competitor_profiles(db: Session) -> dict:
@@ -165,7 +129,7 @@ def build_competitor_profiles(db: Session) -> dict:
 
     # Call LLM for strategic profiles
     user_content = json.dumps(competitor_summaries, ensure_ascii=False)
-    result = _call_groq_json(PROFILE_SYSTEM_PROMPT, user_content)
+    result = call_llm_json(PROFILE_SYSTEM_PROMPT, user_content)
 
     if not result:
         return {"status": "llm_failed", "built": 0}

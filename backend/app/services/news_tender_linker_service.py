@@ -1,11 +1,10 @@
 """News-to-tender linker service — connects news signals to active tenders."""
-import json, logging, re
+import json, logging
 from datetime import datetime
 
-import requests
 from sqlalchemy.orm import Session
 
-from app.core.config import get_settings
+from app.services.llm_client import call_llm_json
 from app.models import NewsArticle, NewsIntelligence, Tender, NewsTenderLink
 
 logger = logging.getLogger(__name__)
@@ -20,41 +19,6 @@ For each news-tender pair, assess:
 If no tenders match, state this is a FUTURE SIGNAL — no tender yet but expected.
 Respond in JSON only. Return {"links": [...]}"""
 
-
-def _call_groq_json(system_prompt, user_content):
-    settings = get_settings()
-    if not settings.groq_api_key:
-        return None
-    headers = {"Authorization": f"Bearer {settings.groq_api_key}", "Content-Type": "application/json"}
-    payload = {
-        "model": "llama-3.3-70b-versatile",
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_content},
-        ],
-        "temperature": 0.3,
-        "max_tokens": 4096,
-        "response_format": {"type": "json_object"},
-    }
-    try:
-        r = requests.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=payload, timeout=90)
-    except requests.RequestException as e:
-        logger.error(f"Groq API failed: {e}")
-        return None
-    if r.status_code != 200:
-        logger.error(f"Groq {r.status_code}: {r.text[:300]}")
-        return None
-    text = r.json().get("choices", [{}])[0].get("message", {}).get("content", "")
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        m = re.search(r'\[.*\]', text, re.DOTALL)
-        if m:
-            try:
-                return json.loads(m.group())
-            except:
-                pass
-        return None
 
 
 def _find_matching_tenders(db: Session, article: NewsArticle, intel: NewsIntelligence):
@@ -126,7 +90,7 @@ def link_news_to_tenders(db: Session) -> dict:
             "potential_tenders": matching_tenders,
         }, ensure_ascii=False)
 
-        result = _call_groq_json(LINKER_SYSTEM_PROMPT, user_content)
+        result = call_llm_json(LINKER_SYSTEM_PROMPT, user_content)
 
         if not result:
             continue
