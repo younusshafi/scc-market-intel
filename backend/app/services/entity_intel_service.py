@@ -33,9 +33,12 @@ Reference actual numbers. No generic language.
 Respond in JSON only. Return {"entities": [...]}"""
 
 
-def _call_groq_json(system_prompt, user_content):
+def _call_groq_json(system_prompt, user_content, retries=2):
+    """Call Groq API expecting JSON response. Retries on failure with delay."""
+    import time as _time
     settings = get_settings()
     if not settings.groq_api_key:
+        logger.error("GROQ_API_KEY not set")
         return None
     headers = {"Authorization": f"Bearer {settings.groq_api_key}", "Content-Type": "application/json"}
     payload = {
@@ -48,25 +51,49 @@ def _call_groq_json(system_prompt, user_content):
         "max_tokens": 4096,
         "response_format": {"type": "json_object"},
     }
-    try:
-        r = requests.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=payload, timeout=90)
-    except requests.RequestException as e:
-        logger.error(f"Groq API failed: {e}")
-        return None
-    if r.status_code != 200:
-        logger.error(f"Groq {r.status_code}: {r.text[:300]}")
-        return None
-    text = r.json().get("choices", [{}])[0].get("message", {}).get("content", "")
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        m = re.search(r'\[.*\]', text, re.DOTALL)
-        if m:
-            try:
-                return json.loads(m.group())
-            except:
-                pass
-        return None
+
+    for attempt in range(retries):
+        if attempt > 0:
+            wait = 5 * attempt
+            logger.info(f"Retrying in {wait}s (attempt {attempt + 1}/{retries})...")
+            _time.sleep(wait)
+
+        try:
+            r = requests.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=payload, timeout=90)
+        except requests.RequestException as e:
+            logger.error(f"Groq API request exception: {e}")
+            print(f"  ERROR: Groq request failed: {e}")
+            continue
+
+        if r.status_code == 429:
+            error_msg = r.text[:500]
+            logger.warning(f"Groq rate limited (429): {error_msg}")
+            print(f"  RATE LIMITED: {error_msg[:200]}")
+            continue
+        elif r.status_code != 200:
+            error_msg = r.text[:500]
+            logger.error(f"Groq {r.status_code}: {error_msg}")
+            print(f"  ERROR: Groq returned {r.status_code}: {error_msg[:200]}")
+            return None
+
+        text = r.json().get("choices", [{}])[0].get("message", {}).get("content", "")
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError:
+            m = re.search(r'\[.*\]', text, re.DOTALL)
+            if m:
+                try:
+                    return json.loads(m.group())
+                except:
+                    pass
+            logger.error(f"Failed to parse JSON: {text[:200]}")
+            print(f"  ERROR: JSON parse failed: {text[:150]}")
+            return None
+
+    # All retries exhausted
+    logger.error("All Groq retries exhausted")
+    print("  ERROR: All retries exhausted")
+    return None
 
 
 def build_entity_intel(db: Session) -> dict:
@@ -157,14 +184,31 @@ def build_entity_intel(db: Session) -> dict:
         }
         entity_summaries.append(summary)
 
-    # Call LLM
-    user_content = json.dumps(entity_summaries, ensure_ascii=False)
-    result = _call_groq_json(ENTITY_SYSTEM_PROMPT, user_content)
+    # Call LLM in batches of 5 to avoid context length issues
+    import time as _time
+    all_llm_entities = []
+    batch_size = 5
+    for i in range(0, len(entity_summaries), batch_size):
+        batch = entity_summaries[i:i + batch_size]
+        logger.info(f"Processing entity batch {i // batch_size + 1} ({len(batch)} entities)")
+        print(f"  Processing batch {i // batch_size + 1}: {[b['entity'][:30] for b in batch]}")
 
-    if not result:
+        user_content = json.dumps(batch, ensure_ascii=False)
+        result = _call_groq_json(ENTITY_SYSTEM_PROMPT, user_content)
+
+        if result:
+            entities_batch = result if isinstance(result, list) else result.get("entities", [])
+            all_llm_entities.extend(entities_batch)
+        else:
+            logger.warning(f"Batch {i // batch_size + 1} failed")
+
+        if i + batch_size < len(entity_summaries):
+            _time.sleep(3)
+
+    if not all_llm_entities:
         return {"status": "llm_failed", "built": 0}
 
-    entities = result if isinstance(result, list) else result.get("entities", [])
+    entities = all_llm_entities
 
     # Store in database
     built = 0
