@@ -12,6 +12,8 @@ import GalfarProfile from './components/GalfarProfile'
 import GeoDistribution from './components/GeoDistribution'
 import PTLCContext from './components/PTLCContext'
 import RetenderRadar from './components/RetenderRadar'
+import ScoredTenders from './components/ScoredTenders'
+import NewsIntelligence from './components/NewsIntelligence'
 
 const SCC_CATEGORIES = ['Construction', 'Ports', 'Roads', 'Bridges', 'Pipeline', 'Electromechanical', 'Dams', 'Marine']
 
@@ -124,6 +126,9 @@ export default function App() {
         {/* e. TenderTable (SCC-relevant) */}
         <TenderTable sccOnly={true} />
 
+        {/* e2. AI Scored Tenders */}
+        <ScoredTenders />
+
         {/* f. EarlyWarnings + GalfarProfile */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <EarlyWarnings />
@@ -139,13 +144,16 @@ export default function App() {
         {/* h. RetenderRadar */}
         <RetenderRadar />
 
-        {/* i. Collapsible: NewsSection */}
+        {/* i. AI News Intelligence */}
+        <NewsIntelligence />
+
+        {/* j. Collapsible: Raw News Feed */}
         <div>
           <button
             onClick={() => setNewsOpen(!newsOpen)}
             className="w-full flex items-center justify-between bg-[#1E293B] border border-[#334155] rounded-xl px-6 py-4 hover:bg-[#253347] transition-colors"
           >
-            <span className="text-[11px] font-semibold text-[#5a6a85] uppercase tracking-wider">News Intelligence</span>
+            <span className="text-[11px] font-semibold text-[#5a6a85] uppercase tracking-wider">Raw News Feed</span>
             <span className="text-[#5a6a85] text-lg">{newsOpen ? '\u2212' : '+'}</span>
           </button>
           {newsOpen && (

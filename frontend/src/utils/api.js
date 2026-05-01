@@ -13,6 +13,12 @@ async function fetchAPI(endpoint, params = {}) {
   return res.json()
 }
 
+async function postAPI(endpoint) {
+  const res = await fetch(`${API_BASE}${endpoint}`, { method: 'POST' })
+  if (!res.ok) throw new Error(`API error: ${res.status}`)
+  return res.json()
+}
+
 export const api = {
   // Tenders
   getTenders: (params) => fetchAPI('/tenders/', params),
@@ -37,6 +43,14 @@ export const api = {
 
   // Geography
   getGeoDistribution: () => fetchAPI('/geo/distribution'),
+
+  // AI Scoring
+  getScoredTenders: () => fetchAPI('/tenders/scored'),
+  triggerScoring: () => postAPI('/tenders/score'),
+
+  // AI News Intelligence
+  getNewsIntelligence: () => fetchAPI('/news/intelligence'),
+  triggerNewsAnalysis: () => postAPI('/news/analyse'),
 
   // System
   getHealth: () => fetchAPI('/system/health'),

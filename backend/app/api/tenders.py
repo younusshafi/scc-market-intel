@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func, desc
 
 from app.core.database import get_db
-from app.models import Tender
+from app.models import Tender, TenderScore, TenderProbe
 
 router = APIRouter(prefix="/tenders", tags=["tenders"])
 
@@ -127,6 +127,71 @@ def tender_trend(db: Session = Depends(get_db)):
         }
         for r in results[-6:]  # Last 6 months
     ]
+
+
+@router.get("/scored")
+def get_scored_tenders(
+    min_score: int = Query(0, ge=0, le=100),
+    recommendation: str | None = None,
+    page: int = Query(1, ge=1),
+    page_size: int = Query(50, ge=10, le=200),
+    db: Session = Depends(get_db),
+):
+    """Get tenders with AI match scores, sorted by score descending."""
+    q = (
+        db.query(Tender, TenderScore)
+        .join(TenderScore, Tender.tender_number == TenderScore.tender_number)
+        .filter(TenderScore.score >= min_score)
+    )
+
+    if recommendation:
+        q = q.filter(TenderScore.recommendation == recommendation.upper())
+
+    total = q.count()
+    results = (
+        q.order_by(desc(TenderScore.score))
+        .offset((page - 1) * page_size)
+        .limit(page_size)
+        .all()
+    )
+
+    items = []
+    # Preload probe data for all tender numbers in this page
+    tender_numbers = [t.tender_number for t, _ in results]
+    probes = {
+        p.tender_number: p
+        for p in db.query(TenderProbe)
+        .filter(TenderProbe.tender_number.in_(tender_numbers))
+        .all()
+    } if tender_numbers else {}
+
+    for tender, score in results:
+        item = _serialize_tender(tender)
+        item["score"] = score.score
+        item["recommendation"] = score.recommendation
+        item["reasoning"] = score.reasoning
+        item["scored_at"] = score.scored_at.isoformat() if score.scored_at else None
+        probe = probes.get(tender.tender_number)
+        if probe:
+            item["num_bidders"] = len(probe.bidders or [])
+            item["num_purchasers"] = len(probe.purchasers or [])
+        items.append(item)
+
+    return {
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "pages": (total + page_size - 1) // page_size,
+        "tenders": items,
+    }
+
+
+@router.post("/score")
+def trigger_scoring(db: Session = Depends(get_db)):
+    """Trigger AI scoring of SCC-relevant tenders."""
+    from app.services.tender_scoring_service import score_tenders
+    result = score_tenders(db)
+    return result
 
 
 def _serialize_tender(t: Tender) -> dict:

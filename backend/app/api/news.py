@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func, desc
 
 from app.core.database import get_db
-from app.models import NewsArticle
+from app.models import NewsArticle, NewsIntelligence
 
 router = APIRouter(prefix="/news", tags=["news"])
 
@@ -123,6 +123,62 @@ def jv_stats(db: Session = Depends(get_db)):
         "total_jv_mentions": total_jv,
         "top_partners": [{"name": p[0], "count": p[1]} for p in top_partners],
     }
+
+
+@router.get("/intelligence")
+def get_news_intelligence(
+    category: str | None = None,
+    priority: str | None = None,
+    page: int = Query(1, ge=1),
+    page_size: int = Query(30, ge=10, le=100),
+    db: Session = Depends(get_db),
+):
+    """Get news articles with AI intelligence analysis, sorted by priority."""
+    priority_order = {"HIGH": 1, "MEDIUM": 2, "LOW": 3}
+
+    q = (
+        db.query(NewsArticle, NewsIntelligence)
+        .join(NewsIntelligence, NewsArticle.id == NewsIntelligence.article_id)
+        .filter(NewsIntelligence.relevant == True)
+    )
+
+    if category:
+        q = q.filter(NewsIntelligence.category == category.upper())
+    if priority:
+        q = q.filter(NewsIntelligence.priority == priority.upper())
+
+    total = q.count()
+    # Sort by priority (HIGH first), then by published date
+    results = (
+        q.order_by(NewsIntelligence.priority, desc(NewsArticle.published))
+        .offset((page - 1) * page_size)
+        .limit(page_size)
+        .all()
+    )
+
+    items = []
+    for article, intel in results:
+        item = _serialize_article(article)
+        item["scc_implication"] = intel.scc_implication
+        item["intel_category"] = intel.category
+        item["priority"] = intel.priority
+        item["analysed_at"] = intel.analysed_at.isoformat() if intel.analysed_at else None
+        items.append(item)
+
+    return {
+        "total": total,
+        "page": page,
+        "pages": (total + page_size - 1) // page_size,
+        "articles": items,
+    }
+
+
+@router.post("/analyse")
+def trigger_analysis(db: Session = Depends(get_db)):
+    """Trigger AI analysis of recent news articles."""
+    from app.services.news_intelligence_service import analyse_news
+    result = analyse_news(db)
+    return result
 
 
 def _serialize_article(a: NewsArticle) -> dict:

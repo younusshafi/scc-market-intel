@@ -144,3 +144,26 @@ class CompetitorMention(Base):
     source_id = Column(Integer)  # FK to news_articles.id or tenders.id
     context = Column(Text, nullable=True)  # snippet of where they were mentioned
     detected_at = Column(DateTime, default=func.now())
+
+
+class TenderScore(Base):
+    __tablename__ = "tender_scores"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    tender_number = Column(String(100), index=True, unique=True)
+    score = Column(Integer)
+    recommendation = Column(String(50))
+    reasoning = Column(Text, nullable=True)
+    scored_at = Column(DateTime, default=func.now())
+
+
+class NewsIntelligence(Base):
+    __tablename__ = "news_intelligence"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    article_id = Column(Integer, index=True, unique=True)
+    relevant = Column(Boolean, default=True)
+    scc_implication = Column(Text, nullable=True)
+    category = Column(String(50), nullable=True)
+    priority = Column(String(20), nullable=True)
+    analysed_at = Column(DateTime, default=func.now())
