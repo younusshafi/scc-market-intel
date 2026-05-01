@@ -109,7 +109,7 @@ function TenderCard({ tender }) {
           {/* Entity + fee */}
           <div className="flex flex-wrap items-center gap-3 text-xs text-[#8896b0] mb-2">
             {tender.entity_en && <span>{tender.entity_en}</span>}
-            {feeStr && <span className="font-mono text-amber-400">{feeStr}</span>}
+            {feeStr && <span className="font-mono text-amber-400">Doc Fee: {feeStr}</span>}
             {tender.bid_closing_date && (
               <span>Closes {new Date(tender.bid_closing_date).toLocaleDateString()}</span>
             )}

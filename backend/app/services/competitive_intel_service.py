@@ -109,7 +109,12 @@ def build_competitive_intel(db: Session) -> dict:
                 activity[name]["docs"] += 1
                 comp_doc_tenders[name].add(probe.tender_number)
 
-        # --- Major Projects (fee >= 200 OMR) ---
+        # --- Major Projects (fee >= 200 OMR, SCC category OR has tracked competitors) ---
+        SCC_CAT_KW = ["construction", "ports", "roads", "bridges", "pipeline",
+                      "electromechanical", "dams", "marine", "مقاولات"]
+        cat_lower = (probe.category or "").lower()
+        is_scc_cat = any(kw in cat_lower for kw in SCC_CAT_KW)
+
         if fee >= 200:
             comp_bids = {}
             comp_docs = {}
@@ -145,18 +150,21 @@ def build_competitive_intel(db: Session) -> dict:
             else:
                 border_colour = "#10B981"
 
-            major_projects.append({
-                "name": nit.get("title", "") or probe.tender_name or "",
-                "entity": probe.entity or "",
-                "fee": fee,
-                "category": probe.category or "",
-                "tender_number": probe.tender_number,
-                "num_bidders": num_bidders,
-                "num_purchasers": num_purchasers,
-                "competitors": comp_presence,
-                "sarooj_present": "Sarooj" in all_comp_names,
-                "border_colour": border_colour,
-            })
+            # Only include if SCC category OR has tracked competitors
+            has_competitors = len(all_comp_names) > 0
+            if is_scc_cat or has_competitors:
+                major_projects.append({
+                    "name": nit.get("title", "") or probe.tender_name or "",
+                    "entity": probe.entity or "",
+                    "fee": fee,
+                    "category": probe.category or "",
+                    "tender_number": probe.tender_number,
+                    "num_bidders": num_bidders,
+                    "num_purchasers": num_purchasers,
+                    "competitors": comp_presence,
+                    "sarooj_present": "Sarooj" in all_comp_names,
+                    "border_colour": border_colour,
+                })
 
         # --- Head-to-Head (Sarooj bid vs competitor bids) ---
         sarooj_val = None

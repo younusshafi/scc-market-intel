@@ -137,11 +137,18 @@ def get_scored_tenders(
     page_size: int = Query(50, ge=10, le=200),
     db: Session = Depends(get_db),
 ):
-    """Get tenders with AI match scores, sorted by score descending."""
+    """Get tenders with AI match scores, sorted by score descending.
+    Only shows tenders with closing dates in the future or last 30 days."""
+    from datetime import timedelta
+    cutoff_date = date.today() - timedelta(days=30)
+
     q = (
         db.query(Tender, TenderScore)
         .join(TenderScore, Tender.tender_number == TenderScore.tender_number)
         .filter(TenderScore.score >= min_score)
+        .filter(
+            (Tender.bid_closing_date >= cutoff_date) | (Tender.bid_closing_date == None)
+        )
     )
 
     if recommendation:
