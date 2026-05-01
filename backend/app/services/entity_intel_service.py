@@ -12,12 +12,22 @@ from app.services.competitive_intel_service import resolve_competitor
 
 logger = logging.getLogger(__name__)
 
-ENTITY_SYSTEM_PROMPT = """You are a strategic advisor to Sarooj Construction Company (SCC), a major Omani civil infrastructure contractor. Analyse each government entity's tendering behaviour and recommend SCC's engagement strategy.
+ENTITY_SYSTEM_PROMPT = """You are a strategic advisor to Sarooj Construction Company (SCC), a major Omani Tier-1 civil infrastructure contractor with Excellent and First grade classifications. SCC's core work: roads, bridges, tunnels, dams, marine works, pipelines, major earthworks.
+
+Analyse each government entity's tendering behaviour and recommend SCC's engagement strategy.
 
 For each entity, provide:
 - strategic_value: "critical", "high", "medium", "low"
 - insight: 2-3 sentences about this entity's tender patterns, scale, competition level, and what SCC should expect
 - action: 1 sentence specific action for SCC
+
+CRITICAL SCORING RULES:
+- SCC is a TIER-1 contractor with Excellent/First grade. Entities that issue small maintenance/renovation tenders (Second/Third grade, fee < 50 OMR) are LOW value regardless of tender count.
+- Entities that issue major infrastructure tenders (fee >= 200 OMR, Excellent grade, roads/bridges/ports/dams) are HIGH or CRITICAL.
+- Ministry of Education issues mostly small school renovations — rate LOW unless they have major construction.
+- Ministry of Housing and Urban Planning issues Sultan Haitham City mega-projects — rate HIGH or CRITICAL.
+- MTCIT, OPAZ, SEZAD issue major roads/ports — rate HIGH.
+- High tender COUNT does not mean high strategic value if the tenders are small-scale.
 
 Reference actual numbers. No generic language.
 Respond in JSON only. Return {"entities": [...]}"""
@@ -97,8 +107,31 @@ def build_entity_intel(db: Session) -> dict:
     if not entity_data:
         return {"status": "no_entity_data", "built": 0}
 
-    # Build summaries for top 15 entities by tender count
-    sorted_entities = sorted(entity_data.items(), key=lambda x: -len(x[1]["tenders"]))[:15]
+    # Prioritize entities by SCC strategic relevance (not just count)
+    # Score: SCC-relevant count * 10 + avg_fee_weight + competitor_presence
+    def entity_score(item):
+        name, data = item
+        scc = data["scc_relevant"]
+        avg_fee = (sum(data["fees"]) / len(data["fees"])) if data["fees"] else 0
+        comp_count = len(set(data["competitors"]))
+        return scc * 10 + min(avg_fee, 500) + comp_count * 5
+
+    # Ensure critical entities are always included
+    MUST_INCLUDE = [
+        "Ministry of Housing and Urban Planning",
+        "Ministry of Transport Communications and Information Technology",
+        "Public Authority for Special Economic Zones and Free Zones",
+        "Salalah Free Zone",
+    ]
+    must_include_entities = [(k, v) for k, v in entity_data.items()
+                            if any(m.lower() in k.lower() for m in MUST_INCLUDE)]
+    other_entities = [(k, v) for k, v in entity_data.items()
+                     if not any(m.lower() in k.lower() for m in MUST_INCLUDE)]
+    other_sorted = sorted(other_entities, key=entity_score, reverse=True)
+
+    # Combine: must-include first, then top by score, capped at 15
+    sorted_entities = must_include_entities + other_sorted
+    sorted_entities = sorted_entities[:15]
 
     entity_summaries = []
     for entity_name, data in sorted_entities:

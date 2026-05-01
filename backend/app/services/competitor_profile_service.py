@@ -67,7 +67,7 @@ def build_competitor_profiles(db: Session) -> dict:
 
     # Gather per-competitor activity
     comp_data = {name: {"docs": [], "bids": [], "withdrawals": [], "categories": [], "tenders_with_scc": []}
-                 for name in COMPETITORS}
+                 for name in COMPETITORS if name != "Sarooj"}
 
     for probe in probes:
         bidders = probe.bidders or []
@@ -76,15 +76,12 @@ def build_competitor_profiles(db: Session) -> dict:
 
         bid_companies = set()
         doc_companies = set()
-        sarooj_present = False
 
         for b in bidders:
             name = resolve_competitor(b.get("company", ""))
             if name:
                 bid_companies.add(name)
-                if name == "Sarooj":
-                    sarooj_present = True
-                if name in comp_data:
+                if name != "Sarooj" and name in comp_data:
                     comp_data[name]["bids"].append({
                         "tender": probe.tender_number,
                         "name": probe.tender_name or "",
@@ -97,7 +94,7 @@ def build_competitor_profiles(db: Session) -> dict:
             name = resolve_competitor(p.get("company", ""))
             if name:
                 doc_companies.add(name)
-                if name in comp_data:
+                if name != "Sarooj" and name in comp_data:
                     comp_data[name]["docs"].append({
                         "tender": probe.tender_number,
                         "name": probe.tender_name or "",
@@ -108,10 +105,11 @@ def build_competitor_profiles(db: Session) -> dict:
 
         # Withdrawals: purchased docs but didn't bid
         for name in doc_companies:
-            if name not in bid_companies and name in comp_data:
+            if name != "Sarooj" and name not in bid_companies and name in comp_data:
                 comp_data[name]["withdrawals"].append(probe.tender_number)
 
-        # SCC overlap
+        # SCC overlap: Sarooj present as bidder OR doc purchaser
+        sarooj_present = "Sarooj" in bid_companies or "Sarooj" in doc_companies
         for name in (bid_companies | doc_companies):
             if name != "Sarooj" and sarooj_present and name in comp_data:
                 comp_data[name]["tenders_with_scc"].append(probe.tender_number)
@@ -125,6 +123,8 @@ def build_competitor_profiles(db: Session) -> dict:
     # Build summary stats for each competitor
     competitor_summaries = []
     for comp_name, data in comp_data.items():
+        if comp_name == "Sarooj":
+            continue  # SCC is Sarooj — never profile ourselves
         if not data["docs"] and not data["bids"]:
             continue
         docs_count = len(data["docs"])

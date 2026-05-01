@@ -154,6 +154,55 @@ def _call_groq_json(system_prompt: str, user_content: str) -> dict | list | None
         return None
 
 
+def _title_word_overlap(title1: str, title2: str) -> float:
+    """Calculate word overlap ratio between two titles."""
+    words1 = set(title1.lower().split())
+    words2 = set(title2.lower().split())
+    if not words1 or not words2:
+        return 0
+    intersection = words1 & words2
+    return len(intersection) / min(len(words1), len(words2))
+
+
+# Source authority ranking (higher = more authoritative)
+SOURCE_PRIORITY = {
+    "oman observer": 3,
+    "times of oman": 2,
+    "google news": 1,
+}
+
+
+def _get_source_priority(source: str) -> int:
+    low = (source or "").lower()
+    for key, priority in SOURCE_PRIORITY.items():
+        if key in low:
+            return priority
+    return 0
+
+
+def _deduplicate_articles(articles: list) -> list:
+    """Remove duplicate articles with >70% title word overlap, keeping more authoritative source."""
+    if not articles:
+        return articles
+
+    keep = []
+    for article in articles:
+        is_dup = False
+        for kept in keep:
+            overlap = _title_word_overlap(article.title or "", kept.title or "")
+            if overlap > 0.7:
+                # Replace if new article is from more authoritative source
+                if _get_source_priority(article.source) > _get_source_priority(kept.source):
+                    keep.remove(kept)
+                    keep.append(article)
+                is_dup = True
+                break
+        if not is_dup:
+            keep.append(article)
+
+    return keep
+
+
 def analyse_news(db: Session) -> dict:
     """Analyse recent news articles for SCC strategic implications."""
     # Get articles from last 7 days that are relevant
@@ -174,6 +223,9 @@ def analyse_news(db: Session) -> dict:
         r[0] for r in db.query(NewsIntelligence.article_id).all()
     )
     to_analyse = [a for a in recent_articles if a.id not in already_analysed]
+
+    # Deduplicate by title similarity (>70% word overlap → keep more authoritative source)
+    to_analyse = _deduplicate_articles(to_analyse)
 
     if not to_analyse:
         return {"status": "all_analysed", "analysed": 0, "total_recent": len(recent_articles)}
