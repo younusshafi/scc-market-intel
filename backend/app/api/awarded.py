@@ -257,3 +257,132 @@ def get_price_benchmark(category: str = Query("Construction"), db: Session = Dep
         "avg_bid_spread_pct": round(avg_spread, 1) if avg_spread else None,
         "lowest_wins_pct": lowest_pct,
     }
+
+
+# === NEW ANALYTICS ENDPOINTS ===
+
+@router.get("/analytics")
+def get_award_analytics(db: Session = Depends(get_db)):
+    """Return computed award analytics (from cache or compute fresh)."""
+    from app.services.award_analytics_service import get_cached_analytics, compute_award_analytics
+
+    cached = get_cached_analytics()
+    if cached:
+        return cached
+
+    # Compute fresh
+    result = compute_award_analytics(db)
+    result["computed_at"] = None  # Will be set by the service
+    return result
+
+
+@router.get("/insights")
+def get_award_insights():
+    """Return AI-generated strategic insights."""
+    from app.jobs.generate_award_insights import get_cached_insights
+
+    cached = get_cached_insights()
+    if cached:
+        return cached
+    return {"insights": [], "generated_at": None, "status": "not_computed"}
+
+
+@router.post("/compute")
+def compute_analytics(db: Session = Depends(get_db)):
+    """Trigger analytics computation + AI insights generation."""
+    from app.services.award_analytics_service import compute_award_analytics
+    from app.jobs.generate_award_insights import generate_insights
+
+    # Step 1: Compute analytics
+    analytics = compute_award_analytics(db)
+    if not analytics or analytics.get("status") == "no_data":
+        return {"status": "no_data", "message": "No awarded tender data found"}
+
+    # Step 2: Generate AI insights
+    insights_result = generate_insights(db)
+
+    return {
+        "status": "success",
+        "analytics_computed": True,
+        "total_tenders_analysed": analytics.get("total_tenders_analysed", 0),
+        "insights_generated": len(insights_result.get("insights", [])),
+    }
+
+
+@router.get("/competitor-history")
+def get_competitor_history(company: str = Query(...), db: Session = Depends(get_db)):
+    """Yearly performance history for a specific competitor."""
+    from app.services.award_analytics_service import get_cached_analytics, compute_award_analytics
+
+    cached = get_cached_analytics()
+    if not cached:
+        cached = compute_award_analytics(db)
+
+    if not cached or cached.get("status") == "no_data":
+        return {"company": company, "yearly": []}
+
+    # Find in competitor_deep
+    comp_deep = cached.get("competitor_deep", {})
+    comp_data = comp_deep.get(company)
+
+    if not comp_data:
+        # Try fuzzy match
+        for name, data in comp_deep.items():
+            if company.lower() in name.lower():
+                comp_data = data
+                company = name
+                break
+
+    if not comp_data:
+        return {"company": company, "yearly": [], "message": "Competitor not found"}
+
+    # Extract yearly from yearly_trends
+    yearly_trends = cached.get("yearly_trends", [])
+    yearly = []
+    for yt in yearly_trends:
+        comp_stats = yt.get("competitors", {}).get(company, {})
+        if comp_stats:
+            yearly.append({
+                "year": yt["year"],
+                "bids": comp_stats.get("bids", 0),
+                "wins": comp_stats.get("wins", 0),
+                "win_rate": comp_stats.get("win_rate", 0),
+                "value_won": comp_stats.get("value_won", 0),
+            })
+
+    return {
+        "company": company,
+        "summary": {
+            "total_bids": comp_data.get("total_bids", 0),
+            "wins": comp_data.get("wins", 0),
+            "win_rate": comp_data.get("win_rate", 0),
+            "total_value_won": comp_data.get("total_value_won", 0),
+            "avg_winning_bid": comp_data.get("avg_winning_bid", 0),
+            "trend": comp_data.get("trend", "stable"),
+            "top_entities": comp_data.get("top_entities", []),
+            "size_brackets": comp_data.get("size_brackets", {}),
+        },
+        "yearly": yearly,
+    }
+
+
+@router.get("/scc-performance")
+def get_scc_performance(db: Session = Depends(get_db)):
+    """SCC's full performance breakdown."""
+    from app.services.award_analytics_service import get_cached_analytics, compute_award_analytics
+
+    cached = get_cached_analytics()
+    if not cached:
+        cached = compute_award_analytics(db)
+
+    if not cached or cached.get("status") == "no_data":
+        return {"status": "no_data"}
+
+    scc = cached.get("scc_performance", {})
+    pricing = cached.get("pricing", {})
+
+    return {
+        **scc,
+        "market_lowest_bidder_wins_pct": pricing.get("lowest_bidder_wins_pct"),
+        "market_avg_spread_pct": pricing.get("avg_bid_spread_pct"),
+    }

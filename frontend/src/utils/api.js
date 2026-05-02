@@ -71,6 +71,11 @@ export const api = {
   // Awarded
   getAwardedStats: () => fetchAPI('/awarded/stats'),
   getAwardedWinners: () => fetchAPI('/awarded/winners'),
+  getAwardedAnalytics: () => fetchAPI('/awarded/analytics'),
+  getAwardedInsights: () => fetchAPI('/awarded/insights'),
+  getSCCPerformance: () => fetchAPI('/awarded/scc-performance'),
+  getCompetitorHistory: (company) => fetchAPI('/awarded/competitor-history', { company }),
+  computeAwardedAnalytics: () => postAPI('/awarded/compute'),
 
   // System
   getHealth: () => fetchAPI('/system/health'),

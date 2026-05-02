@@ -1,17 +1,18 @@
 """
 Tender match scoring service.
-Uses Groq LLM to score SCC-relevant tenders for strategic fit.
+Uses LLM to score SCC-relevant tenders for strategic fit.
 """
 
 import json
 import time
 import logging
+from collections import Counter, defaultdict
 from datetime import datetime, timedelta
 
 from sqlalchemy.orm import Session
 
 from app.services.llm_client import call_llm_json
-from app.models import Tender, TenderProbe, TenderScore
+from app.models import Tender, TenderProbe, TenderScore, AwardedTender
 
 logger = logging.getLogger(__name__)
 
@@ -107,6 +108,9 @@ def score_tenders(db: Session) -> dict:
                 desc["scope"] = probe.nit.get("scope", "")
         tender_descs.append(desc)
 
+    # Enrich with historical entity context
+    _enrich_with_entity_history(db, tender_descs)
+
     # Process in batches of 8
     batch_size = 8
     scored = 0
@@ -141,3 +145,65 @@ def score_tenders(db: Session) -> dict:
             time.sleep(0.5)  # Rate limit
 
     return {"status": "success", "scored": scored, "total_scc": len(scc_tenders)}
+
+
+def _enrich_with_entity_history(db: Session, tender_descs: list):
+    """Add historical pricing context per entity to tender descriptions."""
+    from app.services.competitive_intel_service import resolve_competitor
+
+    try:
+        awarded = db.query(AwardedTender).filter(
+            AwardedTender.is_construction == True,
+            AwardedTender.entity != None,
+            AwardedTender.winning_value != None,
+        ).all()
+    except Exception:
+        return
+
+    if not awarded:
+        return
+
+    # Build per-entity stats
+    entity_stats = defaultdict(lambda: {
+        "count": 0, "values": [], "lowest_wins": 0,
+        "total_with_lowest": 0, "comp_wins": Counter(),
+    })
+
+    for t in awarded:
+        es = entity_stats[t.entity]
+        es["count"] += 1
+        if t.winning_value > 0:
+            es["values"].append(t.winning_value)
+        if t.lowest_bid and t.lowest_bid > 0:
+            es["total_with_lowest"] += 1
+            if abs(t.winning_value - t.lowest_bid) < 1:
+                es["lowest_wins"] += 1
+        winner = resolve_competitor(t.winner_company) if t.winner_company else None
+        if winner:
+            es["comp_wins"][winner] += 1
+
+    # Attach to each tender description
+    for desc in tender_descs:
+        entity_name = desc.get("entity", "")
+        if not entity_name:
+            continue
+
+        # Find matching entity (partial match)
+        es = entity_stats.get(entity_name)
+        if not es:
+            for key, val in entity_stats.items():
+                if entity_name.lower() in key.lower() or key.lower() in entity_name.lower():
+                    es = val
+                    break
+
+        if es and es["count"] >= 3:
+            avg_val = round(sum(es["values"]) / len(es["values"]), 2) if es["values"] else 0
+            lowest_pct = round((es["lowest_wins"] / es["total_with_lowest"]) * 100, 1) if es["total_with_lowest"] > 0 else None
+            top_winners = [f"{c} ({n} wins)" for c, n in es["comp_wins"].most_common(3)]
+
+            desc["historical_context"] = {
+                "entity_total_construction_awards": es["count"],
+                "avg_winning_bid": avg_val,
+                "lowest_bidder_wins_pct": lowest_pct,
+                "top_winners_here": top_winners,
+            }

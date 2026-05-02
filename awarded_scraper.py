@@ -61,31 +61,48 @@ CHECKPOINT_FILE = os.path.join(OUTPUT_DIR, "awarded_scrape_checkpoint.json")
 
 
 def _secure_url(path: str, params: dict) -> str:
-    """Build a secure URL with SHA-256 hash validation."""
-    full = dict(params)
-    full["CTRL_STRDIRECTION"] = "LTR"
+    """Build a secure URL with SHA-256 hash validation.
+
+    'randomno' is included in the hash and encparam but excluded from the
+    visible query string. Some endpoints tolerate it either way, but the
+    Opening Report endpoint rejects URLs with randomno in the query.
+    """
+    visible = dict(params)
+    visible["CTRL_STRDIRECTION"] = "LTR"
+
+    full = dict(visible)
     full["randomno"] = "fixedrandomno"
     names = ",".join(full.keys())
     vals = "".join(v for v in full.values() if v)
     hv = hashlib.sha256(vals.encode()).hexdigest()
-    qs = "&".join(f"{k}={v}" for k, v in full.items())
+
+    qs = "&".join(f"{k}={v}" for k, v in visible.items())
     return f"{BASE}{path}?{qs}&encparam={names}&hashval={hv}"
 
 
 def _opening_report_url(tender_id: str) -> str:
-    """Build URL for the Tender Opening Report (bidders + values)."""
+    """Build URL for the Tender Opening Report (bidders + values).
+
+    Key insight: 'randomno' is included in the hash calculation and encparam list
+    but must NOT appear as a visible query parameter. The portal rejects URLs
+    that include randomno=fixedrandomno in the query string.
+    """
     params = {
         "callAction": "showOpeningStatus_public",
         "strTenderNo": tender_id,
         "PublicUrl": "1",
     }
-    full = dict(params)
-    full["CTRL_STRDIRECTION"] = "LTR"
+    visible = dict(params)
+    visible["CTRL_STRDIRECTION"] = "LTR"
+
+    # Hash includes randomno value, but it's excluded from the query string
+    full = dict(visible)
     full["randomno"] = "fixedrandomno"
     names = ",".join(full.keys())
     vals = "".join(v for v in full.values() if v)
     hv = hashlib.sha256(vals.encode()).hexdigest()
-    qs = "&".join(f"{k}={v}" for k, v in full.items())
+
+    qs = "&".join(f"{k}={v}" for k, v in visible.items())
     return f"{BASE}/product/tmsbidopen/TenderOpeningQCRStatusAction.action?{qs}&encparam={names}&hashval={hv}"
 
 
@@ -100,13 +117,16 @@ def _participation_url(tender_id: str) -> str:
         "SCWF_envList": "PB",
         "PublicUrl": "1",
     }
-    full = dict(params)
-    full["CTRL_STRDIRECTION"] = "LTR"
+    visible = dict(params)
+    visible["CTRL_STRDIRECTION"] = "LTR"
+
+    full = dict(visible)
     full["randomno"] = "fixedrandomno"
     names = ",".join(full.keys())
     vals = "".join(v for v in full.values() if v)
     hv = hashlib.sha256(vals.encode()).hexdigest()
-    qs = "&".join(f"{k}={v}" for k, v in full.items())
+
+    qs = "&".join(f"{k}={v}" for k, v in visible.items())
     return f"{BASE}/product/AllVendorStatusReportPublic?{qs}&encparam={names}&hashval={hv}"
 
 
@@ -337,49 +357,57 @@ def scrape_opening_reports(session: requests.Session, tenders: list[dict], const
             continue
 
         # Parse bidders table
+        # Data rows use class='even gradeA' or 'odd gradeA'
         bidders = []
         winner = None
-        tables = soup.find_all("table")
+        data_rows = soup.find_all("tr", class_=re.compile(r"(even|odd)\s+gradeA"))
 
-        for table in tables:
-            rows = table.find_all("tr")
-            for row in rows[1:]:  # skip header
-                cells = row.find_all("td")
-                if len(cells) < 4:
-                    continue
+        for row in data_rows:
+            cells = row.find_all("td")
+            if len(cells) < 4:
+                continue
 
-                company = cells[1].get_text(strip=True)
-                offer_type = cells[2].get_text(strip=True) if len(cells) > 2 else ""
-                value_text = cells[3].get_text(strip=True) if len(cells) > 3 else ""
-                status = cells[4].get_text(strip=True) if len(cells) > 4 else ""
+            # Cells: 0=S.No, 1=Company Name, 2=Offer Type, 3=Total Quoted Value, 4=Status
+            company_cell = cells[1]
+            company = company_cell.get_text(strip=True)
+            offer_type = cells[2].get_text(strip=True) if len(cells) > 2 else ""
+            value_text = cells[3].get_text(strip=True) if len(cells) > 3 else ""
+            status = cells[4].get_text(strip=True) if len(cells) > 4 else ""
 
-                # Parse value
-                try:
-                    value = float(value_text.replace(",", "")) if value_text else 0
-                except (ValueError, TypeError):
-                    value = 0
+            # Parse value
+            try:
+                value = float(value_text.replace(",", "")) if value_text else 0
+            except (ValueError, TypeError):
+                value = 0
 
-                # Check if this bidder is marked as winner
-                # The portal marks the winner with "Awarded" in the company name cell
-                is_winner = "awarded" in cells[1].get_text().lower()
-                if is_winner:
-                    # Clean the company name (remove "Awarded" text)
-                    company = re.sub(r'\s*Awarded\s*', '', company, flags=re.IGNORECASE).strip()
+            # Check if this bidder is marked as winner
+            # Winner is marked with <img src="...award.svg" title="Awarded">
+            is_winner = False
+            award_img = company_cell.find("img", title=re.compile(r"awarded", re.IGNORECASE))
+            if award_img:
+                is_winner = True
+            elif "awarded" in company_cell.get_text().lower():
+                # Fallback: text-based detection
+                is_winner = True
 
-                bidder = {
+            if is_winner:
+                # Clean the company name (remove "Awarded" text if present)
+                company = re.sub(r'\s*Awarded\s*', '', company, flags=re.IGNORECASE).strip()
+
+            bidder = {
+                "company": company,
+                "offer_type": offer_type,
+                "quoted_value": value,
+                "status": status,
+                "is_winner": is_winner,
+            }
+            bidders.append(bidder)
+
+            if is_winner:
+                winner = {
                     "company": company,
-                    "offer_type": offer_type,
-                    "quoted_value": value,
-                    "status": status,
-                    "is_winner": is_winner,
+                    "value": value,
                 }
-                bidders.append(bidder)
-
-                if is_winner:
-                    winner = {
-                        "company": company,
-                        "value": value,
-                    }
 
         detail = {
             "internal_id": tid,
@@ -630,6 +658,9 @@ def main():
 
     session = requests.Session()
     session.headers.update(HEADERS)
+
+    # Establish session cookie (JSESSIONID required for detail pages)
+    session.get(f"{BASE}/product/publicDash?viewFlag=CompletedTenders&CTRL_STRDIRECTION=LTR", timeout=30)
 
     print("=" * 70)
     print("SCC AWARDED TENDER SCRAPER")

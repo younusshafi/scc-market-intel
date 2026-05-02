@@ -224,8 +224,59 @@ function ActivitySummaryTable({ data }) {
   )
 }
 
+function HistoricalWinRates({ winners }) {
+  if (!winners || !winners.competitors || winners.competitors.length === 0) return null
+
+  const sorted = [...winners.competitors]
+    .filter(c => c.total_bids > 0)
+    .sort((a, b) => b.win_rate - a.win_rate)
+
+  const maxRate = Math.max(...sorted.map(c => c.win_rate), 1)
+
+  return (
+    <div className="mt-6">
+      <div className="bg-[#111827] border border-[#1e2a42] rounded-lg p-5">
+        <h3 className="text-xs font-semibold text-[#5a6a85] uppercase tracking-wider mb-4">
+          Historical Win Rates (Construction Awards)
+        </h3>
+        <div className="space-y-2.5">
+          {sorted.map((c, i) => {
+            const pct = (c.win_rate / maxRate) * 100
+            return (
+              <div key={i} className="flex items-center gap-3">
+                <div className="w-24 flex-shrink-0">
+                  <span className="text-xs text-[#e8ecf4] font-medium">{c.company}</span>
+                </div>
+                <div className="flex-1 h-5 bg-[#0F172A] rounded-full overflow-hidden relative">
+                  <div
+                    className="h-full rounded-full transition-all"
+                    style={{
+                      width: `${pct}%`,
+                      backgroundColor: COMPETITOR_COLORS[c.company] || '#6B7280',
+                      opacity: 0.7,
+                    }}
+                  />
+                </div>
+                <div className="w-40 flex-shrink-0 text-right">
+                  <span className="text-xs font-mono text-[#8896b0]">
+                    {c.total_wins} wins / {c.total_bids} bids
+                  </span>
+                  <span className="text-xs font-mono text-[#e8ecf4] ml-2 font-semibold">
+                    ({c.win_rate}%)
+                  </span>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function CompetitiveBattlefield() {
   const { data, loading, error } = useAPI(() => api.getCompetitiveIntel(), [])
+  const { data: winners } = useAPI(() => api.getAwardedWinners(), [])
 
   if (loading) {
     return (
@@ -254,6 +305,7 @@ export default function CompetitiveBattlefield() {
       <LiveCompetitiveTenders data={liveCompetitive} />
       <HeadToHeadSection data={headToHead} />
       <ActivitySummaryTable data={activitySummary} />
+      <HistoricalWinRates winners={winners} />
     </div>
   )
 }

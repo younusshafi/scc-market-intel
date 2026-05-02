@@ -47,14 +47,21 @@ INFRA_KEYWORDS = [
 
 
 def _secure_url(path: str, params: dict) -> str:
-    """Build a secure URL with hash validation (portal requirement)."""
-    full = dict(params)
-    full["CTRL_STRDIRECTION"] = "LTR"
+    """Build a secure URL with hash validation (portal requirement).
+
+    'randomno' is included in the hash and encparam but excluded from the
+    visible query string — the Opening Report endpoint rejects it otherwise.
+    """
+    visible = dict(params)
+    visible["CTRL_STRDIRECTION"] = "LTR"
+
+    full = dict(visible)
     full["randomno"] = "fixedrandomno"
     names = ",".join(full.keys())
     vals = "".join(v for v in full.values() if v)
     hv = hashlib.sha256(vals.encode()).hexdigest()
-    qs = "&".join(f"{k}={v}" for k, v in full.items())
+
+    qs = "&".join(f"{k}={v}" for k, v in visible.items())
     return f"{BASE}{path}?{qs}&encparam={names}&hashval={hv}"
 
 

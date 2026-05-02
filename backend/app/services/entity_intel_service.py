@@ -1,12 +1,12 @@
 """Entity intelligence service — strategic analysis of government entities."""
 import json, logging, time
 from datetime import datetime
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 from sqlalchemy.orm import Session
 
 from app.services.llm_client import call_llm_json
-from app.models import Tender, TenderProbe, EntityIntelligence
+from app.models import Tender, TenderProbe, EntityIntelligence, AwardedTender
 from app.services.competitive_intel_service import resolve_competitor
 
 logger = logging.getLogger(__name__)
@@ -144,6 +144,9 @@ def build_entity_intel(db: Session) -> dict:
         }
         entity_summaries.append(summary)
 
+    # Enrich with historical award data
+    _enrich_entities_with_award_history(db, entity_summaries)
+
     # Call LLM in batches of 5 to avoid context length issues
     all_llm_entities = []
     batch_size = 5
@@ -205,3 +208,58 @@ def build_entity_intel(db: Session) -> dict:
 
     db.commit()
     return {"status": "success", "built": built}
+
+
+def _enrich_entities_with_award_history(db: Session, entity_summaries: list):
+    """Add historical award stats per entity for richer LLM context."""
+    try:
+        awarded = db.query(AwardedTender).filter(
+            AwardedTender.is_construction == True,
+            AwardedTender.entity != None,
+        ).all()
+    except Exception:
+        return
+
+    if not awarded:
+        return
+
+    # Build per-entity stats
+    entity_stats = defaultdict(lambda: {
+        "total_awarded": 0, "total_value": 0, "lowest_wins": 0,
+        "total_with_lowest": 0, "comp_wins": Counter(),
+    })
+
+    for t in awarded:
+        es = entity_stats[t.entity]
+        es["total_awarded"] += 1
+        if t.winning_value and t.winning_value > 0:
+            es["total_value"] += t.winning_value
+        if t.lowest_bid and t.winning_value and t.lowest_bid > 0:
+            es["total_with_lowest"] += 1
+            if abs(t.winning_value - t.lowest_bid) < 1:
+                es["lowest_wins"] += 1
+        winner = resolve_competitor(t.winner_company) if t.winner_company else None
+        if winner:
+            es["comp_wins"][winner] += 1
+
+    # Attach to summaries
+    for summary in entity_summaries:
+        entity_name = summary.get("entity", "")
+        # Try exact match first, then partial
+        es = entity_stats.get(entity_name)
+        if not es:
+            for key, val in entity_stats.items():
+                if entity_name.lower() in key.lower() or key.lower() in entity_name.lower():
+                    es = val
+                    break
+
+        if es:
+            lowest_pct = round((es["lowest_wins"] / es["total_with_lowest"]) * 100, 1) if es["total_with_lowest"] > 0 else None
+            top_winners = [{"company": c, "wins": n} for c, n in es["comp_wins"].most_common(5)]
+            summary["historical_awards"] = {
+                "total_construction_awarded": es["total_awarded"],
+                "total_value_awarded": round(es["total_value"], 2),
+                "avg_winning_bid": round(es["total_value"] / es["total_awarded"], 2) if es["total_awarded"] > 0 else 0,
+                "lowest_bidder_wins_pct": lowest_pct,
+                "top_winners": top_winners,
+            }
