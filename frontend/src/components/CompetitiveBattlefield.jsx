@@ -1,7 +1,5 @@
-import React from 'react'
 import { useAPI } from '../hooks/useAPI'
 import { api } from '../utils/api'
-import { Activity } from 'lucide-react'
 
 const COMPETITOR_COLORS = {
   'Sarooj': '#2563EB',
@@ -23,17 +21,9 @@ function getCompetitorColor(name) {
 
 function formatValue(val) {
   if (!val || val === 0) return '--'
-  if (val >= 1000000) return `${(val / 1000000).toFixed(2)}M OMR`
-  if (val >= 1000) return `${Math.round(val / 1000)}K OMR`
-  return `${val.toLocaleString()} OMR`
-}
-
-function formatFee(fee) {
-  if (!fee) return null
-  if (typeof fee === 'string') return fee
-  if (fee >= 1000000) return `${(fee / 1000000).toFixed(2)}M OMR`
-  if (fee >= 1000) return `${Math.round(fee / 1000)}K OMR`
-  return `${fee.toLocaleString()} OMR`
+  if (val >= 1000000) return `${(val / 1000000).toFixed(2)}M`
+  if (val >= 1000) return `${Math.round(val / 1000)}K`
+  return val.toLocaleString()
 }
 
 function LivePulse() {
@@ -43,65 +33,82 @@ function LivePulse() {
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" />
         <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
       </span>
-      <span className="text-red-400 text-xs font-semibold uppercase tracking-wide">LIVE</span>
+      <span className="text-red-400 text-[10px] font-bold uppercase tracking-wider">LIVE</span>
     </span>
   )
 }
 
-function CompetitorPill({ name, role }) {
-  const color = getCompetitorColor(name)
-  if (role === 'BID') {
-    return (
-      <span className="inline-block px-2 py-0.5 rounded-full text-xs font-medium mr-1.5 mb-1"
-        style={{ backgroundColor: color, color: '#fff' }}>
-        {name} &middot; BID
-      </span>
-    )
-  }
-  return (
-    <span className="inline-block px-2 py-0.5 rounded-full text-xs font-medium mr-1.5 mb-1 border"
-      style={{ borderColor: color, color }}>
-      {name} &middot; DOCS
-    </span>
-  )
-}
-
-function MajorProjectCard({ project }) {
-  const borderColor = project.border_colour || '#334155'
-  const bgClass = project.sarooj_present ? 'bg-blue-900/10' : 'bg-[#1E293B]'
+function LiveCompetitiveTenders({ data }) {
+  if (!data || data.length === 0) return null
 
   return (
-    <div className={`${bgClass} rounded-lg border border-[#334155] p-3 overflow-hidden`}
-      style={{ borderLeft: `4px solid ${borderColor}` }}>
-      {/* Row 1: Name + Fee */}
-      <div className="flex items-start justify-between gap-2">
-        <h4 className="text-[#e8ecf4] font-bold text-sm truncate flex-1">{project.name}</h4>
-        {project.fee != null && (
-          <span className="text-amber-400 font-mono text-xs whitespace-nowrap">{formatFee(project.fee)}</span>
-        )}
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-xs font-semibold text-[#5a6a85] uppercase tracking-wider">
+          Live Competitive Tenders
+        </h3>
+        <LivePulse />
       </div>
-      {/* Row 2: Entity */}
-      <p className="text-[#5a6a85] text-xs mt-0.5">{project.entity}</p>
-      {/* Row 3: Category */}
-      {project.category && (
-        <span className="inline-block mt-1 text-[10px] bg-[#334155] text-[#8896b0] px-2 py-0.5 rounded-full">
-          {project.category}
-        </span>
-      )}
-      {/* Row 4: Purchasers + Bidders */}
-      <p className="text-[#8896b0] text-xs mt-2">
-        <span className="text-[#e8ecf4] font-bold">{project.num_purchasers || 0}</span> doc purchasers &middot;{' '}
-        <span className="text-[#e8ecf4] font-bold">{project.num_bidders || 0}</span> bidders
-      </p>
-      {/* Row 5: Competitor pills */}
-      <div className="mt-2 flex flex-wrap">
-        {project.competitors && project.competitors.length > 0 ? (
-          project.competitors.map((c, i) => (
-            <CompetitorPill key={i} name={c.name} role={c.role || 'DOCS'} />
-          ))
-        ) : (
-          <p className="text-[#5a6a85] text-xs italic">No tracked competitors</p>
-        )}
+      <div className="space-y-3">
+        {data.map((item, idx) => {
+          const tracked = [...(item.tracked || [])].sort((a, b) =>
+            (a.date || '').localeCompare(b.date || '')
+          )
+
+          return (
+            <div key={idx} className="bg-[#111827] border border-[#1e2a42] rounded-lg p-5 hover:border-[#2a3a5c] transition-colors">
+              <div className="flex items-start justify-between gap-4">
+                {/* Left: project info */}
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-sm font-semibold text-[#e8ecf4] leading-snug mb-1">{item.project}</h4>
+                  <p className="text-xs text-[#5a6a85] mb-2">
+                    {item.total_purchasers} doc purchasers
+                    {item.has_bids && <span className="text-amber-400 ml-2">· Bids received</span>}
+                  </p>
+                </div>
+                {/* Right: competitor avatars + count */}
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <div className="flex -space-x-1">
+                    {tracked.slice(0, 5).map((c, i) => (
+                      <span
+                        key={i}
+                        className="w-6 h-6 rounded-full border-2 border-[#111827] flex items-center justify-center text-[8px] font-bold text-white"
+                        style={{ backgroundColor: getCompetitorColor(c.name) }}
+                        title={c.name}
+                      >
+                        {(c.name || '')[0]}
+                      </span>
+                    ))}
+                  </div>
+                  <span className="text-sm font-bold text-[#e8ecf4]">{item.tracked_count} active</span>
+                </div>
+              </div>
+
+              {/* Timeline bar */}
+              {tracked.length > 0 && (
+                <div className="mt-4 relative">
+                  <div className="h-0.5 bg-[#1e2a42] rounded-full absolute top-3 left-0 right-0" />
+                  <div className="flex justify-between relative">
+                    {tracked.map((c, i) => (
+                      <div key={i} className="flex flex-col items-center" style={{ flex: 1 }}>
+                        <span
+                          className="w-3.5 h-3.5 rounded-full border-2 border-[#111827] z-10"
+                          style={{ backgroundColor: getCompetitorColor(c.name) }}
+                        />
+                        <span className="text-[10px] font-semibold text-[#8896b0] mt-1.5 text-center">
+                          {c.name}
+                        </span>
+                        <span className="text-[10px] font-mono text-[#5a6a85]">
+                          {c.date ? c.date.slice(5) : ''}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )
+        })}
       </div>
     </div>
   )
@@ -112,104 +119,58 @@ function HeadToHeadSection({ data }) {
 
   return (
     <div className="mt-8">
-      <h3 className="text-[#5a6a85] text-xs font-semibold uppercase tracking-wider mb-4">
+      <h3 className="text-xs font-semibold text-[#5a6a85] uppercase tracking-wider mb-4">
         Head-to-Head: SCC vs Competitors
       </h3>
-      <div className="space-y-4">
-        {data.map((item, idx) => (
-          <div key={idx} className="bg-[#0F172A] rounded-lg border border-[#334155] p-4 overflow-x-auto">
-            <h4 className="text-[#e8ecf4] font-semibold text-sm mb-1">{item.project}</h4>
-            <p className="text-[#5a6a85] text-xs font-mono mb-3">{item.tender_number}</p>
-            <table className="w-full text-xs">
-              <thead>
-                <tr className="text-[#5a6a85] border-b border-[#334155]">
-                  <th className="text-left py-1.5 font-medium">Company</th>
-                  <th className="text-right py-1.5 font-medium">Bid Value (OMR)</th>
-                  <th className="text-right py-1.5 font-medium">Difference from SCC</th>
-                </tr>
-              </thead>
-              <tbody>
+      <div className="space-y-3">
+        {data.map((item, idx) => {
+          const maxVal = Math.max(...(item.rows || []).map(r => r.value || 0), 1)
+          const sccRow = (item.rows || []).find(r => r.is_scc)
+          const isLowest = sccRow && (item.rows || []).every(r => r.is_scc || r.value >= sccRow.value)
+
+          return (
+            <div key={idx} className="bg-[#111827] border border-[#1e2a42] rounded-lg p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-sm font-semibold text-[#e8ecf4]">{item.project}</h4>
+                {isLowest && (
+                  <span className="text-[10px] font-bold px-2.5 py-1 rounded bg-green-500/20 text-green-400 border border-green-500/40">
+                    LOWEST BIDDER
+                  </span>
+                )}
+              </div>
+              <div className="space-y-3">
                 {(item.rows || []).map((row, i) => {
+                  const pct = maxVal ? (row.value / maxVal) * 100 : 0
                   const isSCC = row.is_scc
-                  const rowBg = isSCC ? 'bg-blue-900/30' : ''
                   return (
-                    <tr key={i} className={rowBg}>
-                      <td className="py-1.5 text-[#e8ecf4]">
-                        <span className="inline-block w-2 h-2 rounded-full mr-2"
+                    <div key={i} className="flex items-center gap-3">
+                      <span className="text-xs text-[#8896b0] w-24 truncate flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                           style={{ backgroundColor: getCompetitorColor(row.name) }} />
                         {row.name}
-                      </td>
-                      <td className="py-1.5 text-right font-mono text-[#e8ecf4]">
-                        {formatValue(row.value)}
-                      </td>
-                      <td className={`py-1.5 text-right font-mono ${
-                        isSCC ? 'text-[#8896b0]' :
-                        row.diff_pct > 0 ? 'text-red-400' : 'text-amber-400'
-                      }`}>
-                        {isSCC ? 'Baseline' : (
-                          row.diff != null ? `+${formatValue(Math.abs(row.diff)).replace(' OMR', '')} (+${row.diff_pct?.toFixed(1)}%)` : '--'
-                        )}
-                      </td>
-                    </tr>
+                      </span>
+                      <div className="flex-1 h-2.5 bg-[#0F172A] rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full ${isSCC ? 'bg-amber-400' : 'bg-slate-500'}`}
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
+                      <span className="text-xs font-mono text-[#e8ecf4] w-20 text-right">
+                        {formatValue(row.value)} OMR
+                      </span>
+                      {!isSCC && row.diff_pct != null && (
+                        <span className={`text-xs font-mono w-16 text-right ${row.diff_pct > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                          {row.diff_pct > 0 ? '+' : ''}{row.diff_pct.toFixed(1)}%
+                        </span>
+                      )}
+                      {isSCC && <span className="text-xs text-[#5a6a85] w-16 text-right">SCC</span>}
+                    </div>
                   )
                 })}
-              </tbody>
-            </table>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function LiveCompetitiveTenders({ data }) {
-  if (!data || data.length === 0) return null
-
-  return (
-    <div className="mt-8">
-      <h3 className="text-[#5a6a85] text-xs font-semibold uppercase tracking-wider mb-4">
-        Live Competitive Tenders
-      </h3>
-      <div className="space-y-3">
-        {data.map((item, idx) => (
-          <div key={idx} className="bg-[#0F172A] rounded-lg border border-[#334155] p-4">
-            {/* Title row */}
-            <div className="flex items-center justify-between mb-1">
-              <h4 className="text-[#e8ecf4] font-semibold text-sm">{item.project}</h4>
-              <LivePulse />
+              </div>
             </div>
-            {/* Meta line */}
-            <p className="text-[#8896b0] text-xs mb-2">
-              <span className="text-[#e8ecf4] font-bold">{item.tracked_count || 0} of {item.total_purchasers || 0}</span>{' '}
-              tracked competitors active &middot; {item.total_purchasers || 0} total purchasers
-              {item.has_bids && <span className="text-amber-400 ml-2">&middot; Bids received</span>}
-            </p>
-            {/* Competitor pills */}
-            {item.tracked && item.tracked.length > 0 && (
-              <div className="flex flex-wrap mb-2">
-                {item.tracked.map((c, i) => (
-                  <span key={i} className="inline-block px-2 py-0.5 rounded-full text-xs font-medium mr-1.5 mb-1"
-                    style={{ backgroundColor: getCompetitorColor(c.name), color: '#fff' }}>
-                    {c.name}
-                  </span>
-                ))}
-              </div>
-            )}
-            {/* Purchase timestamps */}
-            {item.tracked && item.tracked.length > 0 && (
-              <div className="space-y-0.5 mt-2">
-                {item.tracked.map((c, i) => (
-                  <p key={i} className="text-[#8896b0] text-xs flex items-center gap-1.5">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full"
-                      style={{ backgroundColor: getCompetitorColor(c.name) }} />
-                    <span className="text-[#e8ecf4]">{c.name}:</span>
-                    <span className="font-mono">{c.date || '--'}</span>
-                  </p>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )
@@ -217,42 +178,41 @@ function LiveCompetitiveTenders({ data }) {
 
 function ActivitySummaryTable({ data }) {
   if (!data || data.length === 0) return null
-
   const sorted = [...data].sort((a, b) => ((b.docs || 0) + (b.bids || 0)) - ((a.docs || 0) + (a.bids || 0)))
 
   return (
     <div className="mt-8">
-      <h3 className="text-[#5a6a85] text-xs font-semibold uppercase tracking-wider mb-4">
+      <h3 className="text-xs font-semibold text-[#5a6a85] uppercase tracking-wider mb-4">
         Competitor Activity Summary
       </h3>
-      <div className="bg-[#0F172A] rounded-lg border border-[#334155] overflow-x-auto">
-        <table className="w-full text-xs">
+      <div className="bg-[#111827] border border-[#1e2a42] rounded-lg overflow-x-auto">
+        <table className="w-full text-sm">
           <thead>
-            <tr className="text-[#5a6a85] border-b border-[#334155]">
-              <th className="text-left py-2 px-3 font-medium">Competitor</th>
-              <th className="text-right py-2 px-3 font-medium">Docs Purchased</th>
-              <th className="text-right py-2 px-3 font-medium">Tenders Bid</th>
-              <th className="text-right py-2 px-3 font-medium">Conversion</th>
-              <th className="text-right py-2 px-3 font-medium">Largest Bid</th>
+            <tr className="text-xs text-[#5a6a85] border-b border-[#1e2a42]">
+              <th className="text-left py-3 px-4 font-medium">Competitor</th>
+              <th className="text-right py-3 px-4 font-medium">Docs</th>
+              <th className="text-right py-3 px-4 font-medium">Bids</th>
+              <th className="text-right py-3 px-4 font-medium">Conv %</th>
+              <th className="text-right py-3 px-4 font-medium">Largest Bid</th>
             </tr>
           </thead>
           <tbody>
             {sorted.map((row, i) => {
-              const isSarooj = row.name?.toLowerCase().includes('sarooj') || row.name?.toLowerCase().includes('scc')
+              const isSarooj = row.name?.toLowerCase().includes('sarooj')
               const conv = row.conv || 0
-              const convColor = conv >= 50 ? 'text-green-400' : conv >= 40 ? 'text-amber-400' : conv === 0 ? 'text-[#5a6a85]' : 'text-[#e8ecf4]'
+              const convColor = conv >= 50 ? 'text-green-400' : conv >= 40 ? 'text-amber-400' : 'text-[#8896b0]'
               return (
-                <tr key={i} className={isSarooj ? 'bg-blue-900/30' : ''}>
-                  <td className="py-2 px-3 text-[#e8ecf4]">
-                    <span className="inline-block w-2 h-2 rounded-full mr-2"
+                <tr key={i} className={isSarooj ? 'bg-blue-900/20' : ''}>
+                  <td className="py-2.5 px-4 text-[#e8ecf4]">
+                    <span className="inline-block w-2.5 h-2.5 rounded-full mr-2"
                       style={{ backgroundColor: getCompetitorColor(row.name) }} />
                     {row.name}
                   </td>
-                  <td className="py-2 px-3 text-right font-mono text-[#e8ecf4]">{row.docs || 0}</td>
-                  <td className="py-2 px-3 text-right font-mono text-[#e8ecf4]">{row.bids || 0}</td>
-                  <td className={`py-2 px-3 text-right font-mono ${convColor}`}>{conv}%</td>
-                  <td className="py-2 px-3 text-right font-mono text-[#e8ecf4]">
-                    {row.max_bid ? formatValue(row.max_bid) : '--'}
+                  <td className="py-2.5 px-4 text-right font-mono text-[#e8ecf4]">{row.docs || 0}</td>
+                  <td className="py-2.5 px-4 text-right font-mono text-[#e8ecf4]">{row.bids || 0}</td>
+                  <td className={`py-2.5 px-4 text-right font-mono ${convColor}`}>{conv}%</td>
+                  <td className="py-2.5 px-4 text-right font-mono text-[#e8ecf4]">
+                    {row.max_bid ? `${formatValue(row.max_bid)} OMR` : '--'}
                   </td>
                 </tr>
               )
@@ -269,68 +229,30 @@ export default function CompetitiveBattlefield() {
 
   if (loading) {
     return (
-      <div className="bg-[#1E293B] rounded-xl border border-[#334155] p-6"
-        style={{ borderTop: '3px solid', borderImage: 'linear-gradient(90deg, #ef4444, #f59e0b, #10b981) 1' }}>
-        <div className="animate-pulse space-y-4">
-          {[1, 2, 3].map(i => (
-            <div key={i} className="bg-[#0F172A] rounded-lg h-32 border border-[#334155]" />
-          ))}
-        </div>
+      <div className="space-y-3">
+        {[1, 2, 3].map(i => (
+          <div key={i} className="bg-[#111827] border border-[#1e2a42] rounded-lg h-28 animate-pulse" />
+        ))}
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="bg-[#1E293B] rounded-xl border border-[#334155] p-6"
-        style={{ borderTop: '3px solid', borderImage: 'linear-gradient(90deg, #ef4444, #f59e0b, #10b981) 1' }}>
-        <p className="text-red-400 text-sm">Failed to load competitive intelligence data.</p>
+      <div className="bg-[#111827] border border-red-900/50 rounded-lg p-6 text-center">
+        <p className="text-sm text-red-400">Failed to load competitive intelligence</p>
       </div>
     )
   }
 
-  const majorProjects = data?.major_projects || []
   const headToHead = data?.head_to_head || []
   const liveCompetitive = data?.live_competitive || []
   const activitySummary = data?.activity_summary || []
 
-  if (majorProjects.length === 0 && headToHead.length === 0 && liveCompetitive.length === 0 && activitySummary.length === 0) {
-    return (
-      <div className="bg-[#1E293B] rounded-xl border border-[#334155] p-6"
-        style={{ borderTop: '3px solid', borderImage: 'linear-gradient(90deg, #ef4444, #f59e0b, #10b981) 1' }}>
-        <p className="text-[#5a6a85] text-sm text-center">No competitive intelligence data available.</p>
-      </div>
-    )
-  }
-
   return (
-    <div className="bg-[#1E293B] rounded-xl border border-[#334155] p-6"
-      style={{ borderTop: '3px solid', borderImage: 'linear-gradient(90deg, #ef4444, #f59e0b, #10b981) 1' }}>
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-[#e8ecf4] font-bold text-lg flex items-center gap-2">
-          <Activity size={18} className="text-[#f59e0b]" />
-          Competitive Intelligence
-        </h2>
-        <LivePulse />
-      </div>
-
-      {/* Major Project Tracker */}
-      {majorProjects.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {majorProjects.map((project, idx) => (
-            <MajorProjectCard key={idx} project={project} />
-          ))}
-        </div>
-      )}
-
-      {/* Head-to-Head */}
-      <HeadToHeadSection data={headToHead} />
-
-      {/* Live Competitive Tenders */}
+    <div>
       <LiveCompetitiveTenders data={liveCompetitive} />
-
-      {/* Competitor Activity Summary */}
+      <HeadToHeadSection data={headToHead} />
       <ActivitySummaryTable data={activitySummary} />
     </div>
   )

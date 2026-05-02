@@ -64,6 +64,14 @@ export const api = {
   getNewsTenderLinks: () => fetchAPI('/news/tender-links'),
   linkNewsToTenders: () => postAPI('/news/link-to-tenders'),
 
+  // Dashboard
+  getPriorityActions: () => fetchAPI('/dashboard/priority-actions'),
+  getDashboardMetrics: () => fetchAPI('/dashboard/metrics'),
+
+  // Awarded
+  getAwardedStats: () => fetchAPI('/awarded/stats'),
+  getAwardedWinners: () => fetchAPI('/awarded/winners'),
+
   // System
   getHealth: () => fetchAPI('/system/health'),
   getScrapeStatus: () => fetchAPI('/system/scrape-status'),

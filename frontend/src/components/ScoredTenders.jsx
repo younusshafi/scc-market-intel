@@ -1,159 +1,35 @@
 import { useState } from 'react'
 import { useAPI } from '../hooks/useAPI'
 import { api } from '../utils/api'
-
-const SCORE_COLORS = {
-  high: 'bg-green-600',
-  good: 'bg-blue-600',
-  mid: 'bg-amber-600',
-  low: 'bg-slate-600',
-}
-
-function getScoreColor(score) {
-  if (score >= 80) return SCORE_COLORS.high
-  if (score >= 60) return SCORE_COLORS.good
-  if (score >= 40) return SCORE_COLORS.mid
-  return SCORE_COLORS.low
-}
-
-const REC_STYLES = {
-  'MUST_BID': 'bg-green-900/50 text-green-400 border-green-700',
-  'STRONG_FIT': 'bg-blue-900/50 text-blue-400 border-blue-700',
-  'CONSIDER': 'bg-amber-900/50 text-amber-400 border-amber-700',
-  'WATCH': 'bg-slate-700/50 text-slate-400 border-slate-600',
-  'SKIP': 'bg-slate-700/50 text-slate-400 border-slate-600',
-}
-
-const REC_LABELS = {
-  'MUST_BID': 'Bid Aggressively',
-  'STRONG_FIT': 'Strong Fit',
-  'CONSIDER': 'Consider',
-  'WATCH': 'Monitor',
-  'SKIP': 'Skip',
-}
-
-const COMPETITOR_COLORS = {
-  'Galfar': '#DC2626',
-  'Strabag': '#EA580C',
-  'Al Tasnim': '#16A34A',
-  'L&T': '#7C3AED',
-  'Towell': '#0891B2',
-  'Hassan Allam': '#CA8A04',
-  'Arab Contractors': '#BE185D',
-  'Ozkar': '#6B7280',
-}
-
-function getCompetitorColor(name) {
-  if (!name) return '#6B7280'
-  const key = Object.keys(COMPETITOR_COLORS).find(k => name.toLowerCase().includes(k.toLowerCase()))
-  return key ? COMPETITOR_COLORS[key] : '#6B7280'
-}
-
-function formatFee(fee) {
-  if (!fee) return null
-  if (typeof fee === 'string') return fee
-  if (fee >= 1000000) return `${(fee / 1000000).toFixed(2)}M OMR`
-  if (fee >= 1000) return `${Math.round(fee / 1000)}K OMR`
-  return `${fee.toLocaleString()} OMR`
-}
-
-function SkeletonCard() {
-  return (
-    <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-5 animate-pulse">
-      <div className="flex gap-4">
-        <div className="w-14 h-14 rounded-full bg-[#334155]" />
-        <div className="flex-1 space-y-3">
-          <div className="h-4 bg-[#334155] rounded w-3/4" />
-          <div className="h-3 bg-[#334155] rounded w-1/2" />
-          <div className="h-3 bg-[#334155] rounded w-full" />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function TenderCard({ tender }) {
-  const scoreColor = getScoreColor(tender.score)
-  const recStyle = REC_STYLES[tender.recommendation] || REC_STYLES['SKIP']
-  const feeStr = formatFee(tender.fee)
-
-  return (
-    <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-5 hover:bg-[#253347] transition-colors">
-      <div className="flex gap-4">
-        {/* Score badge */}
-        <div className={`flex-shrink-0 w-14 h-14 rounded-full ${scoreColor} flex items-center justify-center`}>
-          <span className="text-white text-lg font-bold">{tender.score}</span>
-        </div>
-
-        <div className="flex-1 min-w-0">
-          {/* Top row: recommendation + meta */}
-          <div className="flex flex-wrap items-center gap-2 mb-1.5">
-            <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${recStyle}`}>
-              {REC_LABELS[tender.recommendation] || tender.recommendation}
-            </span>
-            {tender.is_retender && (
-              <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded bg-orange-900/40 text-orange-400 border border-orange-700">
-                RE-TENDER
-              </span>
-            )}
-            {tender.grade_en && (
-              <span className="text-[10px] text-[#8896b0]">{tender.grade_en}</span>
-            )}
-          </div>
-
-          {/* Title */}
-          <h4 className="text-sm font-semibold text-[#e8ecf4] leading-snug mb-1 line-clamp-2">
-            {tender.tender_name_en || tender.tender_number}
-          </h4>
-
-          {/* Entity + fee */}
-          <div className="flex flex-wrap items-center gap-3 text-xs text-[#8896b0] mb-2">
-            {tender.entity_en && <span>{tender.entity_en}</span>}
-            {feeStr && <span className="font-mono text-amber-400">Doc Fee: {feeStr}</span>}
-            {tender.bid_closing_date && (
-              <span>Closes {new Date(tender.bid_closing_date).toLocaleDateString()}</span>
-            )}
-          </div>
-
-          {/* Competitor chips */}
-          {tender.tracked_competitors && tender.tracked_competitors.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mb-2">
-              {tender.tracked_competitors.map((comp, i) => (
-                <span
-                  key={i}
-                  className="text-[9px] font-semibold text-white px-2 py-0.5 rounded-full"
-                  style={{ backgroundColor: getCompetitorColor(comp.name) }}
-                >
-                  {comp.name}{comp.role ? ` (${comp.role})` : ''}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* AI reasoning */}
-          {tender.reasoning && (
-            <div className="bg-[#0F172A] rounded-lg px-3 py-2 mt-1">
-              <p className="text-[11px] text-[#8896b0] leading-relaxed">
-                <span className="text-[#5a6a85] font-semibold mr-1">AI:</span>
-                {tender.reasoning}
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  )
-}
+import OpportunityRow from './OpportunityRow'
 
 export default function ScoredTenders() {
   const { data, loading, error, refetch } = useAPI(api.getScoredTenders, [])
+  const { data: allTenders } = useAPI(() => api.getTenders({ scc_only: true, page_size: 200 }), [])
+  const [subTab, setSubTab] = useState('recommended')
   const [showAll, setShowAll] = useState(false)
   const [scoring, setScoring] = useState(false)
 
-  const tenders = data?.tenders || data?.scored_tenders || []
-  const sorted = [...tenders].sort((a, b) => (b.score || 0) - (a.score || 0))
-  const displayed = showAll ? sorted : sorted.slice(0, 15)
-  const total = data?.total || tenders.length
+  const tenders = data?.tenders || []
+  const retenders = (allTenders?.tenders || []).filter(t => t.is_retender)
+
+  // Filter by sub-tab
+  let displayed = []
+  if (subTab === 'recommended') {
+    displayed = tenders.filter(t => t.score >= 70).sort((a, b) => b.score - a.score)
+  } else if (subTab === 'all') {
+    displayed = [...tenders].sort((a, b) => b.score - a.score)
+  } else if (subTab === 'closing') {
+    const today = new Date().toISOString().split('T')[0]
+    displayed = tenders
+      .filter(t => t.bid_closing_date && t.bid_closing_date >= today)
+      .sort((a, b) => (a.bid_closing_date || '').localeCompare(b.bid_closing_date || ''))
+  } else if (subTab === 'retenders') {
+    displayed = retenders
+  }
+
+  const limit = showAll ? displayed.length : 10
+  const shown = displayed.slice(0, limit)
 
   async function handleTriggerScoring() {
     setScoring(true)
@@ -167,77 +43,124 @@ export default function ScoredTenders() {
     }
   }
 
+  const tabs = [
+    { id: 'recommended', label: 'Recommended', count: tenders.filter(t => t.score >= 70).length },
+    { id: 'all', label: 'All Scored', count: tenders.length },
+    { id: 'closing', label: 'Closing Soon', count: null },
+    { id: 'retenders', label: 'Re-Tenders', count: retenders.length },
+  ]
+
   return (
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <h2 className="text-[11px] font-semibold text-[#5a6a85] uppercase tracking-wider">
-            AI Tender Match Scoring
-          </h2>
-          {total > 0 && (
-            <span className="text-[10px] font-semibold bg-blue-600/20 text-blue-400 px-2 py-0.5 rounded-full">
-              {total}
-            </span>
-          )}
-        </div>
-        {tenders.length > 0 && (
+        <h2 className="text-xs font-semibold text-[#5a6a85] uppercase tracking-wider">
+          Opportunities
+        </h2>
+        <button
+          onClick={handleTriggerScoring}
+          disabled={scoring}
+          className="text-xs font-semibold text-blue-400 hover:text-blue-300 disabled:opacity-50 transition-colors"
+        >
+          {scoring ? 'Scoring...' : 'Re-run Scoring'}
+        </button>
+      </div>
+
+      {/* Sub-tabs */}
+      <div className="flex gap-1 mb-4 bg-[#0a0e17] rounded-lg p-1 border border-[#1e2a42]">
+        {tabs.map(tab => (
           <button
-            onClick={handleTriggerScoring}
-            disabled={scoring}
-            className="text-[10px] font-semibold text-blue-400 hover:text-blue-300 disabled:opacity-50 transition-colors"
+            key={tab.id}
+            onClick={() => { setSubTab(tab.id); setShowAll(false) }}
+            className={`text-xs font-semibold py-2 px-4 rounded-md transition-colors flex items-center gap-2 ${
+              subTab === tab.id
+                ? 'bg-[#1e2a42] text-[#e8ecf4]'
+                : 'text-[#5a6a85] hover:text-[#8896b0]'
+            }`}
           >
-            {scoring ? 'Scoring...' : 'Re-run Scoring'}
+            {tab.label}
+            {tab.count !== null && tab.count > 0 && (
+              <span className="text-[10px] bg-[#334155] px-1.5 py-0.5 rounded-full">{tab.count}</span>
+            )}
           </button>
-        )}
+        ))}
       </div>
 
       {/* Loading */}
       {loading && (
         <div className="space-y-3">
-          {[1, 2, 3].map(i => <SkeletonCard key={i} />)}
+          {[1, 2, 3, 4, 5].map(i => (
+            <div key={i} className="bg-[#111827] border border-[#1e2a42] rounded-lg h-20 animate-pulse" />
+          ))}
         </div>
       )}
 
       {/* Error */}
       {error && !loading && (
-        <div className="bg-[#1E293B] border border-red-900/50 rounded-xl p-6 text-center">
-          <p className="text-sm text-red-400 mb-2">Failed to load scored tenders</p>
-          <p className="text-xs text-[#5a6a85]">{error}</p>
+        <div className="bg-[#111827] border border-red-900/50 rounded-lg p-6 text-center">
+          <p className="text-sm text-red-400">Failed to load scored tenders</p>
         </div>
       )}
 
-      {/* Empty state */}
-      {!loading && !error && tenders.length === 0 && (
-        <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-8 text-center">
-          <p className="text-sm text-[#8896b0] mb-3">No tenders scored yet</p>
-          <button
-            onClick={handleTriggerScoring}
-            disabled={scoring}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg disabled:opacity-50 transition-colors"
-          >
-            {scoring ? 'Running AI Scoring...' : 'Run AI Scoring'}
-          </button>
-        </div>
-      )}
-
-      {/* Tender cards */}
-      {!loading && !error && tenders.length > 0 && (
-        <div className="space-y-3">
-          {displayed.map((tender, i) => (
-            <TenderCard key={tender.tender_number || i} tender={tender} />
-          ))}
-
-          {sorted.length > 15 && (
+      {/* Empty */}
+      {!loading && !error && displayed.length === 0 && (
+        <div className="bg-[#111827] border border-[#1e2a42] rounded-lg p-8 text-center">
+          <p className="text-sm text-[#5a6a85]">
+            {subTab === 'retenders' ? 'No re-tenders detected' : 'No tenders in this view'}
+          </p>
+          {tenders.length === 0 && (
             <button
-              onClick={() => setShowAll(!showAll)}
-              className="w-full text-center text-xs text-blue-400 hover:text-blue-300 py-3 bg-[#1E293B] border border-[#334155] rounded-xl hover:bg-[#253347] transition-colors"
+              onClick={handleTriggerScoring}
+              disabled={scoring}
+              className="mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg disabled:opacity-50 transition-colors"
             >
-              {showAll ? 'Show top 15 only' : `Show all ${sorted.length} tenders`}
+              {scoring ? 'Running...' : 'Run AI Scoring'}
             </button>
           )}
         </div>
       )}
+
+      {/* Rows */}
+      {!loading && !error && shown.length > 0 && (
+        <div className="space-y-2">
+          {shown.map((tender, i) => (
+            subTab === 'retenders' ? (
+              <RetenderRow key={tender.tender_number || i} tender={tender} />
+            ) : (
+              <OpportunityRow key={tender.tender_number || i} tender={tender} />
+            )
+          ))}
+
+          {displayed.length > 10 && (
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="w-full text-center text-xs text-blue-400 hover:text-blue-300 py-3 bg-[#111827] border border-[#1e2a42] rounded-lg hover:border-[#2a3a5c] transition-colors"
+            >
+              {showAll ? 'Show top 10' : `Show all ${displayed.length}`}
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function RetenderRow({ tender }) {
+  return (
+    <div className="bg-[#111827] border border-[#1e2a42] border-l-4 border-l-orange-500 rounded-lg px-5 py-4">
+      <h4 className="text-sm font-semibold text-[#e8ecf4] leading-snug mb-1">
+        {tender.tender_name_en || tender.tender_number}
+      </h4>
+      <div className="flex flex-wrap items-center gap-x-2 text-xs text-[#5a6a85]">
+        {tender.entity_en && <span>{tender.entity_en}</span>}
+        {tender.category_en && <><span>·</span><span>{tender.category_en}</span></>}
+        {tender.bid_closing_date && (
+          <><span>·</span><span>Closes {new Date(tender.bid_closing_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span></>
+        )}
+        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-orange-900/40 text-orange-400 border border-orange-700 ml-1">
+          RE-TENDER
+        </span>
+      </div>
     </div>
   )
 }

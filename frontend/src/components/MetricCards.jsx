@@ -1,62 +1,62 @@
-export default function MetricCards({ stats, newsStats, loading }) {
-  if (loading || !stats) {
+import { useAPI } from '../hooks/useAPI'
+import { api } from '../utils/api'
+
+export default function MetricCards() {
+  const { data, loading } = useAPI(api.getDashboardMetrics, [])
+
+  if (loading || !data) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[...Array(4)].map((_, i) => (
-          <div key={i} className="bg-[#1E293B] border border-[#334155] rounded-xl p-6 animate-pulse">
-            <div className="h-10 bg-[#334155] rounded w-16 mb-2" />
-            <div className="h-3 bg-[#334155] rounded w-24" />
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        {[...Array(5)].map((_, i) => (
+          <div key={i} className="bg-[#111827] border border-[#1e2a42] rounded-lg p-5 animate-pulse">
+            <div className="h-9 bg-[#1e2a42] rounded w-14 mb-2" />
+            <div className="h-4 bg-[#1e2a42] rounded w-24" />
           </div>
         ))}
       </div>
     )
   }
 
-  const sccPct = stats.total ? Math.round((stats.scc_relevant / stats.total) * 100) : 0
-
   const metrics = [
     {
-      value: stats.total,
-      label: 'Active Pipeline',
-      sub: 'Floated + In-Process',
-      accent: 'border-blue-500',
+      value: data.tracked_projects,
+      label: 'Tracked Projects',
+      accent: 'border-l-blue-500',
     },
     {
-      value: stats.scc_relevant,
-      label: 'SCC Addressable',
-      sub: `${stats.scc_pct || sccPct}% of pipeline`,
-      accent: 'border-green-500',
-      trend: stats.scc_pct > 20 ? 'up' : null,
+      value: data.competitive_tenders,
+      label: 'Competitive Tenders',
+      accent: 'border-l-red-500',
     },
     {
-      value: stats.retenders,
-      label: 'Re-Tenders',
-      sub: 'In current dataset',
-      accent: 'border-amber-500',
+      value: data.scc_active,
+      label: 'SCC Active',
+      accent: 'border-l-green-500',
     },
     {
-      value: newsStats?.total || 0,
+      value: data.closing_this_month,
+      label: 'Closing This Month',
+      accent: 'border-l-amber-500',
+    },
+    {
+      value: data.news_signals,
       label: 'News Signals',
-      sub: `${newsStats?.competitor_mentions || 0} competitor mentions`,
-      accent: 'border-purple-500',
+      accent: 'border-l-purple-500',
     },
   ]
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
       {metrics.map((m, i) => (
         <div
           key={i}
-          className={`bg-[#1E293B] border border-[#334155] rounded-xl p-6 border-l-4 ${m.accent} hover:bg-[#253347] transition-colors`}
+          className={`bg-[#111827] border border-[#1e2a42] border-l-4 ${m.accent} rounded-lg p-5 hover:border-[#2a3a5c] transition-colors`}
         >
-          <div className="text-[2.5rem] font-mono font-extrabold text-white leading-none">{m.value}</div>
-          <div className="text-[11px] font-semibold text-[#5a6a85] uppercase tracking-wider mt-2">
-            {m.label}
+          <div className="text-3xl font-mono font-bold text-[#e8ecf4] leading-none">
+            {m.value ?? 0}
           </div>
-          <div className="text-xs text-[#8896b0] mt-0.5 flex items-center gap-1">
-            {m.sub}
-            {m.trend === 'up' && <span className="text-green-500">&#8593;</span>}
-            {m.trend === 'down' && <span className="text-red-500">&#8595;</span>}
+          <div className="text-xs font-semibold text-[#5a6a85] uppercase tracking-wide mt-2">
+            {m.label}
           </div>
         </div>
       ))}

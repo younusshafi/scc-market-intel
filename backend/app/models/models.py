@@ -210,3 +210,28 @@ class NewsTenderLink(Base):
     connection = Column(Text, nullable=True)
     scc_action = Column(Text, nullable=True)
     linked_at = Column(DateTime, default=func.now())
+
+
+class AwardedTender(Base):
+    __tablename__ = "awarded_tenders"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    internal_id = Column(String(50), unique=True, index=True)
+    tender_number = Column(String(100), index=True)
+    tender_title = Column(Text, nullable=True)
+    entity = Column(String(300), index=True)
+    category = Column(String(200), nullable=True)
+    grade = Column(String(200), nullable=True)
+    awarded_date = Column(String(50), nullable=True)
+    is_construction = Column(Boolean, default=False)
+
+    # From Opening Report (populated when detail scrape completes)
+    winner_company = Column(String(300), nullable=True)
+    winning_value = Column(Float, nullable=True)
+    num_bidders = Column(Integer, nullable=True)
+    lowest_bid = Column(Float, nullable=True)
+    highest_bid = Column(Float, nullable=True)
+    bid_spread_pct = Column(Float, nullable=True)
+    bidders_json = Column(Text, nullable=True)  # JSON string of all bidders
+
+    scraped_at = Column(DateTime, default=func.now())
