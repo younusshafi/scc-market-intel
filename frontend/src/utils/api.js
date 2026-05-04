@@ -56,6 +56,10 @@ export const api = {
   getCompetitorProfiles: () => fetchAPI('/competitive-intel/profiles'),
   buildCompetitorProfiles: () => postAPI('/competitive-intel/build-profiles'),
 
+  // Galfar MSX Financials
+  getGalfarFinancials: () => fetchAPI('/competitive-intel/galfar-financials'),
+  scrapeGalfarFinancials: () => postAPI('/competitive-intel/scrape-galfar'),
+
   // Entity Intelligence
   getEntityIntel: () => fetchAPI('/entity-intel/'),
   buildEntityIntel: () => postAPI('/entity-intel/build'),
