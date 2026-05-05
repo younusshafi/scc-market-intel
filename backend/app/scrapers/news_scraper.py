@@ -134,6 +134,32 @@ def detect_jv_mentions(title: str, summary: str) -> list[dict] | None:
     return [{"partners": partners, "context": context}]
 
 
+SPORTS_DOMAINS = [
+    "flashscore", "sofascore", "livescore", "espn", "sportskeeda",
+    "goalzz", "kooora", "filgoal", "yallakora",
+]
+
+SPORTS_KW = [
+    "football", "soccer", "match", "league", "tournament",
+    "vs", "versus", "draw", "scored", "goals", "stadium",
+    "premier league", "champions league", "fixtures", "standings",
+]
+
+_SCORE_RE = re.compile(r"\b\d+[-:]\d+\b")
+
+
+def is_sports_article(title: str, link: str, summary: str = "") -> bool:
+    """Return True if the article appears to be sports-related."""
+    if any(domain in link.lower() for domain in SPORTS_DOMAINS):
+        return True
+    if _SCORE_RE.search(title):
+        return True
+    text = f"{title} {summary}".lower()
+    if sum(1 for kw in SPORTS_KW if kw in text) >= 2:
+        return True
+    return False
+
+
 def fetch_feed(source: str, url: str) -> list[dict]:
     """Fetch and parse a single RSS feed."""
     logger.info(f"Fetching: {source}")
@@ -167,6 +193,12 @@ def fetch_feed(source: str, url: str) -> list[dict]:
                     break
 
         title = strip_html(entry.get("title", ""))
+        link = entry.get("link", "")
+
+        if is_sports_article(title, link, summary):
+            logger.debug("Skipping sports article: %s", title)
+            continue
+
         competitors = check_competitor_mentions(title, summary)
         jv_details = detect_jv_mentions(title, summary)
         text = (title + " " + summary).lower()
@@ -177,7 +209,7 @@ def fetch_feed(source: str, url: str) -> list[dict]:
         articles.append({
             "source": source,
             "title": title,
-            "link": entry.get("link", ""),
+            "link": link,
             "published": normalize_date(entry),
             "summary": summary[:500],
             "is_competitor_mention": len(competitors) > 0,
