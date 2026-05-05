@@ -82,7 +82,7 @@ def get_galfar_financials():
             content={"error": "Galfar financials not yet scraped. Run: python -m app.jobs.scrape_galfar"},
         )
     try:
-        with open(_GALFAR_JSON) as f:
+        with open(_GALFAR_JSON, encoding="utf-8") as f:
             data = json.load(f)
         return data
     except Exception as exc:

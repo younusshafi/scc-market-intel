@@ -75,6 +75,10 @@ export default function GalfarProfile() {
   const profitChange = data.profit_change_pct
   const priorProfit = data.net_profit_prior_omr
 
+  const contracts = data.news_intelligence?.recent_contract_wins ?? []
+  const visibleContracts = contracts.slice(0, 5)
+  const hiddenCount = contracts.length - 5
+
   return (
     <div className="bg-[#0F172A] p-6">
       <h2 className="text-[#e8ecf4] font-bold text-xl mb-6 flex items-center gap-2">
@@ -204,6 +208,81 @@ export default function GalfarProfile() {
             </div>
           )}
         </div>
+
+        {/* ── Order Backlog ── */}
+        {!finLoading && data.order_backlog_omr != null && (
+          <div>
+            <h3 className="text-[#8896b0] text-xs uppercase tracking-wide mb-3">Order Backlog</h3>
+            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
+              <p className="text-emerald-400 text-2xl font-bold font-mono">
+                OMR {formatOMR(data.order_backlog_omr, 0)}
+              </p>
+              {data.news_intelligence?.backlog_sector_concentration && (
+                <p className="text-[#94a3b8] text-xs mt-2">
+                  Primary sectors: {data.news_intelligence.backlog_sector_concentration}
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ── Recent Contract Wins ── */}
+        {!finLoading && contracts.length > 0 && (
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-[#8896b0] text-xs uppercase tracking-wide">Recent Contract Wins</h3>
+              <span className="text-[#5a6a85] text-xs">{contracts.length} awards tracked</span>
+            </div>
+
+            <div className="flex flex-col gap-3 max-h-[400px] overflow-y-auto pr-1">
+              {visibleContracts.map((win, i) => {
+                const project = win.project
+                  ? (win.project.length > 100 ? win.project.substring(0, 100) + '…' : win.project)
+                  : null
+                const dateStr = win.date
+                  ? new Date(win.date).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' })
+                  : null
+
+                return (
+                  <div
+                    key={i}
+                    className="bg-[#0F172A]/60 border border-[#334155]/50 rounded-lg p-3.5 hover:border-blue-500/40 hover:bg-[#0F172A]/80 transition-all"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[#e2e8f0] text-sm font-semibold">
+                        {win.client || 'Client undisclosed'}
+                      </span>
+                      {win.value_omr != null && (
+                        <span className="text-emerald-400 text-sm font-bold font-mono">
+                          OMR {formatOMR(win.value_omr, 1)}
+                        </span>
+                      )}
+                    </div>
+                    {project && (
+                      <p className="text-[#94a3b8] text-xs leading-relaxed mb-2">{project}</p>
+                    )}
+                    <div className="flex items-center justify-between">
+                      {dateStr && (
+                        <span className="text-[#94a3b8] text-xs">{dateStr}</span>
+                      )}
+                      {win.source && (
+                        <span className="text-[11px] text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded">
+                          {win.source}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
+            {hiddenCount > 0 && (
+              <p className="text-center text-[#5a6a85] text-xs mt-3">
+                +{hiddenCount} more contract{hiddenCount !== 1 ? 's' : ''}
+              </p>
+            )}
+          </div>
+        )}
 
         {/* ── Portal Activity ── */}
         <div>
