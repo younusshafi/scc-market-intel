@@ -16,6 +16,59 @@ from app.models import Tender, TenderProbe, TenderScore, AwardedTender
 
 logger = logging.getLogger(__name__)
 
+
+# ---------------------------------------------------------------------------
+# Issuer relevance multiplier
+# ---------------------------------------------------------------------------
+
+_GOVERNMENT_KW = [
+    "ministry", "authority", "municipality", "commission", "council",
+    "royal", "government", "public", "national", "state", "municipal",
+    "directorate", "department of", "secretariat",
+]
+
+_STRATEGIC_CLIENTS = [
+    "pdo", "petroleum development oman",
+    "oq", "oqep",
+    "oxy", "occidental",
+    "shell", "bp", "total", "eni",
+    "sohar", "duqm", "sezad",
+    "nama water", "haya water",
+]
+
+_PRIVATE_INDICATORS = ["saoc", "llc", "l.l.c", "est.", "establishment", "ltd", "limited", "co."]
+
+
+def get_issuer_relevance_multiplier(issuing_entity: str) -> float:
+    """Return a score multiplier based on issuer strategic relevance.
+
+    1.0  — Government / public sector or strategic private (PDO, OQ, etc.)
+    0.3  — Non-strategic private company (farms, retail, small businesses)
+    """
+    if not issuing_entity:
+        return 1.0
+    el = issuing_entity.lower()
+    if any(kw in el for kw in _GOVERNMENT_KW):
+        return 1.0
+    if any(c in el for c in _STRATEGIC_CLIENTS):
+        return 1.0
+    if any(ind in el for ind in _PRIVATE_INDICATORS):
+        return 0.3
+    return 1.0
+
+
+def _score_to_recommendation(score: int) -> str:
+    if score >= 90:
+        return "MUST_BID"
+    if score >= 70:
+        return "STRONG_FIT"
+    if score >= 50:
+        return "CONSIDER"
+    if score >= 30:
+        return "WATCH"
+    return "SKIP"
+
+
 SCORING_SYSTEM_PROMPT = (
     "You are a strategic advisor to Sarooj Construction Company (SCC), a major "
     "Omani civil infrastructure contractor. SCC's core capabilities are: roads, "
@@ -111,6 +164,9 @@ def score_tenders(db: Session) -> dict:
     # Enrich with historical entity context
     _enrich_with_entity_history(db, tender_descs)
 
+    # Entity lookup for post-LLM multiplier
+    entity_by_tn = {d["tender_number"]: d.get("entity", "") for d in tender_descs}
+
     # Process in batches of 8
     batch_size = 8
     scored = 0
@@ -125,18 +181,31 @@ def score_tenders(db: Session) -> dict:
                 tn = item.get("tender_number", "")
                 if not tn:
                     continue
+
+                # Apply issuer relevance multiplier post-LLM
+                raw_score = item.get("score", 0)
+                entity = entity_by_tn.get(tn, "")
+                multiplier = get_issuer_relevance_multiplier(entity)
+                final_score = min(100, int(raw_score * multiplier))
+
+                reasoning = item.get("reasoning", "")
+                recommendation = item.get("recommendation", "")
+                if multiplier < 1.0:
+                    reasoning = f"{reasoning} (Score reduced from {raw_score}: private non-strategic issuer)"
+                    recommendation = _score_to_recommendation(final_score)
+
                 existing = db.query(TenderScore).filter_by(tender_number=tn).first()
                 if existing:
-                    existing.score = item.get("score", 0)
-                    existing.recommendation = item.get("recommendation", "")
-                    existing.reasoning = item.get("reasoning", "")
+                    existing.score = final_score
+                    existing.recommendation = recommendation
+                    existing.reasoning = reasoning
                     existing.scored_at = datetime.utcnow()
                 else:
                     db.add(TenderScore(
                         tender_number=tn,
-                        score=item.get("score", 0),
-                        recommendation=item.get("recommendation", ""),
-                        reasoning=item.get("reasoning", ""),
+                        score=final_score,
+                        recommendation=recommendation,
+                        reasoning=reasoning,
                     ))
                 scored += 1
             db.commit()
