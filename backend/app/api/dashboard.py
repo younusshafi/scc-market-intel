@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.models import Tender, TenderScore, TenderProbe, NewsIntelligence
+from app.models import Tender, TenderScore, TenderProbe, NewsIntelligence, AwardedTender
 from app.services.competitive_intel_service import resolve_competitor
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
@@ -203,10 +203,75 @@ def get_dashboard_metrics(db: Session = Depends(get_db)):
         .count()
     )
 
+    # SCC Win Rate (This Year)
+    current_year = today.year
+    all_awarded = db.query(AwardedTender).filter(
+        AwardedTender.awarded_date != None,
+        AwardedTender.awarded_date >= f"{current_year}-01-01",
+        AwardedTender.winner_company != None,
+    ).all()
+    scc_wins_ytd = sum(1 for t in all_awarded if t.winner_company and "sarooj" in t.winner_company.lower())
+    total_awarded_ytd = len(all_awarded)
+    scc_win_rate_ytd = round((scc_wins_ytd / total_awarded_ytd) * 100, 1) if total_awarded_ytd > 0 else None
+
+    # Avg tracked competitors per tender (from probe data)
+    competitor_counts = []
+    for probe in probes:  # probes already loaded above
+        tracked_set = set()
+        for b in (probe.bidders or []):
+            comp = resolve_competitor(b.get("company", ""))
+            if comp and comp != "Sarooj":
+                tracked_set.add(comp)
+        for p in (probe.purchasers or []):
+            comp = resolve_competitor(p.get("company", ""))
+            if comp and comp != "Sarooj":
+                tracked_set.add(comp)
+        if tracked_set:
+            competitor_counts.append(len(tracked_set))
+    avg_competitors = round(sum(competitor_counts) / len(competitor_counts), 1) if competitor_counts else None
+
+    # Highest value open tender (by fee, SCC-relevant)
+    from sqlalchemy import desc as _desc
+    highest_tender = (
+        db.query(Tender)
+        .filter(Tender.is_scc_relevant == True, Tender.fee != None, Tender.fee > 0)
+        .filter(Tender.bid_closing_date == None or Tender.bid_closing_date >= today)
+        .order_by(_desc(Tender.fee))
+        .first()
+    )
+    highest_tender_data = None
+    if highest_tender:
+        highest_tender_data = {
+            "title": highest_tender.tender_name_en or highest_tender.tender_number,
+            "fee": highest_tender.fee,
+            "tender_number": highest_tender.tender_number,
+        }
+
+    # Most active competitor in last 30 days (by purchaser appearances)
+    from datetime import timedelta as _td
+    cutoff_30d = (today - _td(days=30)).isoformat()
+    comp_activity = {}
+    for probe in probes:
+        for p in (probe.purchasers or []):
+            purchase_date = p.get("purchase_date", "")
+            if purchase_date and purchase_date >= cutoff_30d:
+                comp = resolve_competitor(p.get("company", ""))
+                if comp and comp != "Sarooj":
+                    comp_activity[comp] = comp_activity.get(comp, 0) + 1
+    most_active_comp = max(comp_activity, key=comp_activity.get) if comp_activity else None
+    most_active_count = comp_activity.get(most_active_comp, 0) if most_active_comp else 0
+
     return {
         "tracked_projects": tracked_projects,
         "competitive_tenders": competitive_count,
         "scc_active": scc_active_count,
         "closing_this_month": closing_this_month,
         "news_signals": news_high,
+        "scc_win_rate_ytd": scc_win_rate_ytd,
+        "scc_wins_ytd": scc_wins_ytd,
+        "total_awarded_ytd": total_awarded_ytd,
+        "avg_competitors_per_tender": avg_competitors,
+        "highest_value_open_tender": highest_tender_data,
+        "most_active_competitor_30d": most_active_comp,
+        "most_active_competitor_30d_count": most_active_count,
     }

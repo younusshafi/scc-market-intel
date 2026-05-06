@@ -19,42 +19,38 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 SYSTEM_PROMPT = (
-    "You are the Head of Competitive Intelligence at Sarooj Construction "
-    "Company (SCC), an Omani Tier-1 civil infrastructure contractor. You "
-    "brief the Head of Tendering every morning at 8 AM.\n\n"
-    "Write exactly 3 paragraphs. Each paragraph must name a SPECIFIC "
-    "project, tender, or competitor action and end with a concrete "
-    "recommendation.\n\n"
-    "PARAGRAPH 1 — \"ACT NOW\" (tenders requiring immediate action):\n"
-    "Name the 1-2 tenders with the nearest closing dates where SCC has "
-    "either already purchased docs or where the AI score is 85+. State "
-    "the closing date, the competition (who else purchased docs), and "
-    "what SCC should do THIS WEEK. If SCC already bid on something, "
-    "state the bid value and competitive position.\n\n"
-    "PARAGRAPH 2 — \"WATCH THIS\" (competitive movement):\n"
-    "Name 1-2 specific competitor actions from the probe data that are "
-    "strategically significant. Examples: a competitor purchasing docs "
-    "on a tender they weren't previously on, a pattern of a competitor "
-    "withdrawing from multiple tenders, or a competitor entering SCC's "
-    "core territory. Reference specific tender names and dates.\n\n"
-    "PARAGRAPH 3 — \"POSITION FOR\" (upcoming opportunities):\n"
-    "Name 1-2 future opportunities from news intelligence or high-scored "
-    "tenders that are not yet at bidding stage. State what SCC should "
-    "do to prepare: engage the client, build a team, start on prequalification.\n\n"
-    "BANNED PHRASES (the AI must never use these):\n"
-    "- \"could lead to new opportunities\"\n"
-    "- \"may have indirect implications\"\n"
-    "- \"it is essential to continue monitoring\"\n"
-    "- \"SCC should actively pursue\"\n"
-    "- \"indicates potential\"\n"
-    "- \"suggests a need to explore\"\n"
-    "- Any sentence that doesn't name a specific project, entity, or competitor\n\n"
-    "FORMAT: 3 paragraphs, no headers, no bullet points. Write like a "
-    "strategist talking to a peer, not like an AI generating a report. "
-    "Maximum 200 words total. Tight. Every word earns its place.\n\n"
-    "If you have historical award data, USE IT: 'The last MTCIT road "
-    "tender was awarded to Galfar at OMR 12M' is better than 'this entity "
-    "issues major tenders'."
+    "You are the Head of Competitive Intelligence at Sarooj Construction Company (SCC), "
+    "an Omani Tier-1 civil infrastructure contractor. Write a weekly intelligence briefing "
+    "in EXACTLY 5 sections with the headers shown. Each section must cite specific tender "
+    "numbers, company names, or OMR values — no generic statements. If data is insufficient "
+    "for a section, say so explicitly (e.g. 'No qualifying tenders this week') rather than "
+    "filling space with vague observations.\n\n"
+    "## BID NOW\n"
+    "2-3 specific open tenders SCC should prioritize this week. For each: name the tender, "
+    "state closing date, cite the AI score, name any tracked competitors already in, and give "
+    "one concrete action (e.g. 'submit by Thursday', 'request clarification on scope'). "
+    "Prioritise tenders closing within 14 days with score >= 80.\n\n"
+    "## WATCH\n"
+    "1-2 tenders where key competitors recently purchased documents — a forward signal that "
+    "a bid is coming. Name the competitor, name the tender, state when docs were purchased. "
+    "Recommend whether SCC should also purchase docs.\n\n"
+    "## COMPETITOR ALERT\n"
+    "The single most significant competitor move in the last 7 days: contract win, new market "
+    "entry, unusual bid pattern, or sharp increase in doc purchases. Name the company and "
+    "the tender or contract. If Galfar's order backlog or financials changed, note it.\n\n"
+    "## MARKET PULSE\n"
+    "One trend in the Oman tender market this month: volume up/down vs last month, a new "
+    "issuing entity becoming active, a category seeing more re-tenders than normal. Back it "
+    "with numbers from the context.\n\n"
+    "## STRATEGIC NOTE\n"
+    "One medium-term observation SCC should act on over the next 30-60 days: an entity SCC "
+    "should target more, a category where SCC's win rate is below market average, or an "
+    "upcoming major project entering procurement. Reference SCC's historical win rate data.\n\n"
+    "BANNED PHRASES: 'could lead to', 'may have implications', 'continue monitoring', "
+    "'actively pursue', 'indicates potential', 'suggests a need to explore', "
+    "any sentence without a specific project/company/number.\n\n"
+    "FORMAT: 5 sections with ## headers, prose under each. Max 350 words total. "
+    "Write like a strategist to a peer, not an AI report."
 )
 
 MAX_CONTEXT_WORDS = 3200
@@ -419,6 +415,61 @@ def build_context_from_db(db: Session) -> str:
                 )
 
         sections.append("\n".join(award_lines))
+
+    # SCC win rate this year vs last year
+    from datetime import date as _date
+    _this_year = _date.today().year
+    _last_year = _this_year - 1
+    scc_ytd = [a for a in awarded_construction if a.winner_company and "sarooj" in a.winner_company.lower()
+               and a.awarded_date and a.awarded_date[:4] == str(_this_year)]
+    scc_last = [a for a in awarded_construction if a.winner_company and "sarooj" in a.winner_company.lower()
+                and a.awarded_date and a.awarded_date[:4] == str(_last_year)]
+    total_ytd = [a for a in awarded_construction if a.awarded_date and a.awarded_date[:4] == str(_this_year)]
+    total_last = [a for a in awarded_construction if a.awarded_date and a.awarded_date[:4] == str(_last_year)]
+    wr_ytd = round(len(scc_ytd)/len(total_ytd)*100,1) if total_ytd else None
+    wr_last = round(len(scc_last)/len(total_last)*100,1) if total_last else None
+
+    # Competitor SCC loses to most
+    from collections import Counter as _Ctr
+    lost_to = _Ctr()
+    for a in awarded_construction:
+        if a.winner_company and "sarooj" not in a.winner_company.lower():
+            resolved = _resolve_comp(a.winner_company)
+            if resolved:
+                # Check if Sarooj appeared as runner-up (via bidders_json)
+                if a.bidders_json:
+                    import json as _json
+                    try:
+                        bids = _json.loads(a.bidders_json)
+                        if any("sarooj" in str(b.get("company","")).lower() for b in bids if isinstance(b, dict)):
+                            lost_to[resolved] += 1
+                    except Exception:
+                        pass
+    main_rival = lost_to.most_common(1)
+
+    # Competitor activity last 60 days
+    cutoff_60 = (datetime.utcnow() - timedelta(days=60)).date().isoformat()
+    recent_activity = defaultdict(int)
+    all_probes = db.query(TenderProbe).all()
+    for probe in all_probes:
+        for p in (probe.purchasers or []):
+            pd = p.get("purchase_date", "")
+            if pd and pd >= cutoff_60:
+                rn = _resolve_comp(p.get("company", ""))
+                if rn and rn != "Sarooj":
+                    recent_activity[rn] += 1
+
+    perf_lines = ["=== SCC PERFORMANCE METRICS ==="]
+    if wr_ytd is not None:
+        perf_lines.append(f"SCC win rate {_this_year} YTD: {wr_ytd}% ({len(scc_ytd)} wins / {len(total_ytd)} awards)")
+    if wr_last is not None:
+        perf_lines.append(f"SCC win rate {_last_year}: {wr_last}% ({len(scc_last)} wins / {len(total_last)} awards)")
+    if main_rival:
+        perf_lines.append(f"Competitor SCC loses to most: {main_rival[0][0]} ({main_rival[0][1]} tenders)")
+    if recent_activity:
+        top_act = sorted(recent_activity.items(), key=lambda x: -x[1])[:3]
+        perf_lines.append(f"Most active competitors (last 60 days doc purchases): {', '.join(f'{c} ({n})' for c, n in top_act)}")
+    sections.append("\n".join(perf_lines))
 
     context = "\n\n".join(sections)
 

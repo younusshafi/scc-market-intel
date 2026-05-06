@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useAPI } from '../hooks/useAPI'
 import { api } from '../utils/api'
+import CompetitiveActivityChart from './CompetitiveActivityChart'
 import {
   ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
-  CartesianGrid, Legend, BarChart, LineChart,
+  CartesianGrid, Legend, BarChart, LineChart, Cell,
 } from 'recharts'
 
 const COMPETITOR_COLORS = {
@@ -56,6 +57,7 @@ export default function AwardedIntelligence() {
   const { data: sccPerf } = useAPI(api.getSCCPerformance, [])
   const { data: stats } = useAPI(api.getAwardedStats, [])
   const [computing, setComputing] = useState(false)
+  const [marketShareMode, setMarketShareMode] = useState('count') // 'count' | 'value'
 
   async function handleCompute() {
     setComputing(true)
@@ -83,6 +85,36 @@ export default function AwardedIntelligence() {
   const yearlyTrends = analytics?.yearly_trends || []
   const pricing = analytics?.pricing || {}
   const competitorDeep = analytics?.competitor_deep || {}
+
+  // Market Share stacked bar data (2019+, all tracked companies)
+  const TRACKED_COMPANIES = ['Galfar', 'Strabag', 'Al Tasnim', 'L&T', 'Towell', 'Hassan Allam', 'Arab Contractors', 'Ozkar', 'Sarooj']
+  const marketShareData = yearlyTrends
+    .filter(y => y.year >= 2019)
+    .map(y => {
+      const row = { year: y.year }
+      TRACKED_COMPANIES.forEach(comp => {
+        const cd = y.competitors?.[comp]
+        row[comp] = marketShareMode === 'count'
+          ? (cd?.wins || 0)
+          : Math.round((cd?.value_won || 0) / 1000) // thousands OMR
+      })
+      return row
+    })
+
+  // Participation funnel: merge competitorDeep + winners for all tracked companies
+  const funnelData = TRACKED_COMPANIES.map(comp => {
+    const deep = competitorDeep[comp]
+    const winnerRow = stats?.top_winners?.find(w => w.company === comp)
+    if (!deep && !winnerRow) return null
+    return {
+      company: comp,
+      bids: deep?.total_bids ?? 0,
+      wins: deep?.wins ?? winnerRow?.wins ?? 0,
+      win_rate: deep?.win_rate ?? 0,
+      total_value: deep?.total_value_won ?? winnerRow?.total_value ?? 0,
+      avg_bid: deep?.avg_winning_bid ?? 0,
+    }
+  }).filter(Boolean).sort((a, b) => b.wins - a.wins)
 
   // Build chart data from yearly trends (2016+)
   const chartData = yearlyTrends
@@ -112,17 +144,172 @@ export default function AwardedIntelligence() {
 
   return (
     <div className="space-y-5">
+      <CompetitiveActivityChart sccLostTo={sccPerf?.lost_to} />
+
       {/* Section Header */}
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-[#e8ecf4] uppercase tracking-wider">
           Award Intelligence
         </h3>
         {analytics?.computed_at && (
-          <span className="text-[10px] text-[#5a6a85] font-mono">
-            Computed: {new Date(analytics.computed_at).toLocaleDateString()}
+          <span className="text-[10px] text-[#5a6a85]">
+            {'Last updated: ' + new Date(analytics.computed_at).toLocaleString('en-GB', {
+              weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
+              hour: '2-digit', minute: '2-digit',
+            })}
           </span>
         )}
       </div>
+
+      {/* ── Section 1: Market Share Over Time ── */}
+      {marketShareData.length > 0 && (
+        <div className="bg-[#111827] border border-[#1e2a42] rounded-lg p-5">
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="text-xs font-semibold text-[#5a6a85] uppercase tracking-wider">
+              Market Share Over Time (2019–Present)
+            </h4>
+            <div className="flex items-center gap-1 bg-[#0F172A] rounded-lg p-0.5">
+              {['count', 'value'].map(mode => (
+                <button
+                  key={mode}
+                  onClick={() => setMarketShareMode(mode)}
+                  className={`px-3 py-1 text-[10px] font-semibold rounded transition-colors ${
+                    marketShareMode === mode
+                      ? 'bg-blue-600 text-white'
+                      : 'text-[#5a6a85] hover:text-[#e8ecf4]'
+                  }`}
+                >
+                  {mode === 'count' ? 'By Count' : 'By Value (K OMR)'}
+                </button>
+              ))}
+            </div>
+          </div>
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={marketShareData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#1e2a42" />
+              <XAxis dataKey="year" tick={{ fill: '#5a6a85', fontSize: 11 }} axisLine={{ stroke: '#1e2a42' }} />
+              <YAxis tick={{ fill: '#5a6a85', fontSize: 11 }} axisLine={{ stroke: '#1e2a42' }} />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend wrapperStyle={{ fontSize: 10, color: '#8896b0' }} />
+              {TRACKED_COMPANIES.map(comp => (
+                <Bar key={comp} dataKey={comp} stackId="a" fill={COMPETITOR_COLORS[comp] || '#6B7280'} radius={comp === 'Sarooj' ? [2, 2, 0, 0] : [0, 0, 0, 0]} />
+              ))}
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+
+      {/* ── Section 2: Competitor Participation Funnel ── */}
+      {funnelData.length > 0 && (
+        <div className="bg-[#111827] border border-[#1e2a42] rounded-lg p-5">
+          <h4 className="text-xs font-semibold text-[#5a6a85] uppercase tracking-wider mb-4">
+            Competitor Participation Funnel
+          </h4>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-[10px] text-[#5a6a85] border-b border-[#1e2a42] uppercase tracking-wide">
+                  <th className="text-left py-2 px-3 font-medium">Company</th>
+                  <th className="text-right py-2 px-3 font-medium">Bids</th>
+                  <th className="text-right py-2 px-3 font-medium">Wins</th>
+                  <th className="text-right py-2 px-3 font-medium">Win Rate</th>
+                  <th className="text-right py-2 px-3 font-medium">Avg Contract</th>
+                  <th className="text-right py-2 px-3 font-medium">Total Won</th>
+                </tr>
+              </thead>
+              <tbody>
+                {funnelData.map((row, i) => {
+                  const isSCC = row.company === 'Sarooj'
+                  return (
+                    <tr
+                      key={i}
+                      className={`border-b border-[#1e2a42] last:border-0 ${isSCC ? 'bg-blue-900/10' : ''}`}
+                    >
+                      <td className="py-2.5 px-3">
+                        <span className="inline-flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: COMPETITOR_COLORS[row.company] || '#6B7280' }} />
+                          <span className={`text-sm ${isSCC ? 'text-blue-300 font-semibold' : 'text-[#e8ecf4]'}`}>
+                            {row.company}
+                          </span>
+                        </span>
+                      </td>
+                      <td className="py-2.5 px-3 text-right font-mono text-[#8896b0] text-xs">
+                        {row.bids || '—'}
+                      </td>
+                      <td className="py-2.5 px-3 text-right font-mono text-[#e8ecf4] text-xs font-semibold">
+                        {row.wins || '—'}
+                      </td>
+                      <td className="py-2.5 px-3 text-right font-mono text-xs">
+                        <span className={row.win_rate >= 30 ? 'text-emerald-400' : row.win_rate >= 15 ? 'text-amber-400' : 'text-[#8896b0]'}>
+                          {row.win_rate ? `${row.win_rate}%` : '—'}
+                        </span>
+                      </td>
+                      <td className="py-2.5 px-3 text-right font-mono text-[#8896b0] text-xs">
+                        {row.avg_bid > 0 ? formatValue(row.avg_bid) + ' OMR' : '—'}
+                      </td>
+                      <td className="py-2.5 px-3 text-right font-mono text-[#e8ecf4] text-xs">
+                        {row.total_value > 0 ? formatValue(row.total_value) + ' OMR' : '—'}
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+          {funnelData.every(r => r.bids === 0) && (
+            <p className="text-xs text-[#5a6a85] mt-3">
+              Bid counts require probe data — run tender probing to populate.
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* ── Section 3: Head-to-Head SCC vs Competitors ── */}
+      {sccPerf?.lost_to?.length > 0 && (
+        <div className="bg-[#111827] border border-[#1e2a42] rounded-lg p-5">
+          <h4 className="text-xs font-semibold text-[#5a6a85] uppercase tracking-wider mb-4">
+            Head-to-Head: SCC vs Competitors
+          </h4>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {sccPerf.lost_to.slice(0, 8).map((item, i) => {
+              const totalH2H = (sccPerf.total_wins || 0) + item.count
+              const sccPct = totalH2H > 0 ? Math.round((sccPerf.total_wins / totalH2H) * 100) : 0
+              const compPct = 100 - sccPct
+              return (
+                <div key={i} className="bg-[#0F172A] rounded-lg p-3">
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <span className="w-2 h-2 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: COMPETITOR_COLORS[item.company] || '#6B7280' }} />
+                    <span className="text-xs font-semibold text-[#e8ecf4] truncate">{item.company}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <div className="flex-1 h-1.5 rounded-full bg-[#1e2a42] overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-blue-500"
+                        style={{ width: `${sccPct}%` }}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-between text-[10px]">
+                    <span className="text-blue-400 font-mono">{sccPerf.total_wins}W SCC</span>
+                    <span className="text-[#5a6a85]">vs</span>
+                    <span style={{ color: COMPETITOR_COLORS[item.company] || '#6B7280' }} className="font-mono">
+                      {item.count}W {item.company.split(' ')[0]}
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-[#5a6a85] mt-1.5">
+                    SCC lost {item.count} tender{item.count !== 1 ? 's' : ''} to them
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+          <p className="text-[10px] text-[#5a6a85] mt-3">
+            Win counts are from awarded data where both SCC and the competitor appeared in the same tender.
+          </p>
+        </div>
+      )}
 
       {/* AI Strategic Insights */}
       <div className="bg-[#111827] border border-[#1e2a42] rounded-lg p-5">

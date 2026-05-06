@@ -37,7 +37,7 @@ export default function BriefingCard({ briefing, onRefresh }) {
         <div className="flex items-center gap-3">
           {briefing && (
             <span className="text-xs text-[#5a6a85]">
-              {timeAgo(briefing.generated_at)}
+              {formatTimestamp(briefing.generated_at)}
             </span>
           )}
           <button
@@ -62,14 +62,12 @@ export default function BriefingCard({ briefing, onRefresh }) {
   )
 }
 
-function timeAgo(dateStr) {
+function formatTimestamp(dateStr) {
   if (!dateStr) return ''
-  const d = new Date(dateStr)
-  const now = new Date()
-  const diff = Math.floor((now - d) / 1000)
-  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`
-  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`
-  return `${Math.floor(diff / 86400)}d ago`
+  return 'Last updated: ' + new Date(dateStr).toLocaleString('en-GB', {
+    weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
+    hour: '2-digit', minute: '2-digit',
+  })
 }
 
 function formatMd(md) {

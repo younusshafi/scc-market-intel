@@ -84,6 +84,10 @@ def get_galfar_financials():
     try:
         with open(_GALFAR_JSON, encoding="utf-8") as f:
             data = json.load(f)
+        import os
+        mtime = os.path.getmtime(_GALFAR_JSON)
+        from datetime import datetime as _dt
+        data["file_last_modified"] = _dt.fromtimestamp(mtime).isoformat()
         return data
     except Exception as exc:
         logger.error("Failed to read galfar_financials.json: %s", exc)

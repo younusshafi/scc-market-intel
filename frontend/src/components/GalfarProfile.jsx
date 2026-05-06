@@ -64,8 +64,12 @@ export default function GalfarProfile() {
   const data = fin ?? FALLBACK_FINANCIALS
   const isFallback = data._is_fallback || !fin
 
-  const lastUpdated = data.scraped_at
-    ? new Date(data.scraped_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  const lastUpdatedTs = data.file_last_modified || data.scraped_at
+  const lastUpdated = lastUpdatedTs
+    ? 'Last updated: ' + new Date(lastUpdatedTs).toLocaleString('en-GB', {
+        weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit',
+      })
     : null
 
   const netProfit = data.net_profit_omr
@@ -96,8 +100,8 @@ export default function GalfarProfile() {
             <h3 className="text-[#8896b0] text-xs uppercase tracking-wide">Live Market Data</h3>
             <div className="flex items-center gap-3">
               {lastUpdated && (
-                <span className="flex items-center gap-1 text-[#5a6a85] text-xs">
-                  <Clock size={11} />
+                <span className="flex items-center gap-1 text-[#5a6a85] text-[10px]">
+                  <Clock size={10} />
                   {lastUpdated}
                 </span>
               )}

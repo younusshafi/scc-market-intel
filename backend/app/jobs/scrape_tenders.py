@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname
 logger = logging.getLogger(__name__)
 
 from app.core.database import SessionLocal
-from app.models import ScrapeLog
+from app.models import ScrapeLog, Tender, TenderScore
 from app.scrapers.tender_scraper import scrape_all_tenders, persist_tenders
 
 
@@ -30,6 +30,16 @@ def main():
         log.details = result
 
         logger.info(f"Scrape complete: {result}")
+
+        # Auto-score any SCC-relevant tenders not yet in tender_scores
+        if result["new"] > 0:
+            logger.info("Auto-triggering scoring for new tenders...")
+            try:
+                from app.services.tender_scoring_service import score_tenders
+                score_result = score_tenders(db)
+                logger.info(f"Scoring complete: {score_result}")
+            except Exception as score_err:
+                logger.warning(f"Auto-scoring failed (non-fatal): {score_err}")
 
     except Exception as e:
         log.status = "failed"

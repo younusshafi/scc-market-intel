@@ -73,6 +73,7 @@ export const api = {
   getDashboardMetrics: () => fetchAPI('/dashboard/metrics'),
 
   // Awarded
+  getYearlyActivity: () => fetchAPI('/awarded/yearly-activity'),
   getAwardedStats: () => fetchAPI('/awarded/stats'),
   getAwardedWinners: () => fetchAPI('/awarded/winners'),
   getAwardedAnalytics: () => fetchAPI('/awarded/analytics'),

@@ -386,3 +386,140 @@ def get_scc_performance(db: Session = Depends(get_db)):
         "market_lowest_bidder_wins_pct": pricing.get("lowest_bidder_wins_pct"),
         "market_avg_spread_pct": pricing.get("avg_bid_spread_pct"),
     }
+
+
+def _year_from_date(date_str: str) -> int | None:
+    """Extract 4-digit year from a date string.
+    Handles: YYYY-MM-DD, DD-MM-YYYY, DD/MM/YYYY, YYYY, DD-MM-YYYY HH:MM:SS
+    """
+    if not date_str:
+        return None
+    # Strip time component
+    date_part = date_str.strip().split(" ")[0]
+    try:
+        if "-" in date_part:
+            parts = date_part.split("-")
+            for p in parts:
+                if len(p) == 4:
+                    return int(p)
+        if "/" in date_part:
+            parts = date_part.split("/")
+            for p in parts:
+                if len(p) == 4:
+                    return int(p)
+        if len(date_part) == 4:
+            return int(date_part)
+    except (ValueError, IndexError):
+        pass
+    return None
+
+
+@router.get("/yearly-activity")
+def get_yearly_activity(db: Session = Depends(get_db)):
+    """Per-year, per-company competitive activity from awarded data + probe purchasers."""
+    import json as _json
+    from collections import defaultdict
+
+    # Load all awarded construction tenders
+    tenders = db.query(AwardedTender).filter(
+        AwardedTender.is_construction == True,
+        AwardedTender.awarded_date != None,
+    ).all()
+
+    TRACKED = [
+        "Galfar", "Strabag", "Al Tasnim", "Sarooj", "L&T",
+        "Towell", "Hassan Allam", "Arab Contractors", "Ozkar",
+    ]
+
+    # year -> company -> stats
+    stats: dict = defaultdict(lambda: defaultdict(lambda: {
+        "contracts_won": 0,
+        "total_value_won": 0.0,
+        "bids_submitted": 0,
+        "bid_values_won": [],
+        "bid_values_all": [],
+    }))
+
+    for t in tenders:
+        year = _year_from_date(t.awarded_date)
+        if not year or year < 2015:
+            continue
+
+        # Winner credit
+        winner = _resolve_winner(t.winner_company)
+        if winner and winner in TRACKED:
+            stats[year][winner]["contracts_won"] += 1
+            if t.winning_value and t.winning_value > 0:
+                stats[year][winner]["total_value_won"] += t.winning_value
+                stats[year][winner]["bid_values_won"].append(t.winning_value)
+
+        # Bids from bidders_json
+        if t.bidders_json:
+            try:
+                bidders = _json.loads(t.bidders_json)
+                seen: set = set()
+                for b in (bidders if isinstance(bidders, list) else []):
+                    if not isinstance(b, dict):
+                        continue
+                    comp = _resolve_winner(b.get("company", ""))
+                    if comp and comp in TRACKED and comp not in seen:
+                        seen.add(comp)
+                        stats[year][comp]["bids_submitted"] += 1
+                        try:
+                            bval = float(b.get("quoted_value", 0) or 0)
+                            if bval > 0:
+                                stats[year][comp]["bid_values_all"].append(bval)
+                        except (ValueError, TypeError):
+                            pass
+            except Exception:
+                pass
+
+    # Doc purchases from TenderProbe purchasers
+    from app.models import TenderProbe
+    has_docs = False
+    docs: dict = defaultdict(lambda: defaultdict(int))  # year -> company -> count
+
+    probes = db.query(TenderProbe).all()
+    for probe in probes:
+        for p in (probe.purchasers or []):
+            company = p.get("company", "")
+            purchase_date = p.get("purchase_date", "")
+            comp = _resolve_winner(company)
+            if comp and comp in TRACKED and purchase_date:
+                try:
+                    yr = int(purchase_date[:4])
+                    if yr >= 2015:
+                        docs[yr][comp] += 1
+                        has_docs = True
+                except (ValueError, IndexError):
+                    pass
+
+    # Build flat result — only rows with any activity
+    all_years = sorted(stats.keys())
+    result = []
+    for year in all_years:
+        for company in TRACKED:
+            s = stats[year].get(company)
+            doc_count = docs[year].get(company, 0) if has_docs else None
+            bids = s["bids_submitted"] if s else 0
+            wins = s["contracts_won"] if s else 0
+            total_val = round(s["total_value_won"], 0) if s else 0
+            all_vals = (s["bid_values_all"] + s["bid_values_won"]) if s else []
+            avg_bid = round(sum(all_vals) / len(all_vals), 0) if all_vals else 0
+
+            if wins > 0 or bids > 0 or (doc_count and doc_count > 0):
+                result.append({
+                    "year": year,
+                    "company": company,
+                    "contracts_won": wins,
+                    "total_value_won": total_val,
+                    "avg_bid_value": avg_bid,
+                    "bids_submitted": bids,
+                    "docs_purchased": doc_count,
+                })
+
+    return {
+        "data": result,
+        "has_docs_data": has_docs,
+        "years": all_years,
+    }

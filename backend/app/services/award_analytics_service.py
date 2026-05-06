@@ -17,21 +17,23 @@ _analytics_cache = {"data": None, "computed_at": None}
 
 
 def _parse_year(awarded_date: str) -> int | None:
-    """Extract year from awarded_date string."""
+    """Extract year from awarded_date string.
+    Handles: YYYY-MM-DD, DD-MM-YYYY, DD/MM/YYYY, YYYY, DD-MM-YYYY HH:MM:SS
+    """
     if not awarded_date:
         return None
+    date_part = str(awarded_date).strip().split(" ")[0]
     try:
-        # Formats: "2024-03-15", "15/03/2024", "2024"
-        if "-" in awarded_date:
-            return int(awarded_date[:4])
-        if "/" in awarded_date:
-            parts = awarded_date.split("/")
-            # Could be DD/MM/YYYY or MM/DD/YYYY
-            for p in parts:
+        if "-" in date_part:
+            for p in date_part.split("-"):
                 if len(p) == 4:
                     return int(p)
-        if len(awarded_date) == 4:
-            return int(awarded_date)
+        if "/" in date_part:
+            for p in date_part.split("/"):
+                if len(p) == 4:
+                    return int(p)
+        if len(date_part) == 4:
+            return int(date_part)
     except (ValueError, IndexError):
         pass
     return None
@@ -409,10 +411,16 @@ def _compute_pricing(tenders, tender_bidders) -> dict:
             if abs(t.winning_value - t.lowest_bid) < 1:
                 lowest_wins += 1
 
-        if t.bid_spread_pct is not None:
-            all_spreads.append(t.bid_spread_pct)
-            if t.category:
-                category_pricing[t.category]["spreads"].append(t.bid_spread_pct)
+        # Recompute spread from raw values — stored bid_spread_pct has data-entry errors
+        # Formula: ((highest_bid - winning_value) / winning_value) * 100
+        # This shows how much more expensive the highest bidder was vs. the winner
+        if (t.winning_value and t.winning_value > 0
+                and t.highest_bid and t.highest_bid > t.winning_value):
+            spread = round(((t.highest_bid - t.winning_value) / t.winning_value) * 100, 1)
+            if 0 < spread <= 200:  # cap extreme outliers from data errors
+                all_spreads.append(spread)
+                if t.category:
+                    category_pricing[t.category]["spreads"].append(spread)
 
     lowest_wins_pct = round((lowest_wins / total_with_lowest) * 100, 1) if total_with_lowest > 0 else None
     avg_spread = round(sum(all_spreads) / len(all_spreads), 1) if all_spreads else None
@@ -446,6 +454,7 @@ def _compute_pricing(tenders, tender_bidders) -> dict:
     return {
         "lowest_bidder_wins_pct": lowest_wins_pct,
         "avg_bid_spread_pct": avg_spread,
+        "bid_spread_description": "Avg % gap between winner bid and highest bid on same tender",
         "sample_size": total_with_lowest,
         "by_category": by_category,
         "by_grade": by_grade,
