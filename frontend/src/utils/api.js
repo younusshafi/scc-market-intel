@@ -1,6 +1,12 @@
 // Relative path works in both dev (proxied by Vite) and production (proxied by nginx)
 const API_BASE = '/api'
 
+const API_TOKEN = import.meta.env.VITE_API_TOKEN || ''
+
+function authHeaders() {
+  return API_TOKEN ? { Authorization: `Bearer ${API_TOKEN}` } : {}
+}
+
 async function fetchAPI(endpoint, params = {}) {
   const url = new URL(`${API_BASE}${endpoint}`, window.location.origin)
   Object.entries(params).forEach(([k, v]) => {
@@ -9,13 +15,16 @@ async function fetchAPI(endpoint, params = {}) {
     }
   })
 
-  const res = await fetch(url)
+  const res = await fetch(url, { headers: authHeaders() })
   if (!res.ok) throw new Error(`API error: ${res.status}`)
   return res.json()
 }
 
 async function postAPI(endpoint) {
-  const res = await fetch(`${API_BASE}${endpoint}`, { method: 'POST' })
+  const res = await fetch(`${API_BASE}${endpoint}`, {
+    method: 'POST',
+    headers: authHeaders(),
+  })
   if (!res.ok) throw new Error(`API error: ${res.status}`)
   return res.json()
 }
