@@ -231,11 +231,11 @@ def get_dashboard_metrics(db: Session = Depends(get_db)):
     avg_competitors = round(sum(competitor_counts) / len(competitor_counts), 1) if competitor_counts else None
 
     # Highest value open tender (by fee, SCC-relevant)
-    from sqlalchemy import desc as _desc
+    from sqlalchemy import desc as _desc, or_ as _or
     highest_tender = (
         db.query(Tender)
         .filter(Tender.is_scc_relevant == True, Tender.fee != None, Tender.fee > 0)
-        .filter(Tender.bid_closing_date == None or Tender.bid_closing_date >= today)
+        .filter(_or(Tender.bid_closing_date == None, Tender.bid_closing_date >= today))
         .order_by(_desc(Tender.fee))
         .first()
     )
