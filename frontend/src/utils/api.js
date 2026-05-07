@@ -1,4 +1,5 @@
-const API_BASE = 'http://localhost:8000/api'
+// Relative path works in both dev (proxied by Vite) and production (proxied by nginx)
+const API_BASE = '/api'
 
 async function fetchAPI(endpoint, params = {}) {
   const url = new URL(`${API_BASE}${endpoint}`, window.location.origin)
