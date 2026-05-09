@@ -38,19 +38,24 @@ function LivePulse() {
   )
 }
 
-function formatPurchaseDate(timestamp) {
-  if (!timestamp) return '—'
-  const date = new Date(timestamp)
-  if (isNaN(date)) {
-    // Fallback: try DD-MM-YYYY HH:MM:SS format
-    const parts = String(timestamp).trim().split(/[\s/-:]/)
-    if (parts.length >= 5) {
-      const [d, m, y, hh, mm] = parts
-      const rebuilt = new Date(`${y}-${m}-${d}T${hh}:${mm}:00`)
-      if (!isNaN(rebuilt)) return formatPurchaseDate(rebuilt.toISOString())
-    }
-    return String(timestamp).slice(0, 16)
-  }
+// Purchase dates are stored as "DD-MM-YYYY HH:mm" — must parse explicitly.
+// Never pass directly to new Date(): V8 misreads "02-11-2025" as Feb 11 (MM-DD).
+function parsePurchaseDate(dateStr) {
+  if (!dateStr) return null
+  const s = String(dateStr).trim()
+  // Expected: "DD-MM-YYYY HH:mm" or "DD-MM-YYYY HH:mm:ss"
+  const [datePart, timePart] = s.split(' ')
+  if (!datePart) return null
+  const [dd, mm, yyyy] = datePart.split('-')
+  if (!dd || !mm || !yyyy) return null
+  const iso = `${yyyy}-${mm}-${dd}T${timePart ? timePart.slice(0, 5) : '00:00'}:00`
+  const date = new Date(iso)
+  return isNaN(date.getTime()) ? null : date
+}
+
+function formatPurchaseDate(dateStr) {
+  const date = parsePurchaseDate(dateStr)
+  if (!date) return '—'
 
   const now = new Date()
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
