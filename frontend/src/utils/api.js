@@ -49,7 +49,7 @@ export const api = {
   query: (q) => fetchAPI('/query/', { q }),
   // Competitive Intelligence
   getCompetitiveIntel: () => fetchAPI('/competitive-intel/'),
-  getLiveTenders: () => fetchAPI('/competitive-intel/live-tenders'),
+  getLiveTenders: () => fetchAPI('/competitive-intel/'),
   // Geography
   getGeoDistribution: () => fetchAPI('/geo/distribution'),
   // AI Scoring
