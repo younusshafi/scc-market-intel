@@ -1,9 +1,11 @@
 """SCC Market Intelligence Module — FastAPI application."""
 
+import os
 import logging
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from sqlalchemy import text
 
 from app.core.config import get_settings
@@ -16,11 +18,29 @@ settings = get_settings()
 
 app = FastAPI(
     title="SCC Market Intelligence",
-    description="Tender and market intelligence API for Sarooj Construction Company",
     version="1.0.0",
+    # Disable public API docs in production
+    docs_url=None,
+    redoc_url=None,
+    openapi_url=None,
 )
 
-# CORS
+# ── Token authentication middleware ──────────────────────────────────────────
+# All /api/* routes require a Bearer token except /api/system/health.
+# Token is set via API_SECRET_TOKEN env var. If unset, auth is skipped (dev).
+
+@app.middleware("http")
+async def token_auth(request: Request, call_next):
+    path = request.url.path
+    if path.startswith("/api/") and path not in ("/api/system/health", "/api/system/health/"):
+        api_token = os.environ.get("API_SECRET_TOKEN", "")
+        if api_token:
+            auth_header = request.headers.get("Authorization", "")
+            if not auth_header.startswith("Bearer ") or auth_header[7:] != api_token:
+                return JSONResponse({"detail": "Unauthorized"}, status_code=401)
+    return await call_next(request)
+
+# ── CORS ─────────────────────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
@@ -29,26 +49,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Create tables and run migrations on startup
+# ── Startup ───────────────────────────────────────────────────────────────────
 @app.on_event("startup")
 def startup():
-    # Create any new tables (e.g. tender_probes)
     Base.metadata.create_all(bind=engine)
-
-    # Add missing columns to existing tables (idempotent)
     _run_column_migrations()
 
 
 def _run_column_migrations():
     """Add columns that create_all won't add to already-existing tables."""
-    from app.core.config import get_settings
     _settings = get_settings()
 
-    # SQLite: create_all handles everything since we start fresh
     if _settings.database_url.startswith("sqlite"):
         return
 
-    # PostgreSQL: add missing columns to existing tables
     migrations = [
         (
             "news_articles", "is_jv_mention",
@@ -75,7 +89,7 @@ def _run_column_migrations():
                 logger.debug(f"Column {table}.{column} already exists, skipping")
 
 
-# Register routers
+# ── Routers ───────────────────────────────────────────────────────────────────
 app.include_router(tenders.router, prefix="/api")
 app.include_router(news.router, prefix="/api")
 app.include_router(briefings.router, prefix="/api")
