@@ -1,90 +1,58 @@
-// Relative path works in both dev (proxied by Vite) and production (proxied by nginx)
-const API_BASE = '/api'
+const API_BASE = "/api"
 
 async function fetchAPI(endpoint, params = {}) {
   const url = new URL(`${API_BASE}${endpoint}`, window.location.origin)
   Object.entries(params).forEach(([k, v]) => {
-    if (v !== undefined && v !== null && v !== '') {
+    if (v !== undefined && v !== null && v !== "") {
       url.searchParams.set(k, v)
     }
   })
   const res = await fetch(url)
-  if (!res.ok) throw new Error(`API error: ${res.status}`)
   return res.json()
 }
 
 async function postAPI(endpoint) {
-  const res = await fetch(`${API_BASE}${endpoint}`, { method: 'POST' })
-  if (!res.ok) throw new Error(`API error: ${res.status}`)
+  const res = await fetch(`${API_BASE}${endpoint}`, { method: "POST" })
   return res.json()
 }
 
 export const api = {
-  // Tenders
-  getTenders: (params) => fetchAPI('/tenders/', params),
-  getTenderStats: () => fetchAPI('/tenders/stats'),
-  getTenderTrend: () => fetchAPI('/tenders/trend'),
-
-  // News
-  getNews: (params) => fetchAPI('/news/', params),
-  getNewsStats: () => fetchAPI('/news/stats'),
-  getJvMentions: (params) => fetchAPI('/news/jv-mentions', params),
-  getJvStats: () => fetchAPI('/news/jv-stats'),
-
-  // Briefings
-  getLatestBriefing: () => fetchAPI('/briefings/latest'),
-  getBriefingHistory: () => fetchAPI('/briefings/history'),
-  generateBriefing: () => postAPI('/briefings/generate'),
-
-  // Query
-  query: (q) => fetchAPI('/query/', { q }),
-
-  // Competitive Intelligence
-  getCompetitiveIntel: () => fetchAPI('/competitive-intel/'),
-  getLiveTenders: () => fetchAPI('/competitive-intel/live-tenders'),
-
-  // Geography
-  getGeoDistribution: () => fetchAPI('/geo/distribution'),
-
-  // AI Scoring
-  getScoredTenders: () => fetchAPI('/tenders/scored'),
-  triggerScoring: () => postAPI('/tenders/score'),
-
-  // AI News Intelligence
-  getNewsIntelligence: () => fetchAPI('/news/intelligence'),
-  triggerNewsAnalysis: () => postAPI('/news/analyse'),
-
-  // Competitor Profiles
-  getCompetitorProfiles: () => fetchAPI('/competitive-intel/profiles'),
-  buildCompetitorProfiles: () => postAPI('/competitive-intel/build-profiles'),
-
-  // Galfar MSX Financials
-  getGalfarFinancials: () => fetchAPI('/competitive-intel/galfar-financials'),
-  scrapeGalfarFinancials: () => postAPI('/competitive-intel/scrape-galfar'),
-
-  // Entity Intelligence
-  getEntityIntel: () => fetchAPI('/entity-intel/'),
-  buildEntityIntel: () => postAPI('/entity-intel/build'),
-
-  // News-Tender Links
-  getNewsTenderLinks: () => fetchAPI('/news/tender-links'),
-  linkNewsToTenders: () => postAPI('/news/link-to-tenders'),
-
-  // Dashboard
-  getPriorityActions: () => fetchAPI('/dashboard/priority-actions'),
-  getDashboardMetrics: () => fetchAPI('/dashboard/metrics'),
-
-  // Awarded
-  getYearlyActivity: () => fetchAPI('/awarded/yearly-activity'),
-  getAwardedStats: () => fetchAPI('/awarded/stats'),
-  getAwardedWinners: () => fetchAPI('/awarded/winners'),
-  getAwardedAnalytics: () => fetchAPI('/awarded/analytics'),
-  getAwardedInsights: () => fetchAPI('/awarded/insights'),
-  getSCCPerformance: () => fetchAPI('/awarded/scc-performance'),
-  getCompetitorHistory: (company) => fetchAPI('/awarded/competitor-history', { company }),
-  computeAwardedAnalytics: () => postAPI('/awarded/compute'),
-
-  // System
-  getHealth: () => fetchAPI('/system/health'),
-  getScrapeStatus: () => fetchAPI('/system/scrape-status'),
+  getTenders: (params) => fetchAPI("/tenders/", params),
+  getTenderStats: () => fetchAPI("/tenders/stats"),
+  getTenderTrend: () => fetchAPI("/tenders/trend"),
+  getNews: (params) => fetchAPI("/news/", params),
+  getNewsStats: () => fetchAPI("/news/stats"),
+  getJvMentions: (params) => fetchAPI("/news/jv-mentions", params),
+  getJvStats: () => fetchAPI("/news/jv-stats"),
+  getLatestBriefing: () => fetchAPI("/briefings/latest"),
+  getBriefingHistory: () => fetchAPI("/briefings/history"),
+  generateBriefing: () => postAPI("/briefings/generate"),
+  query: (q) => fetchAPI("/query/", { q }),
+  getCompetitiveIntel: () => fetchAPI("/competitive-intel/"),
+  getLiveTenders: () => fetchAPI("/competitive-intel/"),
+  getGeoDistribution: () => fetchAPI("/geo/distribution"),
+  getScoredTenders: () => fetchAPI("/tenders/scored"),
+  triggerScoring: () => postAPI("/tenders/score"),
+  getNewsIntelligence: () => fetchAPI("/news/intelligence"),
+  triggerNewsAnalysis: () => postAPI("/news/analyse"),
+  getCompetitorProfiles: () => fetchAPI("/competitive-intel/profiles"),
+  buildCompetitorProfiles: () => postAPI("/competitive-intel/build-profiles"),
+  getGalfarFinancials: () => fetchAPI("/competitive-intel/galfar-financials"),
+  scrapeGalfarFinancials: () => postAPI("/competitive-intel/scrape-galfar"),
+  getEntityIntel: () => fetchAPI("/entity-intel/"),
+  buildEntityIntel: () => postAPI("/entity-intel/build"),
+  getNewsTenderLinks: () => fetchAPI("/news/tender-links"),
+  linkNewsToTenders: () => postAPI("/news/link-to-tenders"),
+  getPriorityActions: () => fetchAPI("/dashboard/priority-actions"),
+  getDashboardMetrics: () => fetchAPI("/dashboard/metrics"),
+  getYearlyActivity: () => fetchAPI("/awarded/yearly-activity"),
+  getAwardedStats: () => fetchAPI("/awarded/stats"),
+  getAwardedWinners: () => fetchAPI("/awarded/winners"),
+  getAwardedAnalytics: () => fetchAPI("/awarded/analytics"),
+  getAwardedInsights: () => fetchAPI("/awarded/insights"),
+  getSCCPerformance: () => fetchAPI("/awarded/scc-performance"),
+  getCompetitorHistory: (company) => fetchAPI("/awarded/competitor-history", { company }),
+  computeAwardedAnalytics: () => postAPI("/awarded/compute"),
+  getHealth: () => fetchAPI("/system/health"),
+  getScrapeStatus: () => fetchAPI("/system/scrape-status"),
 }
