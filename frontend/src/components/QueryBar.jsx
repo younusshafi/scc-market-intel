@@ -3,14 +3,12 @@ import { Sparkles, X, Loader2 } from 'lucide-react'
 import { api } from '../utils/api'
 
 const SUGGESTIONS = [
-  'How many SCC tenders?',
-  'Tenders closing this week',
-  'Show re-tenders',
-  'News about Galfar',
-  'Pipeline summary',
-  'Market breakdown',
-  'Top entities',
-  'Competitor news',
+  'Which ministries awarded SCC contracts?',
+  'Tenders where Galfar and SCC both bid',
+  'Highest value road tenders this year',
+  'Where does Al Tasnim win most often?',
+  'SCC win rate by ministry',
+  'Open tenders closing this week',
 ]
 
 export default function QueryBar() {
@@ -74,14 +72,14 @@ export default function QueryBar() {
         </button>
       </div>
 
-      {/* Suggestion chips */}
+      {/* Example query chips */}
       {!result && !loading && (
         <div className="flex flex-wrap gap-2 mt-3">
           {SUGGESTIONS.map((s) => (
             <button
               key={s}
               onClick={() => { setQuery(s); handleSubmit(s) }}
-              className="px-3 py-1 bg-slate-800 border border-slate-700/50 rounded-full text-xs text-slate-400 hover:text-slate-200 hover:border-slate-600 transition-colors"
+              className="px-3 py-1.5 bg-blue-500/8 border border-blue-500/25 rounded-full text-[11px] font-medium text-blue-300/80 hover:text-blue-200 hover:border-blue-400/50 hover:bg-blue-500/15 transition-all duration-150"
             >
               {s}
             </button>
