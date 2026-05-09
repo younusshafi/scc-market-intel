@@ -1,5 +1,11 @@
 // Relative path works in both dev (proxied by Vite) and production (proxied by nginx)
 const API_BASE = '/api'
+const API_TOKEN = '2d2650d2c3c12a035ab260fb6c32776e9761731a73b3992483d9011c9851b1ec'
+
+const authHeaders = {
+  'Authorization': `Bearer ${API_TOKEN}`,
+  'Content-Type': 'application/json',
+}
 
 async function fetchAPI(endpoint, params = {}) {
   const url = new URL(`${API_BASE}${endpoint}`, window.location.origin)
@@ -8,14 +14,13 @@ async function fetchAPI(endpoint, params = {}) {
       url.searchParams.set(k, v)
     }
   })
-
-  const res = await fetch(url)
+  const res = await fetch(url, { headers: authHeaders })
   if (!res.ok) throw new Error(`API error: ${res.status}`)
   return res.json()
 }
 
 async function postAPI(endpoint) {
-  const res = await fetch(`${API_BASE}${endpoint}`, { method: 'POST' })
+  const res = await fetch(`${API_BASE}${endpoint}`, { method: 'POST', headers: authHeaders })
   if (!res.ok) throw new Error(`API error: ${res.status}`)
   return res.json()
 }
@@ -25,54 +30,43 @@ export const api = {
   getTenders: (params) => fetchAPI('/tenders/', params),
   getTenderStats: () => fetchAPI('/tenders/stats'),
   getTenderTrend: () => fetchAPI('/tenders/trend'),
-
   // News
   getNews: (params) => fetchAPI('/news/', params),
   getNewsStats: () => fetchAPI('/news/stats'),
   getJvMentions: (params) => fetchAPI('/news/jv-mentions', params),
   getJvStats: () => fetchAPI('/news/jv-stats'),
-
   // Briefings
   getLatestBriefing: () => fetchAPI('/briefings/latest'),
   getBriefingHistory: () => fetchAPI('/briefings/history'),
-
+  generateBriefing: () => postAPI('/briefings/generate'),
   // Query
   query: (q) => fetchAPI('/query/', { q }),
-
   // Competitive Intelligence
   getCompetitiveIntel: () => fetchAPI('/competitive-intel/'),
-
+  getLiveTenders: () => fetchAPI('/competitive-intel/live-tenders'),
   // Geography
   getGeoDistribution: () => fetchAPI('/geo/distribution'),
-
   // AI Scoring
   getScoredTenders: () => fetchAPI('/tenders/scored'),
   triggerScoring: () => postAPI('/tenders/score'),
-
   // AI News Intelligence
   getNewsIntelligence: () => fetchAPI('/news/intelligence'),
   triggerNewsAnalysis: () => postAPI('/news/analyse'),
-
   // Competitor Profiles
   getCompetitorProfiles: () => fetchAPI('/competitive-intel/profiles'),
   buildCompetitorProfiles: () => postAPI('/competitive-intel/build-profiles'),
-
   // Galfar MSX Financials
   getGalfarFinancials: () => fetchAPI('/competitive-intel/galfar-financials'),
   scrapeGalfarFinancials: () => postAPI('/competitive-intel/scrape-galfar'),
-
   // Entity Intelligence
   getEntityIntel: () => fetchAPI('/entity-intel/'),
   buildEntityIntel: () => postAPI('/entity-intel/build'),
-
   // News-Tender Links
   getNewsTenderLinks: () => fetchAPI('/news/tender-links'),
   linkNewsToTenders: () => postAPI('/news/link-to-tenders'),
-
   // Dashboard
   getPriorityActions: () => fetchAPI('/dashboard/priority-actions'),
   getDashboardMetrics: () => fetchAPI('/dashboard/metrics'),
-
   // Awarded
   getYearlyActivity: () => fetchAPI('/awarded/yearly-activity'),
   getAwardedStats: () => fetchAPI('/awarded/stats'),
@@ -82,7 +76,6 @@ export const api = {
   getSCCPerformance: () => fetchAPI('/awarded/scc-performance'),
   getCompetitorHistory: (company) => fetchAPI('/awarded/competitor-history', { company }),
   computeAwardedAnalytics: () => postAPI('/awarded/compute'),
-
   // System
   getHealth: () => fetchAPI('/system/health'),
   getScrapeStatus: () => fetchAPI('/system/scrape-status'),
