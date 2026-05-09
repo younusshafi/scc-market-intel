@@ -1,7 +1,7 @@
 export default function TrendChart({ data }) {
   if (!data || data.length === 0) {
     return (
-      <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-6">
+      <div className="bg-[#111827] border border-[#1e2a42] rounded-xl p-6">
         <h3 className="text-[11px] font-semibold text-[#5a6a85] uppercase tracking-wider mb-4">
           Tender Volume Trend
         </h3>
@@ -18,7 +18,7 @@ export default function TrendChart({ data }) {
   const chartWidth = data.length * (groupWidth + gap * 2)
 
   return (
-    <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-6">
+    <div className="bg-[#111827] border border-[#1e2a42] rounded-xl p-6">
       <h3 className="text-[11px] font-semibold text-[#5a6a85] uppercase tracking-wider mb-4">
         Tender Volume Trend
       </h3>
@@ -33,7 +33,7 @@ export default function TrendChart({ data }) {
               y1={10 + chartHeight * (1 - pct)}
               x2={chartWidth + 30}
               y2={10 + chartHeight * (1 - pct)}
-              stroke="#334155"
+              stroke="#1e2a42"
               strokeWidth="0.5"
               strokeDasharray={pct === 0 ? '' : '2,2'}
             />

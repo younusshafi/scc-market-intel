@@ -11,16 +11,16 @@ function Tooltip({ text }) {
 
 function MetricCard({ value, label, accent, tooltip, sub }) {
   return (
-    <div className={`relative group bg-[#111827] border border-[#1e2a42] border-l-4 ${accent} rounded-lg p-4 hover:border-[#2a3a5c] transition-colors cursor-default`}>
+    <div className={`relative group bg-[#111827] border border-[#1e2a42] border-l-4 ${accent} rounded-lg p-3 sm:p-4 hover:border-[#2a3a5c] transition-colors cursor-default`}>
       {tooltip && <Tooltip text={tooltip} />}
-      <div className="text-2xl font-mono font-bold text-[#e8ecf4] leading-none truncate">
+      <div className="text-xl sm:text-2xl font-mono font-bold text-[#e8ecf4] leading-none truncate">
         {value ?? '—'}
       </div>
-      <div className="text-[10px] font-semibold text-[#5a6a85] uppercase tracking-wide mt-1.5 leading-tight">
+      <div className="text-[9px] sm:text-[10px] font-semibold text-[#5a6a85] uppercase tracking-wide mt-1.5 leading-tight truncate" title={label}>
         {label}
       </div>
       {sub && (
-        <div className="text-[10px] text-[#5a6a85] mt-0.5 truncate">{sub}</div>
+        <div className="text-[9px] sm:text-[10px] text-[#5a6a85] mt-0.5 truncate">{sub}</div>
       )}
     </div>
   )
@@ -32,9 +32,9 @@ export default function MetricCards() {
   if (loading || !data) {
     return (
       <div className="space-y-3">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="bg-[#111827] border border-[#1e2a42] rounded-lg p-4 animate-pulse">
+            <div key={i} className="bg-[#111827] border border-[#1e2a42] rounded-lg p-3 sm:p-4 animate-pulse">
               <div className="h-7 bg-[#1e2a42] rounded w-12 mb-2" />
               <div className="h-3 bg-[#1e2a42] rounded w-20" />
             </div>
@@ -125,7 +125,7 @@ export default function MetricCards() {
 
   return (
     <div className="space-y-3">
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
         {row1.map((m, i) => <MetricCard key={i} {...m} />)}
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">

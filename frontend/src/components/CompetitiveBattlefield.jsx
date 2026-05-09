@@ -38,6 +38,40 @@ function LivePulse() {
   )
 }
 
+// Purchase dates are stored as "DD-MM-YYYY HH:mm" — must parse explicitly.
+// Never pass directly to new Date(): V8 misreads "02-11-2025" as Feb 11 (MM-DD).
+function parsePurchaseDate(dateStr) {
+  if (!dateStr) return null
+  const s = String(dateStr).trim()
+  // Expected: "DD-MM-YYYY HH:mm" or "DD-MM-YYYY HH:mm:ss"
+  const [datePart, timePart] = s.split(' ')
+  if (!datePart) return null
+  const [dd, mm, yyyy] = datePart.split('-')
+  if (!dd || !mm || !yyyy) return null
+  const iso = `${yyyy}-${mm}-${dd}T${timePart ? timePart.slice(0, 5) : '00:00'}:00`
+  const date = new Date(iso)
+  return isNaN(date.getTime()) ? null : date
+}
+
+function formatPurchaseDate(dateStr) {
+  const date = parsePurchaseDate(dateStr)
+  if (!date) return '—'
+
+  const now = new Date()
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  const yesterday = new Date(today - 86_400_000)
+  const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+  const time = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+  const day = String(date.getDate()).padStart(2, '0')
+  const month = date.toLocaleString('en-GB', { month: 'short' })
+  const isCurrentYear = date.getFullYear() === now.getFullYear()
+
+  if (dateOnly.getTime() === today.getTime()) return `Today ${time}`
+  if (dateOnly.getTime() === yesterday.getTime()) return `Yesterday ${time}`
+  if (isCurrentYear) return `${day} ${month} ${time}`
+  return `${day} ${month} ${date.getFullYear()} ${time}`
+}
+
 function LiveCompetitiveTenders({ data }) {
   if (!data || data.length === 0) return null
 
@@ -99,7 +133,7 @@ function LiveCompetitiveTenders({ data }) {
                           {c.name}
                         </span>
                         <span className="text-[10px] font-mono text-[#5a6a85]">
-                          {c.date ? c.date.slice(5) : ''}
+                          {c.date ? formatPurchaseDate(c.date) : ''}
                         </span>
                       </div>
                     ))}

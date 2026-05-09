@@ -7,6 +7,12 @@ const authHeaders = {
   'Content-Type': 'application/json',
 }
 
+const API_TOKEN = import.meta.env.VITE_API_TOKEN || ''
+
+function authHeaders() {
+  return API_TOKEN ? { Authorization: `Bearer ${API_TOKEN}` } : {}
+}
+
 async function fetchAPI(endpoint, params = {}) {
   const url = new URL(`${API_BASE}${endpoint}`, window.location.origin)
   Object.entries(params).forEach(([k, v]) => {

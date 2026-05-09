@@ -79,18 +79,21 @@ export default function PriorityActions() {
             <div className="flex items-start gap-3">
               <div className="mt-0.5 flex-shrink-0">{config.icon}</div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex items-center gap-2 mb-1.5">
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${config.badge} tracking-wider`}>
                     {config.label}
                   </span>
                   {action.closing_date && (
-                    <span className="text-xs font-mono text-red-400">
-                      {new Date(action.closing_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                    <span className="text-xs font-mono text-red-400 font-semibold">
+                      closes {new Date(action.closing_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-[#e8ecf4] leading-snug">{action.description}</p>
-                <p className="text-xs text-[#5a6a85] mt-1">{config.hint}</p>
+                <p className="text-sm font-semibold text-[#e8ecf4] leading-snug">{action.title || action.description}</p>
+                {action.title && action.description && action.description !== action.title && (
+                  <p className="text-xs text-[#8896b0] mt-0.5 leading-relaxed">{action.description}</p>
+                )}
+                <p className="text-[10px] text-[#5a6a85] mt-1 font-medium uppercase tracking-wide">{config.hint}</p>
               </div>
             </div>
           </div>
