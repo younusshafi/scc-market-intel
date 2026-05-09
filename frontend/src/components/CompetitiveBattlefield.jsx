@@ -62,13 +62,14 @@ function formatPurchaseDate(dateStr) {
   const yesterday = new Date(today - 86_400_000)
   const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate())
   const time = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+  const day = String(date.getDate()).padStart(2, '0')
+  const month = date.toLocaleString('en-GB', { month: 'short' })
+  const isCurrentYear = date.getFullYear() === now.getFullYear()
 
   if (dateOnly.getTime() === today.getTime()) return `Today ${time}`
   if (dateOnly.getTime() === yesterday.getTime()) return `Yesterday ${time}`
-
-  const day = String(date.getDate()).padStart(2, '0')
-  const month = date.toLocaleString('en-GB', { month: 'short' })
-  return `${day} ${month} ${time}`
+  if (isCurrentYear) return `${day} ${month} ${time}`
+  return `${day} ${month} ${date.getFullYear()} ${time}`
 }
 
 function LiveCompetitiveTenders({ data }) {
