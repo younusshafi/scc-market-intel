@@ -1,9 +1,10 @@
-import { LayoutDashboard, Swords, Target, Newspaper, UserSearch } from 'lucide-react'
+import { LayoutDashboard, Swords, Target, Newspaper, UserSearch, BarChart2 } from 'lucide-react'
 
 const TABS = [
   { id: 'command-centre', label: 'Command Centre', icon: LayoutDashboard },
   { id: 'competitive-intel', label: 'Competitive Intel', icon: Swords },
   { id: 'opportunities', label: 'Opportunities', icon: Target },
+  { id: 'award-intel', label: 'Award Intelligence', icon: BarChart2 },
   { id: 'market-news', label: 'Market & News', icon: Newspaper },
   { id: 'profiles', label: 'Profiles', icon: UserSearch },
 ]

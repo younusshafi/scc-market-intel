@@ -18,7 +18,7 @@ import MarketContext from './components/MarketContext'
 
 export default function App() {
   const { data: stats } = useAPI(api.getTenderStats, [])
-  const { data: briefing, refetch: refetchBriefing } = useAPI(api.getLatestBriefing, [])
+  const { data: briefing, loading: briefingLoading, refetch: refetchBriefing } = useAPI(api.getLatestBriefing, [])
   const { data: trend } = useAPI(api.getTenderTrend, [])
   const { data: compIntel } = useAPI(api.getCompetitiveIntel, [])
   const { data: scoredData } = useAPI(api.getScoredTenders, [])
@@ -58,6 +58,10 @@ export default function App() {
     'market-news': [
       `${newsIntel?.total || '—'} articles`,
       `${highPriorityNews.length || '—'} high priority`,
+    ].join(' · '),
+    'award-intel': [
+      '28,529 awarded contracts',
+      'SCC win rate · competitor trends · pricing intelligence',
     ].join(' · '),
     'profiles': [
       `${profiles?.profiles?.length || '—'} competitor profiles`,
@@ -110,9 +114,9 @@ export default function App() {
         {/* TAB 1: Command Centre */}
         {activeTab === 'command-centre' && (
           <>
-            <BriefingCard briefing={briefing?.briefing} onRefresh={refetchBriefing} />
-            <MetricCards />
             <PriorityActions />
+            <MetricCards />
+            <BriefingCard briefing={briefing?.briefing} loading={briefingLoading} onRefresh={refetchBriefing} />
             <TrendChart data={trend} />
           </>
         )}
@@ -135,17 +139,21 @@ export default function App() {
           </>
         )}
 
-        {/* TAB 4: Market & News */}
+        {/* TAB 4: Award Intelligence */}
+        {activeTab === 'award-intel' && (
+          <AwardedIntelligence />
+        )}
+
+        {/* TAB 5: Market & News */}
         {activeTab === 'market-news' && (
           <>
             <NewsIntelligence />
             <EntityIntelligence />
-            <AwardedIntelligence />
             <MarketContext stats={stats} />
           </>
         )}
 
-        {/* TAB 5: Profiles */}
+        {/* TAB 6: Profiles */}
         {activeTab === 'profiles' && (
           <>
             <GalfarProfile />

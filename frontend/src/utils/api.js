@@ -44,6 +44,7 @@ export const api = {
   // Briefings
   getLatestBriefing: () => fetchAPI('/briefings/latest'),
   getBriefingHistory: () => fetchAPI('/briefings/history'),
+  generateBriefing: () => postAPI('/briefings/generate'),
 
   // Query
   query: (q) => fetchAPI('/query/', { q }),
