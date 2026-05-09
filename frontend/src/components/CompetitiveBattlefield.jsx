@@ -38,6 +38,34 @@ function LivePulse() {
   )
 }
 
+function formatPurchaseDate(timestamp) {
+  if (!timestamp) return '—'
+  const date = new Date(timestamp)
+  if (isNaN(date)) {
+    // Fallback: try DD-MM-YYYY HH:MM:SS format
+    const parts = String(timestamp).trim().split(/[\s/-:]/)
+    if (parts.length >= 5) {
+      const [d, m, y, hh, mm] = parts
+      const rebuilt = new Date(`${y}-${m}-${d}T${hh}:${mm}:00`)
+      if (!isNaN(rebuilt)) return formatPurchaseDate(rebuilt.toISOString())
+    }
+    return String(timestamp).slice(0, 16)
+  }
+
+  const now = new Date()
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  const yesterday = new Date(today - 86_400_000)
+  const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+  const time = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+
+  if (dateOnly.getTime() === today.getTime()) return `Today ${time}`
+  if (dateOnly.getTime() === yesterday.getTime()) return `Yesterday ${time}`
+
+  const day = String(date.getDate()).padStart(2, '0')
+  const month = date.toLocaleString('en-GB', { month: 'short' })
+  return `${day} ${month} ${time}`
+}
+
 function LiveCompetitiveTenders({ data }) {
   if (!data || data.length === 0) return null
 
@@ -99,7 +127,7 @@ function LiveCompetitiveTenders({ data }) {
                           {c.name}
                         </span>
                         <span className="text-[10px] font-mono text-[#5a6a85]">
-                          {c.date ? c.date.slice(5) : ''}
+                          {c.date ? formatPurchaseDate(c.date) : ''}
                         </span>
                       </div>
                     ))}
