@@ -111,11 +111,11 @@ export default function GalfarProfile() {
               <button
                 onClick={handleRefresh}
                 disabled={scraping}
-                className="flex items-center gap-1 text-xs text-[#5a6a85] hover:text-[#e8ecf4] transition-colors disabled:opacity-40"
+                className="flex items-center gap-1 text-xs text-[#5a6a85] hover:text-[#e8ecf4] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                 title="Refresh from MSX"
               >
                 <RefreshCw size={12} className={scraping ? 'animate-spin' : ''} />
-                {scraping ? 'Fetching…' : 'Refresh'}
+                {scraping ? 'Scraping MSX…' : 'Refresh'}
               </button>
             </div>
           </div>

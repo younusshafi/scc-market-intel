@@ -68,18 +68,32 @@ function ProfileCard({ profile, expanded, onToggle }) {
   )
 }
 
-export default function CompetitorProfiles() {
-  const { data, loading, error, refetch } = useAPI(api.getCompetitorProfiles, [])
+/**
+ * CompetitorProfiles accepts an optional `profiles` prop.
+ * When provided (and non-empty), skips the internal API fetch — avoids duplicate
+ * calls when this component is mounted on multiple tabs.
+ * Falls back to internal fetch for standalone/direct use.
+ */
+export default function CompetitorProfiles({ profiles: profilesProp }) {
+  // Only fetch internally if no prop was provided
+  const skip = Array.isArray(profilesProp) && profilesProp.length > 0
+  const noopFetch = () => Promise.resolve(null)
+  const { data, loading, error, refetch } = useAPI(
+    skip ? noopFetch : api.getCompetitorProfiles,
+    [skip]
+  )
   const [building, setBuilding] = useState(false)
   const [expandedId, setExpandedId] = useState(null)
 
-  const profiles = data?.profiles || []
+  const profiles = skip ? profilesProp : (data?.profiles || [])
+  const isLoading = skip ? false : loading
+  const hasError = skip ? false : error
 
   async function handleBuild() {
     setBuilding(true)
     try {
       await api.buildCompetitorProfiles()
-      await refetch()
+      if (!skip) await refetch()
     } catch (e) {
       console.error('Profile build failed:', e)
     } finally {
@@ -106,7 +120,7 @@ export default function CompetitorProfiles() {
       </div>
 
       {/* Loading */}
-      {loading && (
+      {isLoading && (
         <div className="flex gap-3 overflow-x-auto pb-2">
           {[1, 2, 3].map(i => (
             <div key={i} className="bg-[#111827] border border-[#1e2a42] rounded-lg p-5 animate-pulse min-w-[280px]">
@@ -119,14 +133,14 @@ export default function CompetitorProfiles() {
       )}
 
       {/* Error */}
-      {error && !loading && (
+      {hasError && !isLoading && (
         <div className="bg-[#111827] border border-red-900/50 rounded-lg p-6 text-center">
           <p className="text-sm text-red-400">Failed to load profiles</p>
         </div>
       )}
 
       {/* Empty */}
-      {!loading && !error && profiles.length === 0 && (
+      {!isLoading && !hasError && profiles.length === 0 && (
         <div className="bg-[#111827] border border-[#1e2a42] rounded-lg p-8 text-center">
           <p className="text-sm text-[#5a6a85]">No profiles built yet</p>
           <button
@@ -140,7 +154,7 @@ export default function CompetitorProfiles() {
       )}
 
       {/* Horizontal scrollable row */}
-      {!loading && !error && profiles.length > 0 && (
+      {!isLoading && !hasError && profiles.length > 0 && (
         expandedId !== null ? (
           <ProfileCard
             profile={profiles.find(p => p.id === expandedId) || profiles[0]}

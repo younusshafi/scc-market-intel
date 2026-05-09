@@ -62,7 +62,7 @@ function formatMd(md) {
     .replace(/$/, '</p>')
 }
 
-export default function BriefingCard({ briefing, loading, onRefresh }) {
+export default function BriefingCard({ briefing, loading, isStale, onRefresh }) {
   const [refreshing, setRefreshing] = useState(false)
   const [rawView, setRawView] = useState(false)
 
@@ -79,7 +79,6 @@ export default function BriefingCard({ briefing, loading, onRefresh }) {
   }
 
   const age = briefing ? hoursAgo(briefing.generated_at) : null
-  const isStale = age !== null && age > 24
 
   const htmlContent = briefing?.content_html || formatMd(briefing?.content_md)
   const sections = briefing ? parseSections(briefing.content_md || briefing.content_html) : null
@@ -107,7 +106,10 @@ export default function BriefingCard({ briefing, loading, onRefresh }) {
         <div className="flex items-center gap-3">
           {briefing && (
             <span className={`text-[10px] font-mono ${isStale ? 'text-amber-400' : 'text-[#5a6a85]'}`}>
-              {isStale ? `⚠ ${age}h ago` : formatTimestamp(briefing.generated_at)}
+              {isStale
+                ? (loading ? '⟳ Refreshing…' : age !== null && age > 24 ? `⚠ ${age}h ago` : '⟳ Refreshing…')
+                : formatTimestamp(briefing.generated_at)
+              }
             </span>
           )}
           {sections && (

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useAPI } from '../hooks/useAPI'
 import { api } from '../utils/api'
 import OpportunityRow from './OpportunityRow'
+import TenderTable from './TenderTable'
 
 export default function ScoredTenders() {
   const { data, loading, error, refetch } = useAPI(api.getScoredTenders, [])
@@ -9,9 +10,18 @@ export default function ScoredTenders() {
   const [subTab, setSubTab] = useState('recommended')
   const [showAll, setShowAll] = useState(false)
   const [scoring, setScoring] = useState(false)
+  const [showRawTable, setShowRawTable] = useState(false)
 
   const tenders = data?.tenders || []
   const retenders = (allTenders?.tenders || []).filter(t => t.is_retender)
+
+  // Closing soon = within 7 days
+  const today = new Date()
+  const closingSoonCount = tenders.filter(t => {
+    if (!t.bid_closing_date) return false
+    const days = (new Date(t.bid_closing_date) - today) / (1000 * 60 * 60 * 24)
+    return days >= 0 && days <= 7
+  }).length
 
   // Filter by sub-tab
   let displayed = []
@@ -20,9 +30,9 @@ export default function ScoredTenders() {
   } else if (subTab === 'all') {
     displayed = [...tenders].sort((a, b) => b.score - a.score)
   } else if (subTab === 'closing') {
-    const today = new Date().toISOString().split('T')[0]
+    const todayStr = today.toISOString().split('T')[0]
     displayed = tenders
-      .filter(t => t.bid_closing_date && t.bid_closing_date >= today)
+      .filter(t => t.bid_closing_date && t.bid_closing_date >= todayStr)
       .sort((a, b) => (a.bid_closing_date || '').localeCompare(b.bid_closing_date || ''))
   } else if (subTab === 'retenders') {
     displayed = retenders
@@ -46,7 +56,14 @@ export default function ScoredTenders() {
   const tabs = [
     { id: 'recommended', label: 'Recommended', count: tenders.filter(t => t.score >= 70).length },
     { id: 'all', label: 'All Scored', count: tenders.length },
-    { id: 'closing', label: 'Closing Soon', count: null },
+    {
+      id: 'closing',
+      label: 'Closing Soon',
+      count: closingSoonCount,
+      countStyle: closingSoonCount > 0
+        ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+        : 'bg-[#334155] text-[#5a6a85]',
+    },
     { id: 'retenders', label: 'Re-Tenders', count: retenders.length },
   ]
 
@@ -72,7 +89,7 @@ export default function ScoredTenders() {
           <button
             key={tab.id}
             onClick={() => { setSubTab(tab.id); setShowAll(false) }}
-            className={`text-xs font-semibold py-2 px-4 rounded-md transition-colors flex items-center gap-2 ${
+            className={`text-xs font-semibold py-2 px-4 rounded-md transition-colors flex items-center gap-1.5 ${
               subTab === tab.id
                 ? 'bg-[#1e2a42] text-[#e8ecf4]'
                 : 'text-[#5a6a85] hover:text-[#8896b0]'
@@ -80,7 +97,9 @@ export default function ScoredTenders() {
           >
             {tab.label}
             {tab.count !== null && tab.count > 0 && (
-              <span className="text-[10px] bg-[#334155] px-1.5 py-0.5 rounded-full">{tab.count}</span>
+              <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${tab.countStyle || 'bg-[#334155] text-[#8896b0]'}`}>
+                {tab.count}
+              </span>
             )}
           </button>
         ))}
@@ -141,6 +160,27 @@ export default function ScoredTenders() {
           )}
         </div>
       )}
+
+      {/* Raw tender table — collapsed by default */}
+      <div className="mt-8">
+        <button
+          onClick={() => setShowRawTable(v => !v)}
+          className="flex items-center gap-2 text-sm text-[#5a6a85] hover:text-[#8896b0] transition-colors"
+        >
+          <span
+            className="text-[10px] transition-transform duration-200"
+            style={{ display: 'inline-block', transform: showRawTable ? 'rotate(90deg)' : 'rotate(0deg)' }}
+          >
+            ▶
+          </span>
+          {showRawTable ? 'Hide' : 'View'} all SCC-relevant tenders (unscored)
+        </button>
+        {showRawTable && (
+          <div className="mt-4">
+            <TenderTable sccOnly={true} />
+          </div>
+        )}
+      </div>
     </div>
   )
 }
