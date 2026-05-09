@@ -4,6 +4,7 @@ from pathlib import Path
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 
+# Look for .env in backend/ first, then project root
 _backend_dir = Path(__file__).resolve().parent.parent.parent
 _env_files = [p for p in [_backend_dir / ".env", _backend_dir.parent / ".env"] if p.exists()]
 
@@ -13,17 +14,16 @@ class Settings(BaseSettings):
     database_url: str = "postgresql://localhost:5432/scc_intel"
 
     # API keys
+    groq_api_key: str = ""
     openai_api_key: str = ""
-
-    # Auth — shared secret for Bearer token middleware
-    api_secret_token: str = ""
 
     # App
     environment: str = "development"
     cors_origins: list[str] = [
         "http://localhost:5173",
-        "http://localhost:5175",
-        "https://mi.scc.zavia-ai.com",
+        "http://localhost:3000",
+	"http://localhost:5175",  # Add this line
+        "https://scc-intel-dashboard.onrender.com",
     ]
 
     # Scraper config
