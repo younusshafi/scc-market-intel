@@ -1,0 +1,762 @@
+{
+  "metadata": {
+    "last_updated": "2026-05-09",
+    "awarded_tenders_analysed": 4981,
+    "scc_bid_appearances": 90,
+    "scc_wins": 7,
+    "data_coverage_note": "Covers construction category awarded tenders with bid detail published on Oman Tender Board. Supply/Services tenders (82.5% of total) excluded as not SCC domain."
+  },
+  "scc_performance": {
+    "overall_win_rate": 0.078,
+    "genuine_competitive_band": "50M_plus",
+    "genuine_band_win_rate": 0.286,
+    "by_size_band": {
+      "under_1M": {
+        "genuine_bids": 4,
+        "wins": 0,
+        "win_rate": 0.0
+      },
+      "1M_5M": {
+        "genuine_bids": 29,
+        "wins": 3,
+        "win_rate": 0.103
+      },
+      "5M_15M": {
+        "genuine_bids": 1,
+        "wins": 0,
+        "win_rate": 0.0
+      },
+      "15M_50M": {
+        "genuine_bids": 8,
+        "wins": 0,
+        "win_rate": 0.0
+      },
+      "50M_plus": {
+        "genuine_bids": 7,
+        "wins": 2,
+        "win_rate": 0.286
+      }
+    },
+    "token_bid_rate_overall": 0.333,
+    "token_bid_rate_5M_15M_band": 0.857
+  },
+  "scc_entity_performance": {
+    "Muscat Municipality": {
+      "bids": 5,
+      "wins": 2,
+      "win_rate": 0.4,
+      "avg_gap_pct": 21.9,
+      "near_misses": 0,
+      "dominant_rivals": [
+        "SHUAA ALFATH GOLDEN TRADING",
+        "RIMAL GLOBAL TECHNICAL SERVICES",
+        "AL TASNIM ENTERPRISES"
+      ]
+    },
+    "Ministry of Agricultural, Fisheries Wealth and Water Resources": {
+      "bids": 10,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": 3.6,
+      "near_misses": 2,
+      "dominant_rivals": [
+        "PREMIER INTERNATIONAL PROJECTS",
+        "DETONATON BLASTING CONTRACTING",
+        "AL- GHARBIA ENTERPRISES TRADIG AND CONTRACTING COMPANY"
+      ]
+    },
+    "Ministry of Transport Communications and Information Technology": {
+      "bids": 16,
+      "wins": 2,
+      "win_rate": 0.125,
+      "avg_gap_pct": 12.1,
+      "near_misses": 4,
+      "dominant_rivals": [
+        "GALFAR ENGINEERING AND CONTRACTING",
+        "OMAN GULF COMPANY SAOC",
+        "RIMAL GLOBAL TECHNICAL SERVICES"
+      ]
+    },
+    "Al Dhahira Governor Office": {
+      "bids": 4,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": 23.3,
+      "near_misses": 0,
+      "dominant_rivals": [
+        "SHANFARI AND PARTNERS CO",
+        "DESERT CONVOY LLC",
+        "COMMON ENGINEERING DIRECTIONS"
+      ]
+    },
+    "Buraimi Governor Office": {
+      "bids": 2,
+      "wins": 1,
+      "win_rate": 0.5,
+      "avg_gap_pct": null,
+      "near_misses": 0,
+      "dominant_rivals": [
+        "DETONATON BLASTING CONTRACTING"
+      ]
+    },
+    "South Al Batinah Governor Office": {
+      "bids": 4,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": 14.0,
+      "near_misses": 1,
+      "dominant_rivals": [
+        "AL TASNIM ENTERPRISES",
+        "MARMUL CONTRACTING AND TRADING",
+        "MODERN SPECTRUM PROJECTS LLC"
+      ]
+    },
+    "Al Dakhiliyah Governor Office": {
+      "bids": 6,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": 29.0,
+      "near_misses": 0,
+      "dominant_rivals": [
+        "MARMUL CONTRACTING AND TRADING",
+        "ALI AND CO TRADING CONTRACTING LLC",
+        "AL-SHAFAQ CONSTRUCTIONS CO."
+      ]
+    },
+    "North Al Sharqiyah Governor Office": {
+      "bids": 4,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": 32.4,
+      "near_misses": 0,
+      "dominant_rivals": [
+        "MARMUL CONTRACTING AND TRADING",
+        "BR OMAN LLC",
+        "BEST INFRASTRUCTURE DEVELOPERS"
+      ]
+    },
+    "North Al Batinah Governor Office": {
+      "bids": 2,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": 2.2,
+      "near_misses": 0,
+      "dominant_rivals": [
+        "AL TASNIM ENTERPRISES"
+      ]
+    },
+    "Al Wusta Governor Office": {
+      "bids": 1,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": null,
+      "near_misses": 0,
+      "dominant_rivals": [
+        "AL ARABIA NATIONAL ENGINEERING &CONT CO LLC"
+      ]
+    },
+    "Ministry of Housing and Urban Planning": {
+      "bids": 3,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": null,
+      "near_misses": 0,
+      "dominant_rivals": [
+        "STRABAG OMAN",
+        "TOWELL INFRASTRUCTURE PROJECTS CO",
+        "DETONATON BLASTING CONTRACTING"
+      ]
+    },
+    "Public Authority for Special Economic Zones and Free Zones": {
+      "bids": 4,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": 31.2,
+      "near_misses": 1,
+      "dominant_rivals": [
+        "SERKA TAAHHUT INSAAT AS",
+        "STRABAG OMAN",
+        "AL HASHEMI AL RAWAS TRAD AND CONT"
+      ]
+    },
+    "South Sharqiyah Governor Office": {
+      "bids": 4,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": 41.7,
+      "near_misses": 0,
+      "dominant_rivals": [
+        "ARABIAN PROJECTS AND TRANSPORT CO LLC",
+        "RAWASY ALJANOOB ALSHAMILA TRADING",
+        "SIRIN MODERN PROJECTS RECOMMENDATION"
+      ]
+    },
+    "Ministry of Agriculture and Fisheries": {
+      "bids": 3,
+      "wins": 1,
+      "win_rate": 0.333,
+      "avg_gap_pct": null,
+      "near_misses": 0,
+      "dominant_rivals": [
+        "KHIMJI RAMDAS CONSTRUCTION"
+      ]
+    },
+    "Office of the Minister of State And Governor of Musandam Governorate": {
+      "bids": 4,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": 29.6,
+      "near_misses": 1,
+      "dominant_rivals": [
+        "PREMIER INTERNATIONAL PROJECTS",
+        "QEMAM WADI AL AIN",
+        "GHADIMASHREQPROJECTS"
+      ]
+    },
+    "Special Economic Authority of DUQM": {
+      "bids": 5,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": null,
+      "near_misses": 0,
+      "dominant_rivals": []
+    },
+    "Ministry of Health": {
+      "bids": 1,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": 16.2,
+      "near_misses": 0,
+      "dominant_rivals": [
+        "AL SUBHIAH TRADING AND CONTRACTING LLC"
+      ]
+    },
+    "Ministry of Transport and Communications": {
+      "bids": 2,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": null,
+      "near_misses": 0,
+      "dominant_rivals": []
+    },
+    "Public Establishment for Industrial Estates": {
+      "bids": 1,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": null,
+      "near_misses": 0,
+      "dominant_rivals": [
+        "OMAN BUILDING AND CONT"
+      ]
+    },
+    "Ministry of Regional Municipalities and Water Resources": {
+      "bids": 2,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": null,
+      "near_misses": 0,
+      "dominant_rivals": []
+    },
+    "General Secretariat To The Cabinet": {
+      "bids": 1,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": null,
+      "near_misses": 0,
+      "dominant_rivals": []
+    },
+    "Ministry of Housing": {
+      "bids": 5,
+      "wins": 1,
+      "win_rate": 0.2,
+      "avg_gap_pct": null,
+      "near_misses": 0,
+      "dominant_rivals": []
+    },
+    "Civil Service Employees Pension Fund": {
+      "bids": 1,
+      "wins": 0,
+      "win_rate": 0.0,
+      "avg_gap_pct": null,
+      "near_misses": 0,
+      "dominant_rivals": []
+    }
+  },
+  "scc_near_misses": [
+    {
+      "tender_title": "(JV Omani-Saudi companies on.....",
+      "entity": "Ministry of Transport Communications and Information Technology",
+      "scc_bid": 121090300.515,
+      "winning_value": 116997731.378,
+      "gap_pct": 3.5,
+      "winner_company": "GALFAR ENGINEERING AND CONTRACTING",
+      "awarded_date": "02-03-2025 14:57:38"
+    },
+    {
+      "tender_title": "(JV Omani-Saudi companies on.....",
+      "entity": "Ministry of Transport Communications and Information Technology",
+      "scc_bid": 123547125.594,
+      "winning_value": 116997731.378,
+      "gap_pct": 5.6,
+      "winner_company": "GALFAR ENGINEERING AND CONTRACTING",
+      "awarded_date": "02-03-2025 14:57:38"
+    },
+    {
+      "tender_title": "DESIGN AND CONSTRUCTION OF I.....",
+      "entity": "South Al Batinah Governor Office",
+      "scc_bid": 1380366.165,
+      "winning_value": 1299666.17,
+      "gap_pct": 6.21,
+      "winner_company": "AL TASNIM ENTERPRISES",
+      "awarded_date": "02-10-2025 10:16:37"
+    },
+    {
+      "tender_title": "DESIGN AND BUILD SERVICES FO.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resources",
+      "scc_bid": 3920625.983,
+      "winning_value": 3686562.603,
+      "gap_pct": 6.35,
+      "winner_company": "DETONATON BLASTING CONTRACTING",
+      "awarded_date": "23-04-2024 12:33:09"
+    },
+    {
+      "tender_title": "CONSTRUCTION OF ROADS AT LIG.....",
+      "entity": "Public Authority for Special Economic Zones and Free Zones",
+      "scc_bid": 20761673.178,
+      "winning_value": 19414080.368,
+      "gap_pct": 6.94,
+      "winner_company": "STRABAG OMAN",
+      "awarded_date": "01-01-2024 10:06:34"
+    },
+    {
+      "tender_title": "CONSTRUCTION OF RECHARGE DAM.....",
+      "entity": "Ministry of Agricultural, Fisheries Wealth and Water Resources",
+      "scc_bid": 4990414.092,
+      "winning_value": 4625850.0,
+      "gap_pct": 7.88,
+      "winner_company": "PREMIER INTERNATIONAL PROJECTS",
+      "awarded_date": "02-03-2025 14:40:47"
+    },
+    {
+      "tender_title": "Construction of 05-Bridges a.....",
+      "entity": "Ministry of Transport Communications and Information Technology",
+      "scc_bid": 6616249.268,
+      "winning_value": 6089286.34,
+      "gap_pct": 8.65,
+      "winner_company": "RIMAL GLOBAL TECHNICAL SERVICES",
+      "awarded_date": "20-10-2024 09:14:04"
+    },
+    {
+      "tender_title": "Construction of balance work.....",
+      "entity": "Ministry of Transport Communications and Information Technology",
+      "scc_bid": 48998127.662,
+      "winning_value": 44820744.632,
+      "gap_pct": 9.32,
+      "winner_company": "AL HASHEMI AL RAWAS TRAD AND CONT",
+      "awarded_date": "02-02-2026 14:57:38"
+    },
+    {
+      "tender_title": "Design and implementation of.....",
+      "entity": "Office of the Minister of State And Governor of Musandam Governorate",
+      "scc_bid": 1342150.736,
+      "winning_value": 1221022.96,
+      "gap_pct": 9.92,
+      "winner_company": "PREMIER INTERNATIONAL PROJECTS",
+      "awarded_date": "24-08-2021 19:29:21"
+    }
+  ],
+  "competitor_profiles": {
+    "Galfar": {
+      "search_keywords": [
+        "GALFAR"
+      ],
+      "total_bids": 52,
+      "wins": 11,
+      "overall_win_rate": 0.212,
+      "token_bid_rate": 0.435,
+      "genuine_band": "50M_plus",
+      "avg_winning_bid_omr": 40348084,
+      "territory": [
+        "Ministry of Transport",
+        "Sultan Qaboos University",
+        "Ministry of Health",
+        "DUQM"
+      ],
+      "scc_head_to_head": {
+        "contests": 20,
+        "scc_wins": 5,
+        "galfar_wins": 1
+      },
+      "strategic_note": "Capacity constrained \u2014 OMR 745M backlog, bid volume declining 9 in 2023 to 5 in 2025. Likely to price high. Not competing in SCC real territory below OMR 20M."
+    },
+    "Al Tasnim": {
+      "search_keywords": [
+        "TASNIM"
+      ],
+      "total_bids": 131,
+      "wins": 29,
+      "overall_win_rate": 0.221,
+      "token_bid_rate": 0.316,
+      "genuine_band": "under_1M",
+      "avg_winning_bid_omr": 2018045,
+      "territory": [
+        "North Al Batinah Governor Office",
+        "Al Dakhiliyah Governor Office",
+        "Muscat Municipality"
+      ],
+      "scc_head_to_head": {
+        "contests": 63,
+        "scc_wins": 6,
+        "al_wins": 11
+      },
+      "strategic_note": "Owns Governor Office internal roads. Above OMR 15M almost always token bids. 2025 best year at 43% win rate. SCC cannot compete on cost in their core territory.",
+      "token_bid_rate_15M_50M_band": 0.7
+    },
+    "Premier International Projects": {
+      "search_keywords": [
+        "PREMIER INTERNATIONAL"
+      ],
+      "total_bids": 103,
+      "wins": 30,
+      "overall_win_rate": 0.291,
+      "token_bid_rate": 0.183,
+      "genuine_band": "15M_50M",
+      "avg_winning_bid_omr": 4199917,
+      "territory": [
+        "Ministry of Agricultural/Fisheries/Water Resources",
+        "Musandam Governor Office",
+        "Buraimi Governor Office",
+        "North/South Sharqiyah Governor Office",
+        "Al Dakhiliyah Governor Office"
+      ],
+      "scc_head_to_head": {
+        "contests": 59,
+        "scc_wins": 4,
+        "premier_wins": 16
+      },
+      "strategic_note": "WARNING: Not currently on SCC watchlist. Highest win rate of any competitor. Most disciplined pricing. Beats SCC on every head-to-head. Specialist in water, dams, flood protection, agricultural infrastructure. Should be Tier 1 watchlist."
+    },
+    "Strabag": {
+      "search_keywords": [
+        "STRABAG"
+      ],
+      "total_bids": 41,
+      "wins": 5,
+      "overall_win_rate": 0.122,
+      "token_bid_rate": 0.133,
+      "genuine_band": "15M_50M",
+      "avg_winning_bid_omr": 23906844,
+      "territory": [
+        "DUQM",
+        "Public Authority for Special Economic Zones",
+        "Ministry of Transport"
+      ],
+      "scc_head_to_head": {
+        "contests": 24,
+        "scc_wins": 6,
+        "strabag_wins": 3
+      },
+      "strategic_note": "Most disciplined competitor. When they enter they intend to win. Surging in 2025 \u2014 3 bids in 2024, 10 in 2025. Watch for increasing competition on large infrastructure."
+    },
+    "Towell": {
+      "search_keywords": [
+        "TOWELL"
+      ],
+      "total_bids": 22,
+      "wins": 3,
+      "overall_win_rate": 0.136,
+      "token_bid_rate": 0.143,
+      "genuine_band": "under_1M",
+      "avg_winning_bid_omr": 40060911,
+      "territory": [
+        "Ministry of Housing",
+        "large selective contracts"
+      ],
+      "scc_head_to_head": {
+        "contests": 2,
+        "scc_wins": 0,
+        "towell_wins": 1
+      },
+      "strategic_note": "Selective bidder. Low token rate. When they appear, take seriously."
+    },
+    "Larsen & Toubro": {
+      "search_keywords": [
+        "LARSEN"
+      ],
+      "total_bids": 4,
+      "wins": 1,
+      "overall_win_rate": 0.25,
+      "token_bid_rate": 0.0,
+      "genuine_band": "50M_plus",
+      "avg_winning_bid_omr": 56786100,
+      "scc_head_to_head": {
+        "contests": 1,
+        "scc_wins": 0,
+        "larsen_wins": 0
+      },
+      "strategic_note": "Very low activity in Oman public tenders. International presence."
+    },
+    "Arab Contractors": {
+      "search_keywords": [
+        "ARAB CONTRACTORS"
+      ],
+      "total_bids": 7,
+      "wins": 1,
+      "overall_win_rate": 0.143,
+      "token_bid_rate": 0.0,
+      "genuine_band": "15M_50M",
+      "avg_winning_bid_omr": 1662858,
+      "scc_head_to_head": {
+        "contests": 5,
+        "scc_wins": 0,
+        "arab_wins": 1
+      },
+      "strategic_note": "Low activity, Egyptian firm."
+    },
+    "Ozkar": {
+      "search_keywords": [
+        "OZKAR"
+      ],
+      "total_bids": 8,
+      "wins": 0,
+      "overall_win_rate": 0.0,
+      "token_bid_rate": 1.0,
+      "genuine_band": "unknown",
+      "avg_winning_bid_omr": null,
+      "scc_head_to_head": {
+        "contests": 5,
+        "scc_wins": 4,
+        "ozkar_wins": 0
+      },
+      "strategic_note": "Turkish firm. High token bid rate. Not a genuine threat."
+    },
+    "Hassan Allam": {
+      "search_keywords": [
+        "HASSAN ALLAM"
+      ],
+      "total_bids": 1,
+      "wins": 0,
+      "overall_win_rate": 0.0,
+      "token_bid_rate": 1.0,
+      "genuine_band": "unknown",
+      "avg_winning_bid_omr": null,
+      "scc_head_to_head": {
+        "contests": 0,
+        "scc_wins": 0,
+        "hassan_wins": 0
+      },
+      "strategic_note": "Minimal Oman activity."
+    }
+  },
+  "entity_threat_map": {
+    "Muscat Municipality": {
+      "primary_threats": [
+        "SHUAA ALFATH GOLDEN TRADING",
+        "RIMAL GLOBAL TECHNICAL SERVICES"
+      ],
+      "threat_level": "LOW",
+      "note": "SCC 2 wins from 5 bids. Avg gap (competitive losses): 22%."
+    },
+    "Ministry of Agricultural, Fisheries Wealth and Water Resources": {
+      "primary_threats": [
+        "PREMIER INTERNATIONAL PROJECTS",
+        "DETONATON BLASTING CONTRACTING"
+      ],
+      "threat_level": "HIGH",
+      "note": "SCC 0 wins from 10 bids. Avg gap (competitive losses): 4%."
+    },
+    "Ministry of Transport Communications and Information Technology": {
+      "primary_threats": [
+        "GALFAR ENGINEERING AND CONTRACTING",
+        "OMAN GULF COMPANY SAOC"
+      ],
+      "threat_level": "MEDIUM",
+      "note": "SCC 2 wins from 16 bids. Avg gap (competitive losses): 12%."
+    },
+    "Al Dhahira Governor Office": {
+      "primary_threats": [
+        "SHANFARI AND PARTNERS CO",
+        "DESERT CONVOY LLC"
+      ],
+      "threat_level": "HIGH",
+      "note": "SCC 0 wins from 4 bids. Avg gap (competitive losses): 23%."
+    },
+    "Buraimi Governor Office": {
+      "primary_threats": [
+        "DETONATON BLASTING CONTRACTING"
+      ],
+      "threat_level": "LOW",
+      "note": "SCC 1 wins from 2 bids. Avg gap (competitive losses): n/a."
+    },
+    "South Al Batinah Governor Office": {
+      "primary_threats": [
+        "AL TASNIM ENTERPRISES",
+        "MARMUL CONTRACTING AND TRADING"
+      ],
+      "threat_level": "HIGH",
+      "note": "SCC 0 wins from 4 bids. Avg gap (competitive losses): 14%."
+    },
+    "Al Dakhiliyah Governor Office": {
+      "primary_threats": [
+        "MARMUL CONTRACTING AND TRADING",
+        "ALI AND CO TRADING CONTRACTING LLC"
+      ],
+      "threat_level": "HIGH",
+      "note": "SCC 0 wins from 6 bids. Avg gap (competitive losses): 29%."
+    },
+    "North Al Sharqiyah Governor Office": {
+      "primary_threats": [
+        "MARMUL CONTRACTING AND TRADING",
+        "BR OMAN LLC"
+      ],
+      "threat_level": "HIGH",
+      "note": "SCC 0 wins from 4 bids. Avg gap (competitive losses): 32%."
+    },
+    "North Al Batinah Governor Office": {
+      "primary_threats": [
+        "AL TASNIM ENTERPRISES"
+      ],
+      "threat_level": "MEDIUM",
+      "note": "SCC 0 wins from 2 bids. Avg gap (competitive losses): 2%."
+    },
+    "Al Wusta Governor Office": {
+      "primary_threats": [
+        "AL ARABIA NATIONAL ENGINEERING &CONT CO LLC"
+      ],
+      "threat_level": "MEDIUM",
+      "note": "SCC 0 wins from 1 bids. Avg gap (competitive losses): n/a."
+    },
+    "Ministry of Housing and Urban Planning": {
+      "primary_threats": [
+        "STRABAG OMAN",
+        "TOWELL INFRASTRUCTURE PROJECTS CO"
+      ],
+      "threat_level": "HIGH",
+      "note": "SCC 0 wins from 3 bids. Avg gap (competitive losses): n/a."
+    },
+    "Public Authority for Special Economic Zones and Free Zones": {
+      "primary_threats": [
+        "SERKA TAAHHUT INSAAT AS",
+        "STRABAG OMAN"
+      ],
+      "threat_level": "HIGH",
+      "note": "SCC 0 wins from 4 bids. Avg gap (competitive losses): 31%."
+    },
+    "South Sharqiyah Governor Office": {
+      "primary_threats": [
+        "ARABIAN PROJECTS AND TRANSPORT CO LLC",
+        "RAWASY ALJANOOB ALSHAMILA TRADING"
+      ],
+      "threat_level": "HIGH",
+      "note": "SCC 0 wins from 4 bids. Avg gap (competitive losses): 42%."
+    },
+    "Ministry of Agriculture and Fisheries": {
+      "primary_threats": [
+        "KHIMJI RAMDAS CONSTRUCTION"
+      ],
+      "threat_level": "LOW",
+      "note": "SCC 1 wins from 3 bids. Avg gap (competitive losses): n/a."
+    },
+    "Office of the Minister of State And Governor of Musandam Governorate": {
+      "primary_threats": [
+        "PREMIER INTERNATIONAL PROJECTS",
+        "QEMAM WADI AL AIN"
+      ],
+      "threat_level": "HIGH",
+      "note": "SCC 0 wins from 4 bids. Avg gap (competitive losses): 30%."
+    },
+    "Special Economic Authority of DUQM": {
+      "primary_threats": [],
+      "threat_level": "HIGH",
+      "note": "SCC 0 wins from 5 bids. Avg gap (competitive losses): n/a."
+    },
+    "Ministry of Health": {
+      "primary_threats": [
+        "AL SUBHIAH TRADING AND CONTRACTING LLC"
+      ],
+      "threat_level": "MEDIUM",
+      "note": "SCC 0 wins from 1 bids. Avg gap (competitive losses): 16%."
+    },
+    "Ministry of Transport and Communications": {
+      "primary_threats": [],
+      "threat_level": "MEDIUM",
+      "note": "SCC 0 wins from 2 bids. Avg gap (competitive losses): n/a."
+    },
+    "Public Establishment for Industrial Estates": {
+      "primary_threats": [
+        "OMAN BUILDING AND CONT"
+      ],
+      "threat_level": "MEDIUM",
+      "note": "SCC 0 wins from 1 bids. Avg gap (competitive losses): n/a."
+    },
+    "Ministry of Regional Municipalities and Water Resources": {
+      "primary_threats": [],
+      "threat_level": "MEDIUM",
+      "note": "SCC 0 wins from 2 bids. Avg gap (competitive losses): n/a."
+    },
+    "General Secretariat To The Cabinet": {
+      "primary_threats": [],
+      "threat_level": "MEDIUM",
+      "note": "SCC 0 wins from 1 bids. Avg gap (competitive losses): n/a."
+    },
+    "Ministry of Housing": {
+      "primary_threats": [],
+      "threat_level": "MEDIUM",
+      "note": "SCC 1 wins from 5 bids. Avg gap (competitive losses): n/a."
+    },
+    "Civil Service Employees Pension Fund": {
+      "primary_threats": [],
+      "threat_level": "MEDIUM",
+      "note": "SCC 0 wins from 1 bids. Avg gap (competitive losses): n/a."
+    }
+  },
+  "scoring_guidance": {
+    "score_up_entities": [
+      "Muscat Municipality",
+      "Ministry of Transport Communications and Information Technology",
+      "Ministry of Housing"
+    ],
+    "score_down_entities": [
+      "Ministry of Agricultural, Fisheries Wealth and Water Resources",
+      "North Al Batinah Governor Office",
+      "South Al Batinah Governor Office",
+      "Al Dakhiliyah Governor Office",
+      "Office of the Minister of State And Governor of Musandam Governorate"
+    ],
+    "score_up_categories": [
+      "Construction of Ports Roads Bridges Railways Dams and Maintenance",
+      "Construction and Maintenance"
+    ],
+    "score_down_categories": [
+      "Supply",
+      "Services",
+      "Information Technology Services"
+    ],
+    "doc_purchase_threat_rules": [
+      {
+        "competitor": "Al Tasnim",
+        "high_threat_if": "entity in ['North Al Batinah Governor Office', 'Muscat Municipality', 'Al Dakhiliyah Governor Office'] AND estimated_value < 5000000",
+        "low_threat_if": "estimated_value > 15000000",
+        "reason": "Al Tasnim token bid rate 70% above OMR 15M"
+      },
+      {
+        "competitor": "Galfar",
+        "high_threat_if": "estimated_value > 20000000",
+        "low_threat_if": "estimated_value < 10000000",
+        "reason": "Galfar genuine only at OMR 20M+. 43% token bid rate overall."
+      },
+      {
+        "competitor": "Premier International Projects",
+        "high_threat_if": "entity in ['Ministry of Agricultural, Fisheries Wealth and Water Resources', 'Office of the Minister of State And Governor of Musandam Governorate', 'Buraimi Governor Office']",
+        "low_threat_if": "estimated_value > 50000000",
+        "reason": "Premier genuine band is 1M-30M. Specialist in water/dam/agricultural."
+      },
+      {
+        "competitor": "Strabag",
+        "high_threat_if": "estimated_value > 15000000",
+        "low_threat_if": "estimated_value < 5000000",
+        "reason": "Strabag most disciplined \u2014 when they enter they mean it. 13% token rate."
+      }
+    ]
+  }
+}

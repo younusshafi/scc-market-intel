@@ -198,6 +198,12 @@ def analyse_news(db: Session) -> dict:
     if not to_analyse:
         return {"status": "all_analysed", "analysed": 0, "total_recent": len(recent_articles)}
 
+    # Import full article fetcher (graceful on failure)
+    try:
+        from app.scrapers.news_scraper import fetch_full_article as _fetch_full_article
+    except ImportError:
+        _fetch_full_article = None
+
     # Process in batches of 10
     batch_size = 10
     analysed = 0
@@ -205,12 +211,21 @@ def analyse_news(db: Session) -> dict:
         batch = to_analyse[i:i + batch_size]
         article_descs = []
         for a in batch:
+            # Attempt full article fetch; fall back to RSS snippet
+            full_text = None
+            content_source = "rss_snippet"
+            if _fetch_full_article and a.link:
+                full_text = _fetch_full_article(a.link)
+                if full_text:
+                    content_source = "full_article"
+
             article_descs.append({
                 "article_id": a.id,
                 "title": a.title,
                 "source": a.source,
                 "published": a.published.isoformat() if a.published else None,
-                "summary": (a.summary or "")[:500],
+                "summary": full_text if full_text else (a.summary or "")[:500],
+                "content_source": content_source,
                 "is_competitor_mention": a.is_competitor_mention,
                 "mentioned_competitors": a.mentioned_competitors,
             })

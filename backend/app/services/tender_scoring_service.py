@@ -6,8 +6,10 @@ Uses LLM to score SCC-relevant tenders for strategic fit.
 import json
 import time
 import logging
+import os
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta
+from pathlib import Path
 
 from sqlalchemy.orm import Session
 
@@ -15,6 +17,75 @@ from app.services.llm_client import call_llm_json
 from app.models import Tender, TenderProbe, TenderScore, AwardedTender
 
 logger = logging.getLogger(__name__)
+
+_COMPETITIVE_INTEL_PATH = Path(__file__).resolve().parents[2] / "data" / "competitive_intelligence.json"
+
+
+def load_competitive_intelligence() -> dict | None:
+    """Load competitive_intelligence.json. Returns None gracefully if unavailable."""
+    try:
+        with open(_COMPETITIVE_INTEL_PATH) as f:
+            return json.load(f)
+    except FileNotFoundError:
+        logger.warning("competitive_intelligence.json not found — scoring without competitive context")
+        return None
+    except Exception as exc:
+        logger.warning("Failed to load competitive_intelligence.json: %s", exc)
+        return None
+
+
+def _apply_competitive_adjustments(
+    score: int,
+    reasoning: str,
+    entity: str,
+    category: str,
+    competitive_intel: dict | None,
+) -> tuple[int, str]:
+    """Apply entity/category boosts and penalties from competitive intelligence.
+
+    Returns (adjusted_score, updated_reasoning).
+    """
+    if not competitive_intel:
+        return score, reasoning
+
+    guidance = competitive_intel.get("scoring_guidance", {})
+    adjustments = []
+    delta = 0
+
+    entity_lower = (entity or "").lower()
+
+    for up_entity in guidance.get("score_up_entities", []):
+        if up_entity.lower() in entity_lower or entity_lower in up_entity.lower():
+            delta += 10
+            adjustments.append(f"+10 entity ({up_entity})")
+            break
+
+    for down_entity in guidance.get("score_down_entities", []):
+        if down_entity.lower() in entity_lower or entity_lower in down_entity.lower():
+            delta -= 15
+            adjustments.append(f"-15 entity ({down_entity})")
+            break
+
+    category_lower = (category or "").lower()
+    for up_cat in guidance.get("score_up_categories", []):
+        if up_cat.lower() in category_lower or category_lower in up_cat.lower():
+            delta += 5
+            adjustments.append(f"+5 category ({up_cat})")
+            break
+
+    for down_cat in guidance.get("score_down_categories", []):
+        if down_cat.lower() in category_lower or category_lower in down_cat.lower():
+            delta -= 20
+            adjustments.append(f"-20 category ({down_cat})")
+            break
+
+    if delta != 0:
+        adjusted = max(0, min(100, score + delta))
+        note = f"Competitive context applied ({', '.join(adjustments)})"
+        reasoning = f"{reasoning} [{note}]"
+        return adjusted, reasoning
+
+    return score, reasoning
 
 
 # ---------------------------------------------------------------------------
@@ -110,6 +181,9 @@ SCORING_SYSTEM_PROMPT = (
 
 def score_tenders(db: Session) -> dict:
     """Score SCC-relevant tenders using LLM."""
+    # Load competitive intelligence context (graceful if missing)
+    competitive_intel = load_competitive_intelligence()
+
     # Get tenders that haven't been scored in last 24h
     cutoff = datetime.utcnow() - timedelta(hours=24)
     already_scored = set(
@@ -193,6 +267,16 @@ def score_tenders(db: Session) -> dict:
                 if multiplier < 1.0:
                     reasoning = f"{reasoning} (Score reduced from {raw_score}: private non-strategic issuer)"
                     recommendation = _score_to_recommendation(final_score)
+
+                # Apply competitive intelligence adjustments (entity/category boosts & penalties)
+                category = next(
+                    (d.get("category", "") for d in tender_descs if d.get("tender_number") == tn), ""
+                )
+                final_score, reasoning = _apply_competitive_adjustments(
+                    final_score, reasoning, entity, category, competitive_intel
+                )
+                final_score = max(0, min(100, final_score))
+                recommendation = _score_to_recommendation(final_score)
 
                 existing = db.query(TenderScore).filter_by(tender_number=tn).first()
                 if existing:

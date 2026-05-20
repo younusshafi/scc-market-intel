@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { getCompetitorColor } from '../utils/colors'
+import PipelineStatusButton from './PipelineStatusButton'
+import { getTenderNewsSignals } from '../utils/api'
 
 function getScoreBarColor(score) {
   if (score >= 85) return 'from-green-500 to-emerald-400'
@@ -49,6 +51,16 @@ function CompetitorPills({ competitors }) {
 
 export default function OpportunityRow({ tender }) {
   const [expanded, setExpanded] = useState(false)
+  const [signals, setSignals] = useState(null)
+
+  // Lazy-load news signals after render — does not block card list
+  useEffect(() => {
+    let cancelled = false
+    getTenderNewsSignals(tender.tender_number).then(data => {
+      if (!cancelled && data?.signals?.length > 0) setSignals(data.signals)
+    })
+    return () => { cancelled = true }
+  }, [tender.tender_number])
 
   const score = tender.score || 0
   const recConfig = getRecLabel(tender.recommendation)
@@ -126,6 +138,39 @@ export default function OpportunityRow({ tender }) {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* News signals — lazy loaded, hidden if no signals */}
+      {signals && signals.length > 0 && (
+        <div className="px-5 pb-2 flex flex-wrap gap-1.5" onClick={e => e.stopPropagation()}>
+          {signals.slice(0, 2).map((sig, i) => (
+            <a
+              key={i}
+              href={sig.url || '#'}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={sig.headline}
+              className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-[10px] text-amber-400 hover:bg-amber-500/20 transition-colors max-w-[260px]"
+              onClick={e => e.stopPropagation()}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
+              <span className="truncate">{(sig.headline || '').slice(0, 50)}</span>
+              {sig.source && (
+                <span className="text-[#5a6a85] flex-shrink-0">{sig.source.split('—')[0].trim().split(' ').slice(0, 2).join(' ')}</span>
+              )}
+            </a>
+          ))}
+        </div>
+      )}
+
+      {/* Pipeline status buttons — always visible, stops card toggle propagation */}
+      <div className="px-5 pb-3" onClick={e => e.stopPropagation()}>
+        <PipelineStatusButton
+          tenderNumber={tender.tender_number}
+          tenderTitle={tender.tender_name_en || tender.tender_number}
+          entity={tender.entity_en || tender.entity_ar || ''}
+          closingDate={tender.bid_closing_date}
+        />
       </div>
 
       {/* Expanded details */}

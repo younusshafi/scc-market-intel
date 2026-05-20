@@ -166,6 +166,7 @@ class NewsIntelligence(Base):
     scc_implication = Column(Text, nullable=True)
     category = Column(String(50), nullable=True)
     priority = Column(String(20), nullable=True)
+    content_source = Column(String(20), nullable=True)  # "full_article" or "rss_snippet"
     analysed_at = Column(DateTime, default=func.now())
 
 
@@ -235,3 +236,18 @@ class AwardedTender(Base):
     bidders_json = Column(Text, nullable=True)  # JSON string of all bidders
 
     scraped_at = Column(DateTime, default=func.now())
+
+
+class TenderPipeline(Base):
+    """Tracks Joseph's pipeline decisions: PURSUING / WATCHING / PASS."""
+    __tablename__ = "tender_pipeline"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    tender_number = Column(String(100), unique=True, nullable=False, index=True)
+    tender_title = Column(Text, nullable=True)
+    entity = Column(String(300), nullable=True)
+    status = Column(String(20), nullable=False)  # "PURSUING" | "WATCHING" | "PASS"
+    notes = Column(Text, nullable=True)
+    closing_date = Column(String(50), nullable=True)
+    marked_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

@@ -13,6 +13,7 @@ export const COMPETITOR_COLORS = {
   'Hassan Allam':     { bg: 'bg-green-500/20',  text: 'text-green-400',  border: 'border-green-500/30',  hex: '#16A34A', abbr: 'HA' },
   'Arab Contractors': { bg: 'bg-cyan-500/20',   text: 'text-cyan-400',   border: 'border-cyan-500/30',   hex: '#0891B2', abbr: 'AC' },
   'Ozkar':            { bg: 'bg-pink-500/20',   text: 'text-pink-400',   border: 'border-pink-500/30',   hex: '#DB2777', abbr: 'OZ' },
+  'Premier International': { bg: 'bg-violet-400/20', text: 'text-violet-300', border: 'border-violet-400/30', hex: '#8B5CF6', abbr: 'PI' },
   'Sarooj':           { bg: 'bg-blue-600/20',   text: 'text-blue-400',   border: 'border-blue-600/30',   hex: '#2563EB', abbr: 'SC' },
 }
 

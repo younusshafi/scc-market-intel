@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAPI } from '../hooks/useAPI'
-import { api } from '../utils/api'
+import { api, getPipeline } from '../utils/api'
 import OpportunityRow from './OpportunityRow'
 import TenderTable from './TenderTable'
 
@@ -11,6 +11,19 @@ export default function ScoredTenders() {
   const [showAll, setShowAll] = useState(false)
   const [scoring, setScoring] = useState(false)
   const [showRawTable, setShowRawTable] = useState(false)
+  const [pipelineFilter, setPipelineFilter] = useState('ALL')
+  const [pipelineMap, setPipelineMap] = useState({}) // tender_number -> status
+
+  // Load pipeline entries for filter
+  useEffect(() => {
+    getPipeline().then(entries => {
+      if (entries) {
+        const map = {}
+        entries.forEach(e => { map[e.tender_number] = e.status })
+        setPipelineMap(map)
+      }
+    })
+  }, [])
 
   const tenders = data?.tenders || []
   const retenders = (allTenders?.tenders || []).filter(t => t.is_retender)
@@ -38,6 +51,11 @@ export default function ScoredTenders() {
     displayed = retenders
   }
 
+  // Apply pipeline filter
+  if (pipelineFilter !== 'ALL') {
+    displayed = displayed.filter(t => pipelineMap[t.tender_number] === pipelineFilter)
+  }
+
   const limit = showAll ? displayed.length : 10
   const shown = displayed.slice(0, limit)
 
@@ -54,7 +72,7 @@ export default function ScoredTenders() {
   }
 
   const tabs = [
-    { id: 'recommended', label: 'Recommended', count: tenders.filter(t => t.score >= 70).length },
+    { id: 'recommended', label: 'Top Matches', count: tenders.filter(t => t.score >= 70).length },
     { id: 'all', label: 'All Scored', count: tenders.length },
     {
       id: 'closing',
@@ -70,9 +88,9 @@ export default function ScoredTenders() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-1">
         <h2 className="text-xs font-semibold text-[#5a6a85] uppercase tracking-wider">
-          Opportunities
+          Tender Candidates
         </h2>
         <button
           onClick={handleTriggerScoring}
@@ -81,6 +99,34 @@ export default function ScoredTenders() {
         >
           {scoring ? 'Scoring...' : 'Re-run Scoring'}
         </button>
+      </div>
+      <p className="text-[11px] text-[#475569] mb-4">
+        Tenders are matched on grade and category. Mark which ones SCC is pursuing to unlock contextual intelligence.
+      </p>
+
+      {/* Pipeline filter */}
+      <div className="flex items-center gap-2 mb-3">
+        <span className="text-[10px] font-semibold text-[#5a6a85] uppercase tracking-wider">Pipeline:</span>
+        {['ALL', 'PURSUING', 'WATCHING', 'PASS'].map(f => (
+          <button
+            key={f}
+            onClick={() => { setPipelineFilter(f); setShowAll(false) }}
+            className={[
+              'text-xs font-semibold px-2.5 py-1 rounded border transition-colors',
+              pipelineFilter === f
+                ? f === 'PURSUING' ? 'bg-green-600 text-white border-green-600'
+                  : f === 'WATCHING' ? 'bg-amber-500 text-white border-amber-500'
+                  : f === 'PASS' ? 'bg-slate-500 text-white border-slate-500'
+                  : 'bg-[#1e2a42] text-[#e8ecf4] border-[#2a3a5c]'
+                : f === 'PURSUING' ? 'border-green-600/50 text-green-500/70 hover:border-green-600 hover:text-green-500'
+                  : f === 'WATCHING' ? 'border-amber-500/50 text-amber-400/70 hover:border-amber-500 hover:text-amber-400'
+                  : f === 'PASS' ? 'border-slate-400/50 text-slate-400/70 hover:border-slate-400 hover:text-slate-400'
+                  : 'border-[#1e2a42] text-[#5a6a85] hover:text-[#8896b0]'
+            ].join(' ')}
+          >
+            {f === 'ALL' ? 'All' : f.charAt(0) + f.slice(1).toLowerCase()}
+          </button>
+        ))}
       </div>
 
       {/* Sub-tabs */}

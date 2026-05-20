@@ -20,10 +20,7 @@ class Settings(BaseSettings):
     # App
     environment: str = "development"
     cors_origins: list[str] = [
-        "http://localhost:5173",
-        "http://localhost:3000",
-	"http://localhost:5175",  # Add this line
-        "https://scc-intel-dashboard.onrender.com",
+        "https://mi.scc.zavia-ai.com",
     ]
 
     # Scraper config
@@ -40,6 +37,7 @@ class Settings(BaseSettings):
     scc_competitors: list[str] = [
         "Galfar", "Strabag", "Al Tasnim", "L&T",
         "Towell", "Hassan Allam", "Arab Contractors", "Ozkar",
+        "Premier International",
     ]
 
     model_config = {

@@ -1,0 +1,128 @@
+{
+  "company": "Galfar Engineering & Contracting",
+  "ticker": "GECS",
+  "exchange": "MSM",
+  "scraped_at": "2026-05-05T05:40:54.064812",
+  "share_price_omr": 0.185,
+  "prev_close_omr": 0.185,
+  "daily_high_omr": 0.186,
+  "daily_low_omr": 0.185,
+  "bid_price_omr": 0.175,
+  "ask_price_omr": 0.187,
+  "volume": 739640.0,
+  "turnover_omr": 136838.0,
+  "issued_shares": 202986446.0,
+  "market_cap_omr": 37552492.51,
+  "net_profit_omr": 1567000.0,
+  "net_profit_prior_omr": 680000.0,
+  "profit_change_pct": 330.0,
+  "latest_quarter": "Q1 2026",
+  "latest_profit_news_date": "Apr 15, 2026 09:23:41",
+  "revenue_omr": 285638000.0,
+  "report_net_profit_omr": 5202000.0,
+  "eps": 0.018,
+  "financial_report_label": "Yearly (Audited) 2025",
+  "financial_report_date": "Mar 12, 2026",
+  "order_backlog_omr": 745000000.0,
+  "news_intelligence": {
+    "recent_contract_wins": [
+      {
+        "date": "2025-12-02",
+        "title": "Tender Award",
+        "pdf_url": "https://www.msx.om/msmdocs/images/newsdocs/GECS-02122025-58.pdf",
+        "client": "Sultan Qaboos",
+        "project": "ELECTRO-MECHANICAL AND CIVIL OPERATION AND MAINTENANCE SERVICES AT SULTAN QABOOS UNIVERSITY\n.",
+        "value_omr": 8800000.0,
+        "source": "MSX Announcement"
+      },
+      {
+        "date": "2024-10-27",
+        "title": "Tender Award",
+        "pdf_url": "https://www.msx.om/msmdocs/images/newsdocs/GECS-27102024-58.pdf",
+        "client": null,
+        "project": "App",
+        "value_omr": 46000000.0,
+        "source": "MSX Announcement"
+      },
+      {
+        "date": "2024-08-26",
+        "title": "Galfar secures RO117mn contract from Nama Water Services",
+        "article_url": "https://galfar.com/oman/galfar/2024/08/26/galfar-secures-ro117mn-contract-from-nama-water-services/",
+        "client": "Nama Water Services",
+        "project": "Muscat – Galfar Engineering and Contracting Company announced that it has been awarded a major contract worth RO117mn by Nama Water Services Company.",
+        "value_omr": 117000000.0,
+        "source": "Galfar Website"
+      },
+      {
+        "date": "2024-08-13",
+        "title": "Galfar wins RO18.5mn contract from Oxy",
+        "article_url": "https://galfar.com/oman/galfar/2024/08/13/galfar-wins-ro18-5mn-contract-from-oxy/",
+        "client": "Occidental Oman",
+        "project": "Muscat – Galfar Engineering & Contracting Company, the largest contracting firm in Oman, has been awarded a five-year service contract worth RO18.5mn by Occidental Oman (Oxy), the largest independent ",
+        "value_omr": 18500000.0,
+        "source": "Galfar Website"
+      },
+      {
+        "date": "2024-06-30",
+        "title": "Galfar wins RO35 million contract",
+        "article_url": "https://galfar.com/oman/galfar/2024/06/30/galfar-wins-ro35-million-contract/",
+        "client": "Nama Dhofar Services",
+        "project": "Muscat: Galfar Engineering and Contracting has received a tender worth RO35 million from Nama Dhofar Services Company for the “Expansion of Raysut Water Reclamation Plants—Phase Ill (Stagel)” project.",
+        "value_omr": 35000000.0,
+        "source": "Galfar Website"
+      },
+      {
+        "date": "2024-04-24",
+        "title": "Galfar secures major rail contract, poised for infra diversification",
+        "article_url": "https://galfar.com/oman/galfar/2024/04/24/galfar-secures-major-rail-contract-poised-for-infra-diversification/",
+        "client": null,
+        "project": "Galfar Engineering and Construction is set to power the growth of an indigenous rail construction industry in OmanMuscat: The Sultanate of Oman-based Galfar Engineering & Contracting SAOG (Galfar) has",
+        "value_omr": 521000000.0,
+        "source": "Galfar Website"
+      },
+      {
+        "date": "2024-02-07",
+        "title": "Galfar secures RO 100 million contract for PDO’s Qarn Alalm Project",
+        "article_url": "https://galfar.com/oman/galfar/2024/02/07/galfar-secures-ro-100-million-contract-for-pdos-qarn-alalm-project/",
+        "client": "PDO",
+        "project": "Muscat: Leading Omani engineering firm Galfar Engineering and Contracting SAOG has been awarded a five-year contract valued at approximately RO 100 million to undertake project delivery services for P",
+        "value_omr": 100000000.0,
+        "source": "Galfar Website",
+        "pdf_url": "https://www.msx.om/msmdocs/images/newsdocs/GECS-06022024-43.pdf"
+      },
+      {
+        "date": "2023-10-31",
+        "title": "RO 53M contract for Al Ansab – Al Jifnain road dualisation awarded",
+        "article_url": "https://galfar.com/oman/galfar/2023/10/31/ro-53m-contract-for-al-ansab-al-jifnain-road-dualisation-awarded/",
+        "client": "Muscat Municipality",
+        "project": "Dualisation will steamline traffic flows between Muscat and Al Dakhiliyah Governorate.",
+        "value_omr": 53000000.0,
+        "source": "Galfar Website"
+      }
+    ],
+    "order_backlog_omr": 745000000.0,
+    "backlog_sector_concentration": "the oil & gas, infrastructure",
+    "market_position": {
+      "market_share_pct_range": "15-17%",
+      "tender_success_rate_range": null
+    },
+    "strategic_initiatives": [
+      "Strategic Positioning The Company continues to advance its transformation agenda across operational efficiency, diversification, digital integration, and sustainability alignment.",
+      "In line with Oman Vision 2040 and the national energy transition strategy, Galfar is selectively expanding its capabilities in high-voltage substations, renewable energy projects, environmental infrastructure, and PPP delivery frameworks.",
+      "The Company remains committed to investing in workforce development, leadership programs, and digital HR systems to support organizational resilience and long-term growth.",
+      "Management will continue to emphasize disciplined capital allocation, margin optimization, operational efficiency, and digital integration as key drivers of long-term competitiveness.",
+      "The Company continues to strengthen its enterprise risk management framework through enhanced tender-stage risk assessments, structured bid review processes, and digital cost validation tools to support disciplined project selection and balanced contractual risk allocation."
+    ],
+    "news_counts": {
+      "msx_contract_announcements": 7,
+      "galfar_website_posts": 7
+    }
+  },
+  "sources_hit": {
+    "market_data": true,
+    "quarterly_performance": true,
+    "financial_report": true,
+    "msx_contracts": true,
+    "galfar_website": true
+  }
+}

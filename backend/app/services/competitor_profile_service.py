@@ -1,5 +1,5 @@
 """Competitor behaviour profile service."""
-import json, time, logging
+import json, time, logging, os
 from datetime import datetime
 from collections import defaultdict
 
@@ -11,20 +11,71 @@ from app.services.competitive_intel_service import resolve_competitor, COMPETITO
 
 logger = logging.getLogger(__name__)
 
-PROFILE_SYSTEM_PROMPT = """You are a competitive intelligence analyst for Sarooj Construction Company (SCC). Analyse each competitor's behaviour patterns from their tender participation data and historical award record to produce strategic profiles.
+# Map competitive_intelligence.json keys → canonical COMPETITORS keys
+_CI_NAME_MAP = {
+    "Galfar": "Galfar",
+    "Al Tasnim": "Al Tasnim",
+    "Premier International Projects": "Premier International",
+    "Strabag": "Strabag",
+    "Towell": "Towell",
+    "Larsen & Toubro": "L&T",
+    "Arab Contractors": "Arab Contractors",
+    "Ozkar": "Ozkar",
+    "Hassan Allam": "Hassan Allam",
+}
 
-For each competitor, write:
-- behaviour_summary: 2-3 sentences describing their bidding pattern, speed of entry, price positioning, historical win rate, and strategic intent
-- threat_level: "high", "medium", "low" based on how often they compete with SCC, their historical win rate, and their win potential
-- scc_strategy: 1 sentence recommendation for how SCC should respond when this competitor is present
+_CI_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "data", "competitive_intelligence.json")
 
-Be specific — reference actual numbers, historical win rates, tender names, and patterns. Do not use generic language.
+
+def _load_ci_context() -> dict:
+    """Load per-competitor context from competitive_intelligence.json. Returns {} on any error."""
+    try:
+        with open(os.path.normpath(_CI_PATH), encoding="utf-8") as f:
+            ci = json.load(f)
+        profiles = ci.get("competitor_profiles", {})
+        result = {}
+        for ci_name, data in profiles.items():
+            canonical = _CI_NAME_MAP.get(ci_name, ci_name)
+            result[canonical] = {
+                "total_bids": data.get("total_bids", 0),
+                "wins": data.get("wins", 0),
+                "win_rate_pct": round(data.get("wins", 0) / max(data.get("total_bids", 1), 1) * 100, 1),
+                "genuine_band": data.get("genuine_band", "unknown"),
+                "token_bid_rate_pct": round(data.get("token_bid_rate", 0) * 100, 1),
+                "strategic_note": data.get("strategic_note", ""),
+            }
+        return result
+    except Exception:
+        return {}
+
+
+PROFILE_SYSTEM_PROMPT = """You are a competitive intelligence analyst for Sarooj Construction Company (SCC), an Omani Tier-1 civil infrastructure contractor. Analyse each competitor from their tender participation data, historical award record, and competitive intelligence context.
+
+Each competitor entry includes:
+- probe_data: live tender participation (docs, bids, SCC overlap, recent bids)
+- historical_awards: from 28,529 awarded tender records
+- ci_context: pre-computed stats (total_bids, wins, win_rate_pct, genuine_band, token_bid_rate_pct, strategic_note)
+
+For each competitor, produce:
+- behaviour_summary: 2-3 sentences — reference their genuine_band (where they actually win), token_bid_rate_pct, historical win rate, and strategic pattern
+- threat_level: "high", "medium", "low" — based on SCC overlap count, historical wins, and genuine band overlap with SCC (50M+)
+- scc_strategy: 1 precise sentence — what SCC should do specifically when this competitor is present (reference their band, token rate, or entity territory)
+
+Rules:
+- Be specific — cite actual numbers (e.g. "43.5% token bid rate", "genuine band: 50M+", "11 historical wins")
+- If token_bid_rate_pct > 40%: note they use token bids heavily and are not a serious pricing threat below their genuine band
+- If genuine_band is "unknown": note limited data
+- Do not use generic phrases like "poses a significant threat" without citing specifics
+
 Respond in JSON only. Return {"profiles": [...]}"""
 
 
 
 def build_competitor_profiles(db: Session) -> dict:
     """Build AI-powered competitor behaviour profiles from probe data."""
+    # Load pre-computed competitive intelligence context
+    ci_context = _load_ci_context()
+
     probes = db.query(TenderProbe).all()
     if not probes:
         return {"status": "no_data", "built": 0}
@@ -122,7 +173,28 @@ def build_competitor_profiles(db: Session) -> dict:
             "top_governorates": [g[0] for g in top_govs],
             "recent_bids": [{"tender": b["tender"], "name": b["name"][:50], "value": b["value"]} for b in data["bids"][:5]],
         }
+        # Attach CI context (genuine band, token rate, win rate from 28K awards dataset)
+        if comp_name in ci_context:
+            summary["ci_context"] = ci_context[comp_name]
+
         competitor_summaries.append(summary)
+
+    # Add CI-only competitors (no probe data but have CI stats) — ensures all 9 are included
+    existing_names = {s["competitor"] for s in competitor_summaries}
+    for ci_name, ci_data in ci_context.items():
+        if ci_name not in existing_names and ci_name != "Sarooj":
+            competitor_summaries.append({
+                "competitor": ci_name,
+                "docs_purchased": 0,
+                "bids_submitted": 0,
+                "conversion_rate": 0,
+                "withdrawals": 0,
+                "scc_overlap": 0,
+                "top_categories": [],
+                "top_governorates": [],
+                "recent_bids": [],
+                "ci_context": ci_data,
+            })
 
     if not competitor_summaries:
         return {"status": "no_competitor_data", "built": 0}

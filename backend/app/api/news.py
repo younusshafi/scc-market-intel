@@ -201,6 +201,30 @@ def get_news_tender_links(db: Session = Depends(get_db)):
     }
 
 
+@router.get("/tender-links/{tender_number}")
+def get_news_for_tender(tender_number: str, db: Session = Depends(get_db)):
+    """Get news articles linked to a specific tender (max 3 most recent)."""
+    links = (
+        db.query(NewsTenderLink)
+        .filter(NewsTenderLink.tender_number == tender_number)
+        .order_by(desc(NewsTenderLink.linked_at))
+        .limit(3)
+        .all()
+    )
+    result = []
+    for lnk in links:
+        article = db.query(NewsArticle).filter(NewsArticle.id == lnk.article_id).first()
+        result.append({
+            "headline": article.title if article else None,
+            "url": article.link if article else None,
+            "source": article.source if article else None,
+            "published_date": article.published.isoformat() if article and article.published else None,
+            "match_confidence": lnk.match_confidence,
+            "connection": lnk.connection,
+        })
+    return {"signals": result}
+
+
 @router.post("/link-to-tenders")
 def trigger_link_news_to_tenders(db: Session = Depends(get_db)):
     """Trigger AI news-to-tender linking."""

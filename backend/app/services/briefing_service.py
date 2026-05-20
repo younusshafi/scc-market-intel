@@ -3,10 +3,12 @@ Briefing generation service.
 Ported from briefing_test.py — builds context from database, calls LLM, stores result.
 """
 
+import json
 import re
 import logging
 from datetime import datetime, timedelta
 from collections import defaultdict
+from pathlib import Path
 
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
@@ -17,6 +19,102 @@ from app.models import Tender, NewsArticle, Briefing, TenderProbe, TenderScore
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
+
+_COMPETITIVE_INTEL_PATH = Path(__file__).resolve().parents[2] / "data" / "competitive_intelligence.json"
+
+
+def _load_competitive_intel_for_briefing() -> dict | None:
+    """Load competitive_intelligence.json for briefing context. Silent on failure."""
+    try:
+        with open(_COMPETITIVE_INTEL_PATH) as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+
+def _build_standing_context(intel: dict) -> str:
+    """Build a STANDING CONTEXT section from competitive_intelligence.json.
+
+    This section informs the LLM's analysis without appearing verbatim in output.
+    """
+    if not intel:
+        return ""
+
+    guidance = intel.get("scoring_guidance", {})
+    scc_perf = intel.get("scc_performance", {})
+    profiles = intel.get("competitor_profiles", {})
+    entity_perf = intel.get("scc_entity_performance", {})
+
+    lines = ["=== STANDING COMPETITIVE CONTEXT (use to inform analysis, do not quote verbatim) ==="]
+
+    # SCC strongest entities
+    up_entities = guidance.get("score_up_entities", [])
+    down_entities = guidance.get("score_down_entities", [])
+    if up_entities:
+        lines.append(f"\nSCC STRONGEST ENTITIES (high historical win rate):")
+        for e in up_entities:
+            ep = entity_perf.get(e, {})
+            wr = ep.get("win_rate", 0)
+            wins = ep.get("wins", 0)
+            bids = ep.get("bids", 0)
+            lines.append(f"  {e}: {wins}/{bids} bids won ({wr:.0%} win rate)")
+
+    if down_entities:
+        lines.append(f"\nSCC WEAKEST ENTITIES (poor historical performance — low win probability):")
+        for e in down_entities:
+            ep = entity_perf.get(e, {})
+            wr = ep.get("win_rate", 0)
+            wins = ep.get("wins", 0)
+            bids = ep.get("bids", 0)
+            lines.append(f"  {e}: {wins}/{bids} bids won ({wr:.0%} win rate)")
+
+    # Premier International warning
+    pi = profiles.get("Premier International Projects", {})
+    if pi:
+        lines.append(
+            f"\nWARNING — PREMIER INTERNATIONAL PROJECTS (not on original SCC watchlist but should be Tier 1):"
+            f"\n  Win rate: {pi.get('overall_win_rate',0):.0%} on {pi.get('total_bids',0)} bids — highest of any competitor."
+            f"\n  Beats SCC on every head-to-head contest. Specialist in water, dams, flood protection, agricultural infrastructure."
+            f"\n  Token bid rate only {pi.get('token_bid_rate',0):.0%} — disciplined pricing, bids to win."
+        )
+
+    # Galfar capacity constraint
+    galfar = profiles.get("Galfar", {})
+    if galfar:
+        lines.append(
+            f"\nGALFAR CAPACITY NOTE:"
+            f"\n  OMR 745M backlog as of 2024. Bid volume declining (9 bids in 2023 → 5 in 2025)."
+            f"\n  Token bid rate {galfar.get('token_bid_rate',0):.0%} — genuine only at OMR 20M+."
+            f"\n  If Galfar bids on a sub-20M tender, price is likely a token/placeholder."
+        )
+
+    # Al Tasnim token bid rule
+    at = profiles.get("Al Tasnim", {})
+    if at:
+        at_15_50_rate = at.get("token_bid_rate_15M_50M_band", 0)
+        lines.append(
+            f"\nAL TASNIM TOKEN BID RULE:"
+            f"\n  Token bid rate above OMR 15M: {at_15_50_rate:.0%} — almost always a placeholder bid."
+            f"\n  Core territory: North/South Al Batinah, Al Dakhiliyah, Muscat Municipality, sub-OMR 5M."
+            f"\n  If Al Tasnim appears on a large tender, do NOT treat as genuine competition."
+        )
+
+    # Strabag surge note
+    strabag = profiles.get("Strabag", {})
+    if strabag:
+        lines.append(
+            f"\nSTRABAG SURGE NOTE:"
+            f"\n  Most disciplined competitor — {strabag.get('token_bid_rate',0):.0%} token rate."
+            f"\n  Surging in 2025 (3 bids 2024 → 10 bids 2025). When they enter, they intend to win."
+        )
+
+    lines.append(
+        f"\nSCC GENUINE COMPETITIVE BAND: OMR 50M+ (28.6% win rate there)."
+        f"\n  Below OMR 5M and OMR 5-15M: high token bid rate ({scc_perf.get('token_bid_rate_5M_15M_band',0):.0%} in 5-15M band). "
+        f"Score these ranges lower unless specific strategic reason."
+    )
+
+    return "\n".join(lines)
 
 SYSTEM_PROMPT = (
     "You are the Head of Competitive Intelligence at Sarooj Construction Company (SCC), "
@@ -230,6 +328,12 @@ def build_trend_direction(db: Session) -> str:
 def build_context_from_db(db: Session) -> str:
     """Build the LLM context payload from database records."""
     sections = []
+
+    # Standing competitive context from competitive_intelligence.json (prepended first)
+    intel = _load_competitive_intel_for_briefing()
+    standing_ctx = _build_standing_context(intel)
+    if standing_ctx:
+        sections.append(standing_ctx)
 
     # SCC profile
     sections.append(

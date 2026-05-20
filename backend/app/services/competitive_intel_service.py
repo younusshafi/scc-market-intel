@@ -24,6 +24,7 @@ COMPETITORS = {
     "Hassan Allam": ["hassan allam", "hassanallam"],
     "Arab Contractors": ["arab contractor"],
     "Ozkar": ["ozkar"],
+    "Premier International": ["premier international", "premier intl"],
 }
 
 TRACKED_ALIASES = {
@@ -42,6 +43,9 @@ TRACKED_ALIASES = {
     "THE ARAB CONTRACTORS OMAN LIMITED": "Arab Contractors",
     "The Arab Contractors Oman Limited": "Arab Contractors",
     "OZKAR": "Ozkar",
+    "PREMIER INTERNATIONAL PROJECTS": "Premier International",
+    "Premier International Projects": "Premier International",
+    "PREMIER INTL": "Premier International",
 }
 
 

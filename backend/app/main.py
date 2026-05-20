@@ -8,7 +8,7 @@ from sqlalchemy import text
 
 from app.core.config import get_settings
 from app.core.database import engine, Base
-from app.api import tenders, news, briefings, system, query, competitive_intel, geo, entity_intel, dashboard, awarded
+from app.api import tenders, news, briefings, system, query, competitive_intel, geo, entity_intel, dashboard, awarded, pipeline
 
 logger = logging.getLogger(__name__)
 
@@ -86,6 +86,7 @@ app.include_router(geo.router, prefix="/api")
 app.include_router(entity_intel.router, prefix="/api")
 app.include_router(dashboard.router, prefix="/api")
 app.include_router(awarded.router, prefix="/api")
+app.include_router(pipeline.router, prefix="/api")
 
 
 @app.get("/")

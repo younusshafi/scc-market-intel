@@ -13,6 +13,7 @@ import NewsIntelligence from './components/NewsIntelligence'
 import CompetitorProfiles from './components/CompetitorProfiles'
 import EntityIntelligence from './components/EntityIntelligence'
 import MarketContext from './components/MarketContext'
+import ActiveBids from './components/ActiveBids'
 
 // Lazy-loaded — large component with heavy Recharts usage
 const AwardedIntelligence = lazy(() => import('./components/AwardedIntelligence'))
@@ -109,7 +110,7 @@ export default function App() {
     ].join(' · '),
     'opportunities': [
       `${scoredData?.total || '—'} scored`,
-      `${(scoredData?.tenders || []).filter(t => t.score >= 70).length || '—'} recommended`,
+      `${(scoredData?.tenders || []).filter(t => t.score >= 70).length || '—'} matched SCC profile`,
     ].join(' · '),
     'market-news': [
       `${newsIntel?.total || '—'} articles`,
@@ -170,6 +171,7 @@ export default function App() {
         {/* TAB 1: Command Centre */}
         {activeTab === 'command-centre' && (
           <>
+            <ActiveBids />
             <PriorityActions />
             <MetricCards />
             <BriefingCard

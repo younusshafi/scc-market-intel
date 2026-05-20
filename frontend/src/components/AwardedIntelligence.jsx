@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useAPI } from '../hooks/useAPI'
 import { api } from '../utils/api'
 import CompetitiveActivityChart from './CompetitiveActivityChart'
+import EntitySuccessMatrix from './EntitySuccessMatrix'
 import {
   ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
   CartesianGrid, Legend, BarChart, LineChart, Cell,
@@ -510,6 +511,9 @@ export default function AwardedIntelligence() {
           )}
         </div>
       )}
+
+      {/* Entity Success Matrix */}
+      <EntitySuccessMatrix />
 
       {/* Top Winners Table (enhanced) */}
       {stats?.top_winners && stats.top_winners.length > 0 && (

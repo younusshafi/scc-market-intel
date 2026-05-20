@@ -16,6 +16,63 @@ async function postAPI(endpoint) {
   return res.json()
 }
 
+export const getPipeline = async () => {
+  try {
+    const res = await fetch(`${API_BASE}/pipeline/`)
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
+}
+
+export const setPipelineStatus = async (tenderNumber, tenderTitle, entity, status, closingDate = null, notes = null) => {
+  try {
+    const body = { tender_number: tenderNumber, tender_title: tenderTitle, entity, status }
+    if (closingDate) body.closing_date = closingDate
+    if (notes) body.notes = notes
+    const res = await fetch(`${API_BASE}/pipeline/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
+}
+
+export const removePipelineStatus = async (tenderNumber) => {
+  try {
+    const res = await fetch(`${API_BASE}/pipeline/${encodeURIComponent(tenderNumber)}`, { method: 'DELETE' })
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
+}
+
+export const getTenderPipelineStatus = async (tenderNumber) => {
+  try {
+    const res = await fetch(`${API_BASE}/pipeline/status/${encodeURIComponent(tenderNumber)}`)
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
+}
+
+export const getTenderNewsSignals = async (tenderNumber) => {
+  try {
+    const res = await fetch(`${API_BASE}/news/tender-links/${encodeURIComponent(tenderNumber)}`)
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
+}
+
 export const api = {
   getTenders: (params) => fetchAPI("/tenders/", params),
   getTenderStats: () => fetchAPI("/tenders/stats"),

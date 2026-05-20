@@ -135,9 +135,62 @@ def detect_jv_mentions(title: str, summary: str) -> list[dict] | None:
 
 
 SPORTS_DOMAINS = [
-    "flashscore", "sofascore", "livescore", "espn", "sportskeeda",
+    "flashscore", "flashscore.co.za",
+    "sofascore", "livescore", "espn", "sportskeeda",
     "goalzz", "kooora", "filgoal", "yallakora",
 ]
+
+_FULL_ARTICLE_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (compatible; SCC-Intel/1.0)",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.5",
+}
+
+_MAX_FULL_ARTICLE_CHARS = 3000
+
+
+def fetch_full_article(url: str) -> str | None:
+    """Fetch the full text of a news article from its URL.
+
+    Returns up to _MAX_FULL_ARTICLE_CHARS characters of paragraph text,
+    or None on any error (timeout, 403, 404, connection error, etc.).
+    """
+    if not url:
+        return None
+    try:
+        resp = requests.get(url, headers=_FULL_ARTICLE_HEADERS, timeout=10, allow_redirects=True)
+        if resp.status_code not in (200, 201):
+            return None
+
+        content = resp.text
+
+        # Try BeautifulSoup first for clean extraction
+        try:
+            from bs4 import BeautifulSoup as _BS
+            soup = _BS(content, "html.parser")
+            # Remove nav, header, footer, script, style, ads
+            for tag in soup(["nav", "header", "footer", "script", "style", "aside",
+                              "form", "figure", "figcaption", "iframe", "noscript"]):
+                tag.decompose()
+            # Extract paragraph text
+            paragraphs = soup.find_all("p")
+            text = " ".join(p.get_text(separator=" ", strip=True) for p in paragraphs)
+        except ImportError:
+            # Fallback: regex extraction of <p> tag content
+            import re as _re
+            p_tags = _re.findall(r"<p[^>]*>(.*?)</p>", content, _re.DOTALL | _re.IGNORECASE)
+            text = " ".join(_re.sub(r"<[^>]+>", "", p).strip() for p in p_tags)
+
+        # Normalize whitespace
+        import re as _re2
+        text = _re2.sub(r"\s+", " ", text).strip()
+
+        if not text:
+            return None
+        return text[:_MAX_FULL_ARTICLE_CHARS]
+
+    except Exception:
+        return None
 
 SPORTS_KW = [
     "football", "soccer", "match", "league", "tournament",
