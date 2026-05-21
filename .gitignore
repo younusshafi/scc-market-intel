@@ -36,3 +36,9 @@ backend/scc_intel.db-journal
 # Internal project docs
 Project.md
 WIP.md
+
+*.db
+*.csv
+scraped_data/
+*.txt
+openai key.txt
