@@ -108,7 +108,15 @@ def parse_rows(soup, header_map):
             key = mapped[i]
             if key in SKIP_FIELDS:
                 continue
-            text = re.sub(r"\s+", " ", cell.get_text(separator=" ", strip=True)).strip()
+            # Prefer the full text from the onmouseover Tip('...') tooltip
+            # over the truncated visible text (portal clips names to ~33 chars).
+            tip_text = None
+            mouseover = cell.get("onmouseover", "")
+            if mouseover:
+                tip_m = re.search(r"Tip\('(.+?)'\)", mouseover)
+                if tip_m:
+                    tip_text = re.sub(r"\s+", " ", tip_m.group(1)).strip()
+            text = tip_text or re.sub(r"\s+", " ", cell.get_text(separator=" ", strip=True)).strip()
             if text and text != "N/A":
                 record[key] = text
         if record:

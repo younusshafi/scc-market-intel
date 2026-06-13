@@ -325,7 +325,7 @@ def _fetch_nit(session: requests.Session, tid: str) -> dict:
     }.items():
         m = re.search(pat, text)
         if m:
-            nit[key] = re.sub(r"\s+", " ", m.group(1).strip())[:120]
+            nit[key] = re.sub(r"\s+", " ", m.group(1).strip())[:500]
 
     return nit
 
