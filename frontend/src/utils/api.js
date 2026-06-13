@@ -73,6 +73,20 @@ export const getTenderNewsSignals = async (tenderNumber) => {
   }
 }
 
+export const askNlq = async (question) => {
+  try {
+    const res = await fetch(`${API_BASE}/nlq/ask`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question }),
+    })
+    if (!res.ok) return { answer: 'Request failed. Please try again.', sql: '', rows: [], tier: 0, caveats: [], error: 'http_error' }
+    return res.json()
+  } catch {
+    return { answer: 'Could not reach the server. Is the backend running?', sql: '', rows: [], tier: 0, caveats: [], error: 'network_error' }
+  }
+}
+
 export const api = {
   getTenders: (params) => fetchAPI("/tenders/", params),
   getTenderStats: () => fetchAPI("/tenders/stats"),

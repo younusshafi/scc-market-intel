@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { LayoutDashboard, Swords, Target, Newspaper, UserSearch, BarChart2 } from 'lucide-react'
+import { LayoutDashboard, Swords, Target, Newspaper, UserSearch, BarChart2, MessageCircle } from 'lucide-react'
 
 const TABS = [
   { id: 'command-centre',    label: 'Command Centre',    icon: LayoutDashboard },
@@ -8,6 +8,7 @@ const TABS = [
   { id: 'award-intel',       label: 'Award Intelligence',icon: BarChart2 },
   { id: 'market-news',       label: 'Market & News',     icon: Newspaper },
   { id: 'profiles',          label: 'Profiles',          icon: UserSearch },
+  { id: 'ask-intel',          label: 'Ask Intel',         icon: MessageCircle },
 ]
 
 // Task 3 — tooltip descriptions for each tab
@@ -18,6 +19,7 @@ const TOOLTIPS = {
   'award-intel':       'Historical wins, competitor participation and head-to-head data',
   'market-news':       'Live news feed, entity intelligence and ministry profiles',
   'profiles':          'Galfar financials, competitor summaries and watchlist',
+  'ask-intel':         'Ask questions in plain English about tenders, awards, competitors and news',
 }
 
 export default function TabNavigation({ activeTab, onTabChange, notifications = {} }) {

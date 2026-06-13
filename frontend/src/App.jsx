@@ -14,6 +14,7 @@ import CompetitorProfiles from './components/CompetitorProfiles'
 import EntityIntelligence from './components/EntityIntelligence'
 import MarketContext from './components/MarketContext'
 import ActiveBids from './components/ActiveBids'
+import AskIntel from './components/AskIntel'
 
 // Lazy-loaded — large component with heavy Recharts usage
 const AwardedIntelligence = lazy(() => import('./components/AwardedIntelligence'))
@@ -225,6 +226,11 @@ export default function App() {
             <GalfarProfile />
             <CompetitorProfiles profiles={competitorProfiles} />
           </>
+        )}
+
+        {/* TAB 7: Ask Intel */}
+        {activeTab === 'ask-intel' && (
+          <AskIntel />
         )}
 
       </main>
