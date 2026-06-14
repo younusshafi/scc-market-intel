@@ -239,7 +239,7 @@ class AwardedTender(Base):
 
 
 class TenderPipeline(Base):
-    """Tracks Joseph's pipeline decisions: PURSUING / WATCHING / PASS."""
+    """Tracks the SCC tendering/proposals team's pipeline decisions: PURSUING / WATCHING / PASS."""
     __tablename__ = "tender_pipeline"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

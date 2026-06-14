@@ -40,7 +40,7 @@ RAW_DIR      = SCRAPED_DATA / "galfar_raw"
 STRUCTURED   = SCRAPED_DATA / "galfar_financials_structured.json"
 
 # ---------------------------------------------------------------------------
-# SCC context — fed to LLM so analysis is always from Joseph's perspective
+# SCC context — fed to LLM so analysis is always from the SCC tendering/proposals team's perspective
 # ---------------------------------------------------------------------------
 
 SCC_CONTEXT = """
@@ -51,7 +51,7 @@ SCC's key facts:
 - Genuine competitive territory: OMR 50M+ infrastructure tenders (MoTCIT, large municipal)
 - Win rate at OMR 50M+: ~25% when genuinely competing
 - Near misses against Galfar: lost by 3.5% on OMR 121M, 5.6% on OMR 123.5M (MoT highway packages)
-- SCC's head of tendering (Joseph Feghali) reviews this analysis to make bid/no-bid decisions
+- SCC's tendering/proposals team reviews this analysis to make bid/no-bid decisions
 
 Galfar is SCC's primary large-scale competitor. Galfar facts you already know:
 - Oman's largest civil contractor by revenue (~OMR 286M/year)
@@ -89,7 +89,7 @@ Return ONLY valid JSON with exactly this structure:
 
   "capacity_assessment": "one sentence on whether Galfar has capacity to take on new large tenders",
 
-  "scc_implication": "the single most important thing Joseph should know from this report",
+  "scc_implication": "the single most important thing the SCC tendering/proposals team should know from this report",
 
   "bid_watch": "specific instruction — e.g. 'Watch Galfar doc purchases on any MoTCIT tender above OMR 20M'",
 

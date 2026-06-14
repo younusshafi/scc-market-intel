@@ -55,7 +55,7 @@ Question arrives
 The RAG answer format would include the source article titles/links for
 auditability, matching the anti-hallucination standard.
 
-## Which Joseph questions need RAG vs SQL full-text search?
+## Which SCC tendering/proposals team questions need RAG vs SQL full-text search?
 
 | Question type | SQL LIKE/FTS enough? | Needs RAG? |
 |--------------|---------------------|------------|

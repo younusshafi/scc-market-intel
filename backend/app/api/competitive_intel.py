@@ -21,6 +21,12 @@ _GALFAR_JSON = (
     / "galfar_financials.json"
 )
 
+_GALFAR_STRUCTURED_JSON = (
+    Path(__file__).resolve().parent.parent.parent.parent
+    / "scraped_data"
+    / "galfar_financials_structured.json"
+)
+
 router = APIRouter(prefix="/competitive-intel", tags=["competitive-intel"])
 
 
@@ -94,6 +100,34 @@ def get_galfar_financials():
         return JSONResponse(
             status_code=500,
             content={"error": "Could not read Galfar financials file"},
+        )
+
+
+@router.get("/galfar-structured")
+def get_galfar_structured():
+    """Return multi-period structured Galfar financials with AI analysis.
+
+    Reads the deep 9-period analysis from galfar_financials_structured.json,
+    produced by extract_galfar_financials + analyse_galfar jobs.
+    """
+    if not _GALFAR_STRUCTURED_JSON.exists():
+        return JSONResponse(
+            status_code=404,
+            content={"error": "Structured Galfar financials not available. Run: python -m app.jobs.extract_galfar_financials && python -m app.jobs.analyse_galfar"},
+        )
+    try:
+        with open(_GALFAR_STRUCTURED_JSON, encoding="utf-8") as f:
+            data = json.load(f)
+        import os
+        mtime = os.path.getmtime(_GALFAR_STRUCTURED_JSON)
+        from datetime import datetime as _dt
+        data["file_last_modified"] = _dt.fromtimestamp(mtime).isoformat()
+        return data
+    except Exception as exc:
+        logger.error("Failed to read galfar_financials_structured.json: %s", exc)
+        return JSONResponse(
+            status_code=500,
+            content={"error": "Could not read structured Galfar financials file"},
         )
 
 

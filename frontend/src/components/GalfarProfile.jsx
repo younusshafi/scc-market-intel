@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useAPI } from '../hooks/useAPI'
 import { api } from '../utils/api'
-import { Building2, AlertCircle, RefreshCw, Clock, TrendingUp, TrendingDown } from 'lucide-react'
+import { Building2, AlertCircle, RefreshCw, Clock, TrendingUp, TrendingDown, BarChart3, ChevronDown, ChevronUp, Shield } from 'lucide-react'
 
 // 2024 hardcoded fallback — shown only when scrape hasn't run yet
 const FALLBACK_FINANCIALS = {
@@ -41,12 +41,24 @@ export default function GalfarProfile() {
   const [fin, setFin] = useState(null)
   const [finLoading, setFinLoading] = useState(true)
   const [scraping, setScraping] = useState(false)
+  const [structured, setStructured] = useState(null)
+  const [selectedPeriod, setSelectedPeriod] = useState(null)
+  const [showTrends, setShowTrends] = useState(true)
 
   useEffect(() => {
     api.getGalfarFinancials()
       .then(setFin)
       .catch(() => setFin(FALLBACK_FINANCIALS))
       .finally(() => setFinLoading(false))
+    api.getGalfarStructured()
+      .then(d => {
+        setStructured(d)
+        if (d?.periods) {
+          const keys = Object.keys(d.periods)
+          setSelectedPeriod(keys[keys.length - 1])
+        }
+      })
+      .catch(() => {})
   }, [])
 
   const galfarActivity = intelData?.activity_summary?.find(
@@ -285,6 +297,154 @@ export default function GalfarProfile() {
                 +{hiddenCount} more contract{hiddenCount !== 1 ? 's' : ''}
               </p>
             )}
+          </div>
+        )}
+
+        {/* ── Multi-Period Financial Trends ── */}
+        {structured?.periods && (
+          <div>
+            <button
+              onClick={() => setShowTrends(v => !v)}
+              className="flex items-center gap-2 mb-3 w-full"
+            >
+              <BarChart3 size={14} className="text-blue-400" />
+              <h3 className="text-[#8896b0] text-xs uppercase tracking-wide">
+                Financial Trends — {Object.keys(structured.periods).length} Periods
+              </h3>
+              {showTrends ? <ChevronUp size={14} className="text-[#5a6a85] ml-auto" /> : <ChevronDown size={14} className="text-[#5a6a85] ml-auto" />}
+            </button>
+
+            {showTrends && (() => {
+              const periodKeys = Object.keys(structured.periods).reverse()
+              const periods = periodKeys.map(k => structured.periods[k])
+              return (
+                <div className="space-y-4">
+                  {/* Trend table */}
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="text-[#5a6a85] border-b border-[#334155]">
+                          <th className="text-left py-2 pr-3 font-medium">Period</th>
+                          <th className="text-right py-2 px-2 font-medium">Revenue</th>
+                          <th className="text-right py-2 px-2 font-medium">Net Profit</th>
+                          <th className="text-right py-2 px-2 font-medium">EBITDA</th>
+                          <th className="text-right py-2 px-2 font-medium">Total Assets</th>
+                          <th className="text-right py-2 px-2 font-medium">Equity</th>
+                          <th className="text-center py-2 pl-2 font-medium">Threat</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {periods.map((p, i) => {
+                          const rev = p.revenue_parent_omr ?? p.revenue_group_omr
+                          const np = p.net_profit_parent_omr ?? p.net_profit_group_omr
+                          const ebitda = p.ebitda_parent_omr ?? p.ebitda_group_omr
+                          const assets = p.total_assets_parent_omr ?? p.total_assets_group_omr
+                          const equity = p.total_equity_parent_omr ?? p.total_equity_group_omr
+                          const threat = p.analysis?.threat_level
+                          const isSelected = periodKeys[i] === selectedPeriod
+                          const threatColor = threat === 'HIGH' ? 'bg-red-500/20 text-red-400' : threat === 'MEDIUM' ? 'bg-amber-500/20 text-amber-400' : 'bg-emerald-500/20 text-emerald-400'
+
+                          return (
+                            <tr
+                              key={p.period}
+                              onClick={() => setSelectedPeriod(periodKeys[i])}
+                              className={`border-b border-[#334155]/50 cursor-pointer transition-colors ${isSelected ? 'bg-blue-500/10' : 'hover:bg-[#0F172A]/60'}`}
+                            >
+                              <td className="py-2 pr-3">
+                                <span className={`font-medium ${p.is_annual ? 'text-blue-400' : 'text-[#e8ecf4]'}`}>
+                                  {p.label?.replace(' (Audited)', '').replace(' (Un-Audited)', '') ?? p.period}
+                                </span>
+                              </td>
+                              <td className="text-right py-2 px-2 font-mono text-[#e8ecf4]">{rev != null ? formatOMR(rev) : '—'}</td>
+                              <td className={`text-right py-2 px-2 font-mono ${np != null && np < 0 ? 'text-red-400' : 'text-emerald-400'}`}>
+                                {np != null ? formatOMR(np) : '—'}
+                              </td>
+                              <td className={`text-right py-2 px-2 font-mono ${ebitda != null && ebitda < 0 ? 'text-red-400' : 'text-[#e8ecf4]'}`}>
+                                {ebitda != null ? formatOMR(ebitda) : '—'}
+                              </td>
+                              <td className="text-right py-2 px-2 font-mono text-[#e8ecf4]">{assets != null ? formatOMR(assets) : '—'}</td>
+                              <td className="text-right py-2 px-2 font-mono text-[#e8ecf4]">{equity != null ? formatOMR(equity) : '—'}</td>
+                              <td className="text-center py-2 pl-2">
+                                {threat && (
+                                  <span className={`text-[10px] px-1.5 py-0.5 rounded ${threatColor}`}>{threat}</span>
+                                )}
+                              </td>
+                            </tr>
+                          )
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Selected period AI analysis */}
+                  {selectedPeriod && structured.periods[selectedPeriod]?.analysis && (() => {
+                    const a = structured.periods[selectedPeriod].analysis
+                    const p = structured.periods[selectedPeriod]
+                    const threatColor = a.threat_level === 'HIGH' ? 'border-red-500/40 bg-red-500/5' : a.threat_level === 'MEDIUM' ? 'border-amber-500/40 bg-amber-500/5' : 'border-emerald-500/40 bg-emerald-500/5'
+                    const threatText = a.threat_level === 'HIGH' ? 'text-red-400' : a.threat_level === 'MEDIUM' ? 'text-amber-400' : 'text-emerald-400'
+                    return (
+                      <div className={`rounded-lg border p-4 space-y-3 ${threatColor}`}>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Shield size={14} className={threatText} />
+                            <span className={`text-sm font-semibold ${threatText}`}>
+                              {a.threat_level} THREAT — {p.label}
+                            </span>
+                          </div>
+                          {a.pricing_expectation && a.pricing_expectation !== 'UNKNOWN' && (
+                            <span className="text-[10px] bg-[#1E293B] text-[#8896b0] px-2 py-0.5 rounded">
+                              Pricing: {a.pricing_expectation}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[#94a3b8] text-xs leading-relaxed">{a.threat_rationale}</p>
+
+                        {a.key_signals?.length > 0 && (
+                          <div>
+                            <p className="text-[#5a6a85] text-[10px] uppercase tracking-wide mb-1">Key Signals</p>
+                            <ul className="space-y-1">
+                              {a.key_signals.map((s, i) => (
+                                <li key={i} className="text-[#8896b0] text-xs flex gap-1.5">
+                                  <span className="text-blue-400 flex-shrink-0">-</span>
+                                  <span>{s}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                          {a.scc_implication && (
+                            <div>
+                              <p className="text-[#5a6a85] text-[10px] uppercase tracking-wide mb-1">SCC Implication</p>
+                              <p className="text-[#94a3b8] text-xs">{a.scc_implication}</p>
+                            </div>
+                          )}
+                          {a.bid_watch && (
+                            <div>
+                              <p className="text-[#5a6a85] text-[10px] uppercase tracking-wide mb-1">Bid Watch</p>
+                              <p className="text-[#94a3b8] text-xs">{a.bid_watch}</p>
+                            </div>
+                          )}
+                          {a.capacity_assessment && (
+                            <div>
+                              <p className="text-[#5a6a85] text-[10px] uppercase tracking-wide mb-1">Capacity Assessment</p>
+                              <p className="text-[#94a3b8] text-xs">{a.capacity_assessment}</p>
+                            </div>
+                          )}
+                          {a.backlog_commentary && (
+                            <div>
+                              <p className="text-[#5a6a85] text-[10px] uppercase tracking-wide mb-1">Backlog Trend ({a.backlog_trend ?? '—'})</p>
+                              <p className="text-[#94a3b8] text-xs">{a.backlog_commentary}</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )
+                  })()}
+                </div>
+              )
+            })()}
           </div>
         )}
 

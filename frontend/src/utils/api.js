@@ -109,6 +109,7 @@ export const api = {
   getCompetitorProfiles: () => fetchAPI("/competitive-intel/profiles"),
   buildCompetitorProfiles: () => postAPI("/competitive-intel/build-profiles"),
   getGalfarFinancials: () => fetchAPI("/competitive-intel/galfar-financials"),
+  getGalfarStructured: () => fetchAPI("/competitive-intel/galfar-structured"),
   scrapeGalfarFinancials: () => postAPI("/competitive-intel/scrape-galfar"),
   getEntityIntel: () => fetchAPI("/entity-intel/"),
   buildEntityIntel: () => postAPI("/entity-intel/build"),
