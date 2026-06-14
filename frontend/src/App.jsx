@@ -223,8 +223,8 @@ export default function App() {
         {/* TAB 6: Profiles */}
         {activeTab === 'profiles' && (
           <>
-            <GalfarProfile />
-            <CompetitorProfiles profiles={competitorProfiles} />
+            <GalfarProfile bidProfile={competitorProfiles.find(p => p.competitor_name?.toLowerCase().includes('galfar'))} />
+            <CompetitorProfiles profiles={competitorProfiles.filter(p => !p.competitor_name?.toLowerCase().includes('galfar'))} />
           </>
         )}
 

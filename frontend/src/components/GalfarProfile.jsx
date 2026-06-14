@@ -36,7 +36,7 @@ function formatOMR(value, decimals = 1) {
   return value.toFixed(3)
 }
 
-export default function GalfarProfile() {
+export default function GalfarProfile({ bidProfile }) {
   const { data: intelData, loading: intelLoading } = useAPI(() => api.getCompetitiveIntel(), [])
   const [fin, setFin] = useState(null)
   const [finLoading, setFinLoading] = useState(true)
@@ -463,6 +463,50 @@ export default function GalfarProfile() {
             <p className="text-[#5a6a85] text-sm">No portal activity data available</p>
           )}
         </div>
+
+        {/* ── Tender Board Bidding Intelligence ── */}
+        {bidProfile && (
+          <div>
+            <h3 className="text-[#8896b0] text-xs uppercase tracking-wide mb-3">Tender Board Bidding</h3>
+            <div className="space-y-3">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <StatBox label="Win Rate" value={`${bidProfile.conversion_rate ?? 0}%`} />
+                <StatBox label="SCC Overlap" value={bidProfile.overlap_with_scc ?? 0} />
+                <StatBox
+                  label="Threat Level"
+                  value={bidProfile.threat_level?.toUpperCase() ?? '—'}
+                  negative={bidProfile.threat_level?.toLowerCase() === 'high'}
+                  positive={bidProfile.threat_level?.toLowerCase() === 'low'}
+                />
+                <StatBox label="Profile Built" value={bidProfile.built_at ? new Date(bidProfile.built_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—'} subdued />
+              </div>
+
+              <p className="text-[#8896b0] text-xs leading-relaxed">{bidProfile.behaviour_summary}</p>
+
+              {bidProfile.scc_strategy && (
+                <div className="border-l-2 border-blue-500 bg-[#0a0e17] rounded-r-lg px-4 py-3">
+                  <p className="text-sm text-[#8896b0] italic">
+                    <span className="text-blue-400 font-semibold not-italic mr-1">Strategy:</span>
+                    {bidProfile.scc_strategy}
+                  </p>
+                </div>
+              )}
+
+              <div className="flex flex-wrap gap-2">
+                {(bidProfile.top_categories || []).map((cat, i) => (
+                  <span key={`cat-${i}`} className="text-xs font-semibold px-2.5 py-1 rounded-full border border-blue-500/40 text-blue-400">
+                    {cat}
+                  </span>
+                ))}
+                {(bidProfile.top_governorates || []).map((gov, i) => (
+                  <span key={`gov-${i}`} className="text-xs font-semibold px-2.5 py-1 rounded-full border border-purple-500/40 text-purple-400">
+                    {gov}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ── Strategic signal ── */}
         <div className="bg-amber-900/10 border border-amber-700/30 rounded-lg p-4 flex items-start gap-3">
